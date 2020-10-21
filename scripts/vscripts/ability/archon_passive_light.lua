@@ -97,11 +97,12 @@ function modifier_archon_passive_light:OnAttackLanded( params )
 	-- local EffectName = "particles/units/heroes/hero_abaddon/abaddon_borrowed_time_heal.vpcf"
 	local EffectName = "particles/units/heroes/hero_omniknight/omniknight_loadout.vpcf"
 	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hTarget)
+	ParticleManager:ReleaseParticleIndex(nFXIndex)
 	-- 新加特效 -- 敌人
 	local EffectName_2 = "particles/heroes/thtd_yuugi/ability_yuugi_01.vpcf"
 	local nFXIndex_2 = ParticleManager:CreateParticle( EffectName_2, PATTACH_ABSORIGIN_FOLLOW, hTarget )
 	ParticleManager:SetParticleControl(nFXIndex_2, 0, Vector(nDamageRadius, nDamageRadius, nDamageRadius))
-
+	ParticleManager:ReleaseParticleIndex(nFXIndex_2)
 	-- 治疗值
 	local nHealthAmount = nBaseDamage * self:GetAbility():GetSpecialValueFor( "health_coefficient" )
 	EmitSoundOn( "Hero_Dazzle.Shadow_Wave", hCaster )

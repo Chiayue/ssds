@@ -11,7 +11,7 @@ function item_tools_mode:OnSpellStart()
 	
 	local EffectName = "particles/units/heroes/hero_ursa/ursa_earthshock.vpcf"
 	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hCaster )
-	
+	ParticleManager:ReleaseParticleIndex(nFXIndex)
 	local enemies = FindUnitsInRadius(
 		hCaster:GetTeamNumber(), 
 		hCaster:GetOrigin(), 
@@ -57,15 +57,7 @@ function modifier_item_tools_mode:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 	}
 end
-
-function modifier_item_tools_mode:GetModifierBonusStats_Agility() 
-	return 50000
-end
-
-function modifier_item_tools_mode:GetModifierBonusStats_Intellect()	
-	return 50000
-end
-
-function modifier_item_tools_mode:GetModifierBonusStats_Strength() 
-	return 50000
-end
+function modifier_item_tools_mode:IsHidden()return true end
+function modifier_item_tools_mode:GetModifierBonusStats_Agility() return 50000 end
+function modifier_item_tools_mode:GetModifierBonusStats_Intellect()	return 50000 end
+function modifier_item_tools_mode:GetModifierBonusStats_Strength() return 50000 end

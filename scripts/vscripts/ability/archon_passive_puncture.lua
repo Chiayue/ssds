@@ -125,7 +125,7 @@ function archon_passive_puncture:OnProjectileHit( hTarget, vLocation )
 			local damage = {
 				victim = hTarget,
 				attacker = self:GetCaster(),
-				damage = nAttackDamage * 0.1,
+				damage = nAttackDamage * 0.25,
 				damage_type = DAMAGE_TYPE_PURE,
 				ability = self
 			}

@@ -128,6 +128,7 @@ function modifier_series_reward_talent_vitality:OnIntervalThink()
 	hCaster:Heal( nHealHealth, hCaster )
 	local EffectName = "particles/econ/events/ti6/mekanism_ti6.vpcf"
 	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hCaster)
+	ParticleManager:ReleaseParticleIndex(nFXIndex)
 end
 
 if modifier_series_reward_talent_ruin == nil then modifier_series_reward_talent_ruin = class(modifier_series_reward_talent) end

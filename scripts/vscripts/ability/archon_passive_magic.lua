@@ -57,10 +57,11 @@ function modifier_archon_passive_magic:OnAttack( params )
 			local EffectName = "particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
 			local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_POINT, hTarget )
 			ParticleManager:SetParticleControl(nFXIndex, 1, Vector(500, 500, 500))
-
+			ParticleManager:ReleaseParticleIndex(nFXIndex)
 			local EffectName_1 = "particles/heroes/lily/ability_lily_01.vpcf"
 			local nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_POINT, hTarget )
 			ParticleManager:SetParticleControl(nFXIndex_1, 1, Vector(500, 500, 500))
+			ParticleManager:ReleaseParticleIndex(nFXIndex_1)
 			EmitSoundOn( "Hero_EarthShaker.Fissure", hTarget )
 			
 			-- 范围
@@ -110,7 +111,7 @@ function modifier_archon_passive_magic:OnAttack( params )
 		local EffectName = "particles/econ/items/abaddon/abaddon_alliance/abaddon_aphotic_shield_alliance_explosion.vpcf"
 		local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_POINT, hCaster )
 		ParticleManager:SetParticleControl(nFXIndex, 1, Vector(nAllRange, nAllRange, nAllRange))
-
+		ParticleManager:ReleaseParticleIndex(nFXIndex)
 		-- 范围
 		local enemies = FindUnitsInRadius(
 			hCaster:GetTeamNumber(), 

@@ -97,6 +97,7 @@ function modifier_archon_passive_bank:HitTarget( hOrigin,hTarget)
 	)
 
 	table.insert( self:GetAbility().hTargetsHit, hTarget )
+	ParticleManager:ReleaseParticleIndex(lightningBolt)
 end
 
 
@@ -205,4 +206,5 @@ function modifier_archon_passive_bank_thinker:HitTarget( hOrigin,hTarget)
 		"modifier_archon_passive_bank_thinker", 
 		{ duration = 1} 
 	)
+	ParticleManager:ReleaseParticleIndex(lightningBolt)
 end

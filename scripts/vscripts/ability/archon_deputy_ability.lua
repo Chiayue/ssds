@@ -257,6 +257,7 @@ function archon_deputy_doctor:OnSpellStart()
 			if nDeputyBlink >= 3 then
 				ally:AddNewModifier(hCaster, self, "modifier_series_reward_deputy_doctor_effect",{ duration = 5}) 
 			end
+			ParticleManager:ReleaseParticleIndex(nFXIndex)
 		end
 	end
 end

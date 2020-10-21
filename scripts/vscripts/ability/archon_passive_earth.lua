@@ -114,7 +114,7 @@ function modifier_archon_passive_earth:OnAttackLanded( params )
 	local EffectName_1 = "particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_magical.vpcf"
 	local nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hCaster )
 	ParticleManager:SetParticleControl(nFXIndex_1, 0, Vector(nBaseRange, nBaseRange, nBaseRange))
-
+	ParticleManager:ReleaseParticleIndex(nFXIndex_1)
 	EmitSoundOn( "Hero_Ursa.Earthshock", hCaster )
 	local abil_damage = self:GetCaster():GetMaxHealth() * self:GetAbility():GetSpecialValueFor( "coefficient" ) * 0.01
 	-- 范围

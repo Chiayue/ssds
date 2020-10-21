@@ -292,6 +292,7 @@ function Player_Data:OnEntityKilled(event)
                         if nLevel < 7 then
                             hTalentPassive:SetLevel(nLevel+1)
                             local nFXIndex = ParticleManager:CreateParticle( sParticle, PATTACH_POINT, hHero )
+                            ParticleManager:ReleaseParticleIndex(nFXIndex)
                         end
                     end
                     ---- 神赐光环 ---

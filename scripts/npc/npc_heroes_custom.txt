@@ -220,7 +220,7 @@
 		"MovementSpeed"	"400"
 		"AttackAnimationPoint"	"0.1"
 		"ProjectileSpeed"	"1500"
-		"AttributePrimary"	"DOTA_ATTRIBUTE_INTELLECT"
+		"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 	}
 
 	"npc_dota_hero_magic"

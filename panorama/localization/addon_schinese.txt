@@ -1,0 +1,5 @@
+"addon"
+{
+    "CHAPTER7"   "第7章"
+    "CHAPTER10"   "第10章"
+}

@@ -67,6 +67,7 @@ function HeroesSkin:ChangeSkin(hHero,skinId)
 	--if hSkin == nil then return end
 	WearableManager:RemoveOriginalWearables(hHero)
 	WearableManager:RemoveAllWearable(hHero)
+	-- DeepPrintTable(hSkin[skinId])
 	if hSkin[skinId].model ~= nil then hHero:SetModel(hSkin[skinId].model) end
 	if hSkin[skinId].model_scale ~= nil then hHero:SetModelScale(hSkin[skinId].model_scale) end
 	hHero:FindModifierByName("modifier_wearable_hider_while_model_changes").sOriginalModel = hSkin[skinId].model

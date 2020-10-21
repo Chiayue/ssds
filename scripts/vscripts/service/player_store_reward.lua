@@ -10,8 +10,8 @@ LinkLuaModifier("modifier_store_reward_vip_diamond", "service/player_store_rewar
 LinkLuaModifier("modifier_store_reward_aura_god", "service/player_store_reward", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_store_reward_aura_god_effect", "service/player_store_reward", LUA_MODIFIER_MOTION_NONE)
 
--- LinkLuaModifier("modifier_store_reward_dark_wings", "service/player_store_reward", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_store_reward_dark_wings_effect", "service/player_store_reward", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_store_reward_dark_wings", "service/player_store_reward", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_store_reward_dark_wings_effect", "service/player_store_reward", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_store_reward_arrow_infinite", "service/player_store_reward", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_store_reward_arrow_infinite_effect", "service/player_store_reward", LUA_MODIFIER_MOTION_NONE)
@@ -400,4 +400,4 @@ function modifier_store_reward_golden_dragon_effect:OnDestroy()
 	ParticleManager:DestroyParticle(self.nFXIndex,true)
 end
 
-
+----------- 翅膀 -----------

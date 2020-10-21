@@ -23,7 +23,7 @@ AFFIX_FOR_EQUIPMENT = {
 		mana = {2,10}, -- 最大每秒回蓝
 		health = {1,15}, -- 最大生命恢复 0.1 - 1.5 1 - 15
 		as = {10,25},
-		armor = {1,15},
+		armor = {1,10},
 		damage = {1,7},
 		-- magic = {1,7}
 	},
@@ -192,6 +192,7 @@ function SeriseSystem:CreateEquipmentInUnit(hArchiveEqui,hHero)
 			hNewItem.bonus = v
 			hNewItem:SetPurchaser(hHero)
 			hHero:AddItem(hNewItem)
+			SeriseSystem:WriteNetTable(hNewItem)
 		end
 		-- 背包栏
 		for k,v in pairs(hBackpack) do
@@ -201,6 +202,7 @@ function SeriseSystem:CreateEquipmentInUnit(hArchiveEqui,hHero)
 			hNewItem.bonus = v
 			hNewItem:SetPurchaser(hHero)
 			InventoryBackpack:AddItem( hHero, hNewItem )
+			SeriseSystem:WriteNetTable(hNewItem)
 		end
 	end
 end
@@ -251,9 +253,18 @@ function SeriseSystem:CreateSeriesItem(hHero,nAffix,nSeason,nTier)
 	local nRand = RandomInt(1, #hPosition)
 	local sSet = hPosition[nRand]
 	local sItemName = "item_series_s"..nSeason.."_t"..nTier.."_"..sSet
-	local hItemHand = CreateItem( sItemName, nil, nil )
-	hItemHand:SetPurchaser(hHero)
-	SeriseSystem:SetItemAttr(hItemHand,nAffix,nSeason,nTier)
-	hHero:AddItem(hItemHand)
-	return hItemHand
+	local hItem = CreateItem( sItemName, nil, nil )
+	hItem:SetPurchaser(hHero)
+	SeriseSystem:SetItemAttr(hItem,nAffix,nSeason,nTier)
+	hHero:AddItem(hItem)
+	SeriseSystem:WriteNetTable(hItem)
+	return hItem
+end
+
+-- 写入网表
+function SeriseSystem:WriteNetTable(hItem)
+	local nItemIndex = hItem:GetEntityIndex()
+	local sItemKey = "series_item_"..nItemIndex
+	local hItemTable = hItem.bonus
+	CustomNetTables:SetTableValue("backpack_system", sItemKey, hItemTable) 
 end

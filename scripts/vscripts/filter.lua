@@ -165,7 +165,7 @@ function Filter:HealingFilter( params )
 				local sEffectName = "particles/econ/items/omniknight/hammer_ti6_immortal/omniknight_pu_ti6_heal_hammers.vpcf"
 				local nFXIndex_2 = ParticleManager:CreateParticle( sEffectName, PATTACH_CUSTOMORIGIN_FOLLOW, hTarget )
 				ParticleManager:SetParticleControl(nFXIndex_2, 0, Vector(nRadius, nRadius, nRadius))
-
+				ParticleManager:ReleaseParticleIndex(nFXIndex_2)
 				for _,enemy in pairs(enemies) do
 					if enemy ~= nil  then
 						local damage = {

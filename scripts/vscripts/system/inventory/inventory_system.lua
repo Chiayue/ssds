@@ -119,6 +119,7 @@ function InventorySystem:OnSetGemSeries(args)
 		hRes["status"] = true
 		hSeriesItem:OnUnequip()
 		hSeriesItem:OnEquip()
+		SeriseSystem:WriteNetTable(hSeriesItem)
 	else
 		hRes["status"] = false
 		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="金币不够"})

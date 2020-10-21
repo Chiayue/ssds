@@ -1,0 +1,5 @@
+"addon"
+{
+    "CHAPTER7"   "chapter7"
+    "CHAPTER10"   "chapter10"
+}

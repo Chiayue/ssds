@@ -102,6 +102,7 @@ function modifier_archon_passive_fire:OnAttackLanded( params )
 			local EffectName_0 = "particles/heroes/mouko/ability_mokou_01_boom.vpcf"
 			local nFXIndex_0 = ParticleManager:CreateParticle( EffectName_0, PATTACH_ABSORIGIN_FOLLOW, hTarget )
 			ParticleManager:SetParticleControl(nFXIndex_0, 1, Vector(500, 500, 500))
+			ParticleManager:ReleaseParticleIndex(nFXIndex_0)
 			--------------------------------------------------------------
 			EmitSoundOn( "Hero_OgreMagi.Fireblast.Target", hTarget )
 			-- 范围

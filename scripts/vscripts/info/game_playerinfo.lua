@@ -122,8 +122,11 @@ function game_playerinfo:update_playerInfo()
                 end
     
                 if GlobalVarFunc.game_mode == "endless" then
-                    if Archive:GetData(PlayerID,"endless_waves") <= GlobalVarFunc.MonsterWave then
-                        Archive:EditPlayerProfile(PlayerID,"endless_waves",GlobalVarFunc.MonsterWave)
+
+                    if GlobalVarFunc.game_type==1000 then
+                        if Archive:GetData(PlayerID,"endless_waves") <= GlobalVarFunc.MonsterWave then
+                            Archive:EditPlayerProfile(PlayerID,"endless_waves",GlobalVarFunc.MonsterWave)
+                        end
                     end
 
                     if GlobalVarFunc.game_type==1001 then
@@ -139,7 +142,6 @@ function game_playerinfo:update_playerInfo()
                 end 
     
                 --箭魂奖励结算
-                
                 table.insert(hClearReward,self:OnArrowSoulReward(PlayerID))
             end
         end

@@ -50,7 +50,7 @@
 			"06"
 			{
 				"var_type"	"FIELD_FLOAT"
-				"coefficient"	"1.5 1.95 2.4 2.85 3.30 3.75 4.2"
+				"coefficient"	"2 2.6 3.2 3.8 4.4 5 5.6"
 			}
 			"07"
 			{
@@ -542,7 +542,6 @@
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
 				"IsHidden"	"0"
-				"_IsAura"	"1"
 			}
 			"health_regen"
 			{
@@ -587,7 +586,6 @@
 			"particle"	"particles/units/heroes/hero_alchemist/alchemist_acid_spray_debuff.vpcf"
 			"particle"	"particles/econ/generic/generic_buff_1/generic_buff_1.vpcf"
 			"particle"	"particles/econ/generic/generic_aoe_explosion_sphere_1/generic_aoe_explosion_sphere_1.vpcf"
-			"soundfile"	""
 		}
 		"OnOwnerDied"
 		{
@@ -661,7 +659,6 @@
 				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
 				"Aura_Flags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				"IsHidden"	"0"
-				"_IsAura"	"1"
 			}
 			"create_acid_spray_armor_reduction_aura"
 			{
@@ -994,7 +991,6 @@
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ALLIES_YES"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
 		// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
@@ -1039,12 +1035,12 @@
 				"scepter_manacost"	"50"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ALLIES_YES"
 	}
 
 	"life_stealer_feast"
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_2"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1066,13 +1062,13 @@
 				"attack_speed_bonus"	"50"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 	}
 
 	"spirit_breaker_greater_bash"
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_3"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1125,6 +1121,7 @@
 				"movespeed_duration"	"3.0"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"	"SPELL_DISPELLABLE_YES_STRONG"
 		"AbilitySound"	"Hero_Spirit_Breaker.GreaterBash"
 		// Stats
@@ -1136,7 +1133,6 @@
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_3"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1175,6 +1171,7 @@
 				"max_range_tooltip"	"1500"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"	"SPELL_DISPELLABLE_YES"
 		"AbilitySound"	"hero_viper.CorrosiveSkin"
 		// Stats
@@ -1212,7 +1209,6 @@
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_PURE"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_2"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1244,6 +1240,7 @@
 				"slow"	"-100"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		// Damage.
 		// -------------------------------------------------------------------------------------------------------------
 		"AbilityDamage"	"50"
@@ -1253,7 +1250,6 @@
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_PURE"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_3"
 		"AbilityCooldown"	"3"
 		// General
@@ -1280,6 +1276,7 @@
 				"bonus_damage"	"50"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 	}
 
 	"visage_gravekeepers_cloak"
@@ -1332,7 +1329,6 @@
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_PHYSICAL"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_1"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1373,6 +1369,7 @@
 				"illusion_percentage"	"50"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilitySound"	"Hero_Antimage.ManaBreak"
 	}
 
@@ -1381,7 +1378,6 @@
 		"BaseClass"	"ability_datadriven"
 		"AbilityTextureName"	"phantom_assassin_blur"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_1"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1409,6 +1405,7 @@
 				"bonus_dodge"	"15"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilitySound"	"Hero_Antimage.ManaBreak"
 	}
 
@@ -2768,7 +2765,6 @@
 		"AbilityTextureName"	"centaur_hoof_stomp"
 		"ScriptFile"	"ability/creatures/creature_bonus_chicken"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		// Special
 		// -------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -2789,6 +2785,7 @@
 				"gold_bag_duration"	"10.0"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		"IsOnCastBar"	"0"
 	}
 
@@ -2817,7 +2814,6 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -2848,6 +2844,7 @@
 				"agi_multiple_damage"	"30"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"gem_die_venom"
@@ -2858,7 +2855,6 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -2901,6 +2897,7 @@
 				"timer_attack_multiple"	"5"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"gem_raging_fire_interrogate"
@@ -2911,7 +2908,6 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -2955,6 +2951,7 @@
 				"timer_attack_multiple"	"5"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"archon_passive_solar_flare"
@@ -2966,7 +2963,6 @@
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_PHYSICAL"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilitySpecial"
 		{
@@ -2991,6 +2987,7 @@
 				"attack_multiple"	"20"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"gem_earth_burst"
@@ -3001,7 +2998,6 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -3034,6 +3030,7 @@
 				"attack_multiple"	"30"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"gem_shadow_quiet"
@@ -3044,7 +3041,6 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -3092,6 +3088,7 @@
 				"timer_attack_multiple"	"3"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"gem_Ice_storm"
@@ -3102,7 +3099,6 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -3149,6 +3145,7 @@
 				"timer_attack_multiple"	"3"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"abilityyuyuko"
@@ -4109,7 +4106,6 @@
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CREEP"
 				"Aura_ApplyToCaster"	"0"
-				"_IsAura"	"1"
 			}
 			"modifier_ability_operate_attack_2"
 			{
@@ -4163,7 +4159,6 @@
 				"Aura_Radius"	"%radius"
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CREEP"
-				"_IsAura"	"1"
 			}
 			"modifier_ability_operate_attack_speed_2"
 			{
@@ -4217,7 +4212,6 @@
 				"Aura_Radius"	"%radius"
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CREEP"
-				"_IsAura"	"1"
 			}
 			"modifier_ability_operate_move_speed_2"
 			{
@@ -4271,7 +4265,6 @@
 				"Aura_Radius"	"%radius"
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CREEP"
-				"_IsAura"	"1"
 			}
 			"modifier_ability_operate_armor_2"
 			{
@@ -4325,7 +4318,6 @@
 				"Aura_Radius"	"%radius"
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CREEP"
-				"_IsAura"	"1"
 			}
 			"modifier_ability_operate_magicalResistance_2"
 			{
@@ -4888,8 +4880,6 @@
 		"AbilityTextureName"	"ancient_apparition_cold_feet"
 		"ScriptFile"	"ability/creatures/ability_zibi"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetType"	""
-		"AbilityUnitTargetTeam"	""
 	}
 
 	"ability_zibi_boss"
@@ -4898,8 +4888,6 @@
 		"AbilityTextureName"	"ancient_apparition_cold_feet"
 		"ScriptFile"	"ability/creatures/ability_zibi_boss"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetType"	""
-		"AbilityUnitTargetTeam"	""
 	}
 
 	"ability_the_injury"

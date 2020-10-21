@@ -638,8 +638,8 @@ function AttributeCalculation(hHero)
 	-------------------- 物理暴击几率 --------------------
 	local nPhysicalCritUp1 = hHero:GetModifierStackCount("modifier_Upgrade_Physical_Critical", hHero ) * 4
 	local nPhysicalCritUp2 = hHero:GetModifierStackCount( "modifier_tech_max_physical_critical_buff", hHero ) * 3
-	local nCanbaiCrit = hHero:GetModifierStackCount( "modifier_gem_canbaizhiren" ,hHero) * -20
-	local nShufuCrit = hHero:GetModifierStackCount( "modifier_gem_shufuzhiren",hHero ) * 20 
+	local nCanbaiCrit = hHero:HasModifier( "modifier_gem_canbaizhiren") and -20 or 0
+	local nShufuCrit = hHero:HasModifier( "modifier_gem_shufuzhiren" ) and 20 or 0
 	hAttr["physical_crit"] = nPhysicalCritUp1 + nPhysicalCritUp2 + nCanbaiCrit + nShufuCrit + nSageBonus
 	-------------------- 物理爆伤 --------------------
 	local nAgiCritDamage =  0--hHero:GetAgility() * 0.05
@@ -680,27 +680,20 @@ function AttributeCalculation(hHero)
 		+ nShihunDamage + nFlameBonus + nIntCritDamage + nYongmengXiao_mag 
 		+ nYongmengZhong_mag + nYongmengDa_mag + nHeimo
 	------ 伤害加成 通用 --------
+	---- 最终伤害
+	local nFinalDamage = hHero:GetStrength() * 0.0001 -- 1W点100% 0.01%
+	hAttr["final_damage"] = nFinalDamage
 	-------------------- 物理伤害加成 --------------------
 	local nPhysicalDamage =  hHero:GetAgility() * 0.0002 -- 1W点200%
 	local sHeroName = hHero:GetUnitName()
 	if sHeroName == "npc_dota_hero_troll_warlord" then
-		nPhysicalDamage = nPhysicalDamage * 0.4
+		nPhysicalDamage = nPhysicalDamage * 0.75
 	end
 	-- local nAgiPhysicalDamage =  hHero:GetAgility() * 0.002 -- 1W点200%
-	hAttr["physical_damage"] = nPhysicalDamage
+	hAttr["physical_damage"] = nPhysicalDamage + nFinalDamage
 	-------------------- 法术伤害加成 --------------------
 	local nMagicDamage = hHero:GetIntellect() * 0.0008 -- 1W点800% 
-	hAttr["magic_damage"] = nMagicDamage
-	-- DeepPrintTable(hAttr)
-
-	---- 最终伤害
-	local nFinalDamage = hHero:GetStrength() * 0.0001 -- 1W点100% 0.01%
-	hAttr["final_damage"] = nFinalDamage
-
-	-- DeepPrintTable(hAttr)
-	-- local m = collectgarbage('count')
-	-- print(string.format("[Lua Memory]  %.3f KB  %.3f MB", m, m / 1024))
-		-------------------- 物理伤害加成 --------------------
+	hAttr["magic_damage"] = nMagicDamage + nFinalDamage
 	-- DeepPrintTable(hAttr)
 end 
 
