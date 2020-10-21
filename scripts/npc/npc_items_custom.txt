@@ -1,0 +1,3888 @@
+// Dota2 Editor
+// Get latest version: https://github.com/zombieJ/nw-dota2editor
+
+"DOTAAbilities"
+{
+	"Version"		"1"
+
+	"item_archer_armor"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"chainmail"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ID"	"1518"
+		"ItemCastOnPickup"	"0"
+		"ItemCost"	"4000"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemPurchasable"	"0"
+		"ItemAlertable"	"1"
+		"ItemStackable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_item_armor_1"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
+				}
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_armor"	"20"
+			}
+		}
+	}
+
+	"item_archer_elvenskin"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"band_of_elvenskin"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ID"	"1520"
+		"ItemQuality"	"rare"
+		"ItemCost"	"4000"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemPurchasable"	"0"
+		"ItemAlertable"	"1"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_item_elvenskin"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"IsHidden"	"1"
+				"Passive"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_magic_resistance"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_magic_resistance"	"20"
+			}
+		}
+	}
+
+	"item_archer_assault"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"assault"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ID"	"1519"
+		"ItemQuality"	"artifact"
+		"ItemCost"	"12500"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemPurchasable"	"0"
+		"ItemAlertable"	"1"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_item_assault_1"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bouns_armor"
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_magic_resistance"
+					"MODIFIER_PROPERTY_HEALTH_BONUS"	"%bonus_hp"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bouns_armor"	"25"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_magic_resistance"	"25"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_hp"	"500"
+			}
+		}
+	}
+
+	"item_recipe_archer_assault"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"mystery_arrow"
+		"ID"	"1521"
+		"ItemCost"	"500"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemAlertable"	"1"
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_archer_assault"
+		"ItemRequirements"
+		{
+			"1"	"item_archer_armor;item_archer_elvenskin"
+		}
+	}
+
+	"item_archers_gold"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"Gold bag"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"ID"	"1666"
+		"ItemQuality"	"consumable"
+		"ItemCastOnPickup"	"1"
+		"ItemShareability"	"ITEM_NOT_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemKillable"	"0"
+		"ItemStackable"	"0"
+		"ItemRequirements"	{}
+		"Model"	"models/props_gameplay/gold_bag.vmdl"
+	}
+
+	"item_archers_wood"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"wood"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"ID"	"1667"
+		"ItemQuality"	"consumable"
+		"ItemCastOnPickup"	"1"
+		"ItemShareability"	"ITEM_NOT_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemKillable"	"0"
+		"ItemStackable"	"0"
+		"ItemRequirements"	{}
+		"Model"	"models/props_gameplay/branch.vmdl"
+	}
+
+	"item_baoxiang_gold"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"yuanbao"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"ID"	"1668"
+		"ItemQuality"	"consumable"
+		"ItemCastOnPickup"	"1"
+		"ItemDroppable"	"0"
+		"ItemSellable"	"0"
+		"ItemShareability"	"ITEM_NOT_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemKillable"	"0"
+		"ItemStackable"	"0"
+		"ItemRequirements"	{}
+		"Model"	"models/props_gameplay/gold_coin001.vmdl"
+	}
+
+	"item_baoWu_book"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"baowubook"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"ID"	"1669"
+		"ItemQuality"	"artifact"
+		"ItemCastOnPickup"	"0"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"0"
+		"ItemShareability"	"ITEM_FULLY_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemKillable"	"0"
+		"ItemPermanent"	"0"
+		"ItemInitialCharges"	"1"
+		"ItemStackable"	"1"
+		"ItemRequirements"	{}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"	"CASTER"
+				"ScriptFile"	"scripts/vscripts/item/item_baoWu_book.lua"
+				"Function"	"item_baoWu_book"
+			}
+			"SpendCharge"	{}
+		}
+		"Model"	"models/items/courier/bookwyrm/bookwyrm_flying.vmdl"
+		"Effect"	"particles/ambient/ambient2.vpcf"
+	}
+
+	// 个人宝物书
+	"item_gerenbaoWu_book"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"baowubook_geren"
+		"ScriptFile"	"item/item_baoWu_book"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"AbilityCooldown"	"1"
+		"ID"	"1670"
+		"ItemQuality"	"artifact"
+		"ItemCastOnPickup"	"0"
+		"ItemCost"	"20000"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemShareability"	"ITEM_NOT_SHAREABLE"
+		"ItemPurchasable"	"1"
+		"ItemKillable"	"0"
+		"ItemKillable"	"0"
+		"ItemPermanent"	"0"
+		"ItemInitialCharges"	"1"
+		"ItemStackable"	"1"
+		"ItemRequirements"	{}
+		"Model"	"models/items/courier/bookwyrm/bookwyrm_flying.vmdl"
+		"Effect"	"particles/test_particles/parterre_partic/dazzle_ti6_shallow_grave_gold.vpcf"
+	}
+
+	// 个人宝物书
+	"item_baowu_book_dark_wings"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"baowubook_geren"
+		"ScriptFile"	"item/item_baoWu_book"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"AbilityCooldown"	"1"
+		"ID"	"1599"
+		"ItemQuality"	"artifact"
+		"ItemCastOnPickup"	"0"
+		"ItemCost"	"0"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemShareability"	"ITEM_NOT_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemKillable"	"0"
+		"ItemAlertable"	"1"
+		"ItemPermanent"	"0"
+		"ItemInitialCharges"	"1"
+		"ItemStackable"	"1"
+		"ItemRequirements"	{}
+		"Model"	"models/items/courier/bookwyrm/bookwyrm_flying.vmdl"
+		"Effect"	"particles/test_particles/parterre_partic/dazzle_ti6_shallow_grave_gold.vpcf"
+	}
+
+	"item_recipe_archer_paradise"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_recipe"
+		"ID"	"1504"
+		"ItemQuality"	"common"
+		"ItemCost"	"100"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemPurchasable"	"1"
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_archer_paradise"
+		"ItemRequirements"
+		{
+			"01"	"item_archer_greenhand;item_archer_elf"
+		}
+	}
+
+	"item_recipe_archer_lily_white"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_recipe"
+		"ID"	"1511"
+		"ItemQuality"	"common"
+		"ItemCost"	"250"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_archer_lily_white"
+		"ItemRequirements"
+		{
+			"02"	"item_archer_greenhand;item_archer_paradise"
+		}
+	}
+
+	"item_recipe_archer_horus"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_recipe"
+		"ID"	"1512"
+		"ItemQuality"	"rare"
+		"ItemCost"	"350"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_archer_horus"
+		"ItemRequirements"
+		{
+			"03"	"item_archer_elf;item_archer_lily_white"
+		}
+	}
+
+	"item_recipe_archer_violent_winds"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_recipe"
+		"ID"	"1513"
+		"ItemQuality"	"rare"
+		"ItemCost"	"900"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_archer_violent_winds"
+		"ItemRequirements"
+		{
+			"04"	"item_archer_paradise;item_archer_horus"
+		}
+	}
+
+	"item_recipe_archer_efreet"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_recipe"
+		"ID"	"1514"
+		"ItemQuality"	"epic"
+		"ItemCost"	"1900"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_archer_efreet"
+		"ItemRequirements"
+		{
+			"05"	"item_archer_lily_white;item_archer_violent_winds"
+		}
+	}
+
+	"item_recipe_archer_sonata"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_recipe"
+		"ID"	"1515"
+		"ItemQuality"	"epic"
+		"ItemCost"	"7300"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_archer_sonata"
+		"ItemRequirements"
+		{
+			"06"	"item_archer_horus;item_archer_efreet"
+		}
+	}
+
+	"item_recipe_archer_snowstorm"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_recipe"
+		"ID"	"1516"
+		"ItemQuality"	"secret_shop"
+		"ItemCost"	"8200"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_archer_snowstorm"
+		"ItemRequirements"
+		{
+			"07"	"item_archer_violent_winds;item_archer_sonata"
+		}
+	}
+
+	"item_recipe_archer_fairy_dragon"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_recipe"
+		"ID"	"1517"
+		"ItemQuality"	"artifact"
+		"ItemCost"	"17900"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_archer_fairy_dragon"
+		"ItemRequirements"
+		{
+			"08"	"item_archer_sonata;item_archer_snowstorm"
+		}
+	}
+
+	// 宝石
+	"item_strength_gemstone_0"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_11"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1511"
+		"ItemCost"	"40"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_strength_gemstone"
+			{
+				"Passive"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%strength"
+				}
+				"IsHidden"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"2"
+			}
+		}
+	}
+
+	"item_strength_gemstone_1"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_12"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1535"
+		"ItemCost"	"90"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_strength_gemstone_1"
+			{
+				"Passive"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%strength"
+				}
+				"IsHidden"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"4"
+			}
+		}
+	}
+
+	"item_strength_gemstone_2"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_34"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1536"
+		"ItemCost"	"210"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_strength_gemstone_2"
+			{
+				"Passive"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%strength"
+				}
+				"IsHidden"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"8"
+			}
+		}
+	}
+
+	"item_strength_gemstone_3"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_40"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1537"
+		"ItemCost"	"514"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_strength_gemstone_3"
+			{
+				"Passive"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%strength"
+				}
+				"IsHidden"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"16"
+			}
+		}
+	}
+
+	"item_strength_gemstone_4"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_31"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1538"
+		"ItemCost"	"1130"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_strength_gemstone_4"
+			{
+				"Passive"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%strength"
+				}
+				"IsHidden"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"32"
+			}
+		}
+	}
+
+	"item_strength_gemstone_5"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_33"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1539"
+		"ItemCost"	"2486"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_strength_gemstone_5"
+			{
+				"Passive"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%strength"
+				}
+				"IsHidden"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"64"
+			}
+		}
+	}
+
+	"item_strength_gemstone_6"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_32"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1540"
+		"ItemCost"	"5470"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_strength_gemstone_6"
+			{
+				"Passive"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%strength"
+				}
+				"IsHidden"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"128"
+			}
+		}
+	}
+
+	"item_strength_gemstone_7"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_35"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1541"
+		"ItemCost"	"12034"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_strength_gemstone_7"
+			{
+				"Passive"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%strength"
+				}
+				"IsHidden"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"256"
+			}
+		}
+	}
+
+	"item_strength_gemstone_8"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_36"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1542"
+		"ItemCost"	"26474"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_strength_gemstone_8"
+			{
+				"Passive"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%strength"
+				}
+				"IsHidden"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"512"
+			}
+		}
+	}
+
+	"item_strength_gemstone_9"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_baoshi_46"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1501"
+		"ItemCost"	"42474"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_strength_gemstone_8"
+			{
+				"Passive"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%strength"
+				}
+				"IsHidden"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"912"
+			}
+		}
+	}
+
+	"item_strength_gemstone_10"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_baoshi_48"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1503"
+		"ItemCost"	"42474"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_strength_gemstone_8"
+			{
+				"Passive"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%strength"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%agility"
+				}
+				"IsHidden"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"512"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"400"
+			}
+		}
+	}
+
+	"item_agility_gemstone_11"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_baoshi_42"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1507"
+		"ItemCost"	"42474"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_strength_gemstone_8"
+			{
+				"Passive"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%strength"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%agility"
+				}
+				"IsHidden"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"512"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"400"
+			}
+		}
+	}
+
+	"item_agility_gemstone_0"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_13"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1533"
+		"ItemCost"	"40"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_agility_gemstone"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%agility"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"2"
+			}
+		}
+	}
+
+	"item_agility_gemstone_1"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_14"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1543"
+		"ItemCost"	"90"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_agility_gemstone_1"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%agility"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"4"
+			}
+		}
+	}
+
+	"item_agility_gemstone_2"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_21"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1544"
+		"ItemCost"	"210"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_agility_gemstone_2"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%agility"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"8"
+			}
+		}
+	}
+
+	"item_agility_gemstone_3"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_17"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1545"
+		"ItemCost"	"514"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_agility_gemstone_3"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%agility"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"16"
+			}
+		}
+	}
+
+	"item_agility_gemstone_4"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_18"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1546"
+		"ItemCost"	"1130"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_agility_gemstone_4"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%agility"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"32"
+			}
+		}
+	}
+
+	"item_agility_gemstone_5"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_19"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1547"
+		"ItemCost"	"2486"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_agility_gemstone_5"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%agility"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"64"
+			}
+		}
+	}
+
+	"item_agility_gemstone_6"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_20"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1548"
+		"ItemCost"	"5470"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_agility_gemstone_6"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%agility"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"128"
+			}
+		}
+	}
+
+	"item_agility_gemstone_7"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_22"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1549"
+		"ItemCost"	"12034"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_agility_gemstone_7"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%agility"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"256"
+			}
+		}
+	}
+
+	"item_agility_gemstone_8"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_23"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1550"
+		"ItemCost"	"26474"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_agility_gemstone_8"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%agility"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"512"
+			}
+		}
+	}
+
+	"item_agility_gemstone_10"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_baoshi_43"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1505"
+		"ItemCost"	"42474"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_agility_gemstone_8"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%agility"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%intelligece"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"512"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intelligece"	"400"
+			}
+		}
+	}
+
+	"item_intelligece_gemstone_10"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_baoshi_41"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1508"
+		"ItemCost"	"42474"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_agility_gemstone_8"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%agility"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%intelligece"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intelligece"	"512"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"400"
+			}
+		}
+	}
+
+	"item_agility_gemstone_9"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_baoshi_44"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1502"
+		"ItemCost"	"42474"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_agility_gemstone_8"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%agility"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"912"
+			}
+		}
+	}
+
+	"item_intelligece_gemstone_0"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_15"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1534"
+		"ItemCost"	"40"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_intelligece_gemstone"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%intelligece"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intelligece"	"2"
+			}
+		}
+	}
+
+	"item_intelligece_gemstone_1"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_16"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1551"
+		"ItemCost"	"90"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_intelligece_gemstone_1"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%intelligece"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intelligece"	"4"
+			}
+		}
+	}
+
+	"item_intelligece_gemstone_2"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_28"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1552"
+		"ItemCost"	"210"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_intelligece_gemstone_2"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%intelligece"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intelligece"	"8"
+			}
+		}
+	}
+
+	"item_intelligece_gemstone_3"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_24"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1553"
+		"ItemCost"	"514"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_intelligece_gemstone_3"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%intelligece"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intelligece"	"16"
+			}
+		}
+	}
+
+	"item_intelligece_gemstone_4"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_25"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1554"
+		"ItemCost"	"1130"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_intelligece_gemstone_4"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%intelligece"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intelligece"	"32"
+			}
+		}
+	}
+
+	"item_intelligece_gemstone_5"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_26"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1555"
+		"ItemCost"	"2486"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_intelligece_gemstone_5"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%intelligece"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intelligece"	"64"
+			}
+		}
+	}
+
+	"item_intelligece_gemstone_6"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_27"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1556"
+		"ItemCost"	"5470"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_intelligece_gemstone_6"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%intelligece"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intelligece"	"128"
+			}
+		}
+	}
+
+	"item_intelligece_gemstone_7"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_29"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1557"
+		"ItemCost"	"12034"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_intelligece_gemstone_7"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%intelligece"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intelligece"	"256"
+			}
+		}
+	}
+
+	"item_intelligece_gemstone_8"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_30"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1558"
+		"ItemCost"	"26474"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_intelligece_gemstone_8"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%intelligece"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intelligece"	"512"
+			}
+		}
+	}
+
+	"item_strength_gemstone_11"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_baoshi_49"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1506"
+		"ItemCost"	"42474"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_intelligece_gemstone_8"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%intelligece"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%strength"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"512"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intelligece"	"400"
+			}
+		}
+	}
+
+	"item_intelligece_gemstone_11"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_baoshi_47"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1509"
+		"ItemCost"	"42474"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_intelligece_gemstone_8"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%intelligece"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%strength"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intelligece"	"512"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"400"
+			}
+		}
+	}
+
+	"item_intelligece_gemstone_9"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_baoshi_45"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1500"
+		"ItemCost"	"42474"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_intelligece_gemstone_8"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%intelligece"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intelligece"	"912"
+			}
+		}
+	}
+
+	// 弓箭
+	"item_archer_elf_1"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_3"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ID"	"1523"
+		"ItemQuality"	"common"
+		"ItemCost"	"96"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemPurchasable"	"1"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_item_archer_greenhand_1"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%attack_range"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_base"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"damage_base"	"6"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"10"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_range"	"120"
+			}
+		}
+	}
+
+	"item_archer_greenhand_1"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_7"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ID"	"1532"
+		"ItemQuality"	"consumable"
+		"ItemCost"	"44"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_item_archer_greenhand_10"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%attack_range"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_base"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"damage_base"	"3"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"5"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_range"	"60"
+			}
+		}
+	}
+
+	"item_archer_paradise_1"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_5"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ID"	"1524"
+		"ItemQuality"	"common"
+		"ItemCost"	"212"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_item_archer_greenhand_2"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%attack_range"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_base"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"damage_base"	"12"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"15"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_range"	"180"
+			}
+		}
+	}
+
+	"item_archer_bow_level_1"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_5"
+		"ScriptFile"	"item/bow/item_archer_bow_level_1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"ID"	"1584"
+		"ItemQuality"	"artifact"
+		"ItemCost"	"1000"
+		"ItemDroppable"	"0"
+		"ItemSellable"	"0"
+		"ItemShareability"	"ITEM_NOT_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemInitialCharges"	"0"
+		"ItemStackable"	"1"
+		"MaxUpgradeLevel"	"6"
+		"ItemBaseLevel"	"1"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_damage"	"6 9 12 15 18 21"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_attackspeed"	"10 12 14 16 18 20"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_range"	"60"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_multiple_chance"	"7"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"limit_soul"	"20"
+			}
+			"06"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"limit_soul_max"	"0"
+			}
+			"07"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"limit_soul_max_damage"	"0"
+			}
+			"08"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"advanced_cost"	"1000"
+			}
+		}
+	}
+
+	"item_archer_bow_level_2"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_3"
+		"ScriptFile"	"item/bow/item_archer_bow_level_1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"ID"	"1585"
+		"ItemQuality"	"artifact"
+		"ItemCost"	"4000"
+		"ItemDroppable"	"0"
+		"ItemSellable"	"0"
+		"ItemShareability"	"ITEM_NOT_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemInitialCharges"	"0"
+		"ItemStackable"	"1"
+		"MaxUpgradeLevel"	"6"
+		"ItemBaseLevel"	"1"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_damage"	"24 36 48 60 72 84"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_attackspeed"	"22 24 26 28 30 32"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_range"	"180"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_multiple_chance"	"14"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"limit_soul"	"40"
+			}
+			"06"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"limit_soul_max"	"0"
+			}
+			"07"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"limit_soul_max_damage"	"0"
+			}
+			"08"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"reward_damage"	"5"
+			}
+			"09"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"advanced_cost"	"4000"
+			}
+		}
+	}
+
+	"item_archer_bow_level_3"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_2"
+		"ScriptFile"	"item/bow/item_archer_bow_level_1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"ID"	"1586"
+		"ItemQuality"	"artifact"
+		"ItemCost"	"16000"
+		"ItemDroppable"	"0"
+		"ItemSellable"	"0"
+		"ItemShareability"	"ITEM_NOT_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemInitialCharges"	"0"
+		"ItemStackable"	"1"
+		"MaxUpgradeLevel"	"6"
+		"ItemBaseLevel"	"1"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_damage"	"96 144 192 240 288 336"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_attackspeed"	"34 36 38 40 42 44"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_range"	"300"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_multiple_chance"	"21"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"limit_soul"	"60"
+			}
+			"06"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"limit_soul_max"	"0"
+			}
+			"07"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"limit_soul_max_damage"	"0"
+			}
+			"08"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"reward_damage"	"10"
+			}
+			"09"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"advanced_cost"	"16000"
+			}
+		}
+	}
+
+	"item_archer_bow_level_4"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_1"
+		"ScriptFile"	"item/bow/item_archer_bow_level_1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"ID"	"1587"
+		"ItemQuality"	"artifact"
+		"ItemCost"	"64000"
+		"ItemDroppable"	"0"
+		"ItemSellable"	"0"
+		"ItemShareability"	"ITEM_NOT_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemInitialCharges"	"0"
+		"ItemStackable"	"1"
+		"MaxUpgradeLevel"	"6"
+		"ItemBaseLevel"	"1"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_damage"	"384 576 768 960 1152 1344"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_attackspeed"	"46 48 50 52 54 56"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_range"	"420"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_multiple_chance"	"28"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"limit_soul"	"80"
+			}
+			"06"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"limit_soul_max"	"0"
+			}
+			"07"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"limit_soul_max_damage"	"0"
+			}
+			"08"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"reward_damage"	"15"
+			}
+			"09"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"advanced_cost"	"64000"
+			}
+		}
+	}
+
+	"item_archer_bow_level_5"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_4"
+		"ScriptFile"	"item/bow/item_archer_bow_level_1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"ID"	"1588"
+		"ItemQuality"	"artifact"
+		"ItemCost"	"99999"
+		"ItemDroppable"	"0"
+		"ItemSellable"	"0"
+		"ItemShareability"	"ITEM_NOT_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemInitialCharges"	"0"
+		"ItemStackable"	"1"
+		"MaxUpgradeLevel"	"6"
+		"ItemBaseLevel"	"1"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_damage"	"1536 2304 3072 3840 4608 5376"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_attackspeed"	"58 60 62 64 66 68"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_range"	"540"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_multiple_chance"	"35"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"limit_soul"	"100"
+			}
+			"06"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"limit_soul_max"	"99999"
+			}
+			"07"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"limit_soul_max_damage"	"5"
+			}
+			"08"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"reward_damage"	"15"
+			}
+		}
+	}
+
+	"item_archer_lily_white_1"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_8"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ID"	"1525"
+		"ItemQuality"	"rare"
+		"ItemCost"	"468"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_item_archer_greenhand_3"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%attack_range"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_base"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"damage_base"	"24"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"20"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_range"	"240"
+			}
+		}
+	}
+
+	"item_archer_horus_1"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_2"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ID"	"1526"
+		"ItemQuality"	"rare"
+		"ItemCost"	"1028"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_item_archer_greenhand_4"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%attack_range"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_base"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"damage_base"	"48"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"25"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_range"	"300"
+			}
+		}
+	}
+
+	"item_archer_violent_winds_1"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ID"	"1527"
+		"ItemQuality"	"epic"
+		"ItemCost"	"2260"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_item_archer_greenhand_5"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%attack_range"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_base"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"damage_base"	"96"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"30"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_range"	"360"
+			}
+		}
+	}
+
+	"item_archer_efreet_1"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_greenhand"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ID"	"1528"
+		"ItemQuality"	"epic"
+		"ItemCost"	"4972"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_item_archer_greenhand_6"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%attack_range"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_base"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"damage_base"	"192"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"35"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_range"	"420"
+			}
+		}
+	}
+
+	"item_archer_sonata_1"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_4"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ID"	"1529"
+		"ItemQuality"	"secret_shop"
+		"ItemCost"	"10940"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_item_archer_greenhand_7"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%attack_range"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_base"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"damage_base"	"384"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"40"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_range"	"480"
+			}
+		}
+	}
+
+	"item_archer_snowstorm_1"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_9"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ID"	"1530"
+		"ItemQuality"	"secret_shop"
+		"ItemCost"	"24068"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_item_archer_greenhand_8"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%attack_range"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_base"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"damage_base"	"768"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"45"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_range"	"540"
+			}
+		}
+	}
+
+	"item_archer_fairy_dragon_1"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_10"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ID"	"1531"
+		"ItemQuality"	"artifact"
+		"ItemCost"	"52948"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_item_archer_greenhand_9"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%attack_range"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_base"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"damage_base"	"1536"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"50"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_range"	"600"
+			}
+		}
+	}
+
+	// 装备
+	"item_ogre_glove"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_ogre_glove"
+		"ScriptFile"	"item/item_ogre_glove"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1559"
+		"ItemCost"	"1750"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"3"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"health"	"75"
+			}
+		}
+	}
+
+	"item_thunderbolt_symbol"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_thunderbolt_symbol"
+		"ScriptFile"	"item/item_thunderbolt_symbol"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1568"
+		"ItemCost"	"10800"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"30"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agiltle"	"30"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intellig"	"30"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"chance"	"10"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"percentage_per_agi"	"0.8"
+			}
+		}
+	}
+
+	"item_strength_belt"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_strength_belt"
+		"ScriptFile"	"item/item_strength_belt"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1566"
+		"ItemCost"	"1480"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"6"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"health"	"150"
+			}
+		}
+	}
+
+	"item_boots_of_agile"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_boots_of_agile"
+		"ScriptFile"	"item/item_boots_of_agile"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1560"
+		"ItemCost"	"680"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agitle"	"3"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"move_speed"	"40"
+			}
+		}
+	}
+
+	"item_speed_boots"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_speed_boots"
+		"ScriptFile"	"item/item_speed_boots"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1574"
+		"ItemCost"	"32000"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"speed"	"100"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"chance"	"10"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"duration_timer"	"5"
+			}
+		}
+	}
+
+	"item_cloak_of_intellg"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_cloak_of_intellg"
+		"ScriptFile"	"item/item_cloak_of_intellg"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1561"
+		"ItemCost"	"1130"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intellig"	"3"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"magic"	"100"
+			}
+		}
+	}
+
+	"item_nobility_ring"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_nobility_ring"
+		"ScriptFile"	"item/item_nobility_ring"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1562"
+		"ItemCost"	"1600"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack"	"2"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"2"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agitle"	"2"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intellig"	"2"
+			}
+		}
+	}
+
+	"item_attack_claw"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_attack_claw"
+		"ScriptFile"	"item/item_attack_claw"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1563"
+		"ItemCost"	"960"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack"	"6"
+			}
+		}
+	}
+
+	"item_accelerate_glove"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_accelerate_glove"
+		"ScriptFile"	"item/item_accelerate_glove"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1564"
+		"ItemCost"	"1400"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"20"
+			}
+		}
+	}
+
+	"item_contrary_flexure_bow"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_contrary_flexure_bow"
+		"ScriptFile"	"item/item_contrary_flexure_bow"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1575"
+		"ItemCost"	"40000"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"damage_base"	"60"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"30"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"30"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"60"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intellige"	"30"
+			}
+			"06"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"chance"	"10"
+			}
+			"07"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"duration_timer"	"5"
+			}
+		}
+	}
+
+	"item_ariane_flute"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_ariane_flute"
+		"ScriptFile"	"item/item_ariane_flute"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1567"
+		"ItemCost"	"2460"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"aura_radius"	"900"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack"	"50"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"30"
+			}
+		}
+	}
+
+	"item_defense_ring"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_defense_ring"
+		"ScriptFile"	"item/item_defense_ring"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1565"
+		"ItemCost"	"1080"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"armor"	"2"
+			}
+		}
+	}
+
+	"item_escape_from_dagger"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_escape_from_dagger"
+		"ScriptFile"	"item/item_escape_from_dagger"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1569"
+		"ItemCost"	"10000"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"30"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"move_speed"	"20"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"chance"	"10"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"duration_timer"	"10"
+			}
+		}
+	}
+
+	"item_order_war_drum"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_order_war_drum"
+		"ScriptFile"	"item/item_order_war_drum"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1570"
+		"ItemCost"	"10"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"health_point"	"170"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"armor"	"3"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"spell_resistance"	"3"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"chance"	"10"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"duration_timer"	"10"
+			}
+			"06"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"damage_base"	"50"
+			}
+			"07"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"50"
+			}
+		}
+	}
+
+	"item_scorching_hot_sword"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_radiance"
+		"ScriptFile"	"item/item_scorching_hot_sword"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1571"
+		"ItemCost"	"11800"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack"	"24"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_percent"	"1"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"10"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"chance"	"10"
+			}
+		}
+	}
+
+	"item_kazan_of_curse"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_kazan_of_curse"
+		"ScriptFile"	"item/item_kazan_of_curse"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1576"
+		"ItemCost"	"10"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"damage_base"	"40"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_percent"	"5"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_speed"	"100"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"attack_range"	"100"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"chance"	"10"
+			}
+			"06"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"property_damage"	"0.05"
+			}
+			"07"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"radius"	"600"
+			}
+		}
+	}
+
+	"item_net_soul_knife"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_net_soul_knife"
+		"ScriptFile"	"item/item_net_soul_knife"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1577"
+		"ItemCost"	"10"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"damage_base"	"160"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"70"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"40"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intellige"	"40"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"chance"	"10"
+			}
+			"06"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"radius"	"600"
+			}
+			"07"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"property_damage"	"0.2"
+			}
+		}
+	}
+
+	"item_flee_shield"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_flee_shield"
+		"ScriptFile"	"item/item_flee_shield"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1522"
+		"ItemCost"	"30000"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"10"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"health_point"	"230"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"max_health"	"1000"
+			}
+		}
+	}
+
+	"item_shield_guard"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_buckler"
+		"ScriptFile"	"item/item_shield_guard"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityCooldown"	"60"
+		"ID"	"1572"
+		"ItemCost"	"23000"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"armor"	"5"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"spell_resistance"	"5"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"health_point"	"220"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"duration_timer"	"10"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_armor"	"10"
+			}
+			"06"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_spell_resistance"	"10"
+			}
+			"07"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_health_point"	"500"
+			}
+		}
+		"1"	"60"
+	}
+
+	"item_val_of_shield"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_shivas_guard"
+		"ScriptFile"	"item/item_val_of_shield"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"1573"
+		"ItemCost"	"42000"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"armor"	"7"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"spell_resistance"	"7"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_health"	"300"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bonus_mana"	"100"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"blast_radius"	"900"
+			}
+			"06"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"blast_speed"	"10"
+			}
+			"07"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"lower_speed"	"-100"
+			}
+		}
+		"1"	"60"
+	}
+
+	"item_study_passive"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_place_building"
+		"ScriptFile"	"scripts/vscripts/item/item_study_passive.lua"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"AbilityCooldown"	"0"
+		"ID"	"2000"
+		"ItemQuality"	"epic"
+		"ItemCastOnPickup"	"0"
+		"ItemCost"	"5000"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemShareability"	"ITEM_FULLY_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemPermanent"	"0"
+		"ItemInitialCharges"	"1"
+		"ItemStackable"	"1"
+		"SideShop"	"1"
+		"ItemShopTags"	"consumable"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"ability_level"	"1"
+			}
+		}
+	}
+
+	"item_study_passive_lv1"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_study_passive_lv1"
+		"ScriptFile"	"scripts/vscripts/item/item_study_passive.lua"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"AbilityCooldown"	"1"
+		"ID"	"1595"
+		"ItemQuality"	"epic"
+		"ItemCastOnPickup"	"0"
+		"ItemCost"	"1500"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemShareability"	"ITEM_FULLY_SHAREABLE"
+		"ItemPurchasable"	"1"
+		"ItemPermanent"	"0"
+		"ItemInitialCharges"	"1"
+		"ItemStackable"	"1"
+		"SideShop"	"1"
+		"ItemShopTags"	"consumable"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"ability_level"	"1"
+			}
+		}
+	}
+
+	"item_study_passive_lv2"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_study_passive_lv2"
+		"ScriptFile"	"scripts/vscripts/item/item_study_passive.lua"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"AbilityCooldown"	"1"
+		"ID"	"1596"
+		"ItemQuality"	"epic"
+		"ItemCastOnPickup"	"0"
+		"ItemCost"	"4000"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemShareability"	"ITEM_FULLY_SHAREABLE"
+		"ItemPurchasable"	"1"
+		"ItemPermanent"	"0"
+		"ItemInitialCharges"	"1"
+		"ItemStackable"	"1"
+		"SideShop"	"1"
+		"ItemShopTags"	"consumable"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"ability_level"	"2"
+			}
+		}
+	}
+
+	"item_study_passive_lv3"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_study_passive_lv3"
+		"ScriptFile"	"scripts/vscripts/item/item_study_passive.lua"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"AbilityCooldown"	"1"
+		"ID"	"1597"
+		"ItemQuality"	"epic"
+		"ItemCastOnPickup"	"0"
+		"ItemCost"	"10000"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemShareability"	"ITEM_FULLY_SHAREABLE"
+		"ItemPurchasable"	"1"
+		"ItemPermanent"	"0"
+		"ItemInitialCharges"	"1"
+		"ItemStackable"	"1"
+		"SideShop"	"1"
+		"ItemShopTags"	"consumable"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"ability_level"	"3"
+			}
+		}
+	}
+
+	"item_talent_upgrade"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_talent_upgrade"
+		"ScriptFile"	"item/item_talent_upgrade"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"AbilityCooldown"	"0"
+		"ID"	"1589"
+		"ItemQuality"	"artifact"
+		"ItemCastOnPickup"	"0"
+		"ItemCost"	"0"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemShareability"	"ITEM_FULLY_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemPermanent"	"0"
+		"ItemInitialCharges"	"1"
+		"ItemStackable"	"1"
+		"SideShop"	"1"
+		"ItemShopTags"	"consumable"
+		"ItemRequirements"	{}
+	}
+
+	"item_tools_mode"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_fanbei"
+		"ScriptFile"	"item/item_tools_mode"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"AbilityCooldown"	"0"
+		"ID"	"1594"
+		"ItemQuality"	"artifact"
+		"ItemCastOnPickup"	"0"
+		"ItemCost"	"0"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemShareability"	"ITEM_FULLY_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemRequiresCharges"	"0"
+		"ItemInitialCharges"	"1"
+		"ItemStackable"	"1"
+		"SideShop"	"1"
+		"ItemShopTags"	"consumable"
+		"ItemRequirements"	{}
+	}
+
+	"item_ghost_esoterica"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_intellect_book"
+		"ScriptFile"	"item/item_ghost_esoterica"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"ID"	"1510"
+		"ItemCost"	"45000"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bouns_intellect"	"150"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bouns_armor"	"10"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bouns_magical"	"10"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bouns_health"	"500"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"bouns_intellect_multiple"	"0.4"
+			}
+		}
+	}
+
+	"item_zealot_esoterica"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_strength_book"
+		"ScriptFile"	"item/item_zealot_esoterica"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"ID"	"1579"
+		"ItemCost"	"45000"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bouns_strength"	"150"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bouns_armor"	"10"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bouns_magical"	"10"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bouns_health"	"500"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"bouns_strength_multiple"	"0.4"
+			}
+		}
+	}
+
+	"item_pedestrian_esoterica"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_agility_book"
+		"ScriptFile"	"item/item_pedestrian_esoterica"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"ID"	"1580"
+		"ItemCost"	"45000"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bouns_agility"	"150"
+			}
+			"02"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bouns_armor"	"10"
+			}
+			"03"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bouns_magical"	"10"
+			}
+			"04"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"bouns_health"	"500"
+			}
+			"05"
+			{
+				"var_type"	"FIELD_FLOAT"
+				"bouns_agility_multiple"	"0.4"
+			}
+		}
+	}
+
+	"item_custom_lua_test"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_heart"
+		"ScriptFile"	"item/item_custom_lua_test"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"1581"
+		"ItemCost"	"1"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+	}
+
+	// 天使商店7折宝石
+	"item_strength_gemston_8"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_36"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"2100"
+		"ItemCost"	"12000"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_strength_gemstone_8"
+			{
+				"Passive"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%strength"
+				}
+				"IsHidden"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"strength"	"512"
+			}
+		}
+		"CustomShop"	"1"
+		"RequiresCustomShop"	"1"
+		"RequiredCustomShopName"	"angel_shop"
+	}
+
+	// 天使商店7折宝石
+	"item_agility_gemston_8"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_23"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"2101"
+		"ItemCost"	"12000"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_agility_gemstone_8"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%agility"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"agility"	"512"
+			}
+		}
+		"CustomShop"	"1"
+		"RequiresCustomShop"	"1"
+		"RequiredCustomShopName"	"angel_shop"
+	}
+
+	// 天使商店7折宝石
+	"item_intelligece_gemston_8"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_30"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"2102"
+		"ItemCost"	"12000"
+		"ItemRequirements"	{}
+		"Modifiers"
+		{
+			"modifier_intelligece_gemstone_8"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%intelligece"
+				}
+				"Passive"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"	"FIELD_INTEGER"
+				"intelligece"	"512"
+			}
+		}
+		"CustomShop"	"1"
+		"RequiresCustomShop"	"1"
+		"RequiredCustomShopName"	"angel_shop"
+	}
+
+	// =================================================================================================================
+	// Bag of Gold
+	// =================================================================================================================
+	"item_gold_egg"
+	{
+		"BaseClass"	"item_bag_of_gold"
+		"AbilityTextureName"	"egg"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityCastPoint"	"0.0"
+		// Stats
+		// -------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"	"100"
+		"ItemQuality"	"consumable"
+		// Item Info
+		// -------------------------------------------------------------------------------------------------------------
+		"ItemCost"	"0"
+		"ItemShareability"	"ITEM_FULLY_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemKillable"	"0"
+		"ItemPermanent"	"0"
+		"ItemInitialCharges"	"1"
+		"ItemStackable"	"1"
+		"ItemShopTags"	"consumable"
+		"ItemRequirements"	{}
+		// "Model"	"models/props_gameplay/gold_bag.vmdl"
+		"Model"	"models/items/phoenix/ultimate/blazing_wing_blazing_egg/blazing_wing_blazing_egg.vmdl"
+		// General
+		// -------------------------------------------------------------------------------------------------------------
+		"AbilityName"	"item_bag_of_gold"
+	}
+
+	"item_blood_product"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_net_soul_knife"
+		"ScriptFile"	"item/item_blood_product"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1582"
+		"ItemCost"	"10"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+	}
+
+	"item_light_envoy"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_contrary_flexure_bow"
+		"ScriptFile"	"item/item_light_envoy"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1583"
+		"ItemCost"	"10"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+	}
+
+	"item_tpscroll"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_xianjing1"
+		"ScriptFile"	"item/item_tpscroll"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityCooldown"	"0.1"
+		"AbilityManaCost"	"0"
+		"ID"	"1590"
+		"ItemCost"	"0"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+	}
+
+	"item_series_s1_t1_hand"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_series_s1_t1_hand"
+		"ScriptFile"	"item/series/item_series_s1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"1591"
+		"ItemCost"	"0"
+		"ItemSellable"	"0"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemRequirements"	{}
+		"position"	"hand"
+	}
+
+	"item_series_s1_t2_hand"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_series_s1_t2_hand"
+		"ScriptFile"	"item/series/item_series_s1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"1600"
+		"ItemCost"	"0"
+		"ItemSellable"	"0"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemRequirements"	{}
+		"position"	"hand"
+	}
+
+	"item_series_s1_t3_hand"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_series_s1_t3_hand"
+		"ScriptFile"	"item/series/item_series_s1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"1603"
+		"ItemCost"	"0"
+		"ItemSellable"	"0"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemRequirements"	{}
+		"position"	"hand"
+	}
+
+	"item_series_s1_t1_chest"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_series_s1_t1_chest"
+		"ScriptFile"	"item/series/item_series_s1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"1592"
+		"ItemCost"	"0"
+		"ItemSellable"	"0"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemRequirements"	{}
+		"position"	"chest"
+	}
+
+	"item_series_s1_t2_chest"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_series_s1_t2_chest"
+		"ScriptFile"	"item/series/item_series_s1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"1601"
+		"ItemCost"	"0"
+		"ItemSellable"	"0"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemRequirements"	{}
+		"position"	"chest"
+	}
+
+	"item_series_s1_t3_chest"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_series_s1_t3_chest"
+		"ScriptFile"	"item/series/item_series_s1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"1604"
+		"ItemCost"	"0"
+		"ItemSellable"	"0"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemRequirements"	{}
+		"position"	"chest"
+	}
+
+	"item_series_s1_t1_foot"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_series_s1_t1_foot"
+		"ScriptFile"	"item/series/item_series_s1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"1593"
+		"ItemCost"	"0"
+		"ItemSellable"	"0"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemRequirements"	{}
+		"position"	"foot"
+	}
+
+	"item_series_s1_t1_trousers"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_series_s1_t1_trousers"
+		"ScriptFile"	"item/series/item_series_s1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"1606"
+		"ItemCost"	"0"
+		"ItemSellable"	"0"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemRequirements"	{}
+		"position"	"trousers"
+	}
+
+	"item_series_s1_t2_trousers"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_series_s1_t2_trousers"
+		"ScriptFile"	"item/series/item_series_s1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"1607"
+		"ItemCost"	"0"
+		"ItemSellable"	"0"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemRequirements"	{}
+		"position"	"trousers"
+	}
+
+	"item_series_s1_t3_trousers"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_series_s1_t3_trousers"
+		"ScriptFile"	"item/series/item_series_s1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"1608"
+		"ItemCost"	"0"
+		"ItemSellable"	"0"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemRequirements"	{}
+		"position"	"trousers"
+	}
+
+	"item_series_s1_t2_foot"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_series_s1_t2_foot"
+		"ScriptFile"	"item/series/item_series_s1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"1602"
+		"ItemCost"	"0"
+		"ItemSellable"	"0"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemRequirements"	{}
+		"position"	"foot"
+	}
+
+	"item_series_s1_t3_foot"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_series_s1_t3_foot"
+		"ScriptFile"	"item/series/item_series_s1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"ID"	"1605"
+		"ItemCost"	"0"
+		"ItemSellable"	"0"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+		"position"	"foot"
+	}
+
+	"item_gemston_null"
+	{
+		"BaseClass"	"item_datadriven"
+		"AbilityTextureName"	"item_gemston_null"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ID"	"1598"
+		"ItemPurchasable"	"0"
+		"ItemRequirements"	{}
+	}
+}

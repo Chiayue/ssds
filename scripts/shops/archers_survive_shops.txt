@@ -1,0 +1,108 @@
+"dota_shops"
+{
+
+    "custom"
+	{
+		"angel_shop"
+		{
+			"1"
+			{
+				"item"  "item_study_passive" //古代石板
+				"item"  "item_strength_gemston_8" //天使商店7折宝石
+				"item"  "item_agility_gemston_8" //天使商店7折宝石
+				"item"  "item_intelligece_gemston_8" //天使商店7折宝石
+			}
+			"2"
+			{
+			}
+		}
+	}
+    
+    "strength_gemstone"
+    {
+    
+    }
+	"attributes"
+	{
+
+    	"item" "item_strength_gemstone_3"    //力量宝石
+	    "item" "item_strength_gemstone_4"    //力量宝石
+	    "item" "item_strength_gemstone_5"    //力量宝石
+	    "item" "item_strength_gemstone_6"    //力量宝石
+    	"item" "item_strength_gemstone_7"    //力量宝石
+    	"item" "item_strength_gemstone_8"    //力量宝石
+
+
+    	"item" "item_agility_gemstone_3"     //敏捷宝石
+    	"item" "item_agility_gemstone_4"     //敏捷宝石
+    	"item" "item_agility_gemstone_5"     //敏捷宝石
+    	"item" "item_agility_gemstone_6"     //敏捷宝石
+    	"item" "item_agility_gemstone_7"     //敏捷宝石
+    	"item" "item_agility_gemstone_8"     //敏捷宝石
+
+
+
+		
+	}
+
+	"weapons_armor"
+	{
+        "item" "item_intelligece_gemstone_3" //智力宝石
+    	"item" "item_intelligece_gemstone_4" //智力宝石
+    	"item" "item_intelligece_gemstone_5" //智力宝石
+    	"item" "item_intelligece_gemstone_6" //智力宝石
+    	"item" "item_intelligece_gemstone_7" //智力宝石
+    	"item" "item_intelligece_gemstone_8" //智力宝石
+	}
+	
+	"misc"
+	{
+        //"item" "item_study_passive_lv1"
+        //"item" "item_study_passive_lv2"
+        "item" "item_study_passive_lv3"
+        "item" "item_gerenbaoWu_book" //个人宝物书
+	}   
+	
+	
+	// Level 1 - Green Recipes
+	"basics"
+	{
+	}
+
+	// Level 2 - Blue Recipes
+	"support"
+	{
+	}
+	
+	"magics"
+	{
+	}
+	
+	// Level 3 - Purple Recipes
+	"defense"
+	{
+	}
+	
+	"weapons"
+	{
+	}
+	
+	// Level 4 - Orange / Orb / Artifacts
+	"artifacts"
+	{
+	}
+
+	"sideshop1"
+	{	
+	}
+
+	"sideshop2"
+	{	
+	}
+	
+	"secretshop"
+	{
+		// 切记卷轴后缀名 一定要与合成的物品名字一样  item_recipe_ + 合成物品的名字
+		//"item"  "item_study_passive" //古代石板
+	}
+}

@@ -1,0 +1,8 @@
+archers_survive_ice
+{
+	material materials/overviews/archers_survive_ice.vmat
+	pos_x -6438
+	pos_y 6144
+	scale 12.000
+}
+
