@@ -2,4 +2,8 @@
 {
     "CHAPTER7"   "chapter7"
     "CHAPTER10"   "chapter10"
+    "CHAPTER20"   "chapter20"
+    "CHAPTER30"   "chapter30"
+    "CHAPTER40"   "chapter40"
+    "CHAPTER50"   "chapter50"
 }

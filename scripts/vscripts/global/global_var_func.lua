@@ -42,7 +42,7 @@ TALENT_LIST = {
     -- "archon_passive_speed",
     -- "archon_passive_interspace",
     -- "archon_passive_shuttle",
-    -- "archon_passive_greed"
+    "archon_passive_greed"
 }
 
 ITEM_CUSTOM = LoadKeyValues("scripts/npc/npc_items_custom.txt")
@@ -64,7 +64,7 @@ for n=0,5 do
 		fdamage_d = 0, -- 最终伤害乘区d
 		fdamage_e = 0, -- 最终伤害乘区e
 		fdamage_f = 0, -- 最终伤害乘区f
-
+		fdamage_g = 0, -- 最终伤害乘区g
 		da_buff = 0,
 		da_debuff = 0,
 		da_baolie = 0,
@@ -78,9 +78,9 @@ end
 
 
 -- <==============================全局变量================================>
---游戏模式分类：   普通(默认)："common"    挂机："hook"      无尽："endless"     
+--游戏模式分类：   普通(默认)："common"    挂机："hook"      无尽："endless"     深渊："endless"
 GlobalVarFunc.game_mode =  "common"
---游戏模式选择:-2表示挂机模式，0表示序章，1表示第一章，2表示第二章........1000表示无尽模式, 1001表示自闭模式
+--游戏模式选择:-2 挂机，0 序章，1 第一章，2 第二章........1000 无尽,  1001 自闭， 1002 深渊
 GlobalVarFunc.game_type = 0
 --记录游戏玩家数
 GlobalVarFunc.playersNum = 0
@@ -215,4 +215,27 @@ function GlobalVarFunc:OnGameOverState(num)
     local game_info = CustomNetTables:GetTableValue( "gameInfo", "gameInfo" )
     game_info["gameOver_state"] = num
     CustomNetTables:SetTableValue( "gameInfo","gameInfo", game_info)
+end
+
+--贪婪加移动速技能
+function GlobalVarFunc:_addMoveSpeedAbility(unit)
+    local Ability_move_speed = unit:AddAbility("create_monster_move_speed")
+    Ability_move_speed:SetLevel(1)
+end
+
+--每周自闭模式玩法改变
+function GlobalVarFunc:OnWeeklyGameChange(unit)
+
+	if GlobalVarFunc.MonsterWave % 2 == 0 then
+		unit:AddNewModifier( unit, nil, "modifier_autistic_week2_emeny_a", {} )
+	else
+		unit:AddNewModifier( unit, nil, "modifier_autistic_week2_emeny_b", {} )
+	end
+
+	-- --增加移动速度
+	-- local newAbility = unit:AddAbility("ability_zibi")
+	-- newAbility:SetLevel(1)
+	
+	-- --设置该生物每级增加的控制抗性 
+	-- unit:SetDisableResistanceGain(100)
 end

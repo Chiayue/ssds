@@ -8,8 +8,6 @@ if modifier_gem_die_venom == nil then
 	modifier_gem_die_venom = class({})
 end
 
---local timer_built_cooldown = true -- 内置冷却时间
-
 function modifier_gem_die_venom:GetTexture()
 	return "die_venom"
 end
@@ -27,15 +25,22 @@ function modifier_gem_die_venom:RemoveOnDeath()
 end
 
 function modifier_gem_die_venom:OnCreated()
-	--if IsServer() then 
-		self:StartIntervalThink(15)
+	if IsServer() then 
+		self:StartIntervalThink(1)
 		self.timer_built_cooldown = true
-	--end
+		self.timer_count = 0
+	end
 end
 
 function modifier_gem_die_venom:OnIntervalThink( params )
-	--if not IsServer() then return end
-	self.timer_built_cooldown = true
+	if not IsServer() then return end -- 设置内置冷却时间 15 秒
+	
+	if self.timer_built_cooldown == false and self.timer_count == 15 then 
+		self.timer_built_cooldown = true
+		self.timer_count = 0
+	elseif self.timer_built_cooldown == false then 
+		self.timer_count = self.timer_count + 1
+	end
 end
 
 function modifier_gem_die_venom:DeclareFunctions( ... )
@@ -51,7 +56,10 @@ function modifier_gem_die_venom:OnAttackLanded( params )
 	if params.attacker ~= self:GetParent() then
 		return 0
 	end
-
+	-- 不会同时触发两次效果
+    if self.timer_built_cooldown == false then 
+    	return 0
+    end
 	local hCaster = self:GetCaster()
 	local hTarget = params.target
 	local hTarget_pos = hTarget:GetOrigin()
@@ -65,11 +73,6 @@ function modifier_gem_die_venom:OnAttackLanded( params )
 		return 0
 	end
 
-	-- 不会同时触发两次效果
-    if self.timer_built_cooldown == false then 
-    	return
-    end
-    self.timer_built_cooldown = false
 	-- 范围寻找
 		local enemies = FindUnitsInRadius(
 			hCaster:GetTeamNumber(), 
@@ -96,6 +99,7 @@ function modifier_gem_die_venom:OnAttackLanded( params )
 
 	-- 新建一个与NPC不相关的modifier 来实现伤害和减速的效果
 	CreateModifierThinker(hCaster, self:GetAbility(), "modifier_archon_passive_die_venom_debuff", {duration = duration}, hTarget_pos, hCaster:GetTeamNumber(), false)
+	self.timer_built_cooldown = false
 end
 
 ---------------------------------------毒液BUFF---------------------------------------

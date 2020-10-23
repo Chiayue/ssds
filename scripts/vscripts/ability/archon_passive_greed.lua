@@ -111,11 +111,18 @@ function modifier_archon_passive_greed:OnAttackLanded( params )
 		0, 0, false 
 	)
 
-	--local nPlayerID = hCaster:GetPlayerID()
-	local greed_nuber = CustomNetTables:GetTableValue( "common", "greedy_level" )
-	local nGreedLevel = greed_nuber.greedy_level
+	local nPlayerID = hCaster:GetPlayerID()
+	local nGreedLevel = 0
+	local greed_nuber = CustomNetTables:GetTableValue( "gameInfo", "challenge" )
+	for k, v in pairs(greed_nuber) do
+		if tonumber(k) == nPlayerID then
+			--print("args")
+            nGreedLevel = v.DuLiuNum
+        end
+	end
+	
 	--print("nGreedLevel---------->", nGreedLevel)
-	local attack_speed_damage = ( 7 + nGreedLevel ) * ( 7 + nGreedLevel ) * ( 7 + nGreedLevel ) * damage_coefficient
+	local attack_speed_damage = self:GetCaster():GetIntellect() * ( 10 + nGreedLevel ) * damage_coefficient
 	--print("attack_speed_damage===========>", attack_speed_damage)
 	for _,enemy in pairs(enemies) do
 		if enemy ~= nil then

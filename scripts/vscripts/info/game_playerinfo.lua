@@ -135,7 +135,14 @@ function game_playerinfo:update_playerInfo()
                         
                         --每周自闭模式地图经验奖励
                         self:OnWeekly_wavesReward(PlayerID)
+                        --奖励活动币
+                        self:OnRewardActivityCoin(PlayerID)
                     end
+
+                    --if GlobalVarFunc.game_type==1002 then
+                        -- 奖励深渊票
+                        self:OnRewardAbyssTickets(PlayerID)
+                    --end
 
                     --无尽装备存档
                     Archive:SaveServerEqui(PlayerID)
@@ -165,6 +172,28 @@ function game_playerinfo:OnWeekly_wavesReward(nPlayerID)
     end
 end
 
+function game_playerinfo:OnRewardActivityCoin(nPlayerID)
+    if GlobalVarFunc.MonsterWave >= 100 then
+        local activityCoin = (math.floor(GlobalVarFunc.MonsterWave / 100)) * 10
+        if activityCoin > 30 then 
+            activityCoin = 30
+        end
+        local tip = "每周自闭模式奖励"..activityCoin.."活动币"
+        Store:AddCustomGoodsValue(nPlayerID,"activity_coin",activityCoin,tip,true)
+    end
+end
+
+function game_playerinfo:OnRewardAbyssTickets(nPlayerID)
+    if GlobalVarFunc.MonsterWave >= 200 then
+        local randomNum = RandomInt(1,100)
+        if randomNum <= 3 then
+            local abyssTickets = 1
+            local tip = "深渊模式奖励"..abyssTickets.."张深渊票"
+            Store:AddCustomGoodsValue(nPlayerID,"abyss_tickets",abyssTickets,tip,false)
+        end
+    end
+end
+
 --箭魂奖励结算
 function game_playerinfo:OnArrowSoulReward(nPlayerID)
     local CDOTAPlayer = PlayerResource:GetPlayer(nPlayerID)
@@ -190,16 +219,16 @@ function game_playerinfo:OnArrowSoulReward(nPlayerID)
         end
     else
         if GlobalVarFunc.isClearance then 
-            if GlobalVarFunc.game_type > 9 then
-                nBaseArrowSoulReward = 200
+            if GlobalVarFunc.game_type >= 10 then
+                nBaseArrowSoulReward = 150 + 5 * GlobalVarFunc.game_type
             else
-                nBaseArrowSoulReward = math.floor( (GlobalVarFunc.game_type + 1) * 20  )
+                nBaseArrowSoulReward = (GlobalVarFunc.game_type + 1) * 20
             end
         else
             nBaseArrowSoulReward = GlobalVarFunc.MonsterWave
         end
     end
-    local nArrowSoulNum = nBaseArrowSoulReward * nReward
+    local nArrowSoulNum = math.floor(nBaseArrowSoulReward * nReward)
     local nSteamID = PlayerResource:GetSteamAccountID(nPlayerID)
     return {steam_id = nSteamID, quantity = nArrowSoulNum }
 end

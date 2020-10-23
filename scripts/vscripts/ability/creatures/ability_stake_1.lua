@@ -13,7 +13,8 @@ function modifier_ability_stake_1:DeclareFunctions()
 	return {
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
-		MODIFIER_PROPERTY_MIN_HEALTH
+		MODIFIER_PROPERTY_MIN_HEALTH,
+		MODIFIER_EVENT_ON_DEATH
 	} 
 end
 
@@ -33,8 +34,17 @@ function modifier_ability_stake_1:GetModifierHealthRegenPercentage()
 	end
 end
 
+-- function modifier_ability_stake_1:OnDeath( args)
+-- 	if self:GetParent() == args.unit then
+-- 		Timer(1,function()
+-- 			self:GetParent():RespawnUnit()
+-- 		end)
+-- 	end
+-- end
+
 function modifier_ability_stake_1:GetMinHealth()
 	return 1
 end
+
 if modifier_ability_stake_1_disable == nil then modifier_ability_stake_1_disable ={} end
 function modifier_ability_stake_1_disable:IsHidden() return true end

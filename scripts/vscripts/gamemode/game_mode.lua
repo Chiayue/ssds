@@ -27,6 +27,9 @@ end
 function GameMode:_OnPlayerTeam(event)
     --显示游戏模式界面
     CustomGameEventManager:Send_ServerToAllClients("show_game_mode_panel",{})
+
+    --测试模式自动开放每周自闭模式和深渊
+    GameMode:OnAutoOpenAutismAndAbyss()
 end
 
 function GameMode:UpdateGameInfoNetTable(data)
@@ -62,4 +65,11 @@ end
 --统计玩家数量
 function GameMode:OnPlayersNum()
    GlobalVarFunc.playersNum = PlayerResource:GetPlayerCount()
+end
+
+--测试模式自动开放每周自闭模式和深渊
+function GameMode:OnAutoOpenAutismAndAbyss()
+    if MAP_CODE == "archers_survive_test" then
+        CustomGameEventManager:Send_ServerToAllClients("OpenAutismAndAbyss",{})
+    end
 end

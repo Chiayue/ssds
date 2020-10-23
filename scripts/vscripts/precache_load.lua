@@ -41,7 +41,7 @@ return {
 		"particles/diy_particles/ambient12.vpcf",
 		"particles/econ/items/templar_assassin/templar_assassin_focal/ta_focal_base_attack.vpcf",
 		"particles/radiant_fx2/fs_altar_ascension.vpcf",
-		"models/npc/shinai/shinai.vmdl",
+		"particles/diy_particles/flandre_diy_skill.vpcf"
 	},
 
 	soundfile = {
@@ -77,6 +77,7 @@ return {
 		"models/npc/d9/d9.vmdl",
 		"models/heroes/troll_warlord/leimi.vmdl",
 		"models/npc/luoli/luoli.vmdl",
+		"models/npc/shinai/shinai.vmdl",
 	}
 
 }

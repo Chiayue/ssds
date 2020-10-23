@@ -5,8 +5,6 @@ if modifier_gem_void_lock == nil then
 	modifier_gem_void_lock = class({})
 end
 
---local timer_built_cooldown = true -- 内置冷却时间
-
 function modifier_gem_void_lock:IsHidden()
 	return false
 end
@@ -24,15 +22,22 @@ function modifier_gem_void_lock:GetTexture()
 end
 
 function modifier_gem_void_lock:OnCreated()
-	--if IsServer() then 
-		self:StartIntervalThink(15)
+	if IsServer() then 
+		self:StartIntervalThink(1)
 		self.timer_built_cooldown = true
-	--end
+		self.timer_count = 0
+	end
 end
 
 function modifier_gem_void_lock:OnIntervalThink( params )
-	--if not IsServer() then return end
-	self.timer_built_cooldown = true
+	if not IsServer() then return end 
+	
+	if self.timer_built_cooldown == false and self.timer_count == 15 then 
+		self.timer_built_cooldown = true
+		self.timer_count = 0
+	elseif self.timer_built_cooldown == false then 
+		self.timer_count = self.timer_count + 1
+	end
 end
 
 function modifier_gem_void_lock:DeclareFunctions( ... )
@@ -47,7 +52,10 @@ function modifier_gem_void_lock:OnAttackLanded( params )
 	if params.attacker ~= self:GetParent() then
 		return 0
 	end
-
+	-- 不会同时触发两次效果
+    if self.timer_built_cooldown == false then 
+    	return 0
+    end
 	local hCaster = self:GetCaster()
 	local hTarget = params.target
 	local duration = 3
@@ -59,11 +67,6 @@ function modifier_gem_void_lock:OnAttackLanded( params )
 		return 0
 	end
 
-	-- 不会同时触发两次效果
-    if self.timer_built_cooldown == false then 
-    	return
-    end
-    self.timer_built_cooldown = false
 	-- 创建效果
 	local EffectName = "particles/test_particles/void_chronosphere/hero_faceless_void_2faceless_void_chronosphere.vpcf"
 	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ROOTBONE_FOLLOW, hTarget)
@@ -103,6 +106,7 @@ function modifier_gem_void_lock:OnAttackLanded( params )
 			
 		end
 	end
+	self.timer_built_cooldown = false
 end
 
 ---------------------------------------眩晕BUFF---------------------------------------

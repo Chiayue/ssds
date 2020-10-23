@@ -60,3 +60,7 @@ LinkLuaModifier("modifier_gem_yezhendebuyaole", "ability/modifier/modifier_gem_y
 
 --箭魂修炼
 LinkLuaModifier("modifier_arrowSoul_meditation", "ability/modifier/modifier_arrowSoul_meditation", LUA_MODIFIER_MOTION_NONE)
+--贪婪加移动速技能
+LinkLuaModifier( "modifier_create_monster_move_speed", "ability/creatures/create_monster_move_speed.lua", LUA_MODIFIER_MOTION_NONE )
+-- 怪物释放技能AI
+LinkLuaModifier("modifier_cooldown_ai", "ability/modifier/modifier_cooldown_ai", LUA_MODIFIER_MOTION_NONE)

@@ -31,7 +31,7 @@ end
 function MonsterNeutral:OnCreateNeutralBoss()
     local name = "npc_dota_creature_zhongli_monster"
     local position = self:FindPathablePositionNearby()
-    local Boss = CreateUnitByName(name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+    local Boss = CreateUnitByNameInPool(name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
     self:setMonsterBaseInformation(Boss)
 
     GlobalVarFunc.neutralMosterNum = GlobalVarFunc.neutralMosterNum + 1
@@ -79,16 +79,14 @@ function MonsterNeutral:OnCreateMonster(Vec)
     if not path_ok then
         position = Vector(1000, 0, 0)
     end
-    local monster = CreateUnitByName(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+    local monster = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
     --monster:SetRenderColor(0, 0, 0) 
 
     if GlobalVarFunc.game_type == 1001 then
-        --增加移动速度
-        monster:AddAbility("ability_zibi")
-        --设置该生物每级增加的控制抗性 
-        monster:SetDisableResistanceGain(100)
+        GlobalVarFunc:OnWeeklyGameChange(monster)
     end
 
+    GlobalVarFunc:_addMoveSpeedAbility(monster)
     self:setMonsterBaseInformation(monster)
 
 end
@@ -124,7 +122,7 @@ end
 
 --野怪攻击力
 function MonsterNeutral:_AttackDamage()
-    local attack = ((spawner_config.mosterWave-1)*(spawner_config.mosterWave-1)*20+30)*(GlobalVarFunc.duliuLevel*0.05 + 1) * GlobalVarFunc.MonsterViolent
+    local attack = ((spawner_config.mosterWave-1)*(spawner_config.mosterWave-1)*20+30)*(GlobalVarFunc.duliuLevel*0.03 + 1) * GlobalVarFunc.MonsterViolent
     if GlobalVarFunc.game_mode == "common" then
         return attack * (GlobalVarFunc.game_type*0.3+0.5)
     else

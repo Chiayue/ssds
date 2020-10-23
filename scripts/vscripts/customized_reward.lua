@@ -30,6 +30,12 @@ local hRewardTable = {
 				["particles/diy_particles/ambient9.vpcf"] = PATTACH_ABSORIGIN_FOLLOW
 			},
 			["model"] = "models/heroes/troll_warlord/leimi.vmdl"
+		},
+		["npc_dota_hero_drow_ranger"] = {
+			["skin_id"] = 3,
+			["particle"] = {
+				["particles/diy_particles/ambient9.vpcf"] = PATTACH_ABSORIGIN_FOLLOW
+			},
 		}
 		
 	},
@@ -60,6 +66,12 @@ local hRewardTable = {
 			["model_scale"] = 1.4,
 			["particle"] = {
 				["particles/diy_particles/shinai_ambient.vpcf"] = PATTACH_ABSORIGIN_FOLLOW
+			},
+		},
+		["npc_dota_hero_drow_ranger"] = {
+			["skin_id"] = 3,
+			["particle"] = {
+				["particles/diy_particles/ambient9.vpcf"] = PATTACH_ABSORIGIN_FOLLOW
 			},
 		}
 		

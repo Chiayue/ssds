@@ -19,9 +19,9 @@ function archon_blink:GetCooldown()
 	local nDeputyBlink = hCaster:GetModifierStackCount("modifier_series_reward_deputy_blink", hCaster )
 	local nBaseCD = 6
 	if nDeputyBlink >= 2 then nBaseCD = 5 end
-	if hCaster:HasModifier("modifier_autistic_every_week") then
-		return 3
-	end
+	-- if hCaster:HasModifier("modifier_autistic_every_week") then
+	-- 	return 3
+	-- end
 	return nBaseCD
 
 end

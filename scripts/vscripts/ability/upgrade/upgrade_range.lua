@@ -45,12 +45,7 @@ function modifier_Upgrade_Range:OnIntervalThink()
 	if IsServer() then
 		--  射程来自 武器，天赋
 		local nBaseRange = self:GetCaster():GetBaseAttackRange()
-		local nBowRange = 0
-		local hBow = self:GetCaster():FindModifierByName("modifier_item_archer_bow")
-		if hBow ~= nil then
-			nBowRange = hBow:GetModifierAttackRangeBonus()
-		end
-		local nRangeTotal = 500 + nBowRange + nBaseRange
+		local nRangeTotal =  nBaseRange + GetUnitRange(self:GetCaster())
 		self.max_bonus = nRangeTotal * 0.5
 	end
 end

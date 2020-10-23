@@ -196,6 +196,9 @@ function Player_Data:InitModifier( hHero )
         hAbility = hHero:AddAbility("upgrade_ability_core")
         hAbility:SetLevel(1)
     end
+    -- 团队增益BUFF
+    hHero:AddNewModifier(hHero, hAbility, "modifier_team_buff", {})
+    hHero:AddNewModifier(hHero, hAbility, "modifier_select_skin_time", { duration = 15})
     for _,sAbilityName in pairs(TECH_UPGRADE_LIST) do
         local sModifier = "modifier_"..sAbilityName
         local hModifier = hHero:AddNewModifier(hHero, hAbility, sModifier, {}) 
@@ -352,14 +355,12 @@ function Player_Data:OnEntityKilled(event)
             local nPunish = hScaven:GetSpecialValueFor("punish_killbonus")
             PlayerResource:SpendGold(P,nPunish,DOTA_ModifyGold_AbilityCost)
         end
-
-        -- 击杀单位移除
+        -- 击杀单位处理
+        -- table.insert(tUnitPools,hKilled)
         Timer(1.6,function()
-            hKilled:RemoveSelf() 
-        	--UTIL_Remove(hKilled)
-    	end)
-        
-
+            -- hKilled:RemoveSelf() 
+            UTIL_Remove(hKilled)
+        end)
     end
 end
 

@@ -34,7 +34,7 @@ function Filter:DamageFilter( params )
 			* ( 1 + hAttr["fdamage_d"] ) 
 			* ( 1 + hAttr["fdamage_e"] )
 			* ( 1 + hAttr["fdamage_f"] )
-
+			* ( 1 + hAttr["fdamage_g"] )
 		--print(nFinal)
 		params.damage = params.damage * nFinal
 		-- 寒冷3件套
@@ -49,8 +49,13 @@ function Filter:DamageFilter( params )
 				params.damage = params.damage * (1 + nDebuffDamage )
 			end
 		end
+		-- print(params.damage)
 		if iDamageType == 1 then
-			-- 物理伤害DEBUFF
+			-- 自闭减伤Or加伤
+			if hTarget:HasModifier("modifier_autistic_week2_emeny_a") then params.damage = params.damage * 0.2 end
+			if hTarget:HasModifier("modifier_autistic_week2_emeny_b") then params.damage = params.damage * 2 end
+			--print(params.damage)
+			-------------------
 			local hDebuff = hTarget:FindModifierByName("modifier_archon_passive_dark_debuff2" )
 			local nDebuffStack = 0
 			if hDebuff ~= nil then
@@ -86,6 +91,11 @@ function Filter:DamageFilter( params )
 			end
 		end
 		if iDamageType == 2 then
+			-- 自闭减伤Or加伤
+			if hTarget:HasModifier("modifier_autistic_week2_emeny_a") then params.damage = params.damage * 2 end
+			if hTarget:HasModifier("modifier_autistic_week2_emeny_b") then params.damage = params.damage * 0.2 end
+			-- print(params.damage)
+			-------------------
 			-- 魔法伤害DEBUFF
 			--print(params.damage)
 			local hDebuff = hTarget:FindModifierByName("modifier_archon_passive_fire_debuff" )

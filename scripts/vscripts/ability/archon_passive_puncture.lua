@@ -23,6 +23,7 @@ end
 function modifier_archon_passive_puncture:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_ATTACK ,
+		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
 	}
 	return funcs
 end
@@ -45,16 +46,8 @@ function modifier_archon_passive_puncture:OnAttack(params)
 	-- 获取自身攻击范围
 	local nBowRange = 0
 	local nTechRange = 0
-	local nBaseRange = self:GetCaster():GetBaseAttackRange() + 500
-	local hBow = self:GetCaster():FindModifierByName("modifier_item_archer_bow")
-	if hBow ~= nil then
-		nBowRange = hBow:GetModifierAttackRangeBonus()
-	end
-	local hTeahRange = self:GetCaster():FindModifierByName("modifier_Upgrade_Range")
-	if hTeahRange ~= nil then
-		nTechRange = hTeahRange:GetModifierAttackRangeBonus()
-	end
-	local nAllRange = nBaseRange + nBowRange + nTechRange
+	local nBaseRange = self:GetCaster():GetBaseAttackRange()
+	local nAllRange = nBaseRange + GetUnitRange(self:GetCaster())
 	--self.puncture_distance = self:GetAbility():GetSpecialValueFor( "puncture_distance" )
 	self.puncture_distance = nAllRange
 	self.puncture_speed = self:GetAbility():GetSpecialValueFor( "puncture_speed" )
@@ -103,8 +96,20 @@ function modifier_archon_passive_puncture:CreateLinear(vPos)
 		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
 	}
 	ProjectileManager:CreateLinearProjectile( info )
-
 end
+
+function modifier_archon_passive_puncture:GetModifierBaseAttack_BonusDamage()
+	local nLevel = self:GetAbility():GetLevel()
+	if nLevel >= 5 then
+		return self:GetParent():GetAgility() * 2
+	elseif nLevel >= 2 then
+		return self:GetParent():GetAgility()
+	else
+		return 0
+	end
+	
+end
+
 function archon_passive_puncture:OnProjectileHit( hTarget, vLocation )
 	if hTarget ~= nil and ( not hTarget:IsMagicImmune() ) and ( not hTarget:IsInvulnerable() ) then
 		-- self.nHitCount = self.nHitCount + 1

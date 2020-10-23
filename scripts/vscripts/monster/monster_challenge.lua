@@ -82,10 +82,10 @@ function MonsterChallenge:OnRewardGold(nPlayerID)
 
     local hHero = PlayerResource:GetSelectedHeroEntity(nPlayerID)
     if hHero ~= nil then 
-        local gold = 1200 + 200 * hHero:GetLevel()
+        local gold = 1800 + 300 * hHero:GetLevel()
         otherGold = gold * 0.2
         PlayerResource:ModifyGold(nPlayerID,gold,true,DOTA_ModifyGold_PurchaseItem)
-        local wood = 100 + 10 * hHero:GetLevel()
+        local wood = 150 + 15 * hHero:GetLevel()
         otherWood = wood * 0.2
         Player_Data:AddPoint(nPlayerID,wood)
         local tip = "发起贪婪获得了"..gold.."金币和"..wood.."木头！"

@@ -11,7 +11,7 @@ end
 
 function do_ability()
     local unit = thisEntity
-    local ability_heal = unit:FindAbilityByName("the_injury")
+    local ability_heal = unit:FindAbilityByName("ability_the_injury")
     --local ability_fuhuo = unit:FindAbilityByName("tianshi_fuhuo")
     if unit:IsAlive() then
         if ability_heal:IsFullyCastable() then

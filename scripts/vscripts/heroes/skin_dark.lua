@@ -27,6 +27,12 @@ return {
 			{model = "models/items/drow/frostfeather_huntress_head/frostfeather_huntress_head.vmdl", particle_systems = {}},
 			{model = "models/items/drow/frostfeather_huntress_misc/frostfeather_huntress_misc.vmdl", particle_systems = {}},
 		},
+	},
 
+	{	-- 3号
+		model = "models/npc/flandre/flandre.vmdl",
+		attack_projectile = "particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf",
+		model_scale = 1.2,
+		wearables = {},
 	},
 }

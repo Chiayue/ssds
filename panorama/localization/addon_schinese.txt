@@ -2,4 +2,8 @@
 {
     "CHAPTER7"   "第7章"
     "CHAPTER10"   "第10章"
+    "CHAPTER20"   "第20章"
+    "CHAPTER30"   "第30章"
+    "CHAPTER40"   "第40章"
+    "CHAPTER50"   "第50章"
 }

@@ -78,7 +78,7 @@ function item_baowu_book_dark_wings:OnSpellStart( event )
 		if hHero.BaowuSp == nil then
 			hHero.BaowuSp = 0
 		end
-		if hHero.BaowuSp < 4 then
+		if hHero.BaowuSp < 6 then
 			hHero.BaowuSp = hHero.BaowuSp + 1
 			self:SpendCharge()
 

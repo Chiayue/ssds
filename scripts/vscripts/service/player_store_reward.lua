@@ -122,21 +122,22 @@ function PlayerStoreReward:Set(hHero,hCurrentStore)
 				else
 					Archive:EditPlayerProfile(nPlayerID,sToggleKey,1)
 				end
-			-- elseif sStoreName == "dark_wings" then
-			-- 	-- 开局获得一个宝物书<br>全属性+7%<br>最终伤害增加5%
-			-- 	local baowu = hHero:AddItemByName("item_baowu_book_dark_wings")
-			-- 	baowu:SetCurrentCharges(1)
-			-- 	Player_Data:AddBasebonus(hHero,DOTA_ATTRIBUTE_STRENGTH,50)
-			-- 	Player_Data:AddBasebonus(hHero,DOTA_ATTRIBUTE_AGILITY,50)
-			-- 	Player_Data:AddBasebonus(hHero,DOTA_ATTRIBUTE_INTELLECT,50)
-			-- 	hHero:AddNewModifier(hHero, hBonusAbility, sModiPrefix..sStoreName, {}) 
-			-- 	if hArchive[sToggleKey] ~= nil then
-			-- 		if hArchive[sToggleKey] == 1 then
-			-- 			hHero:AddNewModifier(hHero, hBonusAbility, sModiPrefix..sStoreName.."_effect", {}) 
-			-- 		end
-			-- 	else
-			-- 		Archive:EditPlayerProfile(nPlayerID,sToggleKey,1)
-			-- 	end
+			elseif sStoreName == "dark_wings" then
+				-- 开局获得一个宝物书<br>全属性+7%<br>最终伤害增加5%
+				local baowu = hHero:AddItemByName("item_baowu_book_dark_wings")
+				baowu:SetCurrentCharges(1)
+				baowu:SetPurchaser(hHero)
+				Player_Data:AddBasebonus(hHero,DOTA_ATTRIBUTE_STRENGTH,50)
+				Player_Data:AddBasebonus(hHero,DOTA_ATTRIBUTE_AGILITY,50)
+				Player_Data:AddBasebonus(hHero,DOTA_ATTRIBUTE_INTELLECT,50)
+				hHero:AddNewModifier(hHero, hBonusAbility, sModiPrefix..sStoreName, {}) 
+				if hArchive[sToggleKey] ~= nil then
+					if hArchive[sToggleKey] == 1 then
+						hHero:AddNewModifier(hHero, hBonusAbility, sModiPrefix..sStoreName.."_effect", {}) 
+					end
+				else
+					Archive:EditPlayerProfile(nPlayerID,sToggleKey,1)
+				end
 			elseif sStoreName == "arrow_infinite" then
 				hHero:AddNewModifier(hHero, hBonusAbility, sModiPrefix..sStoreName, {}) 
 				if hArchive[sToggleKey] ~= nil then
@@ -401,3 +402,13 @@ function modifier_store_reward_golden_dragon_effect:OnDestroy()
 end
 
 ----------- 翅膀 -----------
+if modifier_store_reward_dark_wings  == nil then modifier_store_reward_dark_wings = class(modifier_store_reward) end
+-- 对应特效
+if modifier_store_reward_dark_wings_effect == nil then modifier_store_reward_dark_wings_effect = class(modifier_store_reward_effect) end
+function modifier_store_reward_dark_wings_effect:OnCreated() 
+	self.nFXIndex = ParticleManager:CreateParticle("maps/cavern_assets/particles/cavern_drip_glow.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+end
+
+function modifier_store_reward_dark_wings_effect:OnDestroy() 
+	ParticleManager:DestroyParticle(self.nFXIndex,true)
+end

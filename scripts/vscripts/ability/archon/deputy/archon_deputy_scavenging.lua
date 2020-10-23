@@ -69,7 +69,7 @@ function modifier_archon_deputy_scavenging:RemoveOnDeath()		return false end
 
 function modifier_archon_deputy_scavenging:CheckState()
 	return {
-		[MODIFIER_STATE_INVISIBLE] = (self:GetDuration() <= 0 and not self:GetCaster():HasModifier("modifier_autistic_every_week") ),
+		[MODIFIER_STATE_INVISIBLE] = ( self:GetDuration() <= 0 ),
 		[MODIFIER_STATE_NO_UNIT_COLLISION]	= self:GetDuration() <= 0,
 	}
 end

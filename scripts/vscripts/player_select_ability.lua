@@ -9,7 +9,7 @@ require("heroes/heroes_skin")
 require("item/series/serise_system")
 require("service/arrow_soul_reward")
 require("service/arrow_soul_compensate")
-
+require("autistic/autistic_weeky_2")
 ----- 技能觉醒 等级
 ABILITY_AWAKEN_1 = 2
 ABILITY_AWAKEN_2 = 5
@@ -178,13 +178,14 @@ function Player_Select_Ability:Talent_Selected(args)
 		-- 毒瘤
 		local hGreedy = hNewHero:FindAbilityByName("challenge_greedy")
 		hGreedy:SetLevel(1)
+		if sAbilityName == "archon_passive_greed" then 
+			hGreedy:StartCooldown(1) 
+			Player_Data:Set(nPlayerID,"status","duliu_in_cd",1)
+		end
 		-- 爆裂
 		local hBonusBA = hNewHero:FindAbilityByName("bonus_base_attackspeed")
 		hBonusBA:SetLevel(1)
-		-- 团队增益BUFF
-		hNewHero:AddNewModifier(hNewHero, nil, "modifier_team_buff", {})
-		hNewHero:AddNewModifier(hNewHero, nil, "modifier_select_skin_time", { duration = 15})
-
+		
 	    CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"closed_ability_select",{})
 	    Player_Data():AddPoint(nPlayerID,200)
 	    CustomNetTables:SetTableValue( "player_data", "passive_select", hPassive )
@@ -217,7 +218,14 @@ function Player_Select_Ability:Talent_Selected(args)
 	    CustomizedReward:SetReward( hNewHero )
 	    if MAP_CODE == "archers_survive_test" then
 	    	-- print("IsInToolsMode")
-	    	if IsInToolsMode() then hNewHero:AddItemByName("item_tools_mode") end
+	    	if IsInToolsMode() then 
+	    		hNewHero:AddItemByName("item_tools_mode") 
+	    		-- heroAbility = "ability_tianjue_challenge"
+	    		-- for n=0,3 do 
+	    		-- 	local Ability = hNewHero:AddAbility(heroAbility)
+       --          	Ability:SetLevel(1)
+	    		-- end
+	    	end
 			
 			local baowu2 = hNewHero:AddItemByName("item_baoWu_book")
 			baowu2:SetCurrentCharges(20)
@@ -515,6 +523,10 @@ function Player_Select_Ability:OnThinkTechnology()
 		if pre >= 5 then
 			pre = 0
 		end
+		-- local position = Vector(1000, 0, 0)
+		-- for n=0,9 do 
+		-- 	CreateUnitByNameInPool( "npc_dota_creature_monster_".. RandomInt(1,20), position, true, nil, nil, DOTA_TEAM_BADGUYS)
+		-- end
 	end
 	return 1
 end
@@ -590,11 +602,12 @@ function AttributeCalculation(hHero)
 	if hBow ~= nil then
 		hAttr["fdamage_b"] = (hBow.reward_damage*0.01) or 0
 	end
-	-- 毁灭3件套
-	if hHero:HasAbility("archon_passive_dark") or hHero:HasAbility("archon_passive_rage")  then
+	------------------ 毁灭3件套
+	hAttr["fdamage_g"] = 0
+	if hHero:HasAbility("archon_passive_puncture") or hHero:HasAbility("archon_passive_rage")  then
 		local nRuinStack = hHero:GetModifierStackCount("modifier_series_reward_talent_ruin", hHero )
 		if nRuinStack >= 3 then
-			hAttr["fdamage_b"] = hAttr["fdamage_b"] + 0.2
+			hAttr["fdamage_g"] = hAttr["fdamage_g"] + 0.2
 		end
 	end
 
@@ -695,6 +708,7 @@ function AttributeCalculation(hHero)
 	local nMagicDamage = hHero:GetIntellect() * 0.0008 -- 1W点800% 
 	hAttr["magic_damage"] = nMagicDamage + nFinalDamage
 	-- DeepPrintTable(hAttr)
+	GetUnitRange(hHero)
 end 
 
 

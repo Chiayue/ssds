@@ -1,6 +1,7 @@
 require("info/game_playerinfo")
 require("gameMode/game_mode")
 require("monster/monster_ability")
+require("monster/monster_abyss")
 require("monster/monster_operate")
 require("randomEvents/random_events")
 
@@ -40,7 +41,6 @@ function MobSpawner:OnThink()
     --创建地图logo 和 萝莉
     if now == 1 then
         self:OnCreateArcherLogo()
-
         self:OnCreaterLuoLi()
     end
 
@@ -55,6 +55,16 @@ function MobSpawner:OnThink()
         --挂机模式下每分钟给英雄增加1点经验,1个金币 
         MobSpawner:OnAddExperience(now)
 
+    --无尽模式
+    elseif GlobalVarFunc.game_type==1000 then 
+
+        --判断是否刷池子怪
+        MobSpawner:OnNowTotalMonsterNum()
+        --剩余野怪数量
+        MobSpawner:totalMonsterNum()
+        --无尽模式
+        self:OnGameModeEndless(now)
+
     --每周自闭模式
     elseif GlobalVarFunc.game_type==1001 then
 
@@ -67,22 +77,22 @@ function MobSpawner:OnThink()
 
     --深渊模式
     elseif GlobalVarFunc.game_type==1002 then
-
-    else
         --判断是否刷池子怪
         MobSpawner:OnNowTotalMonsterNum()
-    
         --剩余野怪数量
         MobSpawner:totalMonsterNum()
-        
-        --判断当前游戏模式
-        if GlobalVarFunc.game_type~=1000 then
-            --普通模式
-            self:OnGameModeNormal(now)
-        else
-            --无尽模式
-            self:OnGameModeEndless(now)
-        end
+        --无尽模式
+        self:OnGameModeEndless(now)
+
+    --普通模式
+    else
+
+        --判断是否刷池子怪
+        MobSpawner:OnNowTotalMonsterNum()
+        --剩余野怪数量
+        MobSpawner:totalMonsterNum()
+        --普通模式
+        self:OnGameModeNormal(now)
     
     end
 
@@ -152,7 +162,7 @@ function MobSpawner:OnGameModeEndless(now)
 
 end
 
--- 下一波
+--下一波
 function MobSpawner:SpawnNextWave()
     
     if GlobalVarFunc.playersNum == 0 then
@@ -171,9 +181,23 @@ function MobSpawner:SpawnNextWave()
     
     --打开竞技场
     GlobalVarFunc:OnOpenDoor()
+
     
+    --无尽模式
+    if GlobalVarFunc.game_type==1000 then
+
+        --野怪池子的数量
+        spawner_config.monsterSurplusNum = 800
+        GlobalVarFunc.monsterIsShuaMan = false
+
+        --25波之后不刷小兵
+        if spawner_config.mosterWave <= 25 then
+            self:SpawnMonsterEndless()
+        end
+        self:SpawnBossEndless()
+
     --每周自闭模式
-    if GlobalVarFunc.game_type==1001 then
+    elseif GlobalVarFunc.game_type==1001 then
         --野怪池子的数量
         spawner_config.monsterSurplusNum = 800
         GlobalVarFunc.monsterIsShuaMan = false
@@ -182,10 +206,21 @@ function MobSpawner:SpawnNextWave()
         if spawner_config.mosterWave <= 25 then
             self:OnWeeklySpawnMonsterEndless()
         end
-        
         self:OnWeeklySpawnBossEndless()
 
-    elseif GlobalVarFunc.game_type~=1000 then
+    --深渊模式
+    elseif GlobalVarFunc.game_type==1002 then
+        --野怪池子的数量
+        spawner_config.monsterSurplusNum = 0
+        GlobalVarFunc.monsterIsShuaMan = false
+ 
+        --测试阶段不刷小兵
+        -- self:OnWeeklySpawnMonsterEndless()
+        self:SpawnBossAbyss()
+
+    --普通模式  
+    else
+
         --开始随机事件
         RandomEvents():Start()
 
@@ -201,18 +236,6 @@ function MobSpawner:SpawnNextWave()
         --野怪池子的数量
         spawner_config.monsterSurplusNum = 56
         GlobalVarFunc.monsterIsShuaMan = false
-    else
-
-        --野怪池子的数量
-        spawner_config.monsterSurplusNum = 800
-        GlobalVarFunc.monsterIsShuaMan = false
-
-        --25波之后不刷小兵
-        if spawner_config.mosterWave <= 25 then
-            self:SpawnMonsterEndless()
-        end
-        
-        self:SpawnBossEndless()
     end
 
     --更新gameInfo网表信息
@@ -383,7 +406,6 @@ function MobSpawner:SpawnMonster()
         if GameRules:IsGamePaused() then
             return 0.01
         end
-
         --判断是否游戏结束
         if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
             return nil
@@ -397,12 +419,13 @@ function MobSpawner:SpawnMonster()
         end
         local monster_name = wave_info_waves.name..spawner_config.mosterWave
         -- 创建单位 
-        local mob = CreateUnitByName(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+        local mob = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
 
         if spawner_config.mosterWave>=8 then
             mob:AddAbility(ability)
         end
 
+        GlobalVarFunc:_addMoveSpeedAbility(mob)
         self:setMonsterBaseInformation(mob)
 
         spawner_config.monsterTable[tostring(mob:entindex())] = mob 
@@ -440,16 +463,90 @@ function MobSpawner:SpawnBoss()
         position = Vector(1000, 0, 0)
     end
     local monster_name = bossname..spawner_config.mosterWave
-    local boss = CreateUnitByName(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+    local boss = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
     boss:AddAbility(ability1)
     if spawner_config.mosterWave>=12 then
         boss:AddAbility(ability2)
     end
+    GlobalVarFunc:_addMoveSpeedAbility(boss)
     boss:SetContext("boss", "1", 0)
     self:setMonsterBaseInformation(boss)
 
     spawner_config.monsterTable[tostring(boss:entindex())] = boss    
     
+end
+
+--无尽模式刷小兵
+function MobSpawner:SpawnMonsterEndless()
+
+    --随机分配野怪技能
+    local ability = self:_addAbility()
+   
+    local count = 0
+    GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("spawn_creep_think"), 
+        function()
+           
+            --判断是否暂停游戏
+            if GameRules:IsGamePaused() then
+                return 0.01
+            end
+            --判断是否游戏结束
+            if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
+                return nil
+            end
+
+            --小兵模型
+            local wave_info_waves = spawner_config.waves
+            local model = spawner_config.mosterWave 
+            if spawner_config.mosterWave <= 50 then 
+                model = spawner_config.mosterWave
+            else
+                if spawner_config.mosterWave%50==0 then 
+                    model = 1
+                else
+                    model = spawner_config.mosterWave%50
+                end
+            end 
+
+            if GlobalVarFunc.endless_boss_isAlive then
+
+                if spawner_config.monsterNumber >= spawner_config.monsterNumMax_endless then
+                    return 0.2
+                end
+
+                local position = Vector(0, 0, 0) + RandomVector( RandomFloat( 1000, 4500 ))
+
+                local path_ok =  GridNav:CanFindPath(position, Vector(1000, 0, 0))
+                --判断是否能从某个起始点移动到某个终点
+                if not path_ok then
+                    position = Vector(1000, 0, 0)
+                end
+
+                local monster_name = wave_info_waves.name..model
+                -- 创建单位 
+                local mob = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+                if spawner_config.mosterWave>=8 then
+                    mob:AddAbility(ability)
+                end
+                GlobalVarFunc:_addMoveSpeedAbility(mob)
+                self:setMonsterBaseInformation(mob)
+    
+                spawner_config.monsterTable[tostring(mob:entindex())] = mob 
+        
+                -- 当前怪物计数
+                count = count + 1
+                -- 刷满退出
+                if count < spawner_config.monsterNumMax_endless then
+                    return 0.2
+                else
+                    GlobalVarFunc.monsterIsShuaMan = true
+                    return nil
+                end
+            else
+                return nil
+            end
+             
+       end, 0)    
 end
 
 -- 无尽模式刷Boss
@@ -480,7 +577,7 @@ function MobSpawner:SpawnBossEndless()
         position = Vector(1000, 0, 0)
     end
     local boss_name = wave_info_waves.name..bossModel
-    local boss = CreateUnitByName(boss_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+    local boss = CreateUnitByNameInPool(boss_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
     boss:AddAbility(ability1)
     if spawner_config.mosterWave>=12 then
         boss:AddAbility(ability2)
@@ -491,6 +588,7 @@ function MobSpawner:SpawnBossEndless()
         Ability3:SetLevel(1)
     end
     boss:SetContext("boss", "1", 0)
+    GlobalVarFunc:_addMoveSpeedAbility(boss)
     self:setMonsterBaseInformation(boss)
 
     GlobalVarFunc.endless_boss_isAlive = true
@@ -499,77 +597,35 @@ function MobSpawner:SpawnBossEndless()
 
 end
 
---无尽模式刷小兵
-function MobSpawner:SpawnMonsterEndless()
+-- 深渊模式刷Boss
+function MobSpawner:SpawnBossAbyss()
 
-    --随机分配野怪技能
-    local ability = self:_addAbility()
-   
-    local count = 0
-    GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("spawn_creep_think"), 
-        function()
-           
-            --判断是否暂停游戏
-            if GameRules:IsGamePaused() then
-                return 0.01
-            end
-
-            --判断是否游戏结束
-            if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
-                return nil
-            end
-
-            --小兵模型
-            local wave_info_waves = spawner_config.waves
-            local model = spawner_config.mosterWave 
-            if spawner_config.mosterWave <= 50 then 
-                model = spawner_config.mosterWave
-            else
-                if spawner_config.mosterWave%50==0 then 
-                    model = 1
-                else
-                    model = spawner_config.mosterWave%50
-                end
-            end 
-
-            if GlobalVarFunc.endless_boss_isAlive then
-
-                if spawner_config.monsterNumber >= spawner_config.monsterNumMax_endless then
-                    return 0.2
-                end
-
-                local position = Vector(0, 0, 0) + RandomVector( RandomFloat( 1000, 4500 ))
-
-                local path_ok =  GridNav:CanFindPath(position, Vector(1000, 0, 0))
-                --判断是否能从某个起始点移动到某个终点
-                if not path_ok then
-                    position = Vector(1000, 0, 0)
-                end
-
-                local monster_name = wave_info_waves.name..model
-                -- 创建单位 
-                local mob = CreateUnitByName(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
-                if spawner_config.mosterWave>=8 then
-                    mob:AddAbility(ability)
-                end
-                self:setMonsterBaseInformation(mob)
     
-                spawner_config.monsterTable[tostring(mob:entindex())] = mob 
-        
-                -- 当前怪物计数
-                count = count + 1
-                -- 刷满退出
-                if count < spawner_config.monsterNumMax_endless then
-                    return 0.2
-                else
-                    GlobalVarFunc.monsterIsShuaMan = true
-                    return nil
-                end
-            else
-                return nil
-            end
-             
-       end, 0)    
+
+    local position = Vector(0, 0, 0) + RandomVector( RandomFloat( 2000, 3000 ))
+    local path_ok =  GridNav:CanFindPath(position, Vector(1000, 0, 0))
+    --判断是否能从某个起始点移动到某个终点
+    if not path_ok then
+        position = Vector(1000, 0, 0)
+    end
+    
+    local ability = self:_addAbyssAbility()
+    local bossModel = self:_addAbyssModel()
+    local boss = CreateUnitByNameInPool(bossModel, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+
+
+    boss:AddNewModifier(boss, nil, "modifier_cooldown_ai", nil)
+    local newAbility = boss:AddAbility(ability)
+    newAbility:SetLevel(1)
+
+
+    boss:SetContext("boss", "1", 0)
+    self:setMonsterBaseInformation(boss)
+
+    GlobalVarFunc.endless_boss_isAlive = true
+    
+    spawner_config.monsterTable[tostring(boss:entindex())] = boss
+
 end
 
 --每周自闭模式刷小兵
@@ -586,7 +642,6 @@ function MobSpawner:OnWeeklySpawnMonsterEndless()
             if GameRules:IsGamePaused() then
                 return 0.01
             end
-
             --判断是否游戏结束
             if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
                 return nil
@@ -621,15 +676,13 @@ function MobSpawner:OnWeeklySpawnMonsterEndless()
 
                 local monster_name = wave_info_waves.name..model
                 -- 创建单位 
-                local mob = CreateUnitByName(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+                local mob = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
                 if spawner_config.mosterWave>=8 then
                     mob:AddAbility(ability)
                 end
-
-                --增加移动速度
-                mob:AddAbility("ability_zibi")
-                --设置该生物每级增加的控制抗性 
-                mob:SetDisableResistanceGain(100)
+                
+                GlobalVarFunc:_addMoveSpeedAbility(mob)
+                GlobalVarFunc:OnWeeklyGameChange(mob)
 
                 self:setMonsterBaseInformation(mob)
     
@@ -679,7 +732,7 @@ function MobSpawner:OnWeeklySpawnBossEndless()
         position = Vector(1000, 0, 0)
     end
     local boss_name = wave_info_waves.name..bossModel
-    local boss = CreateUnitByName(boss_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+    local boss = CreateUnitByNameInPool(boss_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
     boss:AddAbility(ability1)
     if spawner_config.mosterWave>=12 then
         boss:AddAbility(ability2)
@@ -690,10 +743,8 @@ function MobSpawner:OnWeeklySpawnBossEndless()
         Ability3:SetLevel(1)
     end
 
-    --增加移动速度
-    boss:AddAbility("ability_zibi_boss")
-    --设置该生物每级增加的控制抗性 
-    boss:SetDisableResistanceGain(100)
+    GlobalVarFunc:_addMoveSpeedAbility(boss)
+    GlobalVarFunc:OnWeeklyGameChange(boss)
 
     boss:SetContext("boss", "1", 0)
     self:setMonsterBaseInformation(boss)
@@ -731,19 +782,17 @@ function MobSpawner:OnSpawnMonster()
     end
     local monster_name = wave_info_waves.name..model
     -- 创建单位 
-    local mob = CreateUnitByName(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+    local mob = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
 
     if spawner_config.mosterWave>=8 then
         mob:AddAbility(ability)
     end
 
     if GlobalVarFunc.game_type == 1001 then
-        --增加移动速度
-        mob:AddAbility("ability_zibi")
-        --设置该生物每级增加的控制抗性 
-        mob:SetDisableResistanceGain(100)
+        GlobalVarFunc:OnWeeklyGameChange(mob)
     end
 
+    GlobalVarFunc:_addMoveSpeedAbility(mob)
     self:setMonsterBaseInformation(mob)
 
     spawner_config.monsterTable[tostring(mob:entindex())] = mob 
@@ -791,7 +840,7 @@ end
 
 --野怪攻击力
 function MobSpawner:_AttackDamage()
-    local attack = ((spawner_config.mosterWave-1)*(spawner_config.mosterWave-1)*20+30)*(GlobalVarFunc.duliuLevel*0.05 + 1) * GlobalVarFunc.MonsterViolent
+    local attack = ((spawner_config.mosterWave-1)*(spawner_config.mosterWave-1)*20+30)*(GlobalVarFunc.duliuLevel*0.03 + 1) * GlobalVarFunc.MonsterViolent
     if GlobalVarFunc.game_mode == "common" then
         return attack * (GlobalVarFunc.game_type*0.3+0.5)
     else
@@ -864,11 +913,25 @@ function MobSpawner:_MagicalResistance()
     end
 end
 
+--随机分配野怪技能
 function MobSpawner:_addAbility()
-    --随机分配野怪技能
     local random = RandomInt(1,#monster_ability)
     local abilityName =  monster_ability[random]
     return abilityName
+end
+
+--随机分配深渊boss技能
+function MobSpawner:_addAbyssAbility()
+    local random = RandomInt(1,#abyss_ability)
+    local abyssAbilityName =  abyss_ability[random]
+    return abyssAbilityName
+end
+
+--随机分配深渊boss模型
+function MobSpawner:_addAbyssModel()
+    local random = RandomInt(1,#abyss_boss)
+    local abyssBossModel =  abyss_boss[random]
+    return abyssBossModel
 end
 
 --当前野怪计数
