@@ -153,7 +153,7 @@ function modifier_ability_abyss_5:FindEnemyRangeDamage(hCaster)
 		hCaster:GetTeamNumber(), 
 		hCaster:GetAbsOrigin(), 
 		hCaster, 
-		1000, 
+		300, 
 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
 		0, 0, false)

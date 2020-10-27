@@ -1,9 +1,5 @@
-require("info/game_playerinfo")
-require("gameMode/game_mode")
 require("monster/monster_ability")
 require("monster/monster_abyss")
-require("monster/monster_operate")
-require("randomEvents/random_events")
 
 local spawner_config = require("monster/monster_config")
 
@@ -1145,7 +1141,7 @@ function MobSpawner:OnLuoliTiaoWu(args)
         --萝莉跳舞冷却
         MobSpawner:OnCoolDown()
     else
-        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(args.PlayerID),"send_error_message_client",{message="箭魂不够"})
+        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(args.PlayerID),"send_error_message_client",{message="ARROW_SOUL_NOT_ENOUGH"})
     end
 end
 

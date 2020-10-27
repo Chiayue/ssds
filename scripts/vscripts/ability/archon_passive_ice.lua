@@ -122,7 +122,7 @@ function modifier_archon_passive_ice:OnAttackLanded( params )
 		aoe, 
 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-		0, 0, false 
+		0, 0, true 
 	)
 	for _,enemy in pairs(enemies) do
 		if enemy ~= nil then

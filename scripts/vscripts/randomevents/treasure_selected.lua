@@ -152,11 +152,11 @@ function Treasure_selected:OnAddTreasure(args)
             local gold = PlayerResource:GetGold(nPlayerID)
             gold = math.floor(gold * 0.5)
             if random <= 51 then
-                CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="金币博弈成功"})
+                CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="GOLD_GAME_SUCCESS"})
                 PlayerResource:ModifyGold(nPlayerID,gold,true,DOTA_ModifyGold_Unspecified)
                 PopupGoldGain(hHero, gold)
             else
-                CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="金币博弈失败"})
+                CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="GOLD_GAME_FAILURE"})
                 PlayerResource:SpendGold(nPlayerID,gold,DOTA_ModifyGold_AbilityCost)
             end
         end
@@ -165,10 +165,10 @@ function Treasure_selected:OnAddTreasure(args)
             local wood = Player_Data:getPoints(nPlayerID)
             wood = math.floor(wood * 0.5)
             if random <= 51 then
-                CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="木材博弈成功"})
+                CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="WOOD_GAME_SUCCESS"})
                 Player_Data:AddPoint(nPlayerID,wood)
             else
-                CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="木材博弈失败"})
+                CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="WOOD_GAME_FAILURE"})
                 Player_Data:AddPoint(nPlayerID, -wood)
             end
         end

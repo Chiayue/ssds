@@ -3,7 +3,6 @@
 LinkLuaModifier("modifier_ability_abyss_7", "ability/mechanism_Boss/ability_abyss_7", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_ability_abyss_7_damage", "ability/mechanism_Boss/ability_abyss_7", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_ability_abyss_7_effects", "ability/mechanism_Boss/ability_abyss_7", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_ability_abyss_7_Reduction_of_injury", "ability/mechanism_Boss/ability_abyss_7", LUA_MODIFIER_MOTION_NONE)
 
 if ability_abyss_7 == nil then 
 	ability_abyss_7 = class({})
@@ -15,14 +14,18 @@ end
 
 function ability_abyss_7:OnSpellStart( ... )
 	local hCaster = self:GetCaster()
-	for i = 1, 5 do
-		self.mob = CreateUnitByName("ability_abyss_7_unit", hCaster:GetAbsOrigin() + RandomVector(1) * RandomFloat(0, 1000), true, nil, nil, DOTA_TEAM_BADGUYS)
-		self.mob:AddNewModifier(hCaster, self, "modifier_ability_abyss_7", {})
-		self.mob:AddNewModifier(hCaster, self, "modifier_ability_abyss_7_effects", {})
-		self.mob:SetOwner(hCaster)
-		self.mob:SetTeam(4)
+	if hCaster:GetHealthPercent() > 80 then
+		self:EndCooldown()
+	-- 当释放者的血量不足80%
+	elseif hCaster:GetHealthPercent() <= 80 then
+		for i = 1, 5 do
+			self.mob = CreateUnitByName("the_running_of_the_security_unit", hCaster:GetAbsOrigin() + RandomVector(1) * RandomFloat(0, 1000), true, nil, nil, DOTA_TEAM_BADGUYS)
+			self.mob:AddNewModifier(hCaster, self, "modifier_ability_abyss_7", {})
+			self.mob:AddNewModifier(hCaster, self, "modifier_ability_abyss_7_effects", {})
+			self.mob:SetOwner(hCaster)
+			self.mob:SetTeam(3)
+		end
 	end
-
 end
 
 if modifier_ability_abyss_7 == nil then 
@@ -51,7 +54,7 @@ function modifier_ability_abyss_7:OnIntervalThink( kv )
 		--print("number=====", number)
 
 		if number > 0 then
-			local EffectName = "particles/white/xulie.vpcf"
+			local EffectName = "particles/test_particles/xulie/xulie.vpcf"
 			self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName, PATTACH_OVERHEAD_FOLLOW, hCaster)
 			ParticleManager:SetParticleControl(self.nFXIndex_0, 0, Vector(0, 0, 50))
 			ParticleManager:SetParticleControl(self.nFXIndex_0, 1, Vector(math.floor(number / 10), math.floor(number % 10), 0))  -- Vector(0, number, 0)
@@ -106,21 +109,28 @@ function modifier_ability_abyss_7_damage:OnCreated( keys )
 			hParent:GetTeamNumber(), 
 			hParent:GetAbsOrigin(), 
 			hParent, 
-			1000, 
+			99999, 
 			DOTA_UNIT_TARGET_TEAM_ENEMY, 
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
 			0, 0, false)
 
 		for _, enemy in pairs(enemys) do
-			local x = enemy:GetMaxHealth() * 0.25
+			--local x = enemy:GetMaxHealth() * 0.25
 			--print("x===================", x)
-			--if enemy == hCaster then return end
 			ApplyDamage({
 				victim = enemy,
 				attacker = hParent,
-				damage = x,
+				damage = enemy:GetMaxHealth() * 0.25,
 				damage_type = DAMAGE_TYPE_MAGICAL,
 			})
+
+			local EffectName = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_end.vpcf"
+			self.nFXIndex_4 = ParticleManager:CreateParticle( EffectName, PATTACH_ROOTBONE_FOLLOW, enemy)
+			ParticleManager:SetParticleControl(self.nFXIndex_4, 0, enemy:GetAbsOrigin())
+			ParticleManager:SetParticleControl(self.nFXIndex_4, 1, enemy:GetAbsOrigin())
+			ParticleManager:SetParticleControl(self.nFXIndex_4, 2, enemy:GetAbsOrigin())
+			self:AddParticle(self.nFXIndex_4, false, false, -1, false, true)
+
 		end
 	end
 end
@@ -162,7 +172,7 @@ end
 function modifier_ability_abyss_7_effects:DeclareFunctions( ... )
 	return{
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_PROPERTY_AVOID_DAMAGE, -- return 	keys.damage  直接免伤所有伤害(包括技能带来的所有伤害)
 	}
 end
 
@@ -178,36 +188,21 @@ function modifier_ability_abyss_7_effects:OnAttackLanded( keys )
 		return
 	end
 
-	self:IncrementStackCount()
-	local count = self:GetStackCount()
 	--print("count+++++++++++++++++=", count)
-
-	local health = 10 * ( 10 - count ) / 10
+	local max_heal = hParent:GetHealth()
+	local health = (max_heal - 1)
 	--print("health____+++_+__++++=", health)
 	hParent:SetHealth( health )
-
-	if count >= 10 then
-		UTIL_Remove(hParent)
-		self:Destroy()
-	elseif health < 1 or count ~= 10 then
-		hParent:SetHealth( health )
-		hParent:AddNewModifier(hParent, self:GetAbility(), "modifier_ability_abyss_7_Reduction_of_injury", {})
-	end
-
 	if attacker:IsRealHero() then 
-		if count >= 10 then
+		if health <= 0 then
 			UTIL_Remove(hParent)
 			self:Destroy()
-		elseif health < 1 or count ~= 10 then
-			hParent:SetHealth( health )
-			hParent:AddNewModifier(hParent, self:GetAbility(), "modifier_ability_abyss_7_Reduction_of_injury", {})
 		end
 	end
+end
 
-	-- if mob_health <= 0 then
-	-- 	self.mob:ForceKill(true)
-	-- 	self:Destroy()
-	-- end
+function modifier_ability_abyss_7_effects:GetModifierAvoidDamage( keys )
+	return keys.damage
 end
 
 function modifier_ability_abyss_7_effects:OnDestroy()
@@ -222,23 +217,4 @@ function modifier_ability_abyss_7_effects:OnDestroy()
 	ParticleManager:DestroyParticle( self.nFXIndex_4, false )
 	ParticleManager:ReleaseParticleIndex( self.nFXIndex_4 )
 	self.nFXIndex_4 = nil
-end
-
-if modifier_ability_abyss_7_Reduction_of_injury == nil then
-	modifier_ability_abyss_7_Reduction_of_injury = class({})
-end
-
-function modifier_ability_abyss_7_Reduction_of_injury:IsHidden( ... )
-	return true
-end
-
-function modifier_ability_abyss_7_Reduction_of_injury:DeclareFunctions( ... )
-	return 
-		{
-			MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE, -- 减伤
-		}
-end
-
-function modifier_ability_abyss_7_Reduction_of_injury:GetModifierIncomingDamage_Percentage( ... )
-	return -100
 end

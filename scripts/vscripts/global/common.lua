@@ -80,35 +80,42 @@ tUnitPools = {}
 tBossPools = {}
 _G.UnitCustom = LoadKeyValues("scripts/npc/npc_units_custom.txt")
 function CreateUnitByNameInPool( UnitName, vVector, bool, handle_4, handle_5, int_6 )
-	--if #tUnitPools == 0 then
+	if tUnitPools[UnitName] == nil then tUnitPools[UnitName] = {} end
+	if #tUnitPools[UnitName] == 0 then
 		local hUnit = CreateUnitByName(UnitName, vVector, bool, handle_4, handle_5, int_6)
 		return hUnit
-	-- else
-	-- 	local hUnit = tUnitPools[1]
-	-- 	table.remove(tUnitPools,1)
-	-- 	local hUnitCustom = _G.UnitCustom[UnitName]
-	-- 	local sModel =  hUnitCustom["Model"]
-	-- 	-- hUnit:RespawnUnit()
-	-- 	-- hUnit:SetModel(sModel)
-	-- 	-- FindClearSpaceForUnit(hUnit, vVector, bool)
-	-- 	try1 {
-	-- 		main = function ()
-	-- 			hUnit:RespawnUnit()
-	-- 			hUnit:SetModel(sModel)
-	-- 			FindClearSpaceForUnit(hUnit, vVector, bool)
-	-- 		end,
-	-- 		catch = function (errors)
-	-- 			-- print("errors")
-	-- 			-- hUnit:RemoveSelf()
-	-- 			-- print("catch : " .. errors)
-	-- 			hUnit = CreateUnitByName(UnitName, vVector, bool, handle_4, handle_5, int_6)
-	-- 		end,
-	-- 		finally = function (ok, errors)
-	-- 			-- print("finally : " .. tostring(ok))
-	-- 		end,
-	-- 	}
-	-- 	return hUnit
-	-- end
+	else
+		local hUnit = tUnitPools[UnitName][1]
+		table.remove(tUnitPools[UnitName],1)
+		local hUnitCustom = _G.UnitCustom[UnitName]
+		local sModel =  hUnitCustom["Model"]
+		-- hUnit:RespawnUnit()
+		-- hUnit:SetModel(sModel)
+		-- FindClearSpaceForUnit(hUnit, vVector, bool)
+		try1 {
+			main = function ()
+				-- 清除技能
+				-- for n=0,hUnit:GetAbilityCount() - 1 do
+					
+				-- end
+				
+
+				hUnit:RespawnUnit()
+				hUnit:SetModel(sModel)
+				FindClearSpaceForUnit(hUnit, vVector, bool)
+			end,
+			catch = function (errors)
+				-- print("errors")
+				-- hUnit:RemoveSelf()
+				-- print("catch : " .. errors)
+				hUnit = CreateUnitByName(UnitName, vVector, bool, handle_4, handle_5, int_6)
+			end,
+			finally = function (ok, errors)
+				-- print("finally : " .. tostring(ok))
+			end,
+		}
+		return hUnit
+	end
 end
 
 

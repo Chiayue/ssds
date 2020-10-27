@@ -21,7 +21,7 @@ function modifier_gem_bow_of_aeolus:OnCreated(params)
     if IsServer() then 
         local hero = self:GetParent()
         if hero:HasModifier("modifier_gem_arrow_of_aeolus") and not hero:HasModifier("modifier_gem_power_of_aeolus") then
-            hero:AddNewModifier( hero, nil, "modifier_gem_power_of_aeolus", {} )
+            hero:AddNewModifier( hero, self:GetAbility(), "modifier_gem_power_of_aeolus", {} )
         end
     end
 end

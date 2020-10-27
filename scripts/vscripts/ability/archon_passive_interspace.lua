@@ -73,11 +73,11 @@ function modifier_archon_passive_interspace:OnAttackLanded( params )
 		return 0
 	end
 
-	-- local EffectName = "particles/earth/sniper_techies/_2econ/items/techies/techies_arcana/techies_suicide_arcana.vpcf"
-	-- local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_RENDERORIGIN_FOLLOW, hTarget )
-	-- ParticleManager:SetParticleControl(nFXIndex, 0, Vector(500, 500, 500))
-	-- ParticleManager:SetParticleControl(nFXIndex, 1, hTarget:GetAbsOrigin())
-	-- ParticleManager:SetParticleControl(nFXIndex, 3, hTarget:GetAbsOrigin())
+	local EffectName = "particles/earth/sniper_techies/_2econ/items/techies/techies_arcana/techies_suicide_arcana.vpcf"
+	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_RENDERORIGIN_FOLLOW, hTarget )
+	ParticleManager:SetParticleControl(nFXIndex, 0, Vector(500, 500, 500))
+	ParticleManager:SetParticleControl(nFXIndex, 1, hTarget:GetAbsOrigin())
+	ParticleManager:SetParticleControl(nFXIndex, 3, hTarget:GetAbsOrigin())
 
 	-- -- 新建特效
 	-- local EffectName_1 = "particles/particles/earth/snapfire_cookie_landing/hero_snapfire_cooki_2e_landing.vpcf"
@@ -85,7 +85,7 @@ function modifier_archon_passive_interspace:OnAttackLanded( params )
 	-- ParticleManager:SetParticleControl(nFXIndex_1, 0, Vector(500, 500, 500))
 	-- ParticleManager:SetParticleControl(nFXIndex_1, 1, hTarget:GetAbsOrigin())
 
-	hTarget:AddNewModifier(hCaster, self:GetAbility(), "modifier_archon_passive_interspace_particles", {duration = 1})
+	--hTarget:AddNewModifier(hCaster, self:GetAbility(), "modifier_archon_passive_interspace_particles", {duration = 1})
 
 	-- 获取自身攻击的所有范围
 	local nBowRange = 0				      		         -- 武器攻击范围奖励
@@ -154,42 +154,42 @@ function modifier_archon_passive_interspace:GetModifierAttackRangeBonus()
 	return self.base_range + self.agi_of_ramge --self.speed_of_damage
 end
 
-if modifier_archon_passive_interspace_particles == nil then 
-	modifier_archon_passive_interspace_particles = class({})
-end
+-- if modifier_archon_passive_interspace_particles == nil then 
+-- 	modifier_archon_passive_interspace_particles = class({})
+-- end
 
-function modifier_archon_passive_interspace_particles:IsHidden()
-	return true
-end
+-- function modifier_archon_passive_interspace_particles:IsHidden()
+-- 	return true
+-- end
 
-function modifier_archon_passive_interspace_particles:OnCreated( args )
-	--if not IsServer() then return end
-	local hParent = self:GetParent()
-	--local hTarget = args.target
-	if not hParent.nFXIndex and not hParent.nFXIndex_1 then
-		local EffectName = "particles/earth/sniper_techies/_2econ/items/techies/techies_arcana/techies_suicide_arcana.vpcf"
-		hParent.nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_RENDERORIGIN_FOLLOW, hParent )
-		ParticleManager:SetParticleControl(hParent.nFXIndex, 0, Vector(500, 500, 500))
-		ParticleManager:SetParticleControl(hParent.nFXIndex, 1, hParent:GetAbsOrigin())
-		ParticleManager:SetParticleControl(hParent.nFXIndex, 3, hParent:GetAbsOrigin())
-		-- 新建特效
-		local EffectName_1 = "particles/particles/earth/snapfire_cookie_landing/hero_snapfire_cooki_2e_landing.vpcf"
-		hParent.nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hParent )
-		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 0, Vector(500, 500, 500))
-		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 1, hParent:GetAbsOrigin())
-	end
-end
+-- function modifier_archon_passive_interspace_particles:OnCreated( args )
+-- 	--if not IsServer() then return end
+-- 	local hParent = self:GetParent()
+-- 	--local hTarget = args.target
+-- 	if not hParent.nFXIndex and not hParent.nFXIndex_1 then
+-- 		local EffectName = "particles/earth/sniper_techies/_2econ/items/techies/techies_arcana/techies_suicide_arcana.vpcf"
+-- 		hParent.nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_RENDERORIGIN_FOLLOW, hParent )
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex, 0, Vector(500, 500, 500))
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex, 1, hParent:GetAbsOrigin())
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex, 3, hParent:GetAbsOrigin())
+-- 		-- 新建特效
+-- 		local EffectName_1 = "particles/particles/earth/snapfire_cookie_landing/hero_snapfire_cooki_2e_landing.vpcf"
+-- 		hParent.nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hParent )
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 0, Vector(500, 500, 500))
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 1, hParent:GetAbsOrigin())
+-- 	end
+-- end
 
-function modifier_archon_passive_interspace_particles:OnDestroy()
-	--if not IsServer() then return end
-	local hParent = self:GetParent()
-	if hParent.nFXIndex and hParent.nFXIndex_1 then 
-		ParticleManager:DestroyParticle( hParent.nFXIndex, false )
-		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex )
-		hParent.nFXIndex = nil
+-- function modifier_archon_passive_interspace_particles:OnDestroy()
+-- 	--if not IsServer() then return end
+-- 	local hParent = self:GetParent()
+-- 	if hParent.nFXIndex and hParent.nFXIndex_1 then 
+-- 		ParticleManager:DestroyParticle( hParent.nFXIndex, false )
+-- 		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex )
+-- 		hParent.nFXIndex = nil
 
-		ParticleManager:DestroyParticle( hParent.nFXIndex_1, false )
-		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex_1 )
-		hParent.nFXIndex_1 = nil
-	end
-end
+-- 		ParticleManager:DestroyParticle( hParent.nFXIndex_1, false )
+-- 		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex_1 )
+-- 		hParent.nFXIndex_1 = nil
+-- 	end
+-- end

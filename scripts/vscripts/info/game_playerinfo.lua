@@ -104,12 +104,6 @@ function game_playerinfo:update_playerInfo()
                     elseif GlobalVarFunc.game_type==4 then
                         local gameMode_4_clearance = Archive:GetData(PlayerID,"gameMode_4_clearance") + 1
                         Archive:EditPlayerProfile(PlayerID,"gameMode_4_clearance",gameMode_4_clearance)
-                    elseif GlobalVarFunc.game_type==7 then
-                        local gameMode_7_clearance = Archive:GetData(PlayerID,"gameMode_7_clearance") + 1
-                        Archive:EditPlayerProfile(PlayerID,"gameMode_7_clearance",gameMode_7_clearance)
-                    elseif GlobalVarFunc.game_type==10 then
-                        local gameMode_10_clearance = Archive:GetData(PlayerID,"gameMode_10_clearance") + 1
-                        Archive:EditPlayerProfile(PlayerID,"gameMode_10_clearance",gameMode_10_clearance)
                     end
     
                     --记录玩家最高的游戏模式

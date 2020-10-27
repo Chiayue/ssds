@@ -92,11 +92,15 @@ function PopupNumbers(target, pfx, color, lifetime, number, presymbol, postsymbo
         end,1)
 end
 
-function send_tips_message(playerID,message_text)
+function send_tips_message(playerID,message_text,data)
     local gameEvent = {}
     gameEvent["player_id"] = playerID
     gameEvent["locstring_value"]="升级啦"
     gameEvent["teamnumber"] =-1
-    gameEvent["message"] = "{s:player_name}"..message_text
+    if data ~= nil then
+        gameEvent["int_value"] = data
+    end
+    gameEvent["message"] = message_text
+    
     FireGameEvent( "dota_combat_event_message", gameEvent )
 end

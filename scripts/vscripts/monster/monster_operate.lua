@@ -41,7 +41,7 @@ function MonsterOperate:OnChallengeOperate(args)
     --木头
     -- local woods = Player_Data:getPoints(nPlayerID)
     -- if woods<200 then
-    --     CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="科技点不够，无法挑战运营怪"})
+    --     CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="WOOD_NOT_ENOUGH"})
     -- else
     --     Player_Data:AddPoint(nPlayerID,-200)
     --     MonsterOperate:OnCreateMonster(nPlayerID,operate_Index)
@@ -52,14 +52,14 @@ function MonsterOperate:OnChallengeOperate(args)
 
     if operate_Index >= 7 then
         if gold < 25000 then
-            CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="金币不够，无法挑战运营怪"})
+            CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="GOLD_NOT_ENOUGH"})
         else
             PlayerResource:SpendGold(nPlayerID,25000,DOTA_ModifyGold_AbilityCost)
             MonsterOperate:OnCreateMonster(nPlayerID,operate_Index)
         end
     else
         if gold < 2500 then
-            CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="金币不够，无法挑战运营怪"})
+            CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="GOLD_NOT_ENOUGH"})
         else
             PlayerResource:SpendGold(nPlayerID,2500,DOTA_ModifyGold_AbilityCost)
             MonsterOperate:OnCreateMonster(nPlayerID,operate_Index)
@@ -207,12 +207,12 @@ function MonsterOperate:operateReward()
                 local gold = v.operate_gold * GlobalVarFunc.InvestmentAndOperate[PlayerID+1] * GlobalVarFunc.OperateRewardCoefficient[PlayerID+1]
                
                 PlayerResource:ModifyGold(PlayerID,gold,true,DOTA_ModifyGold_Unspecified)
-                send_tips_message(PlayerID, "获得回合收入"..gold.."金币！")
+                send_tips_message(PlayerID, "ROUND_REVENUE_GOLD", gold)
 
-                --木头
+                --木头    
                 -- local wood = v.operate_gold * GlobalVarFunc.InvestmentAndOperate[PlayerID+1] * GlobalVarFunc.OperateRewardCoefficient[PlayerID+1]
                 -- Player_Data:AddPoint(PlayerID,wood)
-                -- send_tips_message(PlayerID, "获得回合收入"..wood.."木材！")
+                -- send_tips_message(PlayerID, "ROUND_REVENUE_WOOD", wood)
             end
         end
     end

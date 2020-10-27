@@ -9804,6 +9804,24 @@
 		"HealthBarOffset"	"200"
 		"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"MovementCapabilities"	"DOTA_UNIT_CAP_MOVE_GROUND"
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"
+				{
+					"ItemDef"	"485"
+				}
+				"Wearable2"
+				{
+					"ItemDef"	"484"
+				}
+				"Wearable3"
+				{
+					"ItemDef"	"446"
+				}
+			}
+		}
 	}
 
 	"npc_dota_creature_boss_blademaster"
@@ -9830,6 +9848,35 @@
 		"Model"	"models/heroes/juggernaut/juggernaut.vmdl"
 		"ModelScale"	"1.1"
 		"HealthBarOffset"	"200"
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"
+				{
+					"ItemDef"	"9"
+				}
+				"Wearable2"
+				{
+					"ItemDef"	"8"
+				}
+				"Wearable3"
+				{
+					"ItemDef"	"6"
+				}
+				"Wearable4"
+				{
+					"ItemDef"	"7"
+				}
+				"Wearable5"
+				{
+					"ItemDef"	"62"
+				}
+			}
+		}
+		"MovementSpeed"	"300"
+		"MovementTurnRate"	"2.0"
+		"HasAggressiveStance"	"1"
 	}
 
 	"npc_dota_creature_boss_shredder"
@@ -9856,6 +9903,40 @@
 		"HealthBarOffset"	"200"
 		"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"MovementCapabilities"	"DOTA_UNIT_CAP_MOVE_GROUND"
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"
+				{
+					"ItemDef"	"401"
+				}
+				"Wearable2"
+				{
+					"ItemDef"	"400"
+				}
+				"Wearable3"
+				{
+					"ItemDef"	"390"
+				}
+				"Wearable4"
+				{
+					"ItemDef"	"388"
+				}
+				"Wearable5"
+				{
+					"ItemDef"	"386"
+				}
+				"Wearable6"
+				{
+					"ItemDef"	"402"
+				}
+				"Wearable7"
+				{
+					"ItemDef"	"389"
+				}
+			}
+		}
 	}
 
 	"npc_dota_creature_boss_shadow"
@@ -9882,6 +9963,32 @@
 		"HealthBarOffset"	"200"
 		"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"MovementCapabilities"	"DOTA_UNIT_CAP_MOVE_GROUND"
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"
+				{
+					"ItemDef"	"456"
+				}
+				"Wearable2"
+				{
+					"ItemDef"	"455"
+				}
+				"Wearable3"
+				{
+					"ItemDef"	"458"
+				}
+				"Wearable4"
+				{
+					"ItemDef"	"457"
+				}
+				"Wearable5"
+				{
+					"ItemDef"	"454"
+				}
+			}
+		}
 	}
 
 	"npc_dota_creature_boss_celestialgod"
@@ -9934,6 +10041,28 @@
 		"Model"	"models/heroes/ursa/ursa.vmdl"
 		"ModelScale"	"1.1"
 		"HealthBarOffset"	"200"
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"
+				{
+					"ItemDef"	"87"
+				}
+				"Wearable2"
+				{
+					"ItemDef"	"86"
+				}
+				"Wearable3"
+				{
+					"ItemDef"	"85"
+				}
+				"Wearable4"
+				{
+					"ItemDef"	"88"
+				}
+			}
+		}
 	}
 
 	"npc_dota_creature_boss_diao"

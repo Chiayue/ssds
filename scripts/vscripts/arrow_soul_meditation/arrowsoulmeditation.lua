@@ -120,7 +120,7 @@ function ArrowSoulMeditation:OnMeditationArrowSoul(args)
         end
 
     else
-        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(args.PlayerID),"send_error_message_client",{message="箭魂不够"})
+        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(args.PlayerID),"send_error_message_client",{message="ARROW_SOUL_NOT_ENOUGH"})
         --防止连点器作弊
         CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(args.PlayerID),"arrowSoul_prevent_cheat",{})
     end

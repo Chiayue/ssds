@@ -6,8 +6,8 @@ local randomPassiveTable = {
 	"ability_flagstone_bonus_int",
 	"ability_flagstone_bounty_hunter",
 	"ability_flagstone_festering_aura",
-	"ability_flagstone_attackspeed_aura",
-	"ability_flagstone_armor_aura",
+	--"ability_flagstone_attackspeed_aura",
+	--"ability_flagstone_armor_aura",
 	"ability_flagstone_sunderarmor_aura",
 	--"ability_flagstone_warlord_fervor"
 }

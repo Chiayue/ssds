@@ -14,9 +14,12 @@ end
 
 function ability_abyss_11:OnSpellStart( ... )
 	local hCaster = self:GetCaster()
-	
-	hCaster:AddNewModifier(hCaster, self, "modifier_ability_abyss_11", {}) -- duration = 2
-
+	if hCaster:GetHealthPercent() > 80 then
+		self:EndCooldown()
+	-- 当释放者的血量不足80%
+	elseif hCaster:GetHealthPercent() <= 80 then
+		hCaster:AddNewModifier(hCaster, self, "modifier_ability_abyss_11", {}) -- duration = 2
+	end
 end
 
 if modifier_ability_abyss_11 == nil then 

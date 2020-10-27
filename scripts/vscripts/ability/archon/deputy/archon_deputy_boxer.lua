@@ -2,6 +2,15 @@ LinkLuaModifier( "modifier_archon_deputy_boxer", "ability/archon/deputy/archon_d
 --------------------
 -- 基础300 每次加50   全属性 50
 if archon_deputy_boxer == nil then archon_deputy_boxer = {} end
+
+-- function archon_deputy_boxer:OnUpgrade()
+-- 	print("OnUpgrade()")
+-- end
+
+-- function archon_deputy_boxer:ToggleAutoCast()
+-- 	print("ToggleAutoCast()")
+-- end
+
 function archon_deputy_boxer:OnSpellStart() 
 	if IsServer() then 
 		local hCaster = self:GetCaster()

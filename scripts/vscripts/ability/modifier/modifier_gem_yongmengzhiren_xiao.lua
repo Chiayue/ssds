@@ -21,7 +21,7 @@ function modifier_gem_yongmengzhiren_xiao:OnCreated(params)
     if IsServer() then
         local hero = self:GetParent()
         if hero:HasModifier("modifier_gem_yongmengzhiren_zhong") and hero:HasModifier("modifier_gem_yongmengzhiren_da")  and not hero:HasModifier("modifier_gem_yongmengzhiren_heimo") then
-            hero:AddNewModifier( hero, nil, "modifier_gem_yongmengzhiren_heimo", {} )
+            hero:AddNewModifier( hero, self:GetAbility(), "modifier_gem_yongmengzhiren_heimo", {} )
         end
     end
 end

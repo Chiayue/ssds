@@ -92,14 +92,14 @@ function modifier_archon_passive_soul:OnAttackLanded( params )
 	-- local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_RENDERORIGIN_FOLLOW, hTarget )
 	-- ParticleManager:SetParticleControl(nFXIndex, 0, Vector(500, 500, 500))	
 	
-	-- -- 新建特效
-	-- local EffectName_1 = "particles/down_particles/red/down_particles_red.vpcf"
-	-- local nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_RENDERORIGIN_FOLLOW, hTarget )
-	-- ParticleManager:SetParticleControl(nFXIndex_1, 0, Vector(500, 500, 500))
-	-- ParticleManager:SetParticleControl(nFXIndex_1, 1, hTarget:GetAbsOrigin())
-	-- ParticleManager:SetParticleControl(nFXIndex_1, 2, hTarget:GetAbsOrigin())
-	-- ParticleManager:SetParticleControl(nFXIndex_1, 3, hTarget:GetAbsOrigin())
-	-- ParticleManager:SetParticleControl(nFXIndex_1, 4, hTarget:GetAbsOrigin())
+	-- 新建特效
+	local EffectName_1 = "particles/down_particles/red/down_particles_red.vpcf"
+	local nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_RENDERORIGIN_FOLLOW, hTarget )
+	ParticleManager:SetParticleControl(nFXIndex_1, 0, Vector(500, 500, 500))
+	ParticleManager:SetParticleControl(nFXIndex_1, 1, hTarget:GetAbsOrigin())
+	ParticleManager:SetParticleControl(nFXIndex_1, 2, hTarget:GetAbsOrigin())
+	ParticleManager:SetParticleControl(nFXIndex_1, 3, hTarget:GetAbsOrigin())
+	ParticleManager:SetParticleControl(nFXIndex_1, 4, hTarget:GetAbsOrigin())
 
 	-- local EffectName_2 = "particles/econ/items/centaur/centaur_ti9/centaur_double_edge_ti9_hit_tgt.vpcf"
 	-- local nFXIndex_2 = ParticleManager:CreateParticle( EffectName_2, PATTACH_RENDERORIGIN_FOLLOW, hTarget )
@@ -108,7 +108,7 @@ function modifier_archon_passive_soul:OnAttackLanded( params )
 	-- ParticleManager:SetParticleControl(nFXIndex_2, 2, hTarget:GetAbsOrigin())
 	-- ParticleManager:SetParticleControl(nFXIndex_2, 3, hTarget:GetAbsOrigin())
 
-	hTarget:AddNewModifier(hCaster, self:GetAbility(), "modifier_archon_passive_soul_particles", {duration = 1})
+	--hTarget:AddNewModifier(hCaster, self:GetAbility(), "modifier_archon_passive_soul_particles", {duration = 1})
 
 	EmitSoundOn( "Hero_Nevermore.Shadowraze", hTarget )
 	-- 范围伤害
@@ -145,57 +145,57 @@ function modifier_archon_passive_soul:OnTooltip()
 	return 0
 end
 
-if modifier_archon_passive_soul_particles == nil then 
-	modifier_archon_passive_soul_particles = class({})
-end
+-- if modifier_archon_passive_soul_particles == nil then 
+-- 	modifier_archon_passive_soul_particles = class({})
+-- end
 
-function modifier_archon_passive_soul_particles:IsHidden()
-	return true
-end
+-- function modifier_archon_passive_soul_particles:IsHidden()
+-- 	return true
+-- end
 
-function modifier_archon_passive_soul_particles:OnCreated( args )
-	--if not IsServer() then return end
-	local hParent = self:GetParent()
-	--local hTarget = args.target
-	if not hParent.nFXIndex and not hParent.nFXIndex_1 and not hParent.nFXIndex_2 then
-		local EffectName = "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
-		hParent.nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_RENDERORIGIN_FOLLOW, hParent )
-		ParticleManager:SetParticleControl(hParent.nFXIndex, 0, Vector(500, 500, 500))
-		ParticleManager:SetParticleControl(hParent.nFXIndex, 1, hParent:GetAbsOrigin())
-		ParticleManager:SetParticleControl(hParent.nFXIndex, 3, hParent:GetAbsOrigin())
-		ParticleManager:SetParticleControl(hParent.nFXIndex, 4, hParent:GetAbsOrigin())
-		-- 新建特效
-		local EffectName_1 = "particles/down_particles/red/down_particles_red.vpcf"
-		hParent.nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hParent )
-		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 0, Vector(500, 500, 500))
-		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 1, hParent:GetAbsOrigin())
-		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 2, hParent:GetAbsOrigin())
-		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 3, hParent:GetAbsOrigin())
-		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 4, hParent:GetAbsOrigin())
+-- function modifier_archon_passive_soul_particles:OnCreated( args )
+-- 	--if not IsServer() then return end
+-- 	local hParent = self:GetParent()
+-- 	--local hTarget = args.target
+-- 	if not hParent.nFXIndex and not hParent.nFXIndex_1 and not hParent.nFXIndex_2 then
+-- 		local EffectName = "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+-- 		hParent.nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_RENDERORIGIN_FOLLOW, hParent )
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex, 0, Vector(500, 500, 500))
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex, 1, hParent:GetAbsOrigin())
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex, 3, hParent:GetAbsOrigin())
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex, 4, hParent:GetAbsOrigin())
+-- 		-- 新建特效
+-- 		local EffectName_1 = "particles/down_particles/red/down_particles_red.vpcf"
+-- 		hParent.nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hParent )
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 0, Vector(500, 500, 500))
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 1, hParent:GetAbsOrigin())
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 2, hParent:GetAbsOrigin())
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 3, hParent:GetAbsOrigin())
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 4, hParent:GetAbsOrigin())
 
-		local EffectName_2 = "particles/econ/items/centaur/centaur_ti9/centaur_double_edge_ti9_hit_tgt.vpcf"
-		hParent.nFXIndex_2 = ParticleManager:CreateParticle( EffectName_2, PATTACH_RENDERORIGIN_FOLLOW, hParent )
-		ParticleManager:SetParticleControl(hParent.nFXIndex_2, 0, Vector(500, 500, 500))
-		ParticleManager:SetParticleControl(hParent.nFXIndex_2, 1, hParent:GetAbsOrigin())
-		ParticleManager:SetParticleControl(hParent.nFXIndex_2, 2, hParent:GetAbsOrigin())
-		ParticleManager:SetParticleControl(hParent.nFXIndex_2, 3, hParent:GetAbsOrigin())
-	end
-end
+-- 		local EffectName_2 = "particles/econ/items/centaur/centaur_ti9/centaur_double_edge_ti9_hit_tgt.vpcf"
+-- 		hParent.nFXIndex_2 = ParticleManager:CreateParticle( EffectName_2, PATTACH_RENDERORIGIN_FOLLOW, hParent )
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_2, 0, Vector(500, 500, 500))
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_2, 1, hParent:GetAbsOrigin())
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_2, 2, hParent:GetAbsOrigin())
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_2, 3, hParent:GetAbsOrigin())
+-- 	end
+-- end
 
-function modifier_archon_passive_soul_particles:OnDestroy()
-	--if not IsServer() then return end
-	local hParent = self:GetParent()
-	if hParent.nFXIndex and hParent.nFXIndex_1 and hParent.nFXIndex_2 then 
-		ParticleManager:DestroyParticle( hParent.nFXIndex, false )
-		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex )
-		hParent.nFXIndex = nil
+-- function modifier_archon_passive_soul_particles:OnDestroy()
+-- 	--if not IsServer() then return end
+-- 	local hParent = self:GetParent()
+-- 	if hParent.nFXIndex and hParent.nFXIndex_1 and hParent.nFXIndex_2 then 
+-- 		ParticleManager:DestroyParticle( hParent.nFXIndex, false )
+-- 		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex )
+-- 		hParent.nFXIndex = nil
 
-		ParticleManager:DestroyParticle( hParent.nFXIndex_1, false )
-		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex_1 )
-		hParent.nFXIndex_1 = nil
+-- 		ParticleManager:DestroyParticle( hParent.nFXIndex_1, false )
+-- 		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex_1 )
+-- 		hParent.nFXIndex_1 = nil
 
-		ParticleManager:DestroyParticle( hParent.nFXIndex_2, false )
-		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex_2 )
-		hParent.nFXIndex_2 = nil
-	end
-end
+-- 		ParticleManager:DestroyParticle( hParent.nFXIndex_2, false )
+-- 		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex_2 )
+-- 		hParent.nFXIndex_2 = nil
+-- 	end
+-- end

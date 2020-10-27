@@ -15,11 +15,12 @@ end
 
 function ability_abyss_9:OnSpellStart( ... )
 	local hCaster = self:GetCaster()
+	print("hCaster_TEAM",hCaster:GetTeam())
 
 	for i = 1, 12 do
-		self.mob = CreateUnitByName("ability_abyss_9_unit", hCaster:GetAbsOrigin() + RandomVector(1) * RandomFloat(0, 1000), true, nil, nil, DOTA_TEAM_BADGUYS)
+		self.mob = CreateUnitByName("repair_crew_unit", hCaster:GetAbsOrigin() + RandomVector(1) * RandomFloat(0, 1000), true, nil, nil, DOTA_TEAM_BADGUYS)
 		-- self.mob:AddNewModifier(hCaster, self, "modifier_ability_abyss_9", {})
 		-- self.mob:AddNewModifier(hCaster, self, "modifier_ability_abyss_9_effects", {})
-		self.mob:SetTeam(4)
+		self.mob:SetTeam(3)
 	end
 end

@@ -49,14 +49,9 @@ end
 
 function HeroesSkin:Init(hHero)
 	if hHero:FindModifierByName("modifier_wearable_hider_while_model_changes") == nil then
-		local OriginalModel = hHero:GetModelName() 
-		if OriginalModel == "models/items/windrunner/windrunner_arcana/wr_arcana_base.vmdl" then
-			hHero:SetModel("models/heroes/windrunner/windrunner.vmdl")
-			OriginalModel = "models/heroes/windrunner/windrunner.vmdl"
-		end
-		--print("OriginalModel")
-		-- print(OriginalModel)
-		hHero:AddNewModifier(hHero, nil, "modifier_wearable_hider_while_model_changes", {}).sOriginalModel = OriginalModel
+		local sHeroName = hHero:GetUnitName()
+		hHero:AddNewModifier(hHero, nil, "modifier_wearable_hider_while_model_changes", {}).sOriginalModel = hSkinData[sHeroName][1].model
+		hHero:SetModel(hSkinData[sHeroName][1].model)
 		HeroesSkin:ChangeSkin(hHero,1)
 	end
 end

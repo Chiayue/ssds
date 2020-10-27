@@ -14,24 +14,28 @@ end
 function ability_abyss_4:OnSpellStart( ... )
 	local hCaster = self:GetCaster()
 
-	hCaster:AddNewModifier(hCaster, self, "modifier_ability_abyss_4", {}) -- duration = 2
+	if hCaster:GetHealthPercent() > 50 then
+		self:EndCooldown()
+	-- 当释放者的血量不足80%
+	elseif hCaster:GetHealthPercent() <= 50 then 
 
+		hCaster:AddNewModifier(hCaster, self, "modifier_ability_abyss_4", {}) -- duration = 2
 
-	local enemys = FindUnitsInRadius(
-		hCaster:GetTeamNumber(), 
-		hCaster:GetAbsOrigin(), 
-		hCaster, 
-		1000, 
-		DOTA_UNIT_TARGET_TEAM_ENEMY, 
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-		0, 0, false)
+		local enemys = FindUnitsInRadius(
+			hCaster:GetTeamNumber(), 
+			hCaster:GetAbsOrigin(), 
+			hCaster, 
+			99999, 
+			DOTA_UNIT_TARGET_TEAM_ENEMY, 
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+			0, 0, false)
 
-	for _, enemy in pairs(enemys) do
+		for _, enemy in pairs(enemys) do
 
-		enemy:AddNewModifier(hCaster, self, "modifier_ability_abyss_4_damage", {})
+			enemy:AddNewModifier(hCaster, self, "modifier_ability_abyss_4_damage", {})
 
+		end
 	end
-
 end
 
 if modifier_ability_abyss_4 == nil then 

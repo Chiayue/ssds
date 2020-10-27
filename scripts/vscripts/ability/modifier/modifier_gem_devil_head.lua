@@ -25,7 +25,7 @@ function modifier_gem_devil_head:OnCreated(params)
     if IsServer() then
         local hero = self:GetParent()
         if hero:HasModifier("modifier_gem_devil_left_foot") and hero:HasModifier("modifier_gem_devil_right_foot") and hero:HasModifier("modifier_gem_devil_right_hand") and hero:HasModifier("modifier_gem_devil_left_hand") and not hero:HasModifier("modifier_gem_devilzhili") then
-            hero:AddNewModifier( hero, nil, "modifier_gem_devilzhili", {} )
+            hero:AddNewModifier( hero, self:GetAbility(), "modifier_gem_devilzhili", {} )
         end
     end
 end

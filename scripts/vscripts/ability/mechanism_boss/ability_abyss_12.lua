@@ -13,9 +13,12 @@ end
 
 function ability_abyss_12:OnSpellStart( ... )
 	local hCaster = self:GetCaster()
-	
-	hCaster:AddNewModifier(hCaster, self, "modifier_ability_abyss_12", {}) -- duration = 2
-
+	if hCaster:GetHealthPercent() > 80 then
+		self:EndCooldown()
+	-- 当释放者的血量不足80%
+	elseif hCaster:GetHealthPercent() <= 80 then
+		hCaster:AddNewModifier(hCaster, self, "modifier_ability_abyss_12", {}) -- duration = 2
+	end
 end
 
 if modifier_ability_abyss_12 == nil then 
@@ -71,15 +74,14 @@ function modifier_ability_abyss_12:FindEnemyRangeDamage(hCaster)
 			hCaster:GetTeamNumber(), 
 			hCaster:GetAbsOrigin(), 
 			hCaster, 
-			1000, 
+			99999, 
 			DOTA_UNIT_TARGET_TEAM_ENEMY, 
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
 			0, 0, false)
 
 	for _, enemy in pairs(enemys) do
-		local x = enemy:GetMaxHealth() * 0.8
+		--local x = enemy:GetMaxHealth() * 0.8
 		--print("x===================", x)
-		--if enemy == hCaster then return end
 
 		local EffectName = "particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start_bolt_parent.vpcf"
 		self.nFXIndex_3 = ParticleManager:CreateParticle( EffectName, PATTACH_ROOTBONE_FOLLOW, hCaster)
@@ -90,7 +92,7 @@ function modifier_ability_abyss_12:FindEnemyRangeDamage(hCaster)
 		ApplyDamage({
 			victim = enemy,
 			attacker = hCaster,
-			damage = x,
+			damage = enemy:GetMaxHealth() * 0.8,
 			damage_type = DAMAGE_TYPE_MAGICAL,
 		})
 	end

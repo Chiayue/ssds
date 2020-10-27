@@ -48,14 +48,13 @@ function MonsterChallenge:OnChallengeMonster(args)
     end
 
     if itemCost > PlayerResource:GetGold(nPlayerID) then
-        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="金币不够"})
+        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="GOLD_NOT_ENOUGH"})
         --防止连点器作弊
         CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"isCheck_prevent_cheat",{})
     else
         PlayerResource:ModifyGold(nPlayerID,-itemCost,true,DOTA_ModifyGold_PurchaseItem)
         if string.find(itemName, "ability_duliu") then
             --挑战毒瘤发育
-            send_tips_message(nPlayerID, "使用了贪婪！")
             MonsterChallenge:OnRewardGold(nPlayerID)
             GlobalVarFunc.duliuLevel = GlobalVarFunc.duliuLevel + 1
             MonsterChallenge:OnDuLiuAddNum(nPlayerID)
@@ -88,8 +87,9 @@ function MonsterChallenge:OnRewardGold(nPlayerID)
         local wood = 150 + 15 * hHero:GetLevel()
         otherWood = wood * 0.2
         Player_Data:AddPoint(nPlayerID,wood)
-        local tip = "发起贪婪获得了"..gold.."金币和"..wood.."木头！"
-        send_tips_message(nPlayerID, tip)
+
+        send_tips_message(nPlayerID, "USED_GREED_GET_GOLD", gold)
+        send_tips_message(nPlayerID, "USED_GREED_GET_WOOD", wood)
     end
 
     for i = 0,MAX_PLAYER - 1 do
@@ -98,8 +98,9 @@ function MonsterChallenge:OnRewardGold(nPlayerID)
             if i ~= nPlayerID then
                 PlayerResource:ModifyGold(i,otherGold,true,DOTA_ModifyGold_PurchaseItem)
                 Player_Data:AddPoint(i,otherWood)
-                local tips = "通过队友发起贪婪获得了"..otherGold.."金币和"..otherWood.."木头！"
-                send_tips_message(i, tips)
+               
+                send_tips_message(i, "USED_GREED_GET_GOLD", otherGold)
+                send_tips_message(i, "USED_GREED_GET_WOOD", otherWood)
             end
         end
     end
@@ -137,8 +138,7 @@ function MonsterChallenge:OnCreateMonster(name,color1,color2,color3,tips,PlayerI
     bigBoss:SetRenderColor(color1, color2, color3) 
     bigBoss.challengerID = tostring(PlayerID) 
 
-    local tip = "发起了弓箭导师挑战，注意啦"..tips.."出现在地图右上角，存在时间90秒！"
-    send_tips_message(PlayerID, tip)
+    send_tips_message(PlayerID, "CHALLENGE_ARCHER_SOUL",90)
 
     --挑战冷却时间
     MonsterChallenge:OnCoolDown(PlayerID)
@@ -200,7 +200,7 @@ function MonsterChallenge:OnAddChallengeAbility(PlayerID,ability,heroAbility)
         if tonumber(k) == PlayerID then
         
             if v.successChallengeNum >=4 then
-                CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(PlayerID),"send_error_message_client",{message="进阶槽已满，只能进阶4次哦！"})
+                CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(PlayerID),"send_error_message_client",{message="ADVANCED_SLOT_IS_FULL"})
             else
 
                 v.successChallengeNum = v.successChallengeNum + 1
@@ -235,7 +235,7 @@ function MonsterChallenge:OnAddChallengeAbility(PlayerID,ability,heroAbility)
                 end
                 
                 CustomNetTables:SetTableValue( "gameInfo", "challenge", player_successChallenge)
-                send_tips_message(PlayerID, "进阶成功！")
+                send_tips_message(PlayerID, "ADVANCED_SUCCESS")
 
                 local hHero = PlayerResource:GetSelectedHeroEntity(PlayerID)
                 if hHero:IsNull() then

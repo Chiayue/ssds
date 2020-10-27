@@ -134,13 +134,13 @@ function Filter:DamageFilter( params )
 		end
 		params.damage = math.floor(params.damage)
 		if targetName == "npc_dota_creature_damege_baoxiang" then
-			RandomEvents:InputPlayersBoxDamage(nPlayerID,params.damage)
+			RandomEvents:InputPlayersBoxDamage(nPlayerID,params.damage/10000)
         end
         
         if GlobalVarFunc.game_mode ~= "endless" then
-	        GlobalVarFunc.damage[nPlayerID+1] = GlobalVarFunc.damage[nPlayerID+1] + params.damage
+	        GlobalVarFunc.damage[nPlayerID+1] = GlobalVarFunc.damage[nPlayerID+1] + params.damage/10000
 		elseif string.sub(targetName,0,22)  == "npc_dota_creature_boss" then
-			GlobalVarFunc.damage[nPlayerID+1] = GlobalVarFunc.damage[nPlayerID+1] + params.damage
+			GlobalVarFunc.damage[nPlayerID+1] = GlobalVarFunc.damage[nPlayerID+1] + params.damage/10000
 		end
 	end
 	

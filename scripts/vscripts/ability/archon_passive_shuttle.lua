@@ -82,13 +82,13 @@ function modifier_archon_passive_shuttle:OnAttackLanded( params )
 	-- ParticleManager:SetParticleControl(nFXIndex, 0, Vector(500, 500, 500))
 	-- ParticleManager:SetParticleControl(nFXIndex, 1, hTarget:GetAbsOrigin())
 	-- ParticleManager:SetParticleControl(nFXIndex, 3, hTarget:GetAbsOrigin())
-	-- -- 新建特效
-	-- local EffectName_1 = "particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
-	-- local nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hTarget )
-	-- ParticleManager:SetParticleControl(nFXIndex_1, 0, Vector(500, 500, 500))
-	-- -- ParticleManager:SetParticleControl(nFXIndex_1, 1, hTarget:GetAbsOrigin())
-	-- -- ParticleManager:SetParticleControl(nFXIndex_1, 3, hTarget:GetAbsOrigin())
-	-- -- ParticleManager:SetParticleControl(nFXIndex_1, 9, hTarget:GetAbsOrigin())
+	-- 新建特效
+	local EffectName_1 = "particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
+	local nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hTarget )
+	ParticleManager:SetParticleControl(nFXIndex_1, 0, Vector(500, 500, 500))
+	-- ParticleManager:SetParticleControl(nFXIndex_1, 1, hTarget:GetAbsOrigin())
+	-- ParticleManager:SetParticleControl(nFXIndex_1, 3, hTarget:GetAbsOrigin())
+	-- ParticleManager:SetParticleControl(nFXIndex_1, 9, hTarget:GetAbsOrigin())
 
 	-- local EffectName_2 = "particles/econ/items/tinker/tinker_ti10_immortal_laser/tinker_ti10_immortal_laser.vpcf"
 	-- local nFXIndex_2 = ParticleManager:CreateParticle( EffectName_2, PATTACH_ABSORIGIN_FOLLOW, hTarget )
@@ -97,7 +97,7 @@ function modifier_archon_passive_shuttle:OnAttackLanded( params )
 	-- ParticleManager:SetParticleControl(nFXIndex_2, 3, hTarget:GetAbsOrigin())
 	-- ParticleManager:SetParticleControl(nFXIndex_2, 9, hTarget:GetAbsOrigin())
 
-	hTarget:AddNewModifier(hCaster, self:GetAbility(), "modifier_archon_passive_shuttle_particles", {duration = 1})
+	--hTarget:AddNewModifier(hCaster, self:GetAbility(), "modifier_archon_passive_shuttle_particles", {duration = 1})
 
 	EmitSoundOn( "Hero_Tinker.Heat-Seeking_Missile", hTarget )
 	-- 范围伤害
@@ -129,55 +129,55 @@ function modifier_archon_passive_shuttle:OnAttackLanded( params )
 	end
 end
 
-if modifier_archon_passive_shuttle_particles == nil then 
-	modifier_archon_passive_shuttle_particles = class({})
-end
+-- if modifier_archon_passive_shuttle_particles == nil then 
+-- 	modifier_archon_passive_shuttle_particles = class({})
+-- end
 
-function modifier_archon_passive_shuttle_particles:IsHidden()
-	return true
-end
+-- function modifier_archon_passive_shuttle_particles:IsHidden()
+-- 	return true
+-- end
 
-function modifier_archon_passive_shuttle_particles:OnCreated( args )
-	--if not IsServer() then return end
-	local hParent = self:GetParent()
-	--local hTarget = args.target
-	if not hParent.nFXIndex and not hParent.nFXIndex_1 and not hParent.nFXIndex_2 then
-		local EffectName = "particles/units/heroes/hero_techies/techies_blast_off.vpcf"
-		hParent.nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_RENDERORIGIN_FOLLOW, hParent )
-		ParticleManager:SetParticleControl(hParent.nFXIndex, 0, Vector(500, 500, 500))
-		ParticleManager:SetParticleControl(hParent.nFXIndex, 1, hParent:GetAbsOrigin())
-		ParticleManager:SetParticleControl(hParent.nFXIndex, 3, hParent:GetAbsOrigin())
-		-- 新建特效
-		local EffectName_1 = "particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
-		hParent.nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hParent )
-		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 0, Vector(500, 500, 500))
+-- function modifier_archon_passive_shuttle_particles:OnCreated( args )
+-- 	--if not IsServer() then return end
+-- 	local hParent = self:GetParent()
+-- 	--local hTarget = args.target
+-- 	if not hParent.nFXIndex and not hParent.nFXIndex_1 and not hParent.nFXIndex_2 then
+-- 		local EffectName = "particles/units/heroes/hero_techies/techies_blast_off.vpcf"
+-- 		hParent.nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_RENDERORIGIN_FOLLOW, hParent )
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex, 0, Vector(500, 500, 500))
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex, 1, hParent:GetAbsOrigin())
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex, 3, hParent:GetAbsOrigin())
+-- 		-- 新建特效
+-- 		local EffectName_1 = "particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
+-- 		hParent.nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hParent )
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 0, Vector(500, 500, 500))
 
-		local EffectName_2 = "particles/econ/items/tinker/tinker_ti10_immortal_laser/tinker_ti10_immortal_laser.vpcf"
-		hParent.nFXIndex_2 = ParticleManager:CreateParticle( EffectName_2, PATTACH_RENDERORIGIN_FOLLOW, hParent )
-		ParticleManager:SetParticleControl(hParent.nFXIndex_2, 0, Vector(500, 500, 500))
-		ParticleManager:SetParticleControl(hParent.nFXIndex_2, 1, hParent:GetAbsOrigin())
-		ParticleManager:SetParticleControl(hParent.nFXIndex_2, 3, hParent:GetAbsOrigin())
-		ParticleManager:SetParticleControl(hParent.nFXIndex_2, 9, hParent:GetAbsOrigin())
-	end
-end
+-- 		local EffectName_2 = "particles/econ/items/tinker/tinker_ti10_immortal_laser/tinker_ti10_immortal_laser.vpcf"
+-- 		hParent.nFXIndex_2 = ParticleManager:CreateParticle( EffectName_2, PATTACH_RENDERORIGIN_FOLLOW, hParent )
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_2, 0, Vector(500, 500, 500))
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_2, 1, hParent:GetAbsOrigin())
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_2, 3, hParent:GetAbsOrigin())
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_2, 9, hParent:GetAbsOrigin())
+-- 	end
+-- end
 
-function modifier_archon_passive_shuttle_particles:OnDestroy()
-	--if not IsServer() then return end
-	local hParent = self:GetParent()
-	if hParent.nFXIndex and hParent.nFXIndex_1 and hParent.nFXIndex_2 then 
-		ParticleManager:DestroyParticle( hParent.nFXIndex, false )
-		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex )
-		hParent.nFXIndex = nil
+-- function modifier_archon_passive_shuttle_particles:OnDestroy()
+-- 	--if not IsServer() then return end
+-- 	local hParent = self:GetParent()
+-- 	if hParent.nFXIndex and hParent.nFXIndex_1 and hParent.nFXIndex_2 then 
+-- 		ParticleManager:DestroyParticle( hParent.nFXIndex, false )
+-- 		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex )
+-- 		hParent.nFXIndex = nil
 
-		ParticleManager:DestroyParticle( hParent.nFXIndex_1, false )
-		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex_1 )
-		hParent.nFXIndex_1 = nil
+-- 		ParticleManager:DestroyParticle( hParent.nFXIndex_1, false )
+-- 		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex_1 )
+-- 		hParent.nFXIndex_1 = nil
 
-		ParticleManager:DestroyParticle( hParent.nFXIndex_2, false )
-		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex_2 )
-		hParent.nFXIndex_2 = nil
-	end
-end
+-- 		ParticleManager:DestroyParticle( hParent.nFXIndex_2, false )
+-- 		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex_2 )
+-- 		hParent.nFXIndex_2 = nil
+-- 	end
+-- end
 
 ------   减少冷却时间的modifier
 

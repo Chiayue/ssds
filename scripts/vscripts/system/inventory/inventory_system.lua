@@ -122,7 +122,7 @@ function InventorySystem:OnSetGemSeries(args)
 		SeriseSystem:WriteNetTable(hSeriesItem)
 	else
 		hRes["status"] = false
-		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="金币不够"})
+		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="GOLD_NOT_ENOUGH"})
 	end
 	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"inventory_system_event_setgem_series_callback",hRes)
 end

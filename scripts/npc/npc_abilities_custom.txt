@@ -542,7 +542,6 @@
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
 				"IsHidden"	"0"
-				"_IsAura"	"1"
 			}
 			"health_regen"
 			{
@@ -587,7 +586,6 @@
 			"particle"	"particles/units/heroes/hero_alchemist/alchemist_acid_spray_debuff.vpcf"
 			"particle"	"particles/econ/generic/generic_buff_1/generic_buff_1.vpcf"
 			"particle"	"particles/econ/generic/generic_aoe_explosion_sphere_1/generic_aoe_explosion_sphere_1.vpcf"
-			"soundfile"	""
 		}
 		"OnOwnerDied"
 		{
@@ -661,7 +659,6 @@
 				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
 				"Aura_Flags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				"IsHidden"	"0"
-				"_IsAura"	"1"
 			}
 			"create_acid_spray_armor_reduction_aura"
 			{
@@ -994,7 +991,6 @@
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ALLIES_YES"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
 		// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
@@ -1039,12 +1035,12 @@
 				"scepter_manacost"	"50"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ALLIES_YES"
 	}
 
 	"life_stealer_feast"
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_2"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1066,13 +1062,13 @@
 				"attack_speed_bonus"	"50"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 	}
 
 	"spirit_breaker_greater_bash"
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_3"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1125,6 +1121,7 @@
 				"movespeed_duration"	"3.0"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"	"SPELL_DISPELLABLE_YES_STRONG"
 		"AbilitySound"	"Hero_Spirit_Breaker.GreaterBash"
 		// Stats
@@ -1136,7 +1133,6 @@
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_3"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1175,6 +1171,7 @@
 				"max_range_tooltip"	"1500"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"	"SPELL_DISPELLABLE_YES"
 		"AbilitySound"	"hero_viper.CorrosiveSkin"
 		// Stats
@@ -1212,7 +1209,6 @@
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_PURE"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_2"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1244,6 +1240,7 @@
 				"slow"	"-100"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		// Damage.
 		// -------------------------------------------------------------------------------------------------------------
 		"AbilityDamage"	"50"
@@ -1253,7 +1250,6 @@
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_PURE"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_3"
 		"AbilityCooldown"	"3"
 		// General
@@ -1280,6 +1276,7 @@
 				"bonus_damage"	"50"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 	}
 
 	"visage_gravekeepers_cloak"
@@ -1332,7 +1329,6 @@
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_PHYSICAL"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_1"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1373,6 +1369,7 @@
 				"illusion_percentage"	"50"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilitySound"	"Hero_Antimage.ManaBreak"
 	}
 
@@ -1381,7 +1378,6 @@
 		"BaseClass"	"ability_datadriven"
 		"AbilityTextureName"	"phantom_assassin_blur"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_1"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1409,6 +1405,7 @@
 				"bonus_dodge"	"15"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilitySound"	"Hero_Antimage.ManaBreak"
 	}
 
@@ -1418,8 +1415,6 @@
 		"AbilityTextureName"	"ancient_apparition_cold_feet"
 		"ScriptFile"	"ability/creatures/create_monster_move_speed"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetType"	""
-		"AbilityUnitTargetTeam"	""
 	}
 
 	"Upgrade_AttackSpeed"
@@ -2778,7 +2773,6 @@
 		"AbilityTextureName"	"centaur_hoof_stomp"
 		"ScriptFile"	"ability/creatures/creature_bonus_chicken"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		// Special
 		// -------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -2799,6 +2793,7 @@
 				"gold_bag_duration"	"10.0"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		"IsOnCastBar"	"0"
 	}
 
@@ -2827,7 +2822,6 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -2858,6 +2852,7 @@
 				"agi_multiple_damage"	"30"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"gem_die_venom"
@@ -2868,7 +2863,6 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -2911,6 +2905,7 @@
 				"timer_attack_multiple"	"5"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"gem_raging_fire_interrogate"
@@ -2921,7 +2916,6 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -2965,6 +2959,7 @@
 				"timer_attack_multiple"	"5"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"archon_passive_solar_flare"
@@ -2976,7 +2971,6 @@
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_PHYSICAL"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilitySpecial"
 		{
@@ -3001,6 +2995,7 @@
 				"attack_multiple"	"20"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"gem_earth_burst"
@@ -3011,7 +3006,6 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -3044,6 +3038,7 @@
 				"attack_multiple"	"30"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"gem_shadow_quiet"
@@ -3054,7 +3049,6 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -3102,6 +3096,7 @@
 				"timer_attack_multiple"	"3"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"gem_Ice_storm"
@@ -3112,7 +3107,6 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -3159,6 +3153,7 @@
 				"timer_attack_multiple"	"3"
 			}
 		}
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"abilityyuyuko"
@@ -4119,7 +4114,6 @@
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CREEP"
 				"Aura_ApplyToCaster"	"0"
-				"_IsAura"	"1"
 			}
 			"modifier_ability_operate_attack_2"
 			{
@@ -4173,7 +4167,6 @@
 				"Aura_Radius"	"%radius"
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CREEP"
-				"_IsAura"	"1"
 			}
 			"modifier_ability_operate_attack_speed_2"
 			{
@@ -4227,7 +4220,6 @@
 				"Aura_Radius"	"%radius"
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CREEP"
-				"_IsAura"	"1"
 			}
 			"modifier_ability_operate_move_speed_2"
 			{
@@ -4281,7 +4273,6 @@
 				"Aura_Radius"	"%radius"
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CREEP"
-				"_IsAura"	"1"
 			}
 			"modifier_ability_operate_armor_2"
 			{
@@ -4335,7 +4326,6 @@
 				"Aura_Radius"	"%radius"
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CREEP"
-				"_IsAura"	"1"
 			}
 			"modifier_ability_operate_magicalResistance_2"
 			{
@@ -4908,81 +4898,87 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
 
-	"ability_the_injury"
+	"ability_abyss_1"
 	{
 		"BaseClass"	"ability_lua"
-		"AbilityTextureName"	"random"
-		"ScriptFile"	"ability/mechanism_Boss/ability_the_injury"
+		"AbilityTextureName"	"fanshang"
+		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_1"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCooldown"	"20"
+	}
+
+	"ability_abyss_2"
+	{
+		"BaseClass"	"ability_lua"
+		"AbilityTextureName"	"xuanfengzhan"
+		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_2"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCooldown"	"10"
+	}
+
+	"ability_abyss_3"
+	{
+		"BaseClass"	"ability_lua"
+		"AbilityTextureName"	"linghunlianjie"
+		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_3"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityCooldown"	"40"
 	}
 
-	"ability_abyss_2"
-	{
-		"BaseClass"	"ability_lua"
-		"AbilityTextureName"	"random"
-		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_2"
-		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	}
-
-	"ability_abyss_3"
-	{
-		"BaseClass"	"ability_lua"
-		"AbilityTextureName"	"random"
-		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_3"
-		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	}
-
 	"ability_abyss_4"
 	{
 		"BaseClass"	"ability_lua"
-		"AbilityTextureName"	"random"
+		"AbilityTextureName"	"miedijue"
 		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_4"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCooldown"	"20"
 	}
 
 	"ability_abyss_5"
 	{
 		"BaseClass"	"ability_lua"
-		"AbilityTextureName"	"random"
+		"AbilityTextureName"	"binjingchangqiong"
 		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_5"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCooldown"	"15"
 	}
 
 	"ability_abyss_6"
 	{
 		"BaseClass"	"ability_lua"
-		"AbilityTextureName"	"random"
+		"AbilityTextureName"	"guozaimoshi"
 		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_6"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCooldown"	"50"
 	}
 
 	"ability_abyss_7"
 	{
 		"BaseClass"	"ability_lua"
-		"AbilityTextureName"	"random"
+		"AbilityTextureName"	"benleijian"
 		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_7"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCooldown"	"50"
 	}
 
 	"ability_abyss_8"
 	{
 		"BaseClass"	"ability_lua"
-		"AbilityTextureName"	"random"
+		"AbilityTextureName"	"gangtiehujia"
 		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_8"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -4992,17 +4988,18 @@
 	"ability_abyss_9"
 	{
 		"BaseClass"	"ability_lua"
-		"AbilityTextureName"	"random"
+		"AbilityTextureName"	"weixiuxiaodui"
 		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_9"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCooldown"	"50"
 	}
 
 	"ability_abyss_10"
 	{
 		"BaseClass"	"ability_lua"
-		"AbilityTextureName"	"random"
+		"AbilityTextureName"	"fushiji"
 		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_10"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -5012,37 +5009,40 @@
 	"ability_abyss_11"
 	{
 		"BaseClass"	"ability_lua"
-		"AbilityTextureName"	"random"
+		"AbilityTextureName"	"heiankuangcao"
 		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_11"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCooldown"	"30"
 	}
 
 	"ability_abyss_12"
 	{
 		"BaseClass"	"ability_lua"
-		"AbilityTextureName"	"random"
+		"AbilityTextureName"	"tianshengzhinu"
 		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_12"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCooldown"	"20"
 	}
 
 	"ability_abyss_13"
 	{
 		"BaseClass"	"ability_lua"
-		"AbilityTextureName"	"random"
+		"AbilityTextureName"	"yanshuxielou"
 		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_13"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCooldown"	"20"
 	}
 
 	"ability_abyss_14"
 	{
 		"BaseClass"	"ability_lua"
-		"AbilityTextureName"	"random"
+		"AbilityTextureName"	"qishangquan"
 		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_14"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -5052,7 +5052,7 @@
 	"ability_abyss_15"
 	{
 		"BaseClass"	"ability_lua"
-		"AbilityTextureName"	"random"
+		"AbilityTextureName"	"nuyikuangji"
 		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_15"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
@@ -5060,8 +5060,19 @@
 	"ability_abyss_16"
 	{
 		"BaseClass"	"ability_lua"
-		"AbilityTextureName"	"random"
+		"AbilityTextureName"	"pinshengmehewoda"
 		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_16"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+
+	"ability_abyss_17"
+	{
+		"BaseClass"	"ability_lua"
+		"AbilityTextureName"	"dianming"
+		"ScriptFile"	"ability/mechanism_Boss/ability_abyss_17"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityCooldown"	"15"
 	}
 }

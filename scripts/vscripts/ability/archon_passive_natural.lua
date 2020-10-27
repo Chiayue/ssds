@@ -55,8 +55,6 @@ function modifier_archon_passive_natural:OnAttackLanded( params )
 	local aoe = self:GetAbility():GetSpecialValueFor( "aoe" )
 	local abil_damage = self:GetCaster():GetAgility() * self:GetAbility():GetSpecialValueFor( "coefficient" )
 	local duration = self:GetAbility():GetSpecialValueFor( "duration" )
-	
-	local max_stacks = self:GetAbility():GetSpecialValueFor( "max_stacks" )
 
 	local EffectName = "particles/econ/items/necrolyte/necro_sullen_harvest/necro_sullen_harvest_ambient_ground_smoke.vpcf"
 	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hTarget )
@@ -139,7 +137,9 @@ end
 function modifier_archon_passive_natural_debuff:GetEffectName()
 	return "particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
 end
-
+function modifier_archon_passive_natural_debuff:IsDebuff()
+	return true
+end
 function modifier_archon_passive_natural_debuff:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
@@ -148,7 +148,7 @@ function modifier_archon_passive_natural_debuff:OnRefresh()
 	if not IsServer() then return end
 	local nLevel = self:GetAbility():GetLevel()
 	if nLevel >= ABILITY_AWAKEN_2 then 
-		if self:GetStackCount() < 30 then
+		if self:GetStackCount() < 99 then
 			self:IncrementStackCount()
 		end
 	else

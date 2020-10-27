@@ -59,9 +59,9 @@ function modifier_archon_passive_time:OnAttackLanded( params )
 	local nLevel = self:GetAbility():GetLevel()
 	local hTarget = params.target
 	
-	-- local EffectName = "particles/units/heroes/hero_arc_warden/arc_warden_tempest_cast.vpcf"
-	-- local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hTarget )
-	-- ParticleManager:SetParticleControl(nFXIndex, 0, Vector(500, 500, 500))
+	local EffectName = "particles/units/heroes/hero_arc_warden/arc_warden_tempest_cast.vpcf"
+	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hTarget )
+	ParticleManager:SetParticleControl(nFXIndex, 0, Vector(500, 500, 500))
 	-- -- 新建特效
 	-- local EffectName_1 = "particles/econ/items/storm_spirit/strom_spirit_ti8/storm_sprit_ti8_overload_discharge.vpcf"
 	-- local nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hTarget )
@@ -69,7 +69,7 @@ function modifier_archon_passive_time:OnAttackLanded( params )
 	-- ParticleManager:SetParticleControl(nFXIndex_1, 2, hTarget:GetAbsOrigin())
 	-- ParticleManager:SetParticleControl(nFXIndex_1, 3, hTarget:GetAbsOrigin())
 
-	hTarget:AddNewModifier(hCaster, self:GetAbility(), "modifier_archon_passive_time_particles", {duration = 1})
+	--hTarget:AddNewModifier(hCaster, self:GetAbility(), "modifier_archon_passive_time_particles", {duration = 1})
 
 	EmitSoundOn( "Hero_Zuus.StaticField", hTarget )
 	-- 范围伤害
@@ -128,41 +128,41 @@ function modifier_archon_passive_time:OnDeath(args)
 	end
 end 
 
-if modifier_archon_passive_time_particles == nil then 
-	modifier_archon_passive_time_particles = class({})
-end
+-- if modifier_archon_passive_time_particles == nil then 
+-- 	modifier_archon_passive_time_particles = class({})
+-- end
 
-function modifier_archon_passive_time_particles:IsHidden()
-	return true
-end
+-- function modifier_archon_passive_time_particles:IsHidden()
+-- 	return true
+-- end
 
-function modifier_archon_passive_time_particles:OnCreated( args )
-	--if not IsServer() then return end
-	local hParent = self:GetParent()
-	--local hTarget = args.target
-	if not hParent.nFXIndex and not hParent.nFXIndex_1 then
-		local EffectName = "particles/units/heroes/hero_arc_warden/arc_warden_tempest_cast.vpcf"
-		hParent.nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hParent )
-		ParticleManager:SetParticleControl(hParent.nFXIndex, 0, Vector(500, 500, 500))
-		-- 新建特效
-		local EffectName_1 = "particles/econ/items/storm_spirit/strom_spirit_ti8/storm_sprit_ti8_overload_discharge.vpcf"
-		hParent.nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hParent )
-		ParticleManager:SetParticleControl( hParent.nFXIndex_1, 0, Vector(500, 500, 500))
-		ParticleManager:SetParticleControl( hParent.nFXIndex_1, 2, hParent:GetAbsOrigin())
-		ParticleManager:SetParticleControl( hParent.nFXIndex_1, 3, hParent:GetAbsOrigin())
-	end
-end
+-- function modifier_archon_passive_time_particles:OnCreated( args )
+-- 	--if not IsServer() then return end
+-- 	local hParent = self:GetParent()
+-- 	--local hTarget = args.target
+-- 	if not hParent.nFXIndex and not hParent.nFXIndex_1 then
+-- 		local EffectName = "particles/units/heroes/hero_arc_warden/arc_warden_tempest_cast.vpcf"
+-- 		hParent.nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hParent )
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex, 0, Vector(500, 500, 500))
+-- 		-- 新建特效
+-- 		local EffectName_1 = "particles/econ/items/storm_spirit/strom_spirit_ti8/storm_sprit_ti8_overload_discharge.vpcf"
+-- 		hParent.nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hParent )
+-- 		ParticleManager:SetParticleControl( hParent.nFXIndex_1, 0, Vector(500, 500, 500))
+-- 		ParticleManager:SetParticleControl( hParent.nFXIndex_1, 2, hParent:GetAbsOrigin())
+-- 		ParticleManager:SetParticleControl( hParent.nFXIndex_1, 3, hParent:GetAbsOrigin())
+-- 	end
+-- end
 
-function modifier_archon_passive_time_particles:OnDestroy()
-	--if not IsServer() then return end
-	local hParent = self:GetParent()
-	if hParent.nFXIndex and hParent.nFXIndex_1 then 
-		ParticleManager:DestroyParticle( hParent.nFXIndex, false )
-		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex )
-		hParent.nFXIndex = nil
+-- function modifier_archon_passive_time_particles:OnDestroy()
+-- 	--if not IsServer() then return end
+-- 	local hParent = self:GetParent()
+-- 	if hParent.nFXIndex and hParent.nFXIndex_1 then 
+-- 		ParticleManager:DestroyParticle( hParent.nFXIndex, false )
+-- 		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex )
+-- 		hParent.nFXIndex = nil
 
-		ParticleManager:DestroyParticle( hParent.nFXIndex_1, false )
-		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex_1 )
-		hParent.nFXIndex_1 = nil
-	end
-end
+-- 		ParticleManager:DestroyParticle( hParent.nFXIndex_1, false )
+-- 		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex_1 )
+-- 		hParent.nFXIndex_1 = nil
+-- 	end
+-- end

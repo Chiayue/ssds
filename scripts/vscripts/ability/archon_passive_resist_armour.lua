@@ -82,18 +82,18 @@ function modifier_archon_passive_resist_armour:OnAttackLanded( params )
 	local nLevel = self:GetAbility():GetLevel()
 	local hTarget = params.target
 
-	-- local EffectName = "particles/down_particles/blue/down_particles_blue.vpcf"
-	-- local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_RENDERORIGIN_FOLLOW, hTarget )
-	-- ParticleManager:SetParticleControl(nFXIndex, 0, Vector(500, 500, 500))
-	-- ParticleManager:SetParticleControl(nFXIndex, 1, hTarget:GetAbsOrigin())
-	-- ParticleManager:SetParticleControl(nFXIndex, 3, hTarget:GetAbsOrigin())
-	-- ParticleManager:SetParticleControl(nFXIndex, 4, hTarget:GetAbsOrigin())
-	-- -- 新建特效
+	local EffectName = "particles/down_particles/blue/down_particles_blue.vpcf"
+	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_RENDERORIGIN_FOLLOW, hTarget )
+	ParticleManager:SetParticleControl(nFXIndex, 0, Vector(500, 500, 500))
+	ParticleManager:SetParticleControl(nFXIndex, 1, hTarget:GetAbsOrigin())
+	ParticleManager:SetParticleControl(nFXIndex, 3, hTarget:GetAbsOrigin())
+	ParticleManager:SetParticleControl(nFXIndex, 4, hTarget:GetAbsOrigin())
+	-- 新建特效
 	-- local EffectName_1 = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_aftershock.vpcf"
 	-- local nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hTarget )
 	-- ParticleManager:SetParticleControl(nFXIndex_1, 0, Vector(500, 500, 500))
 
-	hTarget:AddNewModifier(hCaster, self:GetAbility(), "modifier_archon_passive_resist_armour_particles", {duration = 1})
+	--hTarget:AddNewModifier(hCaster, self:GetAbility(), "modifier_archon_passive_resist_armour_particles", {duration = 1})
 
 	EmitSoundOn( "Hero_VengefulSpirit.WaveOfTerror", hTarget )
 	-- 范围伤害
@@ -127,42 +127,42 @@ function modifier_archon_passive_resist_armour:GetModifierPhysicalArmorBonus()
 	 return self:GetCaster():GetModifierStackCount("modifier_archon_passive_resist_armour", nil)
 end
 
-if modifier_archon_passive_resist_armour_particles == nil then 
-	modifier_archon_passive_resist_armour_particles = class({})
-end
+-- if modifier_archon_passive_resist_armour_particles == nil then 
+-- 	modifier_archon_passive_resist_armour_particles = class({})
+-- end
 
-function modifier_archon_passive_resist_armour_particles:IsHidden()
-	return true
-end
+-- function modifier_archon_passive_resist_armour_particles:IsHidden()
+-- 	return true
+-- end
 
-function modifier_archon_passive_resist_armour_particles:OnCreated( args )
-	--if not IsServer() then return end
-	local hParent = self:GetParent()
-	--local hTarget = args.target
-	if not hParent.nFXIndex and not hParent.nFXIndex_1 then
-		local EffectName = "particles/down_particles/blue/down_particles_blue.vpcf"
-		hParent.nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_RENDERORIGIN_FOLLOW, hParent )
-		ParticleManager:SetParticleControl(hParent.nFXIndex, 0, Vector(500, 500, 500))
-		ParticleManager:SetParticleControl(hParent.nFXIndex, 1, hParent:GetAbsOrigin())
-		ParticleManager:SetParticleControl(hParent.nFXIndex, 3, hParent:GetAbsOrigin())
-		ParticleManager:SetParticleControl(hParent.nFXIndex, 4, hParent:GetAbsOrigin())
-		-- 新建特效
-		local EffectName_1 = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_aftershock.vpcf"
-		hParent.nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hParent )
-		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 0, Vector(500, 500, 500))
-	end
-end
+-- function modifier_archon_passive_resist_armour_particles:OnCreated( args )
+-- 	--if not IsServer() then return end
+-- 	local hParent = self:GetParent()
+-- 	--local hTarget = args.target
+-- 	if not hParent.nFXIndex and not hParent.nFXIndex_1 then
+-- 		local EffectName = "particles/down_particles/blue/down_particles_blue.vpcf"
+-- 		hParent.nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_RENDERORIGIN_FOLLOW, hParent )
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex, 0, Vector(500, 500, 500))
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex, 1, hParent:GetAbsOrigin())
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex, 3, hParent:GetAbsOrigin())
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex, 4, hParent:GetAbsOrigin())
+-- 		-- 新建特效
+-- 		local EffectName_1 = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_aftershock.vpcf"
+-- 		hParent.nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hParent )
+-- 		ParticleManager:SetParticleControl(hParent.nFXIndex_1, 0, Vector(500, 500, 500))
+-- 	end
+-- end
 
-function modifier_archon_passive_resist_armour_particles:OnDestroy()
-	--if not IsServer() then return end
-	local hParent = self:GetParent()
-	if hParent.nFXIndex and hParent.nFXIndex_1 then 
-		ParticleManager:DestroyParticle( hParent.nFXIndex, false )
-		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex )
-		hParent.nFXIndex = nil
+-- function modifier_archon_passive_resist_armour_particles:OnDestroy()
+-- 	--if not IsServer() then return end
+-- 	local hParent = self:GetParent()
+-- 	if hParent.nFXIndex and hParent.nFXIndex_1 then 
+-- 		ParticleManager:DestroyParticle( hParent.nFXIndex, false )
+-- 		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex )
+-- 		hParent.nFXIndex = nil
 
-		ParticleManager:DestroyParticle( hParent.nFXIndex_1, false )
-		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex_1 )
-		hParent.nFXIndex_1 = nil
-	end
-end
+-- 		ParticleManager:DestroyParticle( hParent.nFXIndex_1, false )
+-- 		ParticleManager:ReleaseParticleIndex( hParent.nFXIndex_1 )
+-- 		hParent.nFXIndex_1 = nil
+-- 	end
+-- end

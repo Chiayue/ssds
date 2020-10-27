@@ -3890,6 +3890,7 @@
 	{
 		"BaseClass"	"item_lua"
 		"AbilityTextureName"	"item_greater_salve"
+		"ScriptFile"	"item/item_corrosive"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -3906,8 +3907,9 @@
 
 	"item_the_wind_elements_invulnerable"
 	{
-		"BaseClass"	"item_datadriven"
+		"BaseClass"	"item_lua"
 		"AbilityTextureName"	"item_murenzhuang"
+		"ScriptFile"	"item/item_the_wind_elements_invulnerable"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -3927,8 +3929,9 @@
 
 	"item_ray_elements"
 	{
-		"BaseClass"	"item_datadriven"
+		"BaseClass"	"item_lua"
 		"AbilityTextureName"	"item_thunderbolt_symbol"
+		"ScriptFile"	"item/item_ray_elements"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"

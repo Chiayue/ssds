@@ -123,13 +123,6 @@ function PlayerStoreReward:Set(hHero,hCurrentStore)
 					Archive:EditPlayerProfile(nPlayerID,sToggleKey,1)
 				end
 			elseif sStoreName == "dark_wings" then
-				-- 开局获得一个宝物书<br>全属性+7%<br>最终伤害增加5%
-				local baowu = hHero:AddItemByName("item_baowu_book_dark_wings")
-				baowu:SetCurrentCharges(1)
-				baowu:SetPurchaser(hHero)
-				Player_Data:AddBasebonus(hHero,DOTA_ATTRIBUTE_STRENGTH,50)
-				Player_Data:AddBasebonus(hHero,DOTA_ATTRIBUTE_AGILITY,50)
-				Player_Data:AddBasebonus(hHero,DOTA_ATTRIBUTE_INTELLECT,50)
 				hHero:AddNewModifier(hHero, hBonusAbility, sModiPrefix..sStoreName, {}) 
 				if hArchive[sToggleKey] ~= nil then
 					if hArchive[sToggleKey] == 1 then
@@ -402,13 +395,57 @@ function modifier_store_reward_golden_dragon_effect:OnDestroy()
 end
 
 ----------- 翅膀 -----------
+local hWingModel = {
+	["npc_dota_hero_lina"] = "models/heroes/lina/lina.vmdl",
+	["npc_dota_hero_lone_druid"] = "models/heroes/lone_druid/lone_druid.vmdl",
+	["npc_dota_hero_crystal_maiden"] = "models/heroes/crystal_maiden/crystal_maiden.vmdl",
+	["npc_dota_hero_enchantress"] = "models/heroes/enchantress/enchantress.vmdl",
+	["npc_dota_hero_drow_ranger"] = "models/heroes/drow/drow_base.vmdl",
+	["npc_dota_hero_skywrath_mage"] = "models/heroes/skywrath_mage/skywrath_mage.vmdl",
+	["npc_dota_hero_troll_warlord"] = "models/heroes/troll_warlord/troll_warlord.vmdl",
+	["npc_dota_hero_windrunner"] = "models/heroes/windrunner/windrunner.vmdl",
+	["npc_dota_hero_rubick"] = "models/heroes/rubick/rubick.vmdl",
+	["npc_dota_hero_templar_assassin"] = "models/heroes/lanaya/lanaya.vmdl",
+	["npc_dota_hero_arc_warden"] = "models/heroes/arc_warden/arc_warden.vmdl",
+	["npc_dota_hero_invoker"] = "models/heroes/invoker/invoker.vmdl",
+}
 if modifier_store_reward_dark_wings  == nil then modifier_store_reward_dark_wings = class(modifier_store_reward) end
+function modifier_store_reward_dark_wings:OnCreated() 
+	if not IsServer() then return end
+	self:IncrementStackCount()
+	-- 全属性+7%<br>最终伤害增加5%
+	print("OnCreated")
+	Player_Data:AddBasebonus(self:GetParent(),DOTA_ATTRIBUTE_STRENGTH,50)
+	Player_Data:AddBasebonus(self:GetParent(),DOTA_ATTRIBUTE_AGILITY,50)
+	Player_Data:AddBasebonus(self:GetParent(),DOTA_ATTRIBUTE_INTELLECT,50)
+end
+function modifier_store_reward_dark_wings:OnRefresh() 
+	if not IsServer() then return end
+	self:IncrementStackCount()
+	-- 全属性+7%<br>最终伤害增加5%
+	print("OnRefresh")
+	Player_Data:AddBasebonus(self:GetParent(),DOTA_ATTRIBUTE_STRENGTH,50)
+	Player_Data:AddBasebonus(self:GetParent(),DOTA_ATTRIBUTE_AGILITY,50)
+	Player_Data:AddBasebonus(self:GetParent(),DOTA_ATTRIBUTE_INTELLECT,50)
+end
 -- 对应特效
 if modifier_store_reward_dark_wings_effect == nil then modifier_store_reward_dark_wings_effect = class(modifier_store_reward_effect) end
 function modifier_store_reward_dark_wings_effect:OnCreated() 
-	self.nFXIndex = ParticleManager:CreateParticle("maps/cavern_assets/particles/cavern_drip_glow.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	if not IsServer() then return end
+	local hParent = self:GetParent()
+	local sUnitName = hParent:GetUnitName() 
+	local sModelName = hParent:GetModelName() 
+	local sNewName = string.gsub(sUnitName,"npc_dota_hero_","")
+	if hWingModel[sUnitName] == sModelName then
+		local sWingPath = "particles/diy_particles/"..sNewName.."_wing.vpcf";
+		self.nFXIndex = ParticleManager:CreateParticle(sWingPath, PATTACH_CUSTOMORIGIN, hParent)
+		ParticleManager:SetParticleControlEnt(self.nFXIndex, 0, hParent, PATTACH_POINT_FOLLOW, "attach_hitloc", hParent:GetAbsOrigin(),true)
+	else
+		self.nFXIndex = ParticleManager:CreateParticle("maps/cavern_assets/particles/cavern_drip_glow.vpcf", PATTACH_CUSTOMORIGIN, hParent)
+	end
 end
 
 function modifier_store_reward_dark_wings_effect:OnDestroy() 
+	if not IsServer() then return end
 	ParticleManager:DestroyParticle(self.nFXIndex,true)
 end

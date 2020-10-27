@@ -45,7 +45,7 @@ function item_talent_upgrade:OnSpellStart()
 			hTalentPassive:SetLevel(nLevel+1)
 			self:SpendCharge()
 		else
-			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="天赋已满级"})
+			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="FULL_TALENT"})
 		end
 	end
 	

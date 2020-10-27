@@ -110,7 +110,11 @@ function Player_Select_Ability:ChallengeGreedy( args )
 		    local nMaxCooldown = hDuliu["duliu_max_cd"]
 		    hDuliuAbility:StartCooldown(nMaxCooldown)
 		    Player_Data:Set(nPlayerID,"status","duliu_in_cd",nMaxCooldown)
-		    send_tips_message(nPlayerID, "使用了贪婪！")
+		    local gameEvent = {}
+            gameEvent[ "player_id" ] = nPlayerID
+            gameEvent[ "teamnumber" ] = -1
+            gameEvent[ "message" ] = "#DOTA_HUD_USE_GREED"
+            FireGameEvent( "dota_combat_event_message", gameEvent )
 		    MonsterChallenge:OnRewardGold(nPlayerID)
 		    GlobalVarFunc.duliuLevel = GlobalVarFunc.duliuLevel + 1
 		    MonsterChallenge:OnDuLiuAddNum(nPlayerID)
@@ -118,7 +122,7 @@ function Player_Select_Ability:ChallengeGreedy( args )
 		    CustomNetTables:SetTableValue("common", "greedy_level", { greedy_level = GlobalVarFunc.duliuLevel})
 		    CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"challenge_greedy_success",{})
 		else
-			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="冷却中"})
+			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="COOLING_IN_PROGRESS"})
 		end
 	end
 end
@@ -185,7 +189,7 @@ function Player_Select_Ability:Talent_Selected(args)
 		-- 爆裂
 		local hBonusBA = hNewHero:FindAbilityByName("bonus_base_attackspeed")
 		hBonusBA:SetLevel(1)
-		
+		Player_Data:InitModifier( hNewHero )
 	    CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"closed_ability_select",{})
 	    Player_Data():AddPoint(nPlayerID,200)
 	    CustomNetTables:SetTableValue( "player_data", "passive_select", hPassive )
@@ -197,16 +201,7 @@ function Player_Select_Ability:Talent_Selected(args)
             local reward_lv = getDataOfIndex(v,REWARD_TABLE[sRewardKey])
             FileReward:SetReward(sRewardKey,reward_lv,hNewHero,hBlink)
         end
-        -- 读取商品存档信息
-        Player_Data:InitModifier( hNewHero )
-        local hCurrentStore = Store:GetData(nPlayerID)
-        PlayerStoreReward:Set( hNewHero, hCurrentStore)
-        ArrowSoulMeditation:OnInitArrowSoulMeditation(hNewHero)
-        -- 成就奖励验证
-        ArrowSoulReward:CheckReward( hNewHero )
-        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"show_arrowSoul_meditationButton",{})
-       	
-	    -- 无尽模式下注册背包和UI
+         -- 无尽模式下注册背包和UI
 	    if GlobalVarFunc.game_mode == "endless" or  GlobalVarFunc.game_type == -2 then
 	    	InventoryBackpack:RegisterUnit( hNewHero )
 	    	local hArchiveEqui =  Archive:GetPlayerEqui(nPlayerID)
@@ -247,6 +242,28 @@ function Player_Select_Ability:Talent_Selected(args)
 	   	if  GlobalVarFunc.game_type == 1001 then
 	   		hNewHero:AddNewModifier(hNewHero, nil, "modifier_autistic_every_week", {})
 	   	end
+
+	   	-- 提示
+	   	local gameEvent = {}
+		gameEvent[ "ability_name" ] = sAbilityName
+		gameEvent[ "player_id" ] = nPlayerID
+		gameEvent[ "teamnumber" ] = -1
+		gameEvent[ "message" ] = "#DOTA_HUD_SELECT_HERO"
+		FireGameEvent( "dota_combat_event_message", gameEvent )
+
+		-- 读取商品存档信息
+		Timer(1,function()
+	   		
+	        local hCurrentStore = Store:GetData(nPlayerID)
+	        PlayerStoreReward:Set( hNewHero, hCurrentStore)
+	        ArrowSoulMeditation:OnInitArrowSoulMeditation(hNewHero)
+	        -- 成就奖励验证
+	        ArrowSoulReward:CheckReward( hNewHero )
+	        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"show_arrowSoul_meditationButton",{})
+	   	end)
+	   	
+        
+
     end
 end
 
@@ -349,7 +366,7 @@ function Player_Select_Ability:Deputy_Selected( args )
 	    local Ability = hHero:AddAbility(sAbilityName)
 	   	Ability:SetLevel(1)
 	   	-- 无尽模式
-	   	if GlobalVarFunc.game_mode == "endless" then
+	   	if GlobalVarFunc.game_mode == "endless" or GlobalVarFunc.game_mode == "hook" then
 	   		deputy_2nd:SetHidden(false)
 	   		deputy_2nd:SetLevel(1)
 	   	end
@@ -698,10 +715,10 @@ function AttributeCalculation(hHero)
 	hAttr["final_damage"] = nFinalDamage
 	-------------------- 物理伤害加成 --------------------
 	local nPhysicalDamage =  hHero:GetAgility() * 0.0002 -- 1W点200%
-	local sHeroName = hHero:GetUnitName()
-	if sHeroName == "npc_dota_hero_troll_warlord" then
-		nPhysicalDamage = nPhysicalDamage * 0.75
-	end
+	-- local sHeroName = hHero:GetUnitName()
+	-- if sHeroName == "npc_dota_hero_troll_warlord" then
+	-- 	nPhysicalDamage = nPhysicalDamage * 0.75
+	-- end
 	-- local nAgiPhysicalDamage =  hHero:GetAgility() * 0.002 -- 1W点200%
 	hAttr["physical_damage"] = nPhysicalDamage + nFinalDamage
 	-------------------- 法术伤害加成 --------------------

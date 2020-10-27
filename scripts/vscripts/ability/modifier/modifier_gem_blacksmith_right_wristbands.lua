@@ -21,7 +21,7 @@ function modifier_gem_blacksmith_right_wristbands:OnCreated(params)
 	if IsServer() then
         local hero = self:GetParent()
         if hero:HasModifier("modifier_gem_blacksmith_left_wristbands") and not hero:HasModifier("modifier_gem_blacksmith_power") then
-            hero:AddNewModifier( hero, nil, "modifier_gem_blacksmith_power", {} )
+            hero:AddNewModifier( hero, self:GetAbility(), "modifier_gem_blacksmith_power", {} )
         end
     end
 end

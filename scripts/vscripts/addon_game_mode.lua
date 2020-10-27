@@ -8,7 +8,7 @@ require("global/global_var_func")
 require("global/common")
 require("utils/msg")
 require("utils/timer")
----- 伍松
+---- wusong
 require("global/modifier_link")
 require("gameMode/game_mode")
 require("info/game_playerinfo")
@@ -22,7 +22,7 @@ require("randomEvents/random_events")
 require("randomEvents/treasure_selected")
 require("arrow_Soul_meditation/arrowSoulMeditation")
 require("events")
---- 郭源
+--- guoyuan
 require("player_data")
 require("player_select_ability")
 require("filter")
@@ -31,8 +31,6 @@ require("service/service")
 require("info/file_reward")
 require("heroes/wearable_manager")
 require("system/inventory/inventory_system")
--- 王黎明
-require("player_inlaid_gemstone")
 --
 require("task/tasksystem")
 --排行榜

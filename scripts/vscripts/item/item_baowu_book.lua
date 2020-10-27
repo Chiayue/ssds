@@ -39,10 +39,15 @@ function item_gerenbaoWu_book:OnSpellStart( event )
 	end
 	local nPlayerID = hHero:GetPlayerID()
 	local hPlayer = PlayerResource:GetPlayer(nPlayerID)
-	if hHero.Baowu < 3 then
+	-- 漆黑
+	local nDarkWings = Store:GetData(nPlayerID,"dark_wings")
+	local nUseLimit = 3
+	if nDarkWings ~= nil and nDarkWings > 0 then
+		nUseLimit = 5
+	end
+	if hHero.Baowu < nUseLimit then
 		hHero.Baowu = hHero.Baowu + 1
 		self:SpendCharge()
-
 		--拥有神赐光环的玩家宝物4选1，没有则3选1
 		local selectNum = 3
 		local aura_godNum = Store:GetData(nPlayerID,"aura_god")
@@ -63,7 +68,7 @@ function item_gerenbaoWu_book:OnSpellStart( event )
 
 		CustomGameEventManager:Send_ServerToPlayer(hPlayer,"show_treasure_select", {treasureTable = newTable})
 	else
-		CustomGameEventManager:Send_ServerToPlayer(hPlayer,"send_error_message_client",{message="个人宝物书使用已达到上限"})
+		CustomGameEventManager:Send_ServerToPlayer(hPlayer,"send_error_message_client",{message="PERSONAL_TREASURE_BOOK_USAGE_LIMIT"})
 	end
 end
 
@@ -101,7 +106,7 @@ function item_baowu_book_dark_wings:OnSpellStart( event )
 			end
 			CustomGameEventManager:Send_ServerToPlayer(hPlayer,"show_treasure_select", {treasureTable = newTable})
 		else
-			CustomGameEventManager:Send_ServerToPlayer(hPlayer,"send_error_message_client",{message="特殊宝物书使用已达到上限"})
+			CustomGameEventManager:Send_ServerToPlayer(hPlayer,"send_error_message_client",{message="SPECIAL_TREASURE_BOOK_USAGE_LIMIT"})
 		end
 	end
 end

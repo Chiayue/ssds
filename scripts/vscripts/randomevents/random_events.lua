@@ -93,12 +93,12 @@ function RandomEvents:OnOperateRewards()
             --木头
             -- local wood = math.floor( v.operate_gold * 1 )
             -- Player_Data:AddPoint(PlayerID,wood)
-            -- send_tips_message(PlayerID, "通过随机事件获得"..wood.."木头！")
+            -- send_tips_message(PlayerID, "ROUND_REVENUE_WOOD", gold)
             --金币
             local gold = v.operate_gold * GlobalVarFunc.InvestmentAndOperate[PlayerID+1] * GlobalVarFunc.OperateRewardCoefficient[PlayerID+1]
             gold = math.floor( gold * 2 )
             PlayerResource:ModifyGold(PlayerID,gold,true,DOTA_ModifyGold_Unspecified)
-            send_tips_message(PlayerID, "获得回合收入"..gold.."金币！")
+            send_tips_message(PlayerID, "ROUND_REVENUE_GOLD", gold)
         end
     end
 
@@ -135,15 +135,16 @@ function RandomEvents:OnCreateDamageStatisticsBox()
             return 1
         else
             UTIL_Remove(box)
-            self:OnBoxDamageRewardGold()
+            Timer(1, function()
+                self:OnBoxDamageRewardGold()
+            end)
             return nil
         end
     end, 0)  
 end
 
 function RandomEvents:OnBoxDamageRewardGold()
-    local playersBoxDamageInfo = CustomNetTables:GetTableValue( "players_boxDamage", "players_boxDamage" )
-    for k,v in pairs(playersBoxDamageInfo) do
+    for k,v in pairs(players_boxDamage) do
         local steam_id = PlayerResource:GetSteamAccountID(tonumber(k))
         if steam_id ~= 0 then
             local PlayerID = tonumber(k)
@@ -151,16 +152,17 @@ function RandomEvents:OnBoxDamageRewardGold()
             if nPlayer ~= nil then
                 local aHero = nPlayer:GetAssignedHero()
                 local gold = 0
-                if v.playerBoxDamage > 1000000 then
-                    gold = v.playerBoxDamage/10000 + 10000
+                local damage = v.playerBoxDamage * 10000
+                if damage > 1000000 then
+                    gold = damage/10000 + 10000
                 else
-                    gold = v.playerBoxDamage/100 + 100
+                    gold = damage/100 + 100
                 end
            
+                gold = math.floor(gold)
                 PlayerResource:ModifyGold(PlayerID,gold,true,DOTA_ModifyGold_Unspecified)
                 PopupGoldGain(aHero, gold)
-                local tip = "获得宝箱伤害奖励"..math.floor(gold).."金币！"
-                send_tips_message(PlayerID, tip)
+                send_tips_message(PlayerID, "BOX_DAMAGE_REWARD_GOLD", gold)
             end
         end
     end
@@ -229,8 +231,6 @@ function RandomEvents:OnCreateBusinessMan()
     local businessMan = CreateUnitByName(name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
     businessMan:AddNewModifier(nil, nil, "modifier_invulnerable", {})
     CustomGameEventManager:Send_ServerToAllClients("businessMan_index",{index=businessMan:entindex()})
-
-    send_tips_message(0, "注意啦，天使商品店出现在地图中心，存在时间90秒！")
 
     local time = 90
     GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("spawn_creep_think"), 
@@ -353,7 +353,7 @@ function RandomEvents:OnAddBusinessItem(args)
     end
 
     if itemCost > PlayerResource:GetGold(nPlayerID) then
-        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="金币不够"})
+        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="GOLD_NOT_ENOUGH"})
     else
         PlayerResource:ModifyGold(nPlayerID,-itemCost,true,DOTA_ModifyGold_PurchaseItem)
         hHero:AddItemByName(itemName)

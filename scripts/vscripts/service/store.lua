@@ -53,20 +53,20 @@ end
 -- 读取商品列表
 function Store:LoadGoodsList()
 	Service:HTTPRequest("POST", ACTION_STORE_LOAD_GOODS_LIST, {}, function(iStatusCode, sBody)
-		print("LoadGoodsList:",iStatusCode)
 		if iStatusCode == 200 then
 			local hBody = json.decode(sBody)
 			goods_list = hBody.data
 			for k,v in pairs(goods_list) do
-			if v["free_level"] > 0 then
-				local hRewardInfo = {}
-				hRewardInfo["key"] = v["key"]
-				hRewardInfo["stack"] = v["stack"]
-				hRewardInfo["price"] = v["price"]
-				hMapsLevelReward[v["free_level"]] = hRewardInfo
+				if v["free_level"] > 0 then
+					local hRewardInfo = {}
+					hRewardInfo["key"] = v["key"]
+					hRewardInfo["stack"] = v["stack"]
+					hRewardInfo["price"] = v["price"]
+					hMapsLevelReward[v["free_level"]] = hRewardInfo
+				end
 			end
-		end
-
+			
+			CustomNetTables:SetTableValue("service", "load_time", {week = hBody.msg})
 			CustomNetTables:SetTableValue("service", "store_goods_list", goods_list)
 		end
 	end, REQUEST_TIME_OUT)

@@ -56,10 +56,10 @@ function item_archer_bow_class:OnSpellStart()
 			end
 		else
 			--print("bow is max")
-			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="已达到最高等级"})
+			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="HAS_REACHED_THE_HIGHEST_LEVEL"})
 		end
 	else
-		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="需要弓箭等级达到6级"})
+		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="ARROW_LEVEL_NEED_TO_REACH_SIX"})
 		--print("level need 6")
 	end
 

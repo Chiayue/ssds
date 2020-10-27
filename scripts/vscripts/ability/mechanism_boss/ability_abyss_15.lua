@@ -38,14 +38,14 @@ end
 function modifier_ability_abyss_15:OnAttackLanded( kv )
 	local hParent = self:GetParent()
 	local hAttacker = kv.attacker   -- 攻击者	
-	local target = kv.target   		-- 受害者   
+	local hTarget = kv.target   		-- 受害者   
 
 	if hAttacker ~= hParent then
 		return 0
 	end
 	
-	if hParent:HasModifier("modifier_ability_abyss_15_buff") then 
-		local swipes_buff = hParent:FindModifierByName("modifier_ability_abyss_15_buff"):GetStackCount()
+	if hTarget:HasModifier("modifier_ability_abyss_15_buff") then 
+		local swipes_buff = hTarget:FindModifierByName("modifier_ability_abyss_15_buff"):GetStackCount()
 		--print("swipes_buff>>>>>>>>>>>>>>>>>="..swipes_buff)
 		self.swipes_buff_damage = swipes_buff * 200
 		--print("ability_abyss_15{self.swipes_buff_damage}>>>>>>>>>>>>>>>>>>>>>>>>>="..self.swipes_buff_damage)
@@ -53,13 +53,13 @@ function modifier_ability_abyss_15:OnAttackLanded( kv )
 
 	ApplyDamage({
 		ability = self:GetAbility(),
-		victim = target,
+		victim = hTarget,
 		attacker = hAttacker,
 		damage = hAttacker:GetAttackDamage() + self.swipes_buff_damage,
 		damage_type = DAMAGE_TYPE_MAGICAL,
 	})	
 
-	hParent:AddNewModifier(hParent, self:GetAbility(), "modifier_ability_abyss_15_buff", {duration = 20})
+	hTarget:AddNewModifier(hParent, self:GetAbility(), "modifier_ability_abyss_15_buff", {duration = 20})
 end
 
 if modifier_ability_abyss_15_buff == nil then 
@@ -68,6 +68,10 @@ end
 
 function modifier_ability_abyss_15_buff:IsHidden( ... )
 	return false
+end
+
+function modifier_ability_abyss_15_buff:IsDebuff( ... )
+	return true
 end
 
 function modifier_ability_abyss_15_buff:OnCreated( ... )

@@ -89,8 +89,8 @@ function Player_Data:init()
     ListenToGameEvent( "entity_killed" ,Dynamic_Wrap(Player_Data,"OnEntityKilled"),self)
     ListenToGameEvent( "dota_player_gained_level" ,Dynamic_Wrap(Player_Data,"OnPlayerGainedLevel"),self)
     -- 每秒定时器
-
 end
+
 function Player_Data:OnSkinSelected(args)
     -- DeepPrintTable(args)
     local nPlayerID = args.PlayerID
@@ -160,7 +160,7 @@ function Player_Data:buy_tech_points( args )
         PlayerResource:SpendGold(nPlayerID,1000*nAmonut,DOTA_ModifyGold_AbilityCost)
         Player_Data:AddPoint(nPlayerID,100*nAmonut)
     else
-        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="金币不够"})
+        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="GOLD_NOT_ENOUGH"})
     end
     return
 end
@@ -185,7 +185,7 @@ function Player_Data:buy_income( args )
             hHero:CalculateStatBonus()
         end
     else
-        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="金币不够"})
+        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="GOLD_NOT_ENOUGH"})
     end
     return
 end
@@ -281,8 +281,13 @@ function Player_Data:OnEntityKilled(event)
         local sKilledName = hKilled:GetUnitName()
         local nUnitLevel = hKilled:GetLevel()
         if sKilledName == "npc_dota_creature_BigBoss" then
-            local tip = "击杀了寒冰之王，团队所有成员天赋等级提高。"
-            send_tips_message(P, tip)
+            -- 提示
+            local gameEvent = {}
+            gameEvent[ "player_id" ] = P
+            gameEvent[ "teamnumber" ] = -1
+            gameEvent[ "message" ] = "#DOTA_HUD_KILL_BOSS"
+            FireGameEvent( "dota_combat_event_message", gameEvent )
+
             local hAllHero = HeroList:GetAllHeroes()
             local sParticle = "particles/econ/events/ti8/hero_levelup_ti8.vpcf"
             for nPlayerID = 0,5 do
