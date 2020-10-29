@@ -18,6 +18,10 @@ LinkLuaModifier("modifier_store_reward_arrow_infinite_effect", "service/player_s
 
 LinkLuaModifier("modifier_store_reward_golden_dragon", "service/player_store_reward", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_store_reward_golden_dragon_effect", "service/player_store_reward", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_store_reward_halloween_ambient", "service/player_store_reward", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_store_reward_halloween_ambient_effect", "service/player_store_reward", LUA_MODIFIER_MOTION_NONE)
+
 if PlayerStoreReward == nil then PlayerStoreReward = {} end
 
 local sModiPrefix = "modifier_store_reward_"
@@ -141,6 +145,15 @@ function PlayerStoreReward:Set(hHero,hCurrentStore)
 					Archive:EditPlayerProfile(nPlayerID,sToggleKey,1)
 				end
 			elseif sStoreName == "golden_dragon" then
+				hHero:AddNewModifier(hHero, hBonusAbility, sModiPrefix..sStoreName, {}) 
+				if hArchive[sToggleKey] ~= nil then
+					if hArchive[sToggleKey] == 1 then
+						hHero:AddNewModifier(hHero, hBonusAbility, sModiPrefix..sStoreName.."_effect", {}) 
+					end
+				else
+					Archive:EditPlayerProfile(nPlayerID,sToggleKey,1)
+				end
+			elseif sStoreName == "halloween_ambient" then
 				hHero:AddNewModifier(hHero, hBonusAbility, sModiPrefix..sStoreName, {}) 
 				if hArchive[sToggleKey] ~= nil then
 					if hArchive[sToggleKey] == 1 then
@@ -413,8 +426,6 @@ if modifier_store_reward_dark_wings  == nil then modifier_store_reward_dark_wing
 function modifier_store_reward_dark_wings:OnCreated() 
 	if not IsServer() then return end
 	self:IncrementStackCount()
-	-- 全属性+7%<br>最终伤害增加5%
-	print("OnCreated")
 	Player_Data:AddBasebonus(self:GetParent(),DOTA_ATTRIBUTE_STRENGTH,50)
 	Player_Data:AddBasebonus(self:GetParent(),DOTA_ATTRIBUTE_AGILITY,50)
 	Player_Data:AddBasebonus(self:GetParent(),DOTA_ATTRIBUTE_INTELLECT,50)
@@ -422,8 +433,7 @@ end
 function modifier_store_reward_dark_wings:OnRefresh() 
 	if not IsServer() then return end
 	self:IncrementStackCount()
-	-- 全属性+7%<br>最终伤害增加5%
-	print("OnRefresh")
+	
 	Player_Data:AddBasebonus(self:GetParent(),DOTA_ATTRIBUTE_STRENGTH,50)
 	Player_Data:AddBasebonus(self:GetParent(),DOTA_ATTRIBUTE_AGILITY,50)
 	Player_Data:AddBasebonus(self:GetParent(),DOTA_ATTRIBUTE_INTELLECT,50)
@@ -445,7 +455,56 @@ function modifier_store_reward_dark_wings_effect:OnCreated()
 	end
 end
 
+function modifier_store_reward_dark_wings_effect:DeclareFunctions() 
+	return {MODIFIER_EVENT_ON_MODEL_CHANGED}
+end
+
+function modifier_store_reward_dark_wings_effect:OnModelChanged() 
+	if not IsServer() then return end
+	local hParent = self:GetParent()
+	local sUnitName = hParent:GetUnitName() 
+	local sModelName = hParent:GetModelName() 
+	local sNewName = string.gsub(sUnitName,"npc_dota_hero_","")
+	if hWingModel[sUnitName] ~= sModelName then
+		ParticleManager:DestroyParticle(self.nFXIndex,true)
+	end
+end
 function modifier_store_reward_dark_wings_effect:OnDestroy() 
 	if not IsServer() then return end
 	ParticleManager:DestroyParticle(self.nFXIndex,true)
 end
+
+------------------------------------------------------------
+if modifier_store_reward_halloween_ambient  == nil then modifier_store_reward_halloween_ambient = class(modifier_store_reward) end
+function modifier_store_reward_halloween_ambient:DeclareFunctions()
+    return {
+        MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+        MODIFIER_EVENT_ON_DEATH,
+        MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+    }
+end
+
+function modifier_store_reward_halloween_ambient:GetModifierBonusStats_Agility() return 15 * self:GetStackCount() end
+function modifier_store_reward_halloween_ambient:GetModifierBonusStats_Intellect() return 15 * self:GetStackCount() end
+function modifier_store_reward_halloween_ambient:GetModifierBonusStats_Strength() return 15 * self:GetStackCount() end
+-- 对应特效
+if modifier_store_reward_halloween_ambient_effect == nil then modifier_store_reward_halloween_ambient_effect = class(modifier_store_reward_effect) end
+function modifier_store_reward_halloween_ambient_effect:OnCreated() 
+	self.nFXIndex = ParticleManager:CreateParticle("particles/diy_particles/halloween_ambient.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(self.nFXIndex, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(),true)
+end
+
+function modifier_store_reward_halloween_ambient_effect:OnDestroy() 
+	ParticleManager:DestroyParticle(self.nFXIndex,true)
+end
+
+-- function modifier_store_reward_sage_stone_effect:GetEffectName()
+-- 	return "particles/diy_particles/halloween_ambient.vpcf"
+-- end
+
+-- function modifier_store_reward_sage_stone_effect:GetEffectAttachType()
+-- 	return PATTACH_WORLDORIGIN
+-- end
+

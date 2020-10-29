@@ -66,7 +66,7 @@ function Store:LoadGoodsList()
 				end
 			end
 			
-			CustomNetTables:SetTableValue("service", "load_time", {week = hBody.msg})
+			CustomNetTables:SetTableValue("service", "load_time", {week = hBody.msg,time = hBody.time})
 			CustomNetTables:SetTableValue("service", "store_goods_list", goods_list)
 		end
 	end, REQUEST_TIME_OUT)
@@ -221,3 +221,13 @@ function Store:UsedCustomGoodsValue(nPlayerID,sCurrency,nQuantity,sRemarks)
 	end, REQUEST_TIME_OUT)
 end
 
+function Store:CheckExpCard(nPlayerID)
+	local expTime = Store:GetData(nPlayerID,"expcard") or 0
+	local nGameTime = math.floor(GameRules:GetDOTATime(false,false))
+	local nServerTime = CustomNetTables:GetTableValue("service", "load_time")
+	if expTime >= nServerTime["time"] + nGameTime then
+		return true
+	else
+		return false
+	end
+end

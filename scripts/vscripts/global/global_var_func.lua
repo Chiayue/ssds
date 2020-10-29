@@ -90,6 +90,10 @@ GlobalVarFunc.isCreateMuZhuang = false
 GlobalVarFunc.endless_boss_isAlive = false
 --记录池子外的怪是否刷满
 GlobalVarFunc.monsterIsShuaMan = false
+--深渊模式刷怪状态   false表示深渊开始刷小怪，  true表示深渊开始刷boss
+GlobalVarFunc.abyss_spawn_state = false
+--深渊怪物层级   30秒层级加1
+GlobalVarFunc.abyss_monster_level = 1
 --boss音效
 GlobalVarFunc.boss_sound = nil
 --无尽模式刷boss间隔1秒
@@ -225,12 +229,17 @@ end
 
 --每周自闭模式玩法改变
 function GlobalVarFunc:OnWeeklyGameChange(unit)
-
-	if GlobalVarFunc.MonsterWave % 2 == 0 then
-		unit:AddNewModifier( unit, nil, "modifier_autistic_week2_emeny_a", {} )
+	if unit:GetContext("boss")  then
+		unit:AddNewModifier( unit, nil, "modifier_autistic_week3_boss", {} )
 	else
-		unit:AddNewModifier( unit, nil, "modifier_autistic_week2_emeny_b", {} )
+
+		unit:AddNewModifier( unit, nil, "modifier_autistic_week3_emeny", {} )
 	end
+	-- if GlobalVarFunc.MonsterWave % 2 == 0 then
+	-- 	unit:AddNewModifier( unit, nil, "modifier_autistic_week2_emeny_a", {} )
+	-- else
+	-- 	unit:AddNewModifier( unit, nil, "modifier_autistic_week2_emeny_b", {} )
+	-- end
 
 	-- --增加移动速度
 	-- local newAbility = unit:AddAbility("ability_zibi")
@@ -238,4 +247,24 @@ function GlobalVarFunc:OnWeeklyGameChange(unit)
 	
 	-- --设置该生物每级增加的控制抗性 
 	-- unit:SetDisableResistanceGain(100)
+end
+
+--判断玩家是否拥有双倍经验卡
+function GlobalVarFunc:IsDoubleExperienceCard(nPlayerID)
+	if GlobalVarFunc.game_type == -2 then
+		return false
+	else
+		local isOk = Store:CheckExpCard(nPlayerID)
+		return isOk
+	end
+end
+
+--判断是否能从某个起始点移动到某个终点
+function GlobalVarFunc:IsCanFindPath(mix, max)
+	local position = Vector(0, 0, 0) + RandomVector( RandomFloat( mix, max ))
+    local path_ok =  GridNav:CanFindPath(position, Vector(1000, 0, 0))
+    if not path_ok then
+        position = Vector(1000, 0, 0)
+	end
+	return position
 end

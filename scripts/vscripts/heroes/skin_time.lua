@@ -23,4 +23,17 @@ return {
 		},
 
 	},
+	{	-- 3 万圣南瓜
+		model = "models/heroes/arc_warden/arc_warden.vmdl",
+		attack_projectile = "particles/units/heroes/hero_arc_warden/arc_warden_base_attack.vpcf",
+		--attack_projectile = "particles/econ/items/templar_assassin/templar_assassin_focal/ta_focal_base_attack.vpcf",
+		model_scale = 1,
+		wearables = {
+			{model = "models/heroes/arc_warden/arc_warden_bracers.vmdl", particle_systems = {}},
+			{model = "models/heroes/arc_warden/arc_warden_shoulder.vmdl", particle_systems = {}},
+			{model = "models/heroes/arc_warden/arc_warden_back.vmdl", particle_systems = {}},
+			{model = "models/items/models/halloween/halloween.vmdl", particle_systems = {}},
+		},
+
+	},
 }

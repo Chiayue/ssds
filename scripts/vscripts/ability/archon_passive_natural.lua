@@ -44,10 +44,25 @@ function modifier_archon_passive_natural:OnAttackLanded( params )
 	local nowChance = RandomInt(0,100)
 	local chance = self:GetAbility():GetSpecialValueFor( "chance" )
 	local nTalentStack = self:GetCaster():GetModifierStackCount("modifier_series_reward_talent_flame", self:GetCaster() )
+	local sModifierName = "modifier_archon_passive_natural_debuff"
 	if nTalentStack >= 2 then
 		chance = chance + 5
 	end
 	if nowChance  > chance then
+		-- 普通攻击
+		local abil_damage = self:GetCaster():GetAgility() * self:GetAbility():GetSpecialValueFor( "coefficient" )
+		local current_stack = params.target:GetModifierStackCount( sModifierName, self:GetCaster() )
+		if current_stack > 0 then
+			local total_damage = current_stack * self:GetCaster():GetAgility()
+			local damage = {
+				victim = params.target,
+				attacker = self:GetCaster(),
+				damage = total_damage,
+				damage_type = self:GetAbility():GetAbilityDamageType(),
+			}
+
+			ApplyDamage( damage )
+		end
 		return 0
 	end
 	local hTarget = params.target
@@ -81,9 +96,9 @@ function modifier_archon_passive_natural:OnAttackLanded( params )
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
 		0, 0, false 
 	)
-	local sModifierName = "modifier_archon_passive_natural_debuff"
+	
 	for _,enemy in pairs(enemies) do
-		if enemy ~= nil and ( not enemy:IsMagicImmune() ) and ( not enemy:IsInvulnerable() ) then
+		if enemy ~= nil then
 			local current_stack = enemy:GetModifierStackCount( sModifierName, self:GetCaster() )
 			local total_damage = current_stack * self:GetCaster():GetAgility()
 			local damage = {
@@ -148,7 +163,7 @@ function modifier_archon_passive_natural_debuff:OnRefresh()
 	if not IsServer() then return end
 	local nLevel = self:GetAbility():GetLevel()
 	if nLevel >= ABILITY_AWAKEN_2 then 
-		if self:GetStackCount() < 99 then
+		if self:GetStackCount() < 50 then
 			self:IncrementStackCount()
 		end
 	else

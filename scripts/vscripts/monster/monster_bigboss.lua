@@ -34,7 +34,7 @@ function MonsterBigBoss:OnThinkerRouShan()
         return nil
     end
 
-    if BigBossInfo.isCreated==false and GlobalVarFunc.MonsterWave >= 3 then
+    if (BigBossInfo.isCreated==false) and (GlobalVarFunc.MonsterWave >= 3) and (GlobalVarFunc.game_type ~= 1002) then
         self:OnCreatedBigBoss()
     end
 

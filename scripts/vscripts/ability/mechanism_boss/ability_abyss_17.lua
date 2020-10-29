@@ -24,6 +24,7 @@ function ability_abyss_17:OnSpellStart( ... )
 				0, 0, false)
 	for _,enemy in pairs(enemys) do
 		if #enemy <= 1 then 
+			Unity_Name = hCaster
 			enemy:AddNewModifier(hCaster, self, "modifier_ability_abyss_17", {}) -- duration = 2
 		end
 	end
@@ -50,25 +51,22 @@ function modifier_ability_abyss_17:OnIntervalThink( kv )
 		local hParent = self:GetParent()
 
 		local number = self:GetStackCount() -- 获取到当前的BUFF层数
-		--print("number=====", number)
 
 		if number > 0 then
-		local EffectName_0 = "particles/units/heroes/hero_batrider/batrider_stickynapalm_stack.vpcf"
+		local EffectName_0 = "particles/test_particles/xulie/xulie.vpcf"
 		self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName_0, PATTACH_OVERHEAD_FOLLOW, hParent)
 		ParticleManager:SetParticleControl(self.nFXIndex_0, 1, Vector(math.floor(number / 10), math.floor(number % 10), 0))  -- Vector(0, number, 0)
 		ParticleManager:DestroyParticle( self.nFXIndex_0, false )
 		ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
 		self:AddParticle(self.nFXIndex_0, false, false, -1, false, true)
 
-		 -- 设置BUFF在头顶的层数
-
+		-- 设置BUFF在头顶的层数
 		self:DecrementStackCount()
 		else
 			self.nFXIndex_0 = nil
 
 			self:StartIntervalThink(-1)
 			self:Destroy()
-
 			
 			hParent:AddNewModifier(hParent, self:GetAbility(), "modifier_ability_abyss_17_damage", {})
 			
@@ -95,21 +93,20 @@ end
 
 function modifier_ability_abyss_17_damage:OnIntervalThink( kv )
 	if IsServer() then 
+		local hCaster = self:GetCaster()
 		local hParent = self:GetParent()
-		--local hTarget = kv.target
 
 		local number = self:GetStackCount() -- 获取到当前的BUFF层数
-		--print("number=====", number)
 
 		if number > 0 then
-			local EffectName_0 = "particles/units/heroes/hero_batrider/batrider_stickynapalm_stack.vpcf"
+			local EffectName_0 = "particles/test_particles/xulie/xulie.vpcf"
 			self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName_0, PATTACH_OVERHEAD_FOLLOW, hParent)
 			ParticleManager:SetParticleControl(self.nFXIndex_0, 1, Vector(math.floor(number / 10), math.floor(number % 10), 0))  -- Vector(0, number, 0)
 			ParticleManager:DestroyParticle( self.nFXIndex_0, false )
 			ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
 			self:AddParticle(self.nFXIndex_0, false, false, -1, false, true)
 
-			 -- 设置BUFF在头顶的点灯特效		particles/units/heroes/hero_axe/axe_battle_hunger.vpcf
+			-- 设置BUFF在头顶的点灯特效		particles/units/heroes/hero_axe/axe_battle_hunger.vpcf
 			local EffectName_1 = "particles/units/heroes/hero_axe/axe_battle_hunger.vpcf"
 			self.nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_OVERHEAD_FOLLOW, hParent)
 			ParticleManager:SetParticleControl( self.nFXIndex_1, 0, hParent:GetAbsOrigin())
@@ -125,12 +122,12 @@ function modifier_ability_abyss_17_damage:OnIntervalThink( kv )
 
 			self:StartIntervalThink(-1)
 			self:Destroy()
-		
-			self:FindEnemyRangeDamage(hParent)
+			if Unity_Name:IsAlive() then 
+				self:FindEnemyRangeDamage(hParent)
+			end
 		end
 	end
 end
-
 
 function modifier_ability_abyss_17_damage:FindEnemyRangeDamage( hParent )
 	local enemys = FindUnitsInRadius(
@@ -146,7 +143,7 @@ function modifier_ability_abyss_17_damage:FindEnemyRangeDamage( hParent )
 			ApplyDamage(
 				{
 					victim = enemy,
-					attacker = hParent,
+					attacker = Unity_Name,
 					damage = hParent:GetMaxHealth() * 0.9,
 					damage_type = DAMAGE_TYPE_MAGICAL,
 				})
@@ -154,7 +151,7 @@ function modifier_ability_abyss_17_damage:FindEnemyRangeDamage( hParent )
 			ApplyDamage(
 				{
 					victim = enemy,
-					attacker = hParent,
+					attacker = Unity_Name,
 					damage = 3000,
 					damage_type = DAMAGE_TYPE_MAGICAL,
 				})

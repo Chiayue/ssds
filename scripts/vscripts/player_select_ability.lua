@@ -9,7 +9,7 @@ require("heroes/heroes_skin")
 require("item/series/serise_system")
 require("service/arrow_soul_reward")
 require("service/arrow_soul_compensate")
-require("autistic/autistic_weeky_2")
+require("autistic/autistic_weeky_init")
 ----- 技能觉醒 等级
 ABILITY_AWAKEN_1 = 2
 ABILITY_AWAKEN_2 = 5
@@ -239,8 +239,8 @@ function Player_Select_Ability:Talent_Selected(args)
 	   		ArrowSoulCompensate:CheckReward( hNewHero )
 	   	end)
 	   	-- 自闭模式
-	   	if  GlobalVarFunc.game_type == 1001 then
-	   		hNewHero:AddNewModifier(hNewHero, nil, "modifier_autistic_every_week", {})
+	   	if GlobalVarFunc.game_type == 1001 and GlobalVarFunc.game_mode == "endless"then
+	   		-- hNewHero:AddNewModifier(hNewHero, nil, "modifier_autistic_week3_ally", {})
 	   	end
 
 	   	-- 提示
@@ -510,24 +510,26 @@ function Player_Select_Ability:OnThinkTechnology()
 				---- 理财
 				local PlayerInfo = Player_Data:Get(nPlayerID)
 				local Income_Level = PlayerInfo["common"]["Income_Level"]
-				local Income_Reward = Income_Level
+				-- local Income_Reward = Income_Level
+				local nInvsetBonus = 0
 				if hHero:HasAbility("archon_deputy_investment") then
-					local nInvsetBonus = 1.25
+					nInvsetBonus = 0.25
 					local nDeputyStack = hHero:GetModifierStackCount("modifier_series_reward_deputy_investment", hHero)
 					if nDeputyStack >= 3 then
-						nInvsetBonus = 2
+						nInvsetBonus = 1
 					elseif nDeputyStack >= 2 then
-						nInvsetBonus = 1.4
+						nInvsetBonus = 0.4
 					end
-					Income_Reward = Income_Level * nInvsetBonus
+					
 				end
-				local nCurrentID = nPlayerID+1
+				local nCurrentID = nPlayerID + 1
 				local nGlobalBonus = GlobalVarFunc.GoldInvestmentRewards 
 				+ GlobalVarFunc.InvestmentAndOperate[nCurrentID] 
 				+ GlobalVarFunc.InvestmentRewardCoefficient[nCurrentID]
-				- 2
+				+ nInvsetBonus
+				- 2 
 				
-				Income_Reward = math.floor(Income_Reward * nGlobalBonus)
+				Income_Reward = math.floor(Income_Level * nGlobalBonus)
 				Player_Data():Set(nPlayerID,"common","Income_Amount",Income_Reward)
 
 				if GlobalVarFunc.game_type == -2 then Income_Reward = 99999 end

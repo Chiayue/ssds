@@ -75,6 +75,8 @@ function game_playerinfo:update_playerInfo()
     CustomNetTables:SetTableValue( "player_data", "damage", GlobalVarFunc.damage)
     local nData_common = CustomNetTables:GetTableValue( "player_data", "score" )
     local hClearReward = {}
+    local gTime = math.floor(GameRules:GetDOTATime(false,false))
+
     for k,v in pairs(nData_common) do
         local PlayerID = tonumber(k)
         local steam_id = PlayerResource:GetSteamAccountID(PlayerID)
@@ -82,62 +84,31 @@ function game_playerinfo:update_playerInfo()
             --掉线玩家处理
             local nPlayer = PlayerResource:GetPlayer(PlayerID)
             if nPlayer ~= nil then
-                local game_killNum = tonumber(v.Kills) + Archive:GetData(PlayerID,"game_killNum")
-                Archive:EditPlayerProfile(PlayerID,"game_killNum",game_killNum)
-    
-                local game_time = math.floor(GameRules:GetDOTATime(false,false)) + Archive:GetData(PlayerID,"game_time")
-                Archive:EditPlayerProfile(PlayerID,"game_time",game_time)
-    
+                --击杀数
+                self:OnGameKill(v.Kills, PlayerID)
+                --游戏时长
+                self:OnGameTime(gTime, PlayerID)
+
                 if GlobalVarFunc.isClearance then
-                    if GlobalVarFunc.game_type==0 then
-                        local gameMode_0_clearance = Archive:GetData(PlayerID,"gameMode_0_clearance") + 1
-                        Archive:EditPlayerProfile(PlayerID,"gameMode_0_clearance",gameMode_0_clearance)
-                    elseif GlobalVarFunc.game_type==1 then 
-                        local gameMode_1_clearance = Archive:GetData(PlayerID,"gameMode_1_clearance") + 1
-                        Archive:EditPlayerProfile(PlayerID,"gameMode_1_clearance",gameMode_1_clearance)
-                    elseif GlobalVarFunc.game_type==2 then
-                        local gameMode_2_clearance = Archive:GetData(PlayerID,"gameMode_2_clearance") + 1
-                        Archive:EditPlayerProfile(PlayerID,"gameMode_2_clearance",gameMode_2_clearance)
-                    elseif GlobalVarFunc.game_type==3 then
-                        local gameMode_3_clearance = Archive:GetData(PlayerID,"gameMode_3_clearance") + 1
-                        Archive:EditPlayerProfile(PlayerID,"gameMode_3_clearance",gameMode_3_clearance)
-                    elseif GlobalVarFunc.game_type==4 then
-                        local gameMode_4_clearance = Archive:GetData(PlayerID,"gameMode_4_clearance") + 1
-                        Archive:EditPlayerProfile(PlayerID,"gameMode_4_clearance",gameMode_4_clearance)
-                    end
-    
-                    --记录玩家最高的游戏模式
-                    local gameModeNum = Archive:GetData(PlayerID,"gamaModeNum")
-                    if gameModeNum < GlobalVarFunc.game_type then
-                        gameModeNum = gameModeNum + 1
-                        Archive:EditPlayerProfile(PlayerID,"gamaModeNum",gameModeNum)
-                    end
-    
+                    --通关数据
+                    self:OnGameClearance(PlayerID)
                 end
     
                 if GlobalVarFunc.game_mode == "endless" then
-
-                    if GlobalVarFunc.game_type==1000 then
-                        if Archive:GetData(PlayerID,"endless_waves") <= GlobalVarFunc.MonsterWave then
-                            Archive:EditPlayerProfile(PlayerID,"endless_waves",GlobalVarFunc.MonsterWave)
-                        end
-                    end
+                    --记录无尽最高层数
+                    self:OnGameEndless(PlayerID)
 
                     if GlobalVarFunc.game_type==1001 then
-                        local weekly_wavesNum = Archive:GetData(PlayerID,"weekly_waves") + GlobalVarFunc.MonsterWave
-                        Archive:EditPlayerProfile(PlayerID,"weekly_waves",weekly_wavesNum)
-                        
-                        --每周自闭模式地图经验奖励
+                        --记录自闭最高层数
+                        self:OnGameZiBi(PlayerID)
+                        --自闭地图经验奖励
                         self:OnWeekly_wavesReward(PlayerID)
-                        --奖励活动币
+                        --自闭奖励活动币
                         self:OnRewardActivityCoin(PlayerID)
                     end
-
-                    --if GlobalVarFunc.game_type==1002 then
-                        -- 奖励深渊票
-                        self:OnRewardAbyssTickets(PlayerID)
-                    --end
-
+                    
+                    -- 奖励深渊票
+                    self:OnRewardAbyssTickets(PlayerID)
                     --无尽装备存档
                     Archive:SaveServerEqui(PlayerID)
                 end 
@@ -237,4 +208,57 @@ function game_playerinfo:OnGetPlayerData(args)
     --发送存档信息
     local playerData = Archive:GetData(nPlayerID)
     CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"init_player_file",playerData)
+end
+
+function game_playerinfo:OnGameKill(killNum, PlayerID)
+    local game_killNum = tonumber(killNum) + Archive:GetData(PlayerID,"game_killNum")
+    Archive:EditPlayerProfile(PlayerID,"game_killNum",game_killNum)
+end
+
+function game_playerinfo:OnGameTime(gTime, PlayerID)
+    local isOk = GlobalVarFunc:IsDoubleExperienceCard(PlayerID)
+    if isOk then
+        gTime = gTime * 2
+    end
+    local game_time = gTime + Archive:GetData(PlayerID,"game_time")
+    Archive:EditPlayerProfile(PlayerID,"game_time",game_time)
+end
+
+function game_playerinfo:OnGameClearance(PlayerID)
+    if GlobalVarFunc.game_type==0 then
+        local gameMode_0_clearance = Archive:GetData(PlayerID,"gameMode_0_clearance") + 1
+        Archive:EditPlayerProfile(PlayerID,"gameMode_0_clearance",gameMode_0_clearance)
+    elseif GlobalVarFunc.game_type==1 then 
+        local gameMode_1_clearance = Archive:GetData(PlayerID,"gameMode_1_clearance") + 1
+        Archive:EditPlayerProfile(PlayerID,"gameMode_1_clearance",gameMode_1_clearance)
+    elseif GlobalVarFunc.game_type==2 then
+        local gameMode_2_clearance = Archive:GetData(PlayerID,"gameMode_2_clearance") + 1
+        Archive:EditPlayerProfile(PlayerID,"gameMode_2_clearance",gameMode_2_clearance)
+    elseif GlobalVarFunc.game_type==3 then
+        local gameMode_3_clearance = Archive:GetData(PlayerID,"gameMode_3_clearance") + 1
+        Archive:EditPlayerProfile(PlayerID,"gameMode_3_clearance",gameMode_3_clearance)
+    elseif GlobalVarFunc.game_type==4 then
+        local gameMode_4_clearance = Archive:GetData(PlayerID,"gameMode_4_clearance") + 1
+        Archive:EditPlayerProfile(PlayerID,"gameMode_4_clearance",gameMode_4_clearance)
+    end
+
+    --记录玩家最高的游戏模式
+    local gameModeNum = Archive:GetData(PlayerID,"gamaModeNum")
+    if gameModeNum < GlobalVarFunc.game_type then
+        gameModeNum = gameModeNum + 1
+        Archive:EditPlayerProfile(PlayerID,"gamaModeNum",gameModeNum)
+    end
+end
+
+function game_playerinfo:OnGameEndless(PlayerID)
+    if GlobalVarFunc.game_type==1000 then
+        if Archive:GetData(PlayerID,"endless_waves") <= GlobalVarFunc.MonsterWave then
+            Archive:EditPlayerProfile(PlayerID,"endless_waves",GlobalVarFunc.MonsterWave)
+        end
+    end
+end
+
+function game_playerinfo:OnGameZiBi(PlayerID)
+    local weekly_wavesNum = Archive:GetData(PlayerID,"weekly_waves") + GlobalVarFunc.MonsterWave
+    Archive:EditPlayerProfile(PlayerID,"weekly_waves",weekly_wavesNum)
 end

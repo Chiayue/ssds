@@ -117,7 +117,7 @@ function RandomEvents:OnCreateDamageStatisticsBox()
         players_boxDamage[i]["playerBoxDamage"] = 0
     end
     CustomNetTables:SetTableValue( "players_boxDamage", "players_boxDamage", players_boxDamage )
-    CustomGameEventManager:Send_ServerToAllClients("show_BoxDamage_panel",{})
+
     local name = "npc_dota_creature_damege_baoxiang"
     local position = Vector(0, -200, 0)
     local box = CreateUnitByName(name, position, true, nil, nil, DOTA_TEAM_BADGUYS)          
@@ -130,6 +130,9 @@ function RandomEvents:OnCreateDamageStatisticsBox()
         if GameRules:IsGamePaused() then
             return 0.1
         end
+
+        CustomGameEventManager:Send_ServerToAllClients("box_damage_cool_down",{coolDownTime = time})
+
         if time > 0 then
             time = time - 1
             return 1

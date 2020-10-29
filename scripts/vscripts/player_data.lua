@@ -362,10 +362,10 @@ function Player_Data:OnEntityKilled(event)
         end
         -- 击杀单位处理
         -- table.insert(tUnitPools,hKilled)
-        Timer(1.6,function()
-            -- hKilled:RemoveSelf() 
-            UTIL_Remove(hKilled)
-        end)
+        -- Timer(1.6,function()
+        --     -- hKilled:RemoveSelf() 
+        --     UTIL_Remove(hKilled)
+        -- end)
     end
 end
 

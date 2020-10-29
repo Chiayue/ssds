@@ -17,6 +17,13 @@ if modifier_item_the_wind_elements_invincible_buff == nil then
 	modifier_item_the_wind_elements_invincible_buff = class({})
 end
 
+function modifier_item_the_wind_elements_invincible_buff:IsHidden()
+	return false
+end
+function modifier_item_the_wind_elements_invincible_buff:GetTexture()
+	return "item_feng"
+end
+
 function modifier_item_the_wind_elements_invincible_buff:IsStunDebuff()
 	return true
 end
@@ -77,4 +84,16 @@ function modifier_item_the_wind_elements_invincible_buff:CheckState( ... )
 		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true,
 	}
 	return state
+end
+
+function modifier_item_the_wind_elements_invincible_buff:DeclareFunctions(  ) -- 修改动画  声明修改内容
+	local funs = 
+	{
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+	}
+	return funs
+end
+
+function modifier_item_the_wind_elements_invincible_buff:GetOverrideAnimation( ... )
+	return ACT_DOTA_DISABLED
 end

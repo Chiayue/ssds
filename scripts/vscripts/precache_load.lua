@@ -43,6 +43,7 @@ return {
 		"particles/radiant_fx2/fs_altar_ascension.vpcf",
 		"particles/diy_particles/flandre_diy_skill.vpcf",
 		"particles/diy_particles/rubick_wing.vpcf",
+		"particles/diy_particles/halloween_ambient.vpcf"
 	},
 
 	soundfile = {

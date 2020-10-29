@@ -3,16 +3,19 @@ LinkLuaModifier( "modifier_archon_deputy_boxer", "ability/archon/deputy/archon_d
 -- 基础300 每次加50   全属性 50
 if archon_deputy_boxer == nil then archon_deputy_boxer = {} end
 
--- function archon_deputy_boxer:OnUpgrade()
--- 	print("OnUpgrade()")
--- end
+function archon_deputy_boxer:OnUpgrade()
+	self.first = true
+	-- self:ToggleAutoCast()
+end
 
 -- function archon_deputy_boxer:ToggleAutoCast()
 -- 	print("ToggleAutoCast()")
 -- end
+function archon_deputy_boxer:GetIntrinsicModifierName() return "modifier_archon_deputy_boxer" end
 
 function archon_deputy_boxer:OnSpellStart() 
 	if IsServer() then 
+		self.first = false
 		local hCaster = self:GetCaster()
 		local nPlayerID = hCaster:GetPlayerID()
 		local nPoints = Player_Data:getPoints(nPlayerID)
@@ -21,22 +24,23 @@ function archon_deputy_boxer:OnSpellStart()
 
 		if nPoints  >= nCost then
 			hCaster:AddNewModifier(hCaster, self, "modifier_archon_deputy_boxer", {})
-			local nDeputyStack = hCaster:GetModifierStackCount("modifier_series_reward_deputy_boxer", hCaster )
 			local bCost = true
-			local nChance = 15
-			if nDeputyStack >= 2 then
-				local nRandomChance = RandomInt(0,100)
-				if nRandomChance < nChance then
-					bCost = false
-				end
-			end
+			-- local nDeputyStack = hCaster:GetModifierStackCount("modifier_series_reward_deputy_boxer", hCaster )
+			
+			-- local nChance = 15
+			-- if nDeputyStack >= 2 then
+			-- 	local nRandomChance = RandomInt(0,100)
+			-- 	if nRandomChance < nChance then
+			-- 		bCost = false
+			-- 	end
+			-- end
 			if bCost == true then Player_Data:CostPoints(nPlayerID,nCost) end
-			if nDeputyStack >= 3 then
-				local nRandomChance = RandomInt(0,100)
-				if nRandomChance < nChance then
-					hCaster:AddNewModifier(hCaster, self, "modifier_archon_deputy_boxer", {})
-				end
-			end
+			-- if nDeputyStack >= 3 then
+			-- 	local nRandomChance = RandomInt(0,100)
+			-- 	if nRandomChance < nChance then
+			-- 		hCaster:AddNewModifier(hCaster, self, "modifier_archon_deputy_boxer", {})
+			-- 	end
+			-- end
 
 			local particle = ParticleManager:CreateParticle(
 				"particles/units/heroes/hero_faceless_void/faceless_void_time_lock_bash.vpcf", 
@@ -59,17 +63,43 @@ if modifier_archon_deputy_boxer == nil then modifier_archon_deputy_boxer = {} en
 function modifier_archon_deputy_boxer:RemoveOnDeath() return false end
 function modifier_archon_deputy_boxer:IsHidden() return false end
 function modifier_archon_deputy_boxer:IsPurgable() return false end
-
 function modifier_archon_deputy_boxer:OnCreated() 
-	self.all_status = self:GetAbility():GetSpecialValueFor( "all_status" )
 	if not IsServer() then return end
-	self:IncrementStackCount()
+	self:GetAbility().first = true
+	self:SetStackCount(0)
+	self:StartIntervalThink(0.25)
+end
+
+function modifier_archon_deputy_boxer:OnIntervalThink()
+	if not IsServer() then return end
+	if self:GetAbility():GetAutoCastState()  and self:GetAbility():IsCooldownReady() then
+		self:GetAbility():UseResources(true, true, true)
+		local hCaster = self:GetCaster()
+		local nPlayerID = hCaster:GetPlayerID()
+		local nPoints = Player_Data:getPoints(nPlayerID)
+		local nEveryCost = hCaster:GetModifierStackCount("modifier_archon_deputy_boxer", hCaster ) * self:GetAbility():GetSpecialValueFor("every_cost")
+		local nCost = self:GetAbility():GetSpecialValueFor("Initial_cost") + nEveryCost
+		if nPoints  >= nCost then
+			self:GetAbility().first = false
+			hCaster:AddNewModifier(hCaster, self:GetAbility(), "modifier_archon_deputy_boxer", {})
+			Player_Data:CostPoints(nPlayerID,nCost) 
+			local particle = ParticleManager:CreateParticle(
+				"particles/units/heroes/hero_faceless_void/faceless_void_time_lock_bash.vpcf", 
+				PATTACH_CUSTOMORIGIN, 
+				nil)
+			ParticleManager:SetParticleControl(particle, 0, hCaster:GetAbsOrigin() )
+			ParticleManager:SetParticleControl(particle, 1, hCaster:GetAbsOrigin() )
+			ParticleManager:SetParticleControlEnt(particle, 2, hCaster, PATTACH_CUSTOMORIGIN, "attach_hitloc", hCaster:GetAbsOrigin(), true)
+			ParticleManager:ReleaseParticleIndex(particle)
+		end
+	end
 end
 
 function modifier_archon_deputy_boxer:OnRefresh() 
-	self.all_status = self:GetAbility():GetSpecialValueFor( "all_status" )
 	if not IsServer() then return end
-	self:IncrementStackCount()
+	if self:GetAbility().first == false then
+		self:IncrementStackCount()
+	end
 end
 
 function modifier_archon_deputy_boxer:DeclareFunctions() 
@@ -83,15 +113,15 @@ function modifier_archon_deputy_boxer:DeclareFunctions()
 end
 
 function modifier_archon_deputy_boxer:GetModifierBonusStats_Agility() 
-	return self.all_status * self:GetStackCount() 
+	return self:GetAbility():GetSpecialValueFor( "all_status" ) * self:GetStackCount() 
 end
 
 function modifier_archon_deputy_boxer:GetModifierBonusStats_Intellect()	
-	return self.all_status * self:GetStackCount() 
+	return self:GetAbility():GetSpecialValueFor( "all_status" ) * self:GetStackCount() 
 end
 
 function modifier_archon_deputy_boxer:GetModifierBonusStats_Strength() 
-	return self.all_status * self:GetStackCount() 
+	return self:GetAbility():GetSpecialValueFor( "all_status" ) * self:GetStackCount() 
 end
 
 function modifier_archon_deputy_boxer:OnTooltip() 

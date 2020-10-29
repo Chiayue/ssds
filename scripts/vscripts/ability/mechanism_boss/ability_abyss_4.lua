@@ -2,6 +2,8 @@
 
 LinkLuaModifier("modifier_ability_abyss_4", "ability/mechanism_Boss/ability_abyss_4", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_ability_abyss_4_damage", "ability/mechanism_Boss/ability_abyss_4", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_ability_abyss_4_damage_effect", "ability/mechanism_Boss/ability_abyss_4", LUA_MODIFIER_MOTION_NONE)
+
 
 if ability_abyss_4 == nil then 
 	ability_abyss_4 = class({})
@@ -14,11 +16,11 @@ end
 function ability_abyss_4:OnSpellStart( ... )
 	local hCaster = self:GetCaster()
 
-	if hCaster:GetHealthPercent() > 50 then
-		self:EndCooldown()
+	--if hCaster:GetHealthPercent() > 50 then
+	--	self:EndCooldown()
 	-- 当释放者的血量不足80%
-	elseif hCaster:GetHealthPercent() <= 50 then 
-
+	--elseif hCaster:GetHealthPercent() <= 50 then 
+		UNIT_NAME = hCaster
 		hCaster:AddNewModifier(hCaster, self, "modifier_ability_abyss_4", {}) -- duration = 2
 
 		local enemys = FindUnitsInRadius(
@@ -35,7 +37,7 @@ function ability_abyss_4:OnSpellStart( ... )
 			enemy:AddNewModifier(hCaster, self, "modifier_ability_abyss_4_damage", {})
 
 		end
-	end
+	--end
 end
 
 if modifier_ability_abyss_4 == nil then 
@@ -46,12 +48,8 @@ function modifier_ability_abyss_4:IsHidden( ... )
 	return true
 end
 
-function modifier_ability_abyss_4:OnCreated( kv )
-	local hCaster = self:GetCaster()
-	
+function modifier_ability_abyss_4:OnCreated( kv )	
 	if IsServer() then 
-		--self.hTarget = kv.target
-
 		self:StartIntervalThink(1)
 		self:SetStackCount(5)
 	end 
@@ -59,21 +57,19 @@ end
 
 function modifier_ability_abyss_4:OnIntervalThink( kv )
 	if IsServer() then 
-		local hCaster = self:GetCaster()
+		local hParent = self:GetParent()
 
 		local number = self:GetStackCount() -- 获取到当前的BUFF层数
-		--print("number=====", number)
 
 		if number > 0 then
-		local EffectName_0 = "particles/units/heroes/hero_batrider/batrider_stickynapalm_stack.vpcf"
-		self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName_0, PATTACH_OVERHEAD_FOLLOW, hCaster)
+		local EffectName_0 = "particles/test_particles/xulie/xulie.vpcf"
+		self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName_0, PATTACH_OVERHEAD_FOLLOW, hParent)
 		ParticleManager:SetParticleControl(self.nFXIndex_0, 1, Vector(math.floor(number / 10), math.floor(number % 10), 0))  -- Vector(0, number, 0)
 		ParticleManager:DestroyParticle( self.nFXIndex_0, false )
 		ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
 		self:AddParticle(self.nFXIndex_0, false, false, -1, false, true)
 
 		 -- 设置BUFF在头顶的层数
-
 		self:DecrementStackCount()
 		else
 			self.nFXIndex_0 = nil
@@ -101,17 +97,14 @@ function modifier_ability_abyss_4_damage:OnCreated( ... )
 	end 
 end
 
-function modifier_ability_abyss_4_damage:OnIntervalThink( kv )
+function modifier_ability_abyss_4_damage:OnIntervalThink( )
 	if IsServer() then 
 		local hParent = self:GetParent()
-		local hCaster = self:GetCaster()
-		--local hTarget = kv.target
 
 		local number = self:GetStackCount() -- 获取到当前的BUFF层数
-		--print("number=====", number)
 
 		if number > 0 then
-			local EffectName_0 = "particles/units/heroes/hero_batrider/batrider_stickynapalm_stack.vpcf"
+			local EffectName_0 = "particles/test_particles/xulie/xulie.vpcf"
 			self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName_0, PATTACH_OVERHEAD_FOLLOW, hParent)
 			ParticleManager:SetParticleControl(self.nFXIndex_0, 1, Vector(math.floor(number / 10), math.floor(number % 10), 0))  -- Vector(0, number, 0)
 			ParticleManager:DestroyParticle( self.nFXIndex_0, false )
@@ -120,25 +113,20 @@ function modifier_ability_abyss_4_damage:OnIntervalThink( kv )
 
 			self:DecrementStackCount()
 		else
+			hParent:AddNewModifier(hParent, nil, "modifier_ability_abyss_4_damage_effect", {duration = 9})
+			-- local EffectName_1 = "particles/units/heroes/heroes_underlord/underlord_pitofmalice.vpcf"
+			-- self.nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_RENDERORIGIN_FOLLOW, hParent)
+			-- ParticleManager:SetParticleControl( self.nFXIndex_1, 0, hParent:GetAbsOrigin())
+			-- ParticleManager:SetParticleControl( self.nFXIndex_1, 1, hParent:GetAbsOrigin())
+			-- ParticleManager:SetParticleControl( self.nFXIndex_1, 3, hParent:GetAbsOrigin())
+			-- self:AddParticle( self.nFXIndex_1, false, false, -1, false, true)
 
-			local EffectName_1 = "particles/econ/items/wisp/wisp_relocate_teleport_ti7_out.vpcf"
-			self.nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_OVERHEAD_FOLLOW, hParent)
-			ParticleManager:SetParticleControl( self.nFXIndex_1, 0, hParent:GetAbsOrigin())
-			ParticleManager:SetParticleControl( self.nFXIndex_1, 1, hParent:GetAbsOrigin())
-			ParticleManager:SetParticleControl( self.nFXIndex_1, 3, hParent:GetAbsOrigin())
-			-- ParticleManager:DestroyParticle( self.nFXIndex_1, false )
-			-- ParticleManager:ReleaseParticleIndex( self.nFXIndex_1 )
-			self:AddParticle( self.nFXIndex_1, false, false, -1, false, true)
-
-			local max_helth_damage = hParent:GetMaxHealth() * 0.9
-			--print("max_helth_damage------------------->", max_helth_damage)
-
-			ApplyDamage({
-				victim = hParent,
-				attacker = hCaster,
-				damage = max_helth_damage,
-				damage_type = DAMAGE_TYPE_MAGICAL,
-			})
+			-- ApplyDamage({
+			-- 	victim = hParent,
+			-- 	attacker = UNIT_NAME,
+			-- 	damage = 1000, -- hParent:GetMaxHealth() * 0.9
+			-- 	damage_type = DAMAGE_TYPE_MAGICAL,
+			-- })
 
 			self.nFXIndex_0 = nil
 			self.nFXIndex_1 = nil
@@ -146,5 +134,37 @@ function modifier_ability_abyss_4_damage:OnIntervalThink( kv )
 			self:StartIntervalThink(-1)
 			self:Destroy()
 		end
+	end
+end
+
+if modifier_ability_abyss_4_damage_effect == nil then 
+	modifier_ability_abyss_4_damage_effect =class({})
+end
+
+function modifier_ability_abyss_4_damage_effect:IsHidden( ... )
+	return true
+end
+
+function modifier_ability_abyss_4_damage_effect:OnCreated( ... )
+	if IsServer() then 
+		self:StartIntervalThink(0.5)
+	end
+end
+
+function modifier_ability_abyss_4_damage_effect:OnIntervalThink( ... )
+	if IsServer() then 
+		local hParent = self:GetParent()
+		local EffectName_1 = "particles/econ/items/legion/legion_overwhelming_odds_ti7/legion_commander_odds_ti7.vpcf"
+		self.nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_RENDERORIGIN_FOLLOW, hParent)
+		ParticleManager:SetParticleControl( self.nFXIndex_1, 0, hParent:GetAbsOrigin() + RandomVector(1) * RandomFloat(0, 1000))
+		ParticleManager:SetParticleControl( self.nFXIndex_1, 1, hParent:GetAbsOrigin() + RandomVector(1) * RandomFloat(0, 1000))
+		ParticleManager:SetParticleControl( self.nFXIndex_1, 3, hParent:GetAbsOrigin() + RandomVector(1) * RandomFloat(0, 1000))
+		ParticleManager:SetParticleControl( self.nFXIndex_1, 3, hParent:GetAbsOrigin() + RandomVector(1) * RandomFloat(0, 1000))
+		ApplyDamage({
+				victim = hParent,
+				attacker = UNIT_NAME,
+				damage = hParent:GetMaxHealth() * 0.05, -- hParent:GetMaxHealth() * 0.9
+				damage_type = DAMAGE_TYPE_MAGICAL,
+			})
 	end
 end

@@ -15,7 +15,7 @@ function ability_abyss_6:OnSpellStart( ... )
 	local hCaster = self:GetCaster()
 	if hCaster:GetHealthPercent() > 10 then
 		self:EndCooldown()
-	-- 当释放者的血量不足80%
+	-- 当释放者的血量不足10%
 	elseif hCaster:GetHealthPercent() <= 10 then
 		hCaster:AddNewModifier(hCaster, self, "modifier_ability_abyss_6", {}) -- duration = 2
 	end
@@ -41,21 +41,19 @@ end
 
 function modifier_ability_abyss_6:OnIntervalThink( kv )
 	if IsServer() then 
-		local hCaster = self:GetCaster()
+		local hParent = self:GetParent()
 
 		local number = self:GetStackCount() -- 获取到当前的BUFF层数
-		--print("number=====", number)
 
 		if number > 0 then
-			local EffectName = "particles/units/heroes/hero_shadow_demon/shadow_demon_shadow_poison_stackui.vpcf"
-			self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName, PATTACH_OVERHEAD_FOLLOW, hCaster)
+			local EffectName = "particles/test_particles/xulie/xulie.vpcf"
+			self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName, PATTACH_OVERHEAD_FOLLOW, hParent)
 			ParticleManager:SetParticleControl(self.nFXIndex_0, 1, Vector(math.floor(number / 10), math.floor(number % 10), 0))  -- Vector(0, number, 0)
 			ParticleManager:DestroyParticle( self.nFXIndex_0, false )
 			ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
 			self:AddParticle(self.nFXIndex_0, false, false, -1, false, true)
 
-			 -- 设置BUFF在头顶的层数
-
+			-- 设置BUFF在头顶的层数
 			self:DecrementStackCount()
 		else
 			self.nFXIndex_0 = nil
@@ -63,7 +61,7 @@ function modifier_ability_abyss_6:OnIntervalThink( kv )
 			self:StartIntervalThink(-1)
 			self:Destroy()
 
-			hCaster:AddNewModifier(hCaster, self, "modifier_ability_abyss_6_damage", {}) -- duration = 2
+			hParent:AddNewModifier(hParent, self, "modifier_ability_abyss_6_damage", {}) -- duration = 2
 		end
 	end
 end
@@ -78,7 +76,7 @@ function modifier_ability_abyss_6_damage:IsHidden( ... )
 end
 
 function modifier_ability_abyss_6_damage:OnCreated( ... )
-	local hCaster = self:GetCaster()
+	local hParent = self:GetParent()
 	
 	if IsServer() then 
 		self:StartIntervalThink(1)
@@ -86,27 +84,27 @@ function modifier_ability_abyss_6_damage:OnCreated( ... )
 	end 
 
 	local EffectName = "particles/units/heroes/hero_rattletrap/clock_overclock_buff.vpcf"
-	self.nFXIndex_2 = ParticleManager:CreateParticle( EffectName, PATTACH_ROOTBONE_FOLLOW, hCaster)
+	self.nFXIndex_2 = ParticleManager:CreateParticle( EffectName, PATTACH_ROOTBONE_FOLLOW, hParent)
 	self:AddParticle(self.nFXIndex_2, false, false, -1, false, true)
 
 	local EffectName = "particles/killstreak/killstreak_ice_topbar_lv2.vpcf"
-	self.nFXIndex_3 = ParticleManager:CreateParticle( EffectName, PATTACH_ROOTBONE_FOLLOW, hCaster)
-	ParticleManager:SetParticleControlEnt(self.nFXIndex_3, 0, hCaster, PATTACH_POINT_FOLLOW, "attach_batAss_1", hCaster:GetAbsOrigin(), true)
-	ParticleManager:SetParticleControlEnt(self.nFXIndex_3, 1, hCaster, PATTACH_POINT_FOLLOW, "attach_batAss_4", hCaster:GetAbsOrigin(), true)
+	self.nFXIndex_3 = ParticleManager:CreateParticle( EffectName, PATTACH_ROOTBONE_FOLLOW, hParent)
+	ParticleManager:SetParticleControlEnt(self.nFXIndex_3, 0, hParent, PATTACH_POINT_FOLLOW, "attach_batAss_1", hParent:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(self.nFXIndex_3, 1, hParent, PATTACH_POINT_FOLLOW, "attach_batAss_4", hParent:GetAbsOrigin(), true)
 	self:AddParticle(self.nFXIndex_3, false, false, -1, false, true)
 
 end
 
 function modifier_ability_abyss_6_damage:OnIntervalThink( kv )
 	if IsServer() then 
-		local hCaster = self:GetCaster()
+		local hParent = self:GetParent()
 
 		local number = self:GetStackCount() -- 获取到当前的BUFF层数
 		--print("number=====", number)
 
 		if number > 0 then 
-			local EffectName = "particles/units/heroes/hero_abaddon/abaddon_curse_counter_stack.vpcf"
-			self.nFXIndex_1 = ParticleManager:CreateParticle( EffectName, PATTACH_OVERHEAD_FOLLOW, hCaster)
+			local EffectName = "particles/test_particles/xulie/xulie.vpcf"
+			self.nFXIndex_1 = ParticleManager:CreateParticle( EffectName, PATTACH_OVERHEAD_FOLLOW, hParent)
 			ParticleManager:SetParticleControl(self.nFXIndex_1, 1, Vector(math.floor(number / 10), math.floor(number % 10), 0))  -- Vector(0, number, 0)
 			ParticleManager:DestroyParticle( self.nFXIndex_1, false )
 			ParticleManager:ReleaseParticleIndex( self.nFXIndex_1 )
@@ -116,14 +114,17 @@ function modifier_ability_abyss_6_damage:OnIntervalThink( kv )
 
 			self:DecrementStackCount()
 		else
-			self.nFXIndex_1 = nil
 			self.nFXIndex_2 = nil
 			self.nFXIndex_3 = nil
 
 			self:StartIntervalThink(-1)
 			self:Destroy()
 
-			hCaster:ForceKill(true)
+			if hParent:IsAlive() then 
+				self:FindEnemyRangeDamage(hParent)
+			end
+
+			hParent:ForceKill(true)
 		end
 	end
 end
@@ -146,4 +147,24 @@ end
 
 function modifier_ability_abyss_6_damage:GetModifierAttackSpeedBonus_Constant( kv )
 	return 100
+end
+
+function modifier_ability_abyss_6_damage:FindEnemyRangeDamage( hParent )
+	local enemys = FindUnitsInRadius(
+				hParent:GetTeamNumber(),
+				hParent:GetAbsOrigin(), 
+				hParent,
+				500, 
+				DOTA_UNIT_TARGET_TEAM_ENEMY, 
+				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+				0, 0, false)
+	for _,enemy in pairs(enemys) do
+			ApplyDamage(
+				{
+					victim = enemy,
+					attacker = hParent,
+					damage = 500000,
+					damage_type = DAMAGE_TYPE_MAGICAL,
+				})
+	end
 end

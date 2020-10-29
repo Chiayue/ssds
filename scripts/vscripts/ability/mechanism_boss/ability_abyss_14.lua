@@ -30,7 +30,6 @@ function modifier_ability_abyss_14:DeclareFunctions( ... )
 	return 
 		{
 			MODIFIER_EVENT_ON_ATTACK_LANDED, 
-			--MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE, -- 减伤
 		}
 end
 
@@ -45,9 +44,7 @@ function modifier_ability_abyss_14:OnAttackLanded( kv )
 
 	if hParent:HasModifier("modifier_fury_swipes_buff") then 
 		local swipes_buff = hParent:FindModifierByName("modifier_fury_swipes_buff"):GetStackCount()
-		--print("swipes_buff>>>>>>>>>>>>>>>>>="..swipes_buff)
 		self.swipes_buff_damage = swipes_buff * 200
-		--print("ability_abyss_14{self.swipes_buff_damage}>>>>>>>>>>>>>>>>>>>>>>>>>="..self.swipes_buff_damage)
 	end
 
 	ApplyDamage({

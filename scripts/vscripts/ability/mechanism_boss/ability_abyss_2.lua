@@ -31,11 +31,7 @@ function ability_abyss_2:OnSpellStart( ... )
 		})
 	end
 
-	-- particles/econ/items/axe/axe_weapon_bloodchaser/axe_attack_blur_counterhelix_bloodchaser.vpcf
 	local EffectName_0 = "particles/econ/items/axe/axe_weapon_bloodchaser/axe_attack_blur_counterhelix_bloodchaser.vpcf"
 	self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName_0, PATTACH_RENDERORIGIN_FOLLOW, hCaster)
-	ParticleManager:SetParticleControl(self.nFXIndex_0, 0, Vector(1000, 1000, 1000))  -- Vector(0, number, 0)
-	-- ParticleManager:DestroyParticle( self.nFXIndex_0, false )
-	-- ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
-	-- self:AddParticle(self.nFXIndex_0, false, false, -1, false, true)
+	ParticleManager:SetParticleControl(self.nFXIndex_0, 0, Vector(1000, 1000, 1000))
 end

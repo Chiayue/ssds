@@ -27,6 +27,10 @@
     "QUIT_THE_GAME"       "quit the game"
     "GAME_SETTINGS"        "game settings"
     "PERSONAL_HISTORY"        "Personal history"
+    "BOX_DAMAGE_STATISTICS"    "injury statisticsi"
+    "REMAINING_TIME"      "count down(s):"
+    "BIRD_FEAST"     "bird feast"
+    "TOTAL_GOLD"   "total gold:"
 
     "ROUND_REVENUE_GOLD"     "{s:player_name} gain round income {d:int_value} gold !"
     "ROUND_REVENUE_WOOD"     "{s:player_name} gain round income {d:int_value} wood !"

@@ -42,20 +42,20 @@ end
 
 function modifier_ability_abyss_11:OnIntervalThink( kv )
 	if IsServer() then 
-		local hCaster = self:GetCaster()
+		local hParent = self:GetParent()
 
 		local number = self:GetStackCount() -- 获取到当前的BUFF层数
 		--print("number=====", number)
 
 		if number > 0 then
-			local EffectName = "particles/units/heroes/hero_shadow_demon/shadow_demon_shadow_poison_stackui.vpcf"
-			self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName, PATTACH_OVERHEAD_FOLLOW, hCaster)
+			local EffectName = "particles/test_particles/xulie/xulie.vpcf"
+			self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName, PATTACH_OVERHEAD_FOLLOW, hParent)
 			ParticleManager:SetParticleControl(self.nFXIndex_0, 1, Vector(math.floor(number / 10), math.floor(number % 10), 0))  -- Vector(0, number, 0)
 			ParticleManager:DestroyParticle( self.nFXIndex_0, false )
 			ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
 			self:AddParticle(self.nFXIndex_0, false, false, -1, false, true)
 
-			CreateModifierThinker(hCaster, self:GetAbility(), "modifier_ability_abyss_11_damage", {}, hCaster:GetAbsOrigin() + RandomVector(1) * RandomFloat(0, 1000), hCaster:GetTeamNumber(), false)
+			CreateModifierThinker(hParent, self:GetAbility(), "modifier_ability_abyss_11_damage", {}, hParent:GetAbsOrigin() + RandomVector(1) * RandomFloat(0, 1000), hCaster:GetTeamNumber(), false)
 
 			-- 减少BUFF在头顶的层数
 			self:DecrementStackCount()
@@ -149,12 +149,10 @@ end
 function modifier_ability_abyss_11_damage_debuff:DeclareFunctions( ... )
 	return 
 		{
-			--MODIFIER_EVENT_ON_ATTACKED, 
 			MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE, -- 减伤
 		}
 end
 
 function modifier_ability_abyss_11_damage_debuff:GetModifierIncomingDamage_Percentage( ... )
-	--print("self.IncomingDamage_value * self:GetStackCount()==", self.IncomingDamage_value * self:GetStackCount())
 	return self.IncomingDamage_value * self:GetStackCount()
 end

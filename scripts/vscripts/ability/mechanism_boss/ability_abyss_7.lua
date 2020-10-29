@@ -48,25 +48,22 @@ end
 function modifier_ability_abyss_7:OnIntervalThink( kv )
 	if IsServer() then 
 		local hParent = self:GetParent()
-		local hCaster = self:GetCaster()
 
 		local number = self:GetStackCount() -- 获取到当前的BUFF层数
-		--print("number=====", number)
 
 		if number > 0 then
 			local EffectName = "particles/test_particles/xulie/xulie.vpcf"
-			self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName, PATTACH_OVERHEAD_FOLLOW, hCaster)
+			self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName, PATTACH_OVERHEAD_FOLLOW, hParent)
 			ParticleManager:SetParticleControl(self.nFXIndex_0, 0, Vector(0, 0, 50))
 			ParticleManager:SetParticleControl(self.nFXIndex_0, 1, Vector(math.floor(number / 10), math.floor(number % 10), 0))  -- Vector(0, number, 0)
 			ParticleManager:DestroyParticle( self.nFXIndex_0, false )
 			ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
 			self:AddParticle(self.nFXIndex_0, false, false, -1, false, true)
 
-			 -- 设置BUFF在头顶的层数
-
+			-- 设置BUFF在头顶的层数
 			self:DecrementStackCount()
 		else
-			hParent:AddNewModifier(hCaster, self:GetAbility(), "modifier_ability_abyss_7_damage", {}) -- duration = 2
+			hParent:AddNewModifier(hParent, self:GetAbility(), "modifier_ability_abyss_7_damage", {}) -- duration = 2
 
 			self.nFXIndex_0 = nil
 
@@ -89,22 +86,10 @@ function modifier_ability_abyss_7_damage:IsHidden( ... )
 end
 
 function modifier_ability_abyss_7_damage:OnCreated( keys )
-	local hCaster = self:GetCaster()
 	local hParent = self:GetParent()
 	local hTarget = keys.target
 
 	if IsValidEntity(hParent) then 
-
-		local EffectName = "particles/units/heroes/hero_rattletrap/clock_overclock_buff.vpcf"
-		self.nFXIndex_2 = ParticleManager:CreateParticle( EffectName, PATTACH_ROOTBONE_FOLLOW, hParent)
-		self:AddParticle(self.nFXIndex_2, false, false, -1, false, true)
-
-		local EffectName = "particles/killstreak/killstreak_ice_topbar_lv2.vpcf"
-		self.nFXIndex_3 = ParticleManager:CreateParticle( EffectName, PATTACH_ROOTBONE_FOLLOW, hParent)
-		ParticleManager:SetParticleControlEnt(self.nFXIndex_3, 0, hParent, PATTACH_POINT_FOLLOW, "attach_batAss_1", hParent:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(self.nFXIndex_3, 1, hParent, PATTACH_POINT_FOLLOW, "attach_batAss_4", hParent:GetAbsOrigin(), true)
-		self:AddParticle(self.nFXIndex_3, false, false, -1, false, true)
-
 		local enemys = FindUnitsInRadius(
 			hParent:GetTeamNumber(), 
 			hParent:GetAbsOrigin(), 
@@ -115,6 +100,12 @@ function modifier_ability_abyss_7_damage:OnCreated( keys )
 			0, 0, false)
 
 		for _, enemy in pairs(enemys) do
+			local EffectName = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_end.vpcf"
+			self.nFXIndex_4 = ParticleManager:CreateParticle( EffectName, PATTACH_ROOTBONE_FOLLOW, enemy)
+			ParticleManager:SetParticleControl(self.nFXIndex_4, 0, enemy:GetAbsOrigin())
+			ParticleManager:SetParticleControl(self.nFXIndex_4, 1, enemy:GetAbsOrigin())
+			ParticleManager:SetParticleControl(self.nFXIndex_4, 2, enemy:GetAbsOrigin())
+			self:AddParticle(self.nFXIndex_4, false, false, -1, false, true)
 			--local x = enemy:GetMaxHealth() * 0.25
 			--print("x===================", x)
 			ApplyDamage({
@@ -123,14 +114,6 @@ function modifier_ability_abyss_7_damage:OnCreated( keys )
 				damage = enemy:GetMaxHealth() * 0.25,
 				damage_type = DAMAGE_TYPE_MAGICAL,
 			})
-
-			local EffectName = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_end.vpcf"
-			self.nFXIndex_4 = ParticleManager:CreateParticle( EffectName, PATTACH_ROOTBONE_FOLLOW, enemy)
-			ParticleManager:SetParticleControl(self.nFXIndex_4, 0, enemy:GetAbsOrigin())
-			ParticleManager:SetParticleControl(self.nFXIndex_4, 1, enemy:GetAbsOrigin())
-			ParticleManager:SetParticleControl(self.nFXIndex_4, 2, enemy:GetAbsOrigin())
-			self:AddParticle(self.nFXIndex_4, false, false, -1, false, true)
-
 		end
 	end
 end
@@ -144,7 +127,6 @@ function modifier_ability_abyss_7_effects:IsHidden( ... )
 end
 
 function modifier_ability_abyss_7_effects:OnCreated( ... )
-	local hCaster = self:GetCaster()
 	local hParent = self:GetParent()
 	 
 	local EffectName = "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_gravemarker.vpcf"
@@ -188,14 +170,15 @@ function modifier_ability_abyss_7_effects:OnAttackLanded( keys )
 		return
 	end
 
-	--print("count+++++++++++++++++=", count)
 	local max_heal = hParent:GetHealth()
 	local health = (max_heal - 1)
-	--print("health____+++_+__++++=", health)
 	hParent:SetHealth( health )
 	if attacker:IsRealHero() then 
 		if health <= 0 then
 			UTIL_Remove(hParent)
+			self.nFXIndex_2 = nil
+			self.nFXIndex_3 = nil
+			self.nFXIndex_4 = nil
 			self:Destroy()
 		end
 	end
@@ -203,18 +186,4 @@ end
 
 function modifier_ability_abyss_7_effects:GetModifierAvoidDamage( keys )
 	return keys.damage
-end
-
-function modifier_ability_abyss_7_effects:OnDestroy()
-	ParticleManager:DestroyParticle( self.nFXIndex_2, false )
-	ParticleManager:ReleaseParticleIndex( self.nFXIndex_2 )
-	self.nFXIndex_2 = nil
-
-	ParticleManager:DestroyParticle( self.nFXIndex_3, false )
-	ParticleManager:ReleaseParticleIndex( self.nFXIndex_3 )
-	self.nFXIndex_3 = nil
-
-	ParticleManager:DestroyParticle( self.nFXIndex_4, false )
-	ParticleManager:ReleaseParticleIndex( self.nFXIndex_4 )
-	self.nFXIndex_4 = nil
 end

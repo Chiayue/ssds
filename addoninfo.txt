@@ -2,7 +2,7 @@
 {
     maps = 
 	[
-		"archers_survive_ice",
+		"archers_survive_halloween",
 	]
     MinPlayers = 1
 	MaxPlayers = 5

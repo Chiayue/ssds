@@ -31,7 +31,6 @@ function modifier_ability_abyss_15:DeclareFunctions( ... )
 	return 
 		{
 			MODIFIER_EVENT_ON_ATTACK_LANDED, 
-			--MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE, -- 减伤
 		}
 end
 
@@ -46,9 +45,7 @@ function modifier_ability_abyss_15:OnAttackLanded( kv )
 	
 	if hTarget:HasModifier("modifier_ability_abyss_15_buff") then 
 		local swipes_buff = hTarget:FindModifierByName("modifier_ability_abyss_15_buff"):GetStackCount()
-		--print("swipes_buff>>>>>>>>>>>>>>>>>="..swipes_buff)
 		self.swipes_buff_damage = swipes_buff * 200
-		--print("ability_abyss_15{self.swipes_buff_damage}>>>>>>>>>>>>>>>>>>>>>>>>>="..self.swipes_buff_damage)
 	end
 
 	ApplyDamage({

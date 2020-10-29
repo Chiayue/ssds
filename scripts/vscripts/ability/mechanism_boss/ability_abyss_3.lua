@@ -15,32 +15,27 @@ end
 function ability_abyss_3:OnSpellStart( ... )
 	local hCaster = self:GetCaster()
 	local player_nuber = 0
-	if hCaster:GetHealthPercent() > 80 then
-		self:EndCooldown()
-	-- 当释放者的血量不足80%
-	elseif hCaster:GetHealthPercent() <= 80 then 
-		-- 寻找自身1000范围的敌人
-		local enemys = FindUnitsInRadius(
-			hCaster:GetTeamNumber(), 
-			hCaster:GetAbsOrigin(), 
-			hCaster, 
-			99999, 
-			DOTA_UNIT_TARGET_TEAM_ENEMY, 
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-			0, 0, false)
+	-- 寻找自身所有的敌人
+	local enemys = FindUnitsInRadius(
+		hCaster:GetTeamNumber(), 
+		hCaster:GetAbsOrigin(), 
+		hCaster, 
+		99999, 
+		DOTA_UNIT_TARGET_TEAM_ENEMY, 
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+		0, 0, false)
 
-		if #enemys <= 1 then
-			player_nuber = 1
-		else
-			player_nuber = (#enemys/2)
-		end
+	if #enemys <= 1 then
+		player_nuber = 1
+	else
+		player_nuber = (#enemys/2)
+	end
 
-		for i, enemy in pairs(enemys) do
-			-- 半数以上的敌人加上DEBUFF
-			if i <= player_nuber then 
-				enemy:AddNewModifier(hCaster, self, "modifier_ability_abyss_3", {})
-				hCaster.index_modifier_ability_abyss_3 = enemy 		-- 保存那个实体添加的modifier 
-			end
+	for i, enemy in pairs(enemys) do
+		-- 半数以上的敌人加上DEBUFF
+		if i <= player_nuber then 
+			enemy:AddNewModifier(hCaster, self, "modifier_ability_abyss_3", {})
+			hCaster.index_modifier_ability_abyss_3 = enemy 		-- 保存那个实体添加的modifier 
 		end
 	end
 end
@@ -67,7 +62,6 @@ end
 function modifier_ability_abyss_3_deth:OnDeath( ... )
 	if IsServer() then 
 		local hParent = self:GetParent()
-		local hCaster = self:GetCaster()
 		if hParent:IsAlive() then return end 
 		local hParent_modifier_ability_abyss_3 = hParent.index_modifier_ability_abyss_3		-- 得到拥有这个modified的实体
 		if hParent_modifier_ability_abyss_3 == nil then return end
@@ -111,8 +105,7 @@ function modifier_ability_abyss_3:OnIntervalThink( ... )
 	if IsServer() then 	
 		local hCaster = self:GetCaster()
 		local hParent = self:GetParent()
-		--local hparent_range = hParent:Script_GetAttackRange() + 500
-		--print("hparent_range>>>>>>>>>>>>>=",hparent_range)
+
 		local enemys = FindUnitsInRadius(
 			hParent:GetTeamNumber(), 
 			hParent:GetAbsOrigin(), 

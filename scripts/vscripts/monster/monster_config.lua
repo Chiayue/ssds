@@ -1,4 +1,7 @@
 return {
+    --刷怪状态   0：表示没刷怪， 1表示已经刷怪 
+    spawn_state = 0,
+
     -- 刷怪开始时间（秒）
     spawn_start_time = 10,
     --准备刷怪阶段的提示时间
@@ -7,8 +10,6 @@ return {
     spawn_xu_time = 30,
     --序章准备刷怪阶段的提示时间
     spawn_xu_time_tips = 30,
-    --倒计时10秒，显示UI提示
-    spawn_count_down = 10,
     
     --普通模式刷怪间隔时间
     spawn_interval_time = 100,  
@@ -20,10 +21,12 @@ return {
     --无尽模式刷怪间隔时间提示
     spawn_interval_endless_time_tips = 600,
 
-    --等待第一波刷怪状态提示
-    spawn_start_state = true,
-    --等待下一波刷怪状态提示
-    spawn_next_state = false,
+    --深渊模式刷小怪
+    spawn_abyss_monster_time = 100,
+    --深渊模式刷boss
+    spawn_abyss_boss_time = 30,
+    --深渊模式刷怪状态   false表示深渊开始刷小怪，  true表示深渊开始刷boss
+    spawn_abyss_state = false,
 
     --记录野怪数目的表（野怪总数不能超过200个,超过就停止刷怪）
 	monsterTable = {},

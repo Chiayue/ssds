@@ -41,7 +41,7 @@ function modifier_ability_abyss_1:OnIntervalThink( ... )
 		--print("number=====", number)
 
 		if number > 0 then
-		local EffectName_0 = "particles/units/heroes/hero_batrider/batrider_stickynapalm_stack.vpcf"
+		local EffectName_0 = "particles/test_particles/xulie/xulie.vpcf"
 		self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName_0, PATTACH_OVERHEAD_FOLLOW, hParent)
 		ParticleManager:SetParticleControl(self.nFXIndex_0, 0, Vector(0, 0, 50))
 		ParticleManager:SetParticleControl(self.nFXIndex_0, 1, Vector(math.floor(number / 10), math.floor(number % 10), 0))  -- Vector(0, number, 0)
@@ -97,9 +97,6 @@ function modifier_ability_abyss_1_damage:OnAttacked(kv)
 	if units == self:GetParent() then
 		--print("args") 
 		if hAttacker:IsRealHero() then 
-			--local hParent = self:GetParent()
-			--print("hAttacker:GetAttackDamage()=======", hAttacker:GetAttackDamage())
-			--print("units:GetAttackDamage()=======", units:GetAttackDamage())
 			ApplyDamage({
 						ability = self:GetAbility(),
 						victim = hAttacker,

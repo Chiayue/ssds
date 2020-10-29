@@ -69,12 +69,7 @@ end
 
 function MonsterOperate:OnCreateMonster(PlayerID,index) 
 
-    local position = Vector(0, 0, 0) + RandomVector( RandomFloat( 1000, 4500 ))
-    local path_ok =  GridNav:CanFindPath(position, Vector(1000, 0, 0))
-    --判断是否能从某个起始点移动到某个终点
-    if not path_ok then
-        position = Vector(1000, 0, 0)
-    end
+    local position = GlobalVarFunc:IsCanFindPath(1000, 4500)
     local bigBoss = CreateUnitByName("create_operate_challenge_monster", position, true, nil, nil, DOTA_TEAM_BADGUYS)
     bigBoss.operateID = tostring(PlayerID)
     bigBoss.operateIndex = tostring(index) 
@@ -102,28 +97,28 @@ function MonsterOperate:setMonsterBaseInformation(bigBoss,index)
         bigBoss:SetRenderColor(165, 255, 38)
         MonsterOperate:setOperateInformation(bigBoss, 500, 30)
     elseif index == 2 then
-        MonsterOperate:OnAddAbility(bigBoss, 1)
+        --MonsterOperate:OnAddAbility(bigBoss, 1)
         bigBoss:SetRenderColor(255, 180, 33)
         MonsterOperate:setOperateInformation(bigBoss, 10000, 30)
     elseif index == 3 then
         bigBoss:SetRenderColor(255, 84, 38)
         MonsterOperate:setOperateInformation(bigBoss, 10000, 210)
     elseif index == 4 then
-        MonsterOperate:OnAddAbility(bigBoss, 2)
+        --MonsterOperate:OnAddAbility(bigBoss, 2)
         bigBoss:SetRenderColor(189, 39, 255)
         MonsterOperate:setOperateInformation(bigBoss, 150000, 210)
     elseif index == 5 then
         bigBoss:SetRenderColor(251, 255, 38)
         MonsterOperate:setOperateInformation(bigBoss, 150000, 1000)
     elseif index == 6 then
-        MonsterOperate:OnAddAbility(bigBoss, 2)
+        --MonsterOperate:OnAddAbility(bigBoss, 2)
         bigBoss:SetRenderColor(30, 223, 255)
         MonsterOperate:setOperateInformation(bigBoss, 1500000, 1000)
     elseif index == 7 then
         bigBoss:SetRenderColor(255, 40, 182)
         MonsterOperate:setOperateInformation(bigBoss, 1500000, 2500)
     elseif index == 8 then
-        MonsterOperate:OnAddAbility(bigBoss, 2)
+        --MonsterOperate:OnAddAbility(bigBoss, 2)
         bigBoss:SetRenderColor(102, 179, 148)
         MonsterOperate:setOperateInformation(bigBoss, 10000000, 2500)
     end 

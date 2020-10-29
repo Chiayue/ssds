@@ -21,7 +21,7 @@ function MonsterNeutral:OnMonsterNeutralThinker()
         return nil
     end
     
-    if (spawner_config.mosterWave > 0) and (spawner_config.mosterWave < 50) and (GlobalVarFunc.neutralMosterNum < 15) then
+    if (spawner_config.mosterWave > 0) and (spawner_config.mosterWave < 50) and (GlobalVarFunc.neutralMosterNum < 15) and (GlobalVarFunc.game_type ~= 1002) then
         self:OnCreateNeutralBoss()
     end
     
@@ -35,10 +35,6 @@ function MonsterNeutral:OnCreateNeutralBoss()
     self:setMonsterBaseInformation(Boss)
 
     GlobalVarFunc.neutralMosterNum = GlobalVarFunc.neutralMosterNum + 1
-
-    -- Timer(39, function()
-    --     UTIL_Remove(Boss)
-    -- end)
 end
 
 function MonsterNeutral:OnKillMonsterNeutral(event)

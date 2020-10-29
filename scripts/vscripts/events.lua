@@ -12,6 +12,12 @@ function CAddonTemplateGameMode:OnEntityKill(event)
                 --无尽存档装备掉落
                 self:OnBossCreatedSeriesItem()
 
+                --深渊击杀boss进入下一波
+                if GlobalVarFunc.game_type == 1002 then
+                    GlobalVarFunc.abyss_spawn_state = false
+                    MobSpawner:SpawnAbyssNextWave()
+                end
+                
             else
                 --停止boss音效
                 GlobalVarFunc:OnStopBossSound()

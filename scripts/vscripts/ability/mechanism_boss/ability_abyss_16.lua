@@ -49,10 +49,7 @@ function modifier_ability_abyss_16:OnIntervalThink( ... )
 			return 0
 		end
 		local reduce_heal_percentage = hParent:GetHealthPercent()
-		--print("heal_percentage>>>>>>>>>>>>>"..heal_percentage)
-		self.heal_percentage = 100
-		self.heal_percentage = self.heal_percentage - reduce_heal_percentage
-		--print("self.heal_percentage>>>>>>>>>>>>>"..self.heal_percentage) 
+		self.heal_percentage = 100 - reduce_heal_percentage
 	end
 end
 
@@ -76,17 +73,14 @@ function modifier_ability_abyss_16:OnAttackLanded( kv )
 	end
 	
 	local attack_damage_heal = hParent:GetAttackDamage()
-	--print("attack_damage_heal>>>>>>>>>>>>>>>>>>>>>>>>>>>="..attack_damage_heal)
 	hAttacker:Heal(attack_damage_heal, hAttacker)
 end
 
 function modifier_ability_abyss_16:GetModifierMoveSpeedBonus_Constant( kv )
-	--print("self.heal_percentage>>>>>>>>>>>>>{MoveSpeed}="..self.heal_percentage * 3)
 	return self.heal_percentage * 3
 end
 
 function modifier_ability_abyss_16:GetModifierAttackSpeedBonus_Constant( kv )
-	--print("self.heal_percentage>>>>>>>>>>>>>{AttackSpeed}="..self.heal_percentage * 5)
 	return self.heal_percentage * 5
 end
 

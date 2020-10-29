@@ -35,7 +35,7 @@ function modifier_ability_flagstone_festering:OnAttackLanded( params )
 end
 ---------------
 if modifier_ability_flagstone_festering_debuff == nil then modifier_ability_flagstone_festering_debuff = {} end
-function modifier_ability_flagstone_festering_debuff:IsHidden() return true end
+function modifier_ability_flagstone_festering_debuff:IsHidden() return false end
 function modifier_ability_flagstone_festering_debuff:IsDebuff() return true end
 function modifier_ability_flagstone_festering_debuff:DeclareFunctions()
 	local funcs = {

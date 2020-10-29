@@ -58,35 +58,3 @@ end
 function modifier_ability_abyss_8:GetModifierIncomingDamage_Percentage( ... )
 	return self.IncomingDamage_value
 end
-
-function modifier_ability_abyss_8:OnIntervalThink( kv )
-	if IsServer() then 
-		local hParent = self:GetParent()
-		local hCaster = self:GetCaster()
-
-		local number = self:GetStackCount() -- 获取到当前的BUFF层数
-		--print("number=====", number)
-
-		if number > 0 then
-			local EffectName = "particles/white/xulie.vpcf"
-			self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName, PATTACH_OVERHEAD_FOLLOW, hCaster)
-			ParticleManager:SetParticleControl(self.nFXIndex_0, 0, Vector(0, 0, 50))
-			ParticleManager:SetParticleControl(self.nFXIndex_0, 1, Vector(math.floor(number / 10), math.floor(number % 10), 0))  -- Vector(0, number, 0)
-			ParticleManager:DestroyParticle( self.nFXIndex_0, false )
-			ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
-			self:AddParticle(self.nFXIndex_0, false, false, -1, false, true)
-
-			 -- 设置BUFF在头顶的层数
-
-			self:DecrementStackCount()
-		else
-			--hParent:AddNewModifier(hParent, self, "modifier_ability_abyss_8_damage", {}) -- duration = 2
-
-			self.nFXIndex_0 = nil
-
-			self:StartIntervalThink(-1)
-			self:Destroy()
-			
-		end
-	end
-end
