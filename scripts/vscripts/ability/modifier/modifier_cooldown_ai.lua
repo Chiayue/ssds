@@ -43,7 +43,6 @@ function modifier_cooldown_ai:OnIntervalThink( ... )
 	    		local ability_name = ability_fuhuo:GetAbilityName()
 	    		--print("ability_name>>>>>>>>>>>>>>>>>>>>>>=",ability_name)
 	    		if not ability_fuhuo:IsPassive() then 
-	                print("args")
 	                if ability_fuhuo:IsFullyCastable() then
 	                    hParent:CastAbilityImmediately(ability_fuhuo,hParent:GetEntityIndex())
 	                end

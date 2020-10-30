@@ -222,12 +222,25 @@ function Store:UsedCustomGoodsValue(nPlayerID,sCurrency,nQuantity,sRemarks)
 end
 
 function Store:CheckExpCard(nPlayerID)
-	local expTime = Store:GetData(nPlayerID,"expcard") or 0
-	local nGameTime = math.floor(GameRules:GetDOTATime(false,false))
-	local nServerTime = CustomNetTables:GetTableValue("service", "load_time")
-	if expTime >= nServerTime["time"] + nGameTime then
-		return true
+	local hStoreData = Store:GetData(nPlayerID)
+	local bHasDouble = true
+	local hNeedStore = {"sage_stone","aura_god","arrow_infinite","golden_dragon","dark_wings"}
+	for k,v in pairs(hNeedStore) do
+		if hStoreData[v] == nil then
+			bHasDouble = false
+			break
+		end
+	end
+	if bHasDouble == false then
+		local expTime = Store:GetData(nPlayerID,"expcard") or 0
+		local nGameTime = math.floor(GameRules:GetDOTATime(false,false))
+		local nServerTime = CustomNetTables:GetTableValue("service", "load_time")
+		if expTime >= nServerTime["time"] + nGameTime then
+			return true
+		else
+			return false
+		end
 	else
-		return false
+		return true
 	end
 end

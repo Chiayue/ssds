@@ -56,7 +56,6 @@ end
 -----------------
 if modifier_archon_deputy_scavenging == nil then modifier_archon_deputy_scavenging = {} end
 function modifier_archon_deputy_scavenging:OnCreated()
-
 	if not IsServer() then return end
 	self:SetDuration(0, true)
 end

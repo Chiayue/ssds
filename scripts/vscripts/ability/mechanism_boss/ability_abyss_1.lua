@@ -38,7 +38,6 @@ function modifier_ability_abyss_1:OnIntervalThink( ... )
 		local hParent = self:GetParent()
 
 		local number = self:GetStackCount() -- 获取到当前的BUFF层数
-		--print("number=====", number)
 
 		if number > 0 then
 		local EffectName_0 = "particles/test_particles/xulie/xulie.vpcf"
@@ -46,13 +45,15 @@ function modifier_ability_abyss_1:OnIntervalThink( ... )
 		ParticleManager:SetParticleControl(self.nFXIndex_0, 0, Vector(0, 0, 50))
 		ParticleManager:SetParticleControl(self.nFXIndex_0, 1, Vector(math.floor(number / 10), math.floor(number % 10), 0))  -- Vector(0, number, 0)
 		ParticleManager:DestroyParticle( self.nFXIndex_0, false )
-		ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
+			ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
 		self:AddParticle(self.nFXIndex_0, false, false, -1, false, true)
 
 		 -- 设置BUFF在头顶的层数
 
 		self:DecrementStackCount()
 		else
+			ParticleManager:DestroyParticle( self.nFXIndex_0, false )
+			ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
 			self.nFXIndex_0 = nil
 
 			self:StartIntervalThink(-1)
@@ -80,8 +81,8 @@ end
 
 function modifier_ability_abyss_1_damage:OnDestroy( ... )
 	ParticleManager:DestroyParticle( self.particleID, false )
-		ParticleManager:ReleaseParticleIndex( self.particleID )
-		self.particleID = nil
+	ParticleManager:ReleaseParticleIndex( self.particleID )
+	self.particleID = nil
 end
 
 function modifier_ability_abyss_1_damage:DeclareFunctions( ... )

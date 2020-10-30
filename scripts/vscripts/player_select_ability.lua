@@ -235,6 +235,8 @@ function Player_Select_Ability:Talent_Selected(args)
 	    end
 	   	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"hero_selected_over",{ hero = sAbilityName})
 	   	-- 更新补偿
+	   	local bExp = Store:CheckExpCard(nPlayerID)
+	   	print("ExpCard",bExp)
 	   	Timer(1,function()
 	   		ArrowSoulCompensate:CheckReward( hNewHero )
 	   	end)
@@ -253,7 +255,6 @@ function Player_Select_Ability:Talent_Selected(args)
 
 		-- 读取商品存档信息
 		Timer(1,function()
-	   		
 	        local hCurrentStore = Store:GetData(nPlayerID)
 	        PlayerStoreReward:Set( hNewHero, hCurrentStore)
 	        ArrowSoulMeditation:OnInitArrowSoulMeditation(hNewHero)

@@ -59,15 +59,13 @@ function modifier_ability_abyss_3_deth:DeclareFunctions( ... )
 		}
 end
 
-function modifier_ability_abyss_3_deth:OnDeath( ... )
-	if IsServer() then 
-		local hParent = self:GetParent()
-		if hParent:IsAlive() then return end 
-		local hParent_modifier_ability_abyss_3 = hParent.index_modifier_ability_abyss_3		-- 得到拥有这个modified的实体
-		if hParent_modifier_ability_abyss_3 == nil then return end
-		if hParent_modifier_ability_abyss_3:HasModifier("modifier_ability_abyss_3") then
-			hParent_modifier_ability_abyss_3:RemoveModifierByName("modifier_ability_abyss_3")
-		end
+function modifier_ability_abyss_3_deth:OnDeath( ... ) 
+	local hParent = self:GetParent()
+	if hParent:IsAlive() then return end 
+	local hParent_modifier_ability_abyss_3 = hParent.index_modifier_ability_abyss_3		-- 得到拥有这个modified的实体
+	if hParent_modifier_ability_abyss_3 == nil then return end
+	if hParent_modifier_ability_abyss_3:HasModifier("modifier_ability_abyss_3") then
+		hParent_modifier_ability_abyss_3:RemoveModifierByName("modifier_ability_abyss_3")
 	end
 end
 
@@ -92,13 +90,17 @@ function modifier_ability_abyss_3:OnCreated( ... )
 	self.iParticleID = ParticleManager:CreateParticle(EffectName_0, PATTACH_ROOTBONE_FOLLOW, hParent)
 	ParticleManager:SetParticleControlEnt(self.iParticleID, 0, hCaster, PATTACH_POINT_FOLLOW, "attach_hitloc", hCaster:GetAbsOrigin(), false)
 	ParticleManager:SetParticleControlEnt(self.iParticleID, 1, hParent, PATTACH_POINT_FOLLOW, "attach_hitloc", hParent:GetAbsOrigin(), false)
-	-- ParticleManager:SetParticleControl(iParticleID, 2, Vector(speed, 1, 1))
-	-- ParticleManager:SetParticleControl(iParticleID, 3, Vector(time, 1, 1))
 	self:AddParticle(self.iParticleID, false, false, -1, false, false)
 
 	if IsServer() then 
 		self:StartIntervalThink(1)
 	end
+end
+
+function modifier_ability_abyss_3:OnDestroy( ... )
+	ParticleManager:DestroyParticle( self.iParticleID, false )
+	ParticleManager:ReleaseParticleIndex( self.iParticleID )
+	self.iParticleID = nil
 end
 
 function modifier_ability_abyss_3:OnIntervalThink( ... )

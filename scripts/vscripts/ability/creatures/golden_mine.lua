@@ -10,6 +10,7 @@ end
 modifier_golden_mine = class({
 	IsHidden = function(self) return true end,
 	DeclareFunctions = function(self) return {
+		MODIFIER_EVENT_ON_DEATH,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
@@ -31,6 +32,20 @@ end
 
 function modifier_golden_mine:GetAbsoluteNoDamagePure()
 	return 1
+end
+
+function modifier_golden_mine:OnDeath(args)
+	if args.unit:GetUnitName() == "npc_dota_gold_mine" then
+		local vector = args.unit:GetOrigin()
+		local newItem = CreateItem( "item_baoWu_book", nil, nil )
+		local drop = CreateItemOnPositionSync( vector, newItem )
+		local dropTarget = vector 
+		newItem:LaunchLoot( false, 300, 0.75, dropTarget )
+		--添加特效提示
+        ParticleManager:CreateParticle("particles/diy_particles/treasuretips.vpcf", PATTACH_ABSORIGIN_FOLLOW,newItem:GetContainer())
+		--宝物音效
+		GlobalVarFunc:OnGameSound("baowubook_sound")
+	end
 end
 
 function modifier_golden_mine:OnCreated()
@@ -64,9 +79,12 @@ function modifier_golden_mine:OnAttackLanded(data)
 end
 
 modifier_golden_mine_buff = class({
-	IsHidden = function(self) return false end,
 	IsBuff = function(self) return true end,
 })
+
+function modifier_golden_mine_buff:IsHidden()
+	return true
+end
 
 function modifier_golden_mine_buff:OnCreated()
 	if IsClient() then return end

@@ -163,7 +163,7 @@ function modifier_archon_passive_natural_debuff:OnRefresh()
 	if not IsServer() then return end
 	local nLevel = self:GetAbility():GetLevel()
 	if nLevel >= ABILITY_AWAKEN_2 then 
-		if self:GetStackCount() < 50 then
+		if self:GetStackCount() < 99 then
 			self:IncrementStackCount()
 		end
 	else

@@ -8982,7 +8982,7 @@
 	}
 
 	// =================================================================================
-	// 金矿
+	// 舔狗
 	// =================================================================================
 	"npc_dota_gold_mine"
 	{
@@ -9040,11 +9040,11 @@
 		"BoundsHullName"	"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"	"100"
 		"HealthBarOffset"	"260"
-		"MinimapIconSize"	"500"
+		"MinimapIconSize"	"100"
 		// Movement
 		// ----------------------------------------------------------------
 		// Type of locomotion - ground, air
-		"MovementCapabilities"	"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementCapabilities"	"DOTA_UNIT_CAP_MOVE_GROUND"
 		// Speed
 		"MovementSpeed"	"0"
 		// Turning rate.
@@ -9085,6 +9085,7 @@
 		"Ability14"	""
 		"Ability15"	""
 		"Ability16"	""
+		"MinimapIcon"	"minimap_miscbuilding"
 	}
 
 	"npc_dota_creature_zhongli_monster"
@@ -9786,7 +9787,7 @@
 		"Ability14"	""
 		"Ability15"	""
 		"Ability16"	""
-		"Model"	"models/npc/luoli/luoli.vmdl"
+		"Model"	"models/npc/alice/alice.vmdl"
 		"ModelScale"	"1.8"
 		"Level"	"1"
 		"MinimapIcon"	"minimap_miscbuilding"

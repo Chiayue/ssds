@@ -53,6 +53,8 @@ function modifier_archon_passive_time:OnAttackLanded( params )
 	local chance = self:GetAbility():GetSpecialValueFor( "chance" )
 	local aoe = self:GetAbility():GetSpecialValueFor( "aoe" )
 	local damage_coefficient = self:GetAbility():GetSpecialValueFor( "coefficient" )
+	local nTalentStack = hCaster:GetModifierStackCount("modifier_series_reward_talent_greed", hCaster )
+	if nTalentStack >=2 then chance = chance + 5 end
 	if nowChance  > chance then
 		return 0
 	end

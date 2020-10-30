@@ -168,7 +168,8 @@ function MonsterBigBoss:OnCreatedBaoWuBook(Vector)
 	local drop = CreateItemOnPositionSync( Vector, newItem )
 	local dropTarget = Vector 
     newItem:LaunchLoot( false, 300, 0.75, dropTarget )
-    
+    --添加特效提示
+    ParticleManager:CreateParticle("particles/diy_particles/treasuretips.vpcf", PATTACH_ABSORIGIN_FOLLOW,newItem:GetContainer())
     --宝物音效
     GlobalVarFunc:OnGameSound("baowubook_sound")
 end

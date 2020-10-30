@@ -18,12 +18,12 @@ function modifier_archon_passive_rage:IsHidden() return true end
 
 function modifier_archon_passive_rage:OnCreated()
 	if IsServer() then
+		self.changeCd = 1
 		self.damage_max = 0
 		self.damage_loss = 0
 		self.regen = 0
 		self.series_damage = 0
 		self.series_attackspeed = 0
-		
 		self:StartIntervalThink(0.2) 
 	end
 end
@@ -61,6 +61,14 @@ function modifier_archon_passive_rage:OnIntervalThink()
 		self.damage_max = max_health * self:GetAbility():GetSpecialValueFor( "bonus_damage_health" ) * 0.01
 		self.damage_loss = (max_health - health) * (self:GetAbility():GetSpecialValueFor( "bonus_damage_loss" ) + nSeriesBonus )* 0.01
 		self.regen = (max_health - health) * 0.02
+		------------------------
+		if self.changeCd > 0 then
+			self.changeCd = self.changeCd - 0.2
+		else
+			self.changeCd = 1
+			local nHealthPer = caster:GetHealthPercent()
+		end
+		
 	end
 end
 

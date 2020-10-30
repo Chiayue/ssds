@@ -56,6 +56,8 @@ function modifier_ability_abyss_6:OnIntervalThink( kv )
 			-- 设置BUFF在头顶的层数
 			self:DecrementStackCount()
 		else
+			ParticleManager:DestroyParticle( self.nFXIndex_0, false )
+			ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
 			self.nFXIndex_0 = nil
 
 			self:StartIntervalThink(-1)
@@ -114,7 +116,11 @@ function modifier_ability_abyss_6_damage:OnIntervalThink( kv )
 
 			self:DecrementStackCount()
 		else
+			ParticleManager:DestroyParticle( self.nFXIndex_2, false )
+			ParticleManager:ReleaseParticleIndex( self.nFXIndex_2 )
 			self.nFXIndex_2 = nil
+			ParticleManager:DestroyParticle( self.nFXIndex_3, false )
+			ParticleManager:ReleaseParticleIndex( self.nFXIndex_3 )
 			self.nFXIndex_3 = nil
 
 			self:StartIntervalThink(-1)
@@ -124,7 +130,7 @@ function modifier_ability_abyss_6_damage:OnIntervalThink( kv )
 				self:FindEnemyRangeDamage(hParent)
 			end
 
-			hParent:ForceKill(true)
+			--hParent:ForceKill(true)
 		end
 	end
 end

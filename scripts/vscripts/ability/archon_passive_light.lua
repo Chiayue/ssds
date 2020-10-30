@@ -152,6 +152,7 @@ function modifier_archon_passive_light:HitTarget( hOrigin,hTarget)
 		1,
 		Vector(hTarget:GetAbsOrigin().x,hTarget:GetAbsOrigin().y,hTarget:GetAbsOrigin().z + hTarget:GetBoundingMaxs().z )
 	)
+	ParticleManager:ReleaseParticleIndex(lightningBolt)
 end
 
 ------------ 增伤BUFF ----------------

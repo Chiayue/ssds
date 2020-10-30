@@ -53,16 +53,18 @@ function modifier_ability_abyss_17:OnIntervalThink( kv )
 		local number = self:GetStackCount() -- 获取到当前的BUFF层数
 
 		if number > 0 then
-		local EffectName_0 = "particles/test_particles/xulie/xulie.vpcf"
-		self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName_0, PATTACH_OVERHEAD_FOLLOW, hParent)
-		ParticleManager:SetParticleControl(self.nFXIndex_0, 1, Vector(math.floor(number / 10), math.floor(number % 10), 0))  -- Vector(0, number, 0)
-		ParticleManager:DestroyParticle( self.nFXIndex_0, false )
-		ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
-		self:AddParticle(self.nFXIndex_0, false, false, -1, false, true)
+			local EffectName_0 = "particles/test_particles/xulie/xulie.vpcf"
+			self.nFXIndex_0 = ParticleManager:CreateParticle( EffectName_0, PATTACH_OVERHEAD_FOLLOW, hParent)
+			ParticleManager:SetParticleControl(self.nFXIndex_0, 1, Vector(math.floor(number / 10), math.floor(number % 10), 0))  -- Vector(0, number, 0)
+			ParticleManager:DestroyParticle( self.nFXIndex_0, false )
+			ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
+			self:AddParticle(self.nFXIndex_0, false, false, -1, false, true)
 
-		-- 设置BUFF在头顶的层数
-		self:DecrementStackCount()
+			-- 设置BUFF在头顶的层数
+			self:DecrementStackCount()
 		else
+			ParticleManager:DestroyParticle( self.nFXIndex_0, false )
+			ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
 			self.nFXIndex_0 = nil
 
 			self:StartIntervalThink(-1)
@@ -93,7 +95,6 @@ end
 
 function modifier_ability_abyss_17_damage:OnIntervalThink( kv )
 	if IsServer() then 
-		local hCaster = self:GetCaster()
 		local hParent = self:GetParent()
 
 		local number = self:GetStackCount() -- 获取到当前的BUFF层数
@@ -114,10 +115,12 @@ function modifier_ability_abyss_17_damage:OnIntervalThink( kv )
 
 			self:DecrementStackCount()
 		else
+			ParticleManager:DestroyParticle( self.nFXIndex_0, false )
+			ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
+			self.nFXIndex_0 = nil
+			
 			ParticleManager:DestroyParticle( self.nFXIndex_1, false )
 			ParticleManager:ReleaseParticleIndex( self.nFXIndex_1 )
-
-			self.nFXIndex_0 = nil
 			self.nFXIndex_1 = nil
 
 			self:StartIntervalThink(-1)

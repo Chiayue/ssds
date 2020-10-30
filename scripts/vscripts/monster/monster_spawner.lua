@@ -40,7 +40,7 @@ function MobSpawner:OnThink()
         self:OnCreaterLuoLi()
 
         --创建金矿
-        --MobSpawner:OnCreateGoldTree()
+        MobSpawner:OnCreateGoldMonster()
     end
 
     --10分钟存一次档
@@ -1320,7 +1320,7 @@ end
 --萝莉跳舞冷却\
 function MobSpawner:OnCoolDown()
     
-    local time = 210
+    local time = 240
     GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("luoli_cool_down_think"), 
     function()
         if GameRules:IsGamePaused() then
@@ -1338,8 +1338,8 @@ function MobSpawner:OnCoolDown()
     end, 0)  
 end
 
-function MobSpawner:OnCreateGoldTree()
+function MobSpawner:OnCreateGoldMonster()
     local name = "npc_dota_gold_mine"
-    local position = Vector(0, 1000, 0)
+    local position = Vector(5000, -4600, 0)
     local goldTree = CreateUnitByName(name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
 end

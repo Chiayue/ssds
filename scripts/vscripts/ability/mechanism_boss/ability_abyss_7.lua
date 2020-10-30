@@ -65,6 +65,8 @@ function modifier_ability_abyss_7:OnIntervalThink( kv )
 		else
 			hParent:AddNewModifier(hParent, self:GetAbility(), "modifier_ability_abyss_7_damage", {}) -- duration = 2
 
+			ParticleManager:DestroyParticle( self.nFXIndex_0, false )
+			ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
 			self.nFXIndex_0 = nil
 
 			self:StartIntervalThink(-1)

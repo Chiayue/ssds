@@ -57,6 +57,8 @@ function modifier_ability_abyss_12:OnIntervalThink( kv )
 			-- 设置BUFF在头顶的层数
 			self:DecrementStackCount()
 		else
+			ParticleManager:DestroyParticle( self.nFXIndex_0, false )
+			ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
 			self.nFXIndex_0 = nil
 
 			self:StartIntervalThink(-1)

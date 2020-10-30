@@ -55,11 +55,13 @@ function modifier_ability_abyss_11:OnIntervalThink( kv )
 			ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
 			self:AddParticle(self.nFXIndex_0, false, false, -1, false, true)
 
-			CreateModifierThinker(hParent, self:GetAbility(), "modifier_ability_abyss_11_damage", {}, hParent:GetAbsOrigin() + RandomVector(1) * RandomFloat(0, 1000), hCaster:GetTeamNumber(), false)
+			CreateModifierThinker(hParent, self:GetAbility(), "modifier_ability_abyss_11_damage", {}, hParent:GetAbsOrigin() + RandomVector(1) * RandomFloat(0, 1000), hParent:GetTeamNumber(), false)
 
 			-- 减少BUFF在头顶的层数
 			self:DecrementStackCount()
 		else
+			ParticleManager:DestroyParticle( self.nFXIndex_0, false )
+			ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
 			self.nFXIndex_0 = nil
 
 			self:StartIntervalThink(-1)
@@ -118,6 +120,12 @@ function modifier_ability_abyss_11_damage:OnIntervalThink( ... )
 			enemy:AddNewModifier(hParent, self:GetAbility(), "modifier_ability_abyss_11_damage_debuff", {duration = 20})
 		end
 		self:Destroy()
+end
+
+function modifier_ability_abyss_11_damage:OnDestroy( ... )
+	ParticleManager:DestroyParticle( self.nFXIndex_2, false )
+	ParticleManager:ReleaseParticleIndex( self.nFXIndex_2 )
+	self.nFXIndex_2 = nil
 end
 
 if modifier_ability_abyss_11_damage_debuff == nil then 

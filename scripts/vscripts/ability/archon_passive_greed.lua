@@ -31,14 +31,21 @@ function modifier_archon_passive_greed:OnIntervalThink()
 	local nPlayerID = hCaster:GetPlayerID()
     local hDuliu = Player_Data:GetStatusInfo(nPlayerID)
     local nInCooldown = hDuliu["duliu_in_cd"]
+    local nTalentStack = hCaster:GetModifierStackCount("modifier_series_reward_talent_greed", hCaster )
     local nLevel = self:GetAbility():GetLevel()
+    local nCoefficient = 1
+    if nTalentStack >= 3 then nCoefficient = 0.7 end
 	if nLevel >= ABILITY_AWAKEN_1 and nLevel < ABILITY_AWAKEN_2 then
 		if nInCooldown == 0 then
-    		hDuliu["duliu_max_cd"] = 150
+    		hDuliu["duliu_max_cd"] = 150 * nCoefficient
     	end
 	elseif nLevel >= ABILITY_AWAKEN_2 then
 		if nInCooldown == 0 then
-    		hDuliu["duliu_max_cd"] = 60
+    		hDuliu["duliu_max_cd"] = 60 * nCoefficient
+   		end	
+   	else
+   		if nInCooldown == 0 then
+    		hDuliu["duliu_max_cd"] = 300 * nCoefficient
    		end	
 	end
 end
@@ -72,6 +79,8 @@ function modifier_archon_passive_greed:OnAttackLanded( params )
 	local chance = self:GetAbility():GetSpecialValueFor( "chance" )
 	local damage_coefficient = self:GetAbility():GetSpecialValueFor( "coefficient" )
 	local aoe = self:GetAbility():GetSpecialValueFor( "aoe" )
+	local nTalentStack = hCaster:GetModifierStackCount("modifier_series_reward_talent_greed", hCaster )
+	if nTalentStack >=2 then chance = chance + 5 end
 	if nowChance  > chance then
 		return 0
 	end

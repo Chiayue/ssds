@@ -49,7 +49,7 @@ function modifier_ability_abyss_5_avoid_injury:GetModifierAura()
 end
 
 function modifier_ability_abyss_5_avoid_injury:GetAuraRadius()
-	return 1000
+	return 500
 end
 
 function modifier_ability_abyss_5_avoid_injury:GetAuraSearchType()
@@ -65,6 +65,12 @@ function modifier_ability_abyss_5_avoid_injury:OnCreated( ... )
 	ParticleManager:SetParticleControl(self.nFXIndex_0, 2, hParent:GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.nFXIndex_0, 4, hParent:GetAbsOrigin())
 	self:AddParticle(self.nFXIndex_0, false, false, -1, false, true)
+end
+
+function modifier_ability_abyss_5_avoid_injury:OnDestroy( ... )
+	ParticleManager:DestroyParticle( self.nFXIndex_0, false )
+	ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
+	self.nFXIndex_0 = nil
 end
 
 -- 所有的玩家  免伤效果
@@ -124,6 +130,8 @@ function modifier_ability_abyss_5:OnIntervalThink( kv )
 			 -- 设置BUFF在头顶的层数
 			self:DecrementStackCount()
 		else
+			ParticleManager:DestroyParticle( self.nFXIndex_1, false )
+			ParticleManager:ReleaseParticleIndex( self.nFXIndex_1 )
 			self.nFXIndex_1 = nil
 
 			self:StartIntervalThink(-1)
@@ -150,7 +158,7 @@ function modifier_ability_abyss_5:FindEnemyRangeDamage(hParent)
 		hParent:GetTeamNumber(), 
 		hParent:GetAbsOrigin(), 
 		hParent, 
-		300, 
+		1000, 
 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
 		0, 0, false)

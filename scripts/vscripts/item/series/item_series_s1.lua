@@ -17,6 +17,7 @@ LinkLuaModifier("modifier_series_reward_talent_flame", "item/series/series_rewar
 LinkLuaModifier("modifier_series_reward_talent_clod", "item/series/series_reward", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_series_reward_talent_vitality", "item/series/series_reward", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_series_reward_talent_ruin", "item/series/series_reward", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_series_reward_talent_greed", "item/series/series_reward", LUA_MODIFIER_MOTION_NONE)
 -------------------------------------------- S2 词缀 --------------------------------
 -------------------------------------------- S3 词缀 --------------------------------
 if item_series_s1 == nil then item_series_s1 = {} end

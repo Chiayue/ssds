@@ -40,7 +40,42 @@ function modifier_archon_passive_magic:OnAttack( params )
 	local mana = hCaster:GetMana()
 	local mana_percent = hCaster:GetManaPercent()
 	local aoe = self:GetAbility():GetSpecialValueFor( "aoe" )
-	if mana_percent < 99 then
+	local hTarget = params.target
+	if 	mana_percent > 98 then
+		hCaster:SpendMana(mana,self:GetAbility())
+		local nLevel = self:GetAbility():GetLevel()
+		if nLevel < ABILITY_AWAKEN_1 then return end
+		-- 魔力爆发
+		local abil_damage = hCaster:GetIntellect() * self:GetAbility():GetSpecialValueFor( "full_damage" )
+		local EffectName = "particles/econ/items/abaddon/abaddon_alliance/abaddon_aphotic_shield_alliance_explosion.vpcf"
+		local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_POINT, hCaster )
+		--ParticleManager:SetParticleControl(nFXIndex, 1, Vector(nAllRange, nAllRange, nAllRange))
+		ParticleManager:ReleaseParticleIndex(nFXIndex)
+		-- 范围
+		local enemies = FindUnitsInRadius(
+			hCaster:GetTeamNumber(), 
+			hTarget:GetOrigin(), 
+			hTarget, 
+			aoe, 
+			DOTA_UNIT_TARGET_TEAM_ENEMY, 
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+			0, 0, false 
+		)
+		EmitSoundOn( "Hero_Invoker.EMP.Discharge", hCaster )
+		for _,enemy in pairs(enemies) do
+			if enemy ~= nil  then
+				local damage = {
+					victim = enemy,
+					attacker = self:GetCaster(),
+					damage = abil_damage,
+					damage_type = self:GetAbility():GetAbilityDamageType(),
+				}
+				ApplyDamage( damage )
+			end
+		end
+	end
+
+	if mana_percent < 98 then
 		-- 魔力之箭
 		local add_mana = hCaster:GetAgility() * self:GetAbility():GetSpecialValueFor( "recovery_ratio" )
 		add_mana = add_mana + (0.01 * hCaster:GetMaxMana() * (hCaster:GetAgility() / hCaster:GetIntellect()))
@@ -52,7 +87,7 @@ function modifier_archon_passive_magic:OnAttack( params )
 			chance = chance + 5
 		end
 		if nowChance  < chance then
-			local hTarget = params.target
+			
 			local abil_damage = hCaster:GetIntellect() * self:GetAbility():GetSpecialValueFor( "notfull_damage" ) * mana_percent * 0.01
 			local EffectName = "particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
 			local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_POINT, hTarget )
@@ -87,52 +122,6 @@ function modifier_archon_passive_magic:OnAttack( params )
 				end
 			end
 		end
-	else
-		
-		hCaster:SpendMana(mana,self:GetAbility())
-		local nLevel = self:GetAbility():GetLevel()
-		if nLevel < ABILITY_AWAKEN_1 then return end
-		-- 魔力爆发
-		-- 获取自身攻击范围
-		local nBowRange = 0
-		local nTechRange = 0
-		local nBaseRange = self:GetCaster():GetBaseAttackRange()
-		local hBow = self:GetCaster():FindModifierByName("modifier_item_archer_bow")
-		if hBow ~= nil then
-			nBowRange = hBow:GetModifierAttackRangeBonus()
-		end
-		local hTeahRange = self:GetCaster():FindModifierByName("modifier_Upgrade_Range")
-		if hTeahRange ~= nil then
-			nTechRange = hTeahRange:GetModifierAttackRangeBonus()
-		end
-		local nAllRange = nBaseRange + nBowRange + nTechRange
-		--
-		local abil_damage = hCaster:GetIntellect() * self:GetAbility():GetSpecialValueFor( "full_damage" )
-		local EffectName = "particles/econ/items/abaddon/abaddon_alliance/abaddon_aphotic_shield_alliance_explosion.vpcf"
-		local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_POINT, hCaster )
-		ParticleManager:SetParticleControl(nFXIndex, 1, Vector(nAllRange, nAllRange, nAllRange))
-		ParticleManager:ReleaseParticleIndex(nFXIndex)
-		-- 范围
-		local enemies = FindUnitsInRadius(
-			hCaster:GetTeamNumber(), 
-			hCaster:GetOrigin(), 
-			hCaster, 
-			nAllRange, 
-			DOTA_UNIT_TARGET_TEAM_ENEMY, 
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-			0, 0, false 
-		)
-		EmitSoundOn( "Hero_Invoker.EMP.Discharge", hCaster )
-		for _,enemy in pairs(enemies) do
-			if enemy ~= nil  then
-				local damage = {
-					victim = enemy,
-					attacker = self:GetCaster(),
-					damage = abil_damage,
-					damage_type = self:GetAbility():GetAbilityDamageType(),
-				}
-				ApplyDamage( damage )
-			end
-		end
 	end
+	
 end

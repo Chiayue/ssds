@@ -133,4 +133,24 @@ end
 
 if modifier_series_reward_talent_ruin == nil then modifier_series_reward_talent_ruin = class(modifier_series_reward_talent) end
 function modifier_series_reward_talent_ruin:GetTexture() return "wulibaoji" end
+---- 贪欲
+if modifier_series_reward_talent_greed == nil then modifier_series_reward_talent_greed = class(modifier_series_reward_talent) end
+function modifier_series_reward_talent_greed:GetTexture() return "baowu/tanyuzhihu" end
+function modifier_series_reward_talent_greed:OnRefresh()
+	if not IsServer() then return end
+	self:IncrementStackCount()
+	local nStack = self:GetStackCount()
+	if nStack >= 3 then self:StartIntervalThink( 5 ) else self:StartIntervalThink( -1 ) end
+end
+
+function modifier_series_reward_talent_greed:OnIntervalThink()
+	local hCaster = self:GetParent() 
+	if hCaster:GetUnitName() == "npc_dota_hero_arc_warden" then
+		local nGetXP = hCaster:GetLevel() * 5
+		local hAllHero = HeroList:GetAllHeroes()
+	    for _,v in pairs(hAllHero) do
+	    	v:AddExperience(nGetXP, 1, false, false)
+	    end
+	end
+end
 -------------------------------------------- S1 词缀 END----------------------------------
