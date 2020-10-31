@@ -146,7 +146,7 @@ end
 function modifier_series_reward_talent_greed:OnIntervalThink()
 	local hCaster = self:GetParent() 
 	if hCaster:GetUnitName() == "npc_dota_hero_arc_warden" then
-		local nGetXP = hCaster:GetLevel() * 5
+		local nGetXP = hCaster:GetLevel() * 2
 		local hAllHero = HeroList:GetAllHeroes()
 	    for _,v in pairs(hAllHero) do
 	    	v:AddExperience(nGetXP, 1, false, false)

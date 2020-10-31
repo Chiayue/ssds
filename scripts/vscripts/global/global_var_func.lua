@@ -128,6 +128,8 @@ GlobalVarFunc.player_treasure_list = {}
 GlobalVarFunc.singlePlayerLife = 1
 --萝莉单位记录
 GlobalVarFunc.Luoli = nil
+--记录自闭模式游戏时间3分钟后
+GlobalVarFunc.zibijinengTime = false
 
 -- <==============================全局函数================================>
 -- 切割字符串为数组
@@ -229,12 +231,16 @@ end
 
 --每周自闭模式玩法改变
 function GlobalVarFunc:OnWeeklyGameChange(unit)
-	if unit:GetContext("boss")  then
-		unit:AddNewModifier( unit, nil, "modifier_autistic_week3_boss", {} )
-	else
 
-		unit:AddNewModifier( unit, nil, "modifier_autistic_week3_emeny", {} )
+	--3分钟后添加自闭技能
+	if GlobalVarFunc.zibijinengTime then
+		if unit:GetContext("boss")  then
+			unit:AddNewModifier( unit, nil, "modifier_autistic_week3_boss", {} )
+		else
+			unit:AddNewModifier( unit, nil, "modifier_autistic_week3_emeny", {} )
+		end
 	end
+
 	-- if GlobalVarFunc.MonsterWave % 2 == 0 then
 	-- 	unit:AddNewModifier( unit, nil, "modifier_autistic_week2_emeny_a", {} )
 	-- else

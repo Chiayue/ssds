@@ -29,7 +29,7 @@ local Treasure_list = {
     "gem_dazhiliao",
     "gem_busishengbei",
     "gem_yinxuejian",
-    "gem_yongmengmoshi",
+    --"gem_yongmengmoshi",
     "gem_tanlanmianju",
     "gem_emoqiyue",
     "gem_budengzhiduihuan",

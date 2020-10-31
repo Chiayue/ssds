@@ -34,6 +34,10 @@ function MobSpawner:OnThink()
     local now = GameRules:GetDOTATime(false, false)  --返回Dota游戏内的时间。（是否包含赛前时间或负时间)
     now = math.floor(now)
 
+    if now >= 180 then
+        GlobalVarFunc.zibijinengTime = true
+    end
+
     --创建地图logo 和 萝莉
     if now == 1 then
         self:OnCreateArcherLogo()
@@ -183,7 +187,7 @@ function MobSpawner:SpawnAbyssNextWave()
     if GlobalVarFunc.abyss_spawn_state then
         spawner_config.spawn_abyss_monster_time = spawner_config.spawn_abyss_boss_time
     else
-        spawner_config.spawn_abyss_monster_time = 100
+        spawner_config.spawn_abyss_monster_time = 500
     end
 
     spawner_config.mosterWave = spawner_config.mosterWave + 1
@@ -640,7 +644,7 @@ function MobSpawner:SpawnMonsterAbyss()
     end
 
     --野怪池子的数量
-    spawner_config.monsterSurplusNum = 100
+    spawner_config.monsterSurplusNum = 2000
     GlobalVarFunc.monsterIsShuaMan = false
 
     --小兵模型
@@ -668,6 +672,9 @@ function MobSpawner:SpawnMonsterAbyss()
         local ability = self:_addAbility()
         mob:AddAbility(ability)
 
+        --减伤光环                     
+        mob:AddNewModifier(mob, nil, "modifier_abyss_jianshang", nil)
+        
         self:setAbyssMonsterBaseInformation(mob)
 
         spawner_config.monsterTable[tostring(mob:entindex())] = mob 
@@ -705,6 +712,9 @@ function MobSpawner:SpawnBossAbyss()
     boss:AddNewModifier(boss, nil, "modifier_cooldown_ai", nil)
     local newAbility = boss:AddAbility(ability)
     newAbility:SetLevel(1)
+
+    --减伤光环
+    boss:AddNewModifier(boss, nil, "modifier_abyss_jianshang", nil)
 
     boss:SetContext("boss", "1", 0)
     self:setAbyssMonsterBaseInformation(boss)
@@ -842,6 +852,9 @@ function MobSpawner:OnAbyssSpawnMonster()
     local ability = self:_addAbility()
     mob:AddAbility(ability)
 
+    --减伤光环
+    mob:AddNewModifier(mob, nil, "modifier_abyss_jianshang", nil)
+
     self:setAbyssMonsterBaseInformation(mob)
 
     spawner_config.monsterTable[tostring(mob:entindex())] = mob 
@@ -896,11 +909,9 @@ function MobSpawner:setAbyssMonsterBaseInformation(unit)
     local gold = self:abyss_DeathGold()
 
     if unit:GetContext("boss") then  
-        health = health*15
-        attack = attack*5
-        xp = xp*5
-        gold = gold*5
-
+        
+        health ,attack = self:abyss_boss_info(unit, health, attack)
+    
         if GlobalVarFunc.playersNum~=0 then
             health = health*(GlobalVarFunc.playersNum*0.5+0.5)
         end
@@ -925,14 +936,50 @@ function MobSpawner:setAbyssMonsterBaseInformation(unit)
 	unit:CreatureLevelUp(1)
 end
 
+function MobSpawner:abyss_boss_info(unit, health, attack)
+    if unit:GetUnitName() == "npc_dota_creature_boss_diao" then
+        health = health * 50
+        attack = attack * 30
+    elseif unit:GetUnitName() == "npc_dota_creature_boss_troops" then
+        health = health * 30
+        attack = attack * 10
+    elseif unit:GetUnitName() == "npc_dota_creature_boss_ice" then
+        health = health * 20
+        attack = attack * 10
+    elseif unit:GetUnitName() == "npc_dota_creature_boss_fire" then
+        health = health * 20
+        attack = attack * 10
+    elseif unit:GetUnitName() == "npc_dota_creature_boss_robot" then
+        health = health * 40
+        attack = attack * 10
+    elseif unit:GetUnitName() == "npc_dota_creature_boss_blademaster" then
+        health = health * 30
+        attack = attack * 20
+    elseif unit:GetUnitName() == "npc_dota_creature_boss_shredder" then
+        health = health * 35
+        attack = attack * 10
+    elseif unit:GetUnitName() == "npc_dota_creature_boss_shadow" then
+        health = health * 25
+        attack = attack * 15
+    elseif unit:GetUnitName() == "npc_dota_creature_boss_celestialgod" then
+        health = health * 25
+        attack = attack * 15
+    elseif unit:GetUnitName() == "npc_dota_creature_boss_madwarrior" then
+        health = health * 30
+        attack = attack * 10
+    end
+
+    return health, attack
+end
+
 --深渊野怪攻击力
 function MobSpawner:abyss_AttackDamage()
-    local attack = ((GlobalVarFunc.abyss_monster_level-1)*(GlobalVarFunc.abyss_monster_level-1)*10+30)*(GlobalVarFunc.duliuLevel*0.03 + 1) * GlobalVarFunc.MonsterViolent
+    local attack = (GlobalVarFunc.abyss_monster_level * GlobalVarFunc.abyss_monster_level * 50) * (GlobalVarFunc.duliuLevel*0.03 + 1) * GlobalVarFunc.MonsterViolent
     return attack
 end
 
 function MobSpawner:abyss_Health() 
-    local health =((GlobalVarFunc.abyss_monster_level-1)*(GlobalVarFunc.abyss_monster_level-1)*(GlobalVarFunc.abyss_monster_level-1)*10+30)
+    local health = GlobalVarFunc.abyss_monster_level * GlobalVarFunc.abyss_monster_level * GlobalVarFunc.abyss_monster_level * 10
     return health
 end
 
@@ -941,19 +988,19 @@ function MobSpawner:abyss_HealthRegen()
 end
 
 function MobSpawner:abyss_DeathXP() 
-    return GlobalVarFunc.abyss_monster_level*3 + 15
+    return 20
 end
 
 function MobSpawner:abyss_DeathGold() 
-    return 12
+    return 20
 end
 
 function MobSpawner:abyss_Armor() 
-    return GlobalVarFunc.abyss_monster_level
+    return 0
 end
 
 function MobSpawner:abyss_MagicalResistance() 
-    return GlobalVarFunc.abyss_monster_level
+    return 0
 end
 
 

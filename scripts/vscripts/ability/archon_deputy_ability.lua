@@ -217,77 +217,77 @@ if archon_deputy_investment == nil then
 end
 
 ----------------------- 医生 ---------------------------
-LinkLuaModifier( "modifier_archon_deputy_doctor", "ability/archon_deputy_ability.lua",LUA_MODIFIER_MOTION_NONE )
-if archon_deputy_doctor == nil then	archon_deputy_doctor = class({}) end
-function archon_deputy_doctor:GetCooldown() 
-	local hCaster = self:GetCaster()
-	local nDeputyBlink = hCaster:GetModifierStackCount("modifier_series_reward_deputy_doctor", hCaster )
-	if nDeputyBlink >= 2 then
-		return 45
-	end
-	return 70
-end
-function archon_deputy_doctor:GetCastRange() if IsClient() then return 1200 end end
-function archon_deputy_doctor:OnSpellStart()
-	local hCaster = self:GetCaster() 
-	local aoe = self:GetSpecialValueFor( "aoe" )
-	local nDuration = self:GetSpecialValueFor( "duration" )
-	local nFXIndex0 = ParticleManager:CreateParticle( EffectName, PATTACH_POINT, hCaster)
-	local nDeputyBlink = hCaster:GetModifierStackCount("modifier_series_reward_deputy_doctor", hCaster )
-	local hAllies = FindUnitsInRadius(
-		self:GetCaster():GetTeamNumber(), 
-		self:GetCaster():GetOrigin(), 
-		self:GetCaster(), 
-		aoe, 
-		DOTA_UNIT_TARGET_TEAM_FRIENDLY, 
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-		0, 0, false 
-	)
+-- LinkLuaModifier( "modifier_archon_deputy_doctor", "ability/archon_deputy_ability.lua",LUA_MODIFIER_MOTION_NONE )
+-- if archon_deputy_doctor == nil then	archon_deputy_doctor = class({}) end
+-- function archon_deputy_doctor:GetCooldown() 
+-- 	local hCaster = self:GetCaster()
+-- 	local nDeputyBlink = hCaster:GetModifierStackCount("modifier_series_reward_deputy_doctor", hCaster )
+-- 	if nDeputyBlink >= 2 then
+-- 		return 45
+-- 	end
+-- 	return 70
+-- end
+-- function archon_deputy_doctor:GetCastRange() if IsClient() then return 1200 end end
+-- function archon_deputy_doctor:OnSpellStart()
+-- 	local hCaster = self:GetCaster() 
+-- 	local aoe = self:GetSpecialValueFor( "aoe" )
+-- 	local nDuration = self:GetSpecialValueFor( "duration" )
+-- 	local nFXIndex0 = ParticleManager:CreateParticle( EffectName, PATTACH_POINT, hCaster)
+-- 	local nDeputyBlink = hCaster:GetModifierStackCount("modifier_series_reward_deputy_doctor", hCaster )
+-- 	local hAllies = FindUnitsInRadius(
+-- 		self:GetCaster():GetTeamNumber(), 
+-- 		self:GetCaster():GetOrigin(), 
+-- 		self:GetCaster(), 
+-- 		aoe, 
+-- 		DOTA_UNIT_TARGET_TEAM_FRIENDLY, 
+-- 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+-- 		0, 0, false 
+-- 	)
 
-	local EffectName = "particles/econ/events/ti8/mekanism_ti8.vpcf"
-	for _,ally in pairs(hAllies) do
-		if ally ~= nil  then
-			local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, ally)
-			local nHealtBonus = ally:GetMaxHealth() * self:GetSpecialValueFor( "max_health" ) * 0.01
-			ally:Heal(nHealtBonus,self:GetCaster())
-			local hNewBuff = ally:AddNewModifier(hCaster, self, "modifier_archon_deputy_doctor",{ duration = nDuration})
-			if ally == hCaster then
-				hNewBuff:SetStackCount(2)
-			end 
-			if nDeputyBlink >= 3 then
-				ally:AddNewModifier(hCaster, self, "modifier_series_reward_deputy_doctor_effect",{ duration = 5}) 
-			end
-			ParticleManager:ReleaseParticleIndex(nFXIndex)
-		end
-	end
-end
-if modifier_archon_deputy_doctor == nil then modifier_archon_deputy_doctor = class({}) end
-function modifier_archon_deputy_doctor:IsHidden() return false end
-function modifier_archon_deputy_doctor:OnCreated()
-	self.bonus_attackspeed = self:GetAbility():GetSpecialValueFor( "bonus_attackspeed" )
-	self.bonus_movespeed = self:GetAbility():GetSpecialValueFor( "bonus_movespeed" )
-	if IsServer() then
-		self:SetStackCount(1)
-		self.nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_lina/lina_fiery_soul.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
-		ParticleManager:SetParticleControl( self.nFXIndex, 1, Vector( self:GetStackCount(), 0, 0 ) )
-		self:AddParticle( self.nFXIndex, false, false, -1, false, false )
-	end
-end
-function modifier_archon_deputy_doctor:OnRefresh()
-	if not IsServer() then return end
-	ParticleManager:SetParticleControl( self.nFXIndex, 1, Vector( self:GetStackCount(), 0, 0 ) ) 
-end
+-- 	local EffectName = "particles/econ/events/ti8/mekanism_ti8.vpcf"
+-- 	for _,ally in pairs(hAllies) do
+-- 		if ally ~= nil  then
+-- 			local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, ally)
+-- 			local nHealtBonus = ally:GetMaxHealth() * self:GetSpecialValueFor( "max_health" ) * 0.01
+-- 			ally:Heal(nHealtBonus,self:GetCaster())
+-- 			local hNewBuff = ally:AddNewModifier(hCaster, self, "modifier_archon_deputy_doctor",{ duration = nDuration})
+-- 			if ally == hCaster then
+-- 				hNewBuff:SetStackCount(2)
+-- 			end 
+-- 			if nDeputyBlink >= 3 then
+-- 				ally:AddNewModifier(hCaster, self, "modifier_series_reward_deputy_doctor_effect",{ duration = 5}) 
+-- 			end
+-- 			ParticleManager:ReleaseParticleIndex(nFXIndex)
+-- 		end
+-- 	end
+-- end
+-- if modifier_archon_deputy_doctor == nil then modifier_archon_deputy_doctor = class({}) end
+-- function modifier_archon_deputy_doctor:IsHidden() return false end
+-- function modifier_archon_deputy_doctor:OnCreated()
+-- 	self.bonus_attackspeed = self:GetAbility():GetSpecialValueFor( "bonus_attackspeed" )
+-- 	self.bonus_movespeed = self:GetAbility():GetSpecialValueFor( "bonus_movespeed" )
+-- 	if IsServer() then
+-- 		self:SetStackCount(1)
+-- 		self.nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_lina/lina_fiery_soul.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
+-- 		ParticleManager:SetParticleControl( self.nFXIndex, 1, Vector( self:GetStackCount(), 0, 0 ) )
+-- 		self:AddParticle( self.nFXIndex, false, false, -1, false, false )
+-- 	end
+-- end
+-- function modifier_archon_deputy_doctor:OnRefresh()
+-- 	if not IsServer() then return end
+-- 	ParticleManager:SetParticleControl( self.nFXIndex, 1, Vector( self:GetStackCount(), 0, 0 ) ) 
+-- end
 
-function modifier_archon_deputy_doctor:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT
-	}
-	return funcs
-end
-function modifier_archon_deputy_doctor:GetModifierAttackSpeedBonus_Constant()
-	return self.bonus_attackspeed * self:GetStackCount()
-end
-function modifier_archon_deputy_doctor:GetModifierMoveSpeedBonus_Constant()
-	return self.bonus_movespeed * self:GetStackCount()
-end
+-- function modifier_archon_deputy_doctor:DeclareFunctions()
+-- 	local funcs = {
+-- 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+-- 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT
+-- 	}
+-- 	return funcs
+-- end
+-- function modifier_archon_deputy_doctor:GetModifierAttackSpeedBonus_Constant()
+-- 	return self.bonus_attackspeed * self:GetStackCount()
+-- end
+-- function modifier_archon_deputy_doctor:GetModifierMoveSpeedBonus_Constant()
+-- 	return self.bonus_movespeed * self:GetStackCount()
+-- end

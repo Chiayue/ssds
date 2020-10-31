@@ -23,8 +23,8 @@ function archon_blink:GetCooldown()
 	-- 	return 3
 	-- end
 	return nBaseCD
-
 end
+
 function archon_blink:OnSpellStart()
 	
 	local hCaster = self:GetCaster()

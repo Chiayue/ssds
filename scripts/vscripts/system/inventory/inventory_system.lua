@@ -1,7 +1,7 @@
 require( "system/inventory/inventory_backpack")
 -- require( "system/inventory/inventory_order")
 
-MaxBackpackCount = 20
+MaxBackpackCount = 24
 if InventorySystem == nil then
 	InventorySystem = class({})
 	InventoryConfig = {}

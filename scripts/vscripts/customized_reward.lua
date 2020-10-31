@@ -9,6 +9,9 @@ LinkLuaModifier("modifier_customized_reward_attr_move_speed", "customized_reward
 LinkLuaModifier("modifier_customized_reward_attr_attack_speed", "customized_reward", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_customized_reward_attr_range", "customized_reward", LUA_MODIFIER_MOTION_NONE)
 
+------------------
+LinkLuaModifier("modifier_customized_reward_xiatiya", "customized_reward", LUA_MODIFIER_MOTION_NONE)
+
 -- ListenToGameEvent( "dota_player_gained_level" ,Dynamic_Wrap(ArrowSoulMeditation,"OnPlayerGainedLevel"),self)
 --441173392
 local hRewardTable = {
@@ -62,16 +65,21 @@ local hRewardTable = {
 	},
 	[188898517] = { 
 		["npc_dota_hero_troll_warlord"] = {
-			["skin_id"] = 5,
-			["model_scale"] = 1.4,
-			["particle"] = {
-				["particles/diy_particles/shinai_ambient.vpcf"] = PATTACH_ABSORIGIN_FOLLOW
-			},
+			["skin_id"] = 6,
+			["model"] = "models/npc/xiatiya/xiatiya.vmdl",
+			["modifier"] = "modifier_customized_reward_xiatiya",
+			["model_scale"] = 1.0,
 		},
 		["npc_dota_hero_drow_ranger"] = {
 			["skin_id"] = 3,
 			["particle"] = {
 				["particles/diy_particles/ambient9.vpcf"] = PATTACH_ABSORIGIN_FOLLOW
+			},
+		},
+		["npc_dota_hero_crystal_maiden"] = {
+			["skin_id"] = 3,
+			["particle"] = {
+				["particles/diy_particles/cirno_ambient.vpcf"] = PATTACH_OVERHEAD_FOLLOW
 			},
 		}
 		
@@ -99,6 +107,26 @@ local hRewardTable = {
 			},
 		}
 	},
+	[212545215] = {
+		["npc_dota_hero_troll_warlord"] = {
+			["skin_id"] = 6,
+			["model"] = "models/npc/xiatiya/xiatiya.vmdl",
+			["modifier"] = "modifier_customized_reward_xiatiya",
+			["model_scale"] = 1.0,
+		},
+		["npc_dota_hero_drow_ranger"] = {
+			["skin_id"] = 3,
+			["particle"] = {
+				["particles/diy_particles/ambient9.vpcf"] = PATTACH_ABSORIGIN_FOLLOW
+			},
+		},
+		["npc_dota_hero_crystal_maiden"] = {
+			["skin_id"] = 3,
+			["particle"] = {
+				["particles/diy_particles/cirno_ambient.vpcf"] = PATTACH_OVERHEAD_FOLLOW
+			},
+		}
+	}
 }
 
 
@@ -116,7 +144,8 @@ function CustomizedReward:SetReward(hHero)
 			if nSkinID ~= nil then  HeroesSkin:ChangeSkin(hHero,nSkinID) end
 			if hRewardInfo["model"] ~= nil then  hHero:SetModel(hRewardInfo["model"]) end
 			if hRewardInfo["model_scale"] ~= nil then  hHero:SetModelScale(hRewardInfo["model_scale"]) end
-			
+			if hRewardInfo["modifier"] ~= nil then  hHero:AddNewModifier(hHero, nil, hRewardInfo["modifier"], {}) end
+
 			local sAuraParticels = hRewardInfo["particle"] or {}
 			local hAttr = hRewardInfo["attr"]
 			local hCustomized = {}
@@ -220,3 +249,88 @@ function modifier_customized_reward_attr_move_speed:GetModifierMoveSpeedBonus_Co
 ------------ 射程
 if modifier_customized_reward_attr_range == nil then modifier_customized_reward_attr_range = class(modifier_customized_reward_attr) end
 function modifier_customized_reward_attr_range:GetModifierAttackRangeBonus() return self:GetStackCount() end
+
+
+--------------------------- xiatiya --------
+LinkLuaModifier("modifier_customized_reward_xiatiya_25", "customized_reward", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_customized_reward_xiatiya_50", "customized_reward", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_customized_reward_xiatiya_75", "customized_reward", LUA_MODIFIER_MOTION_NONE)
+if modifier_customized_reward_xiatiya == nil then modifier_customized_reward_xiatiya = {} end
+function modifier_customized_reward_xiatiya:IsHidden()return true end
+
+function modifier_customized_reward_xiatiya:OnCreated()
+	if not IsServer() then return end
+	self.changeCd = 1
+	self:StartIntervalThink(0.2)
+end
+
+function modifier_customized_reward_xiatiya:OnIntervalThink()
+	if not IsServer() then return end
+	local sModiStatus25 = "modifier_customized_reward_xiatiya_25"
+	local sModiStatus50 = "modifier_customized_reward_xiatiya_50"
+	local sModiStatus75 = "modifier_customized_reward_xiatiya_75"
+	if self.changeCd > 0 then
+		self.changeCd = self.changeCd - 0.2
+	else
+		self.changeCd = 1
+		local hParent = self:GetParent()
+		local nHealthPer = hParent:GetHealthPercent()
+		if nHealthPer < 75 and nHealthPer > 50 then
+			if hParent:HasModifier(sModiStatus25) then hParent:RemoveModifierByName(sModiStatus25) end
+			if hParent:HasModifier(sModiStatus50) then hParent:RemoveModifierByName(sModiStatus50) end
+			if hParent:HasModifier(sModiStatus75) == false then hParent:AddNewModifier(hParent, nil, sModiStatus75, {}) end
+			hParent:SetSkin(2)
+		elseif nHealthPer < 50 and nHealthPer > 25 then
+			if hParent:HasModifier(sModiStatus25) then hParent:RemoveModifierByName(sModiStatus25) end
+			if hParent:HasModifier(sModiStatus50) == false then hParent:AddNewModifier(hParent, nil, sModiStatus50, {}) end
+			if hParent:HasModifier(sModiStatus75) then hParent:RemoveModifierByName(sModiStatus75) end
+			hParent:SetSkin(3)
+		elseif nHealthPer < 25 then
+			if hParent:HasModifier(sModiStatus25) == false then hParent:AddNewModifier(hParent, nil, sModiStatus25, {}) end
+			if hParent:HasModifier(sModiStatus50) then hParent:RemoveModifierByName(sModiStatus50) end
+			if hParent:HasModifier(sModiStatus75) then hParent:RemoveModifierByName(sModiStatus75) end
+			hParent:SetSkin(4)
+		else
+			if hParent:HasModifier(sModiStatus25) then hParent:RemoveModifierByName(sModiStatus25) end
+			if hParent:HasModifier(sModiStatus50) then hParent:RemoveModifierByName(sModiStatus50) end
+			if hParent:HasModifier(sModiStatus75) then hParent:RemoveModifierByName(sModiStatus75) end
+			hParent:SetSkin(1)
+		end
+	end
+end
+--- 25%
+if modifier_customized_reward_xiatiya_25 == nil then modifier_customized_reward_xiatiya_25 = {modifier_customized_reward_attr} end
+function modifier_customized_reward_xiatiya_25:IsHidden()return true end
+function modifier_customized_reward_xiatiya_25:OnCreated()
+	if not IsServer() then return end
+	self.nFXIndex = ParticleManager:CreateParticle("particles/diy_particles/xiatiya_ambient_25.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+end
+
+function modifier_customized_reward_xiatiya_25:OnDestroy()
+	if not IsServer() then return end
+	ParticleManager:DestroyParticle(self.nFXIndex,true)
+end
+--- 50%
+if modifier_customized_reward_xiatiya_50 == nil then modifier_customized_reward_xiatiya_50 = {modifier_customized_reward_attr} end
+function modifier_customized_reward_xiatiya_50:IsHidden()return true end
+function modifier_customized_reward_xiatiya_50:OnCreated()
+	if not IsServer() then return end
+	self.nFXIndex = ParticleManager:CreateParticle("particles/diy_particles/xiatiya_ambient_50.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+end
+
+function modifier_customized_reward_xiatiya_50:OnDestroy()
+	if not IsServer() then return end
+	ParticleManager:DestroyParticle(self.nFXIndex,true)
+end
+--- 75%
+if modifier_customized_reward_xiatiya_75 == nil then modifier_customized_reward_xiatiya_75 = {modifier_customized_reward_attr} end
+function modifier_customized_reward_xiatiya_75:IsHidden()return true end
+function modifier_customized_reward_xiatiya_75:OnCreated()
+	if not IsServer() then return end
+	self.nFXIndex = ParticleManager:CreateParticle("particles/diy_particles/xiatiya_ambient_75.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+end
+
+function modifier_customized_reward_xiatiya_75:OnDestroy()
+	if not IsServer() then return end
+	ParticleManager:DestroyParticle(self.nFXIndex,true)
+end

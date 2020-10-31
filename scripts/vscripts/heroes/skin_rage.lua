@@ -39,4 +39,9 @@ return {
 		attack_projectile = "particles/diy_particles/shinai_attack.vpcf",
 		wearables = {},
 	},
+	{	-- 6 夏提雅
+		model = "models/npc/xiatiya/xiatiya.vmdl",
+		attack_projectile = "particles/diy_particles/xiatiya_attack.vpcf",
+		wearables = {},
+	},
 }

@@ -39,7 +39,9 @@ function modifier_Upgrade_Base_Attackspeed:DeclareFunctions()
 end
 
 function modifier_Upgrade_Base_Attackspeed:GetModifierBaseAttackTimeConstant()
-	if self:GetCaster():HasModifier("modifier_bonus_base_attackspeed") then
+	if self:GetCaster():HasModifier("modifier_golden_mine_buff2") then
+		return 2
+	elseif self:GetCaster():HasModifier("modifier_bonus_base_attackspeed") then
 		return 0.9
 	else
 		return 0.6 - (self.bonus * self:GetStackCount())

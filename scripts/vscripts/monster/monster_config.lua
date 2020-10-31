@@ -22,9 +22,9 @@ return {
     spawn_interval_endless_time_tips = 600,
 
     --深渊模式刷小怪
-    spawn_abyss_monster_time = 100,
+    spawn_abyss_monster_time = 500,
     --深渊模式刷boss
-    spawn_abyss_boss_time = 30,
+    spawn_abyss_boss_time = 100,
     --深渊模式刷怪状态   false表示深渊开始刷小怪，  true表示深渊开始刷boss
     spawn_abyss_state = false,
 

@@ -25,4 +25,11 @@ return {
 		},
 
 	},
+	{	-- 3 琪露诺
+		model = "models/npc/cirno/cirno.vmdl",
+		attack_projectile = "particles/units/heroes/hero_crystalmaiden/maiden_base_attack.vpcf",
+		model_scale = 1,
+		wearables = {},
+
+	},
 }

@@ -91,7 +91,7 @@ function modifier_archon_passive_time:OnAttackLanded( params )
 	--local abil_damage = 0
 	if nLevel >= ABILITY_AWAKEN_2 then
 		local total_plauer_level = GetAllHeroesCountLevel()
-		abil_damage = total_plauer_level * total_plauer_level * damage_coefficient
+		abil_damage = hlevel * total_plauer_level * damage_coefficient
 	else
 		abil_damage = hlevel * hlevel * damage_coefficient 
 	end

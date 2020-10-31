@@ -99,15 +99,14 @@ function modifier_archon_passive_ice:OnAttackLanded( params )
 	local aoe = self:GetAbility():GetSpecialValueFor( "aoe" )
 	local abil_damage = self:GetCaster():GetIntellect() * self:GetAbility():GetSpecialValueFor( "coefficient" )
 	local duration = self:GetAbility():GetSpecialValueFor( "duration" )
+
 	local EffectName = "particles/heroes/humei/ability_humei_011_ice_c.vpcf"
+	if modelName == "models/npc/cirno/cirno.vmdl" then
+		EffectName = "particles/diy_particles/cirno_skill.vpcf"
+	end
 	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hTarget )
-	ParticleManager:SetParticleControl(nFXIndex, 0, Vector(500, 500, 500))
 	ParticleManager:ReleaseParticleIndex(nFXIndex)
-	-- 新建特效
-	local EffectName_1 = "particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_cowlofice.vpcf"
-	local nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hTarget )
-	ParticleManager:SetParticleControl(nFXIndex_1, 0, Vector(500, 500, 500))
-	ParticleManager:ReleaseParticleIndex(nFXIndex_1)
+	
 	if nLevel >= ABILITY_AWAKEN_2 then
 		abil_damage = abil_damage + ( self:GetCaster():GetIntellect() * 6 )
 	elseif nLevel >= ABILITY_AWAKEN_1 then

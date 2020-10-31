@@ -64,3 +64,5 @@ LinkLuaModifier("modifier_arrowSoul_meditation", "ability/modifier/modifier_arro
 LinkLuaModifier( "modifier_create_monster_move_speed", "ability/creatures/create_monster_move_speed.lua", LUA_MODIFIER_MOTION_NONE )
 -- 怪物释放技能AI
 LinkLuaModifier("modifier_cooldown_ai", "ability/modifier/modifier_cooldown_ai", LUA_MODIFIER_MOTION_NONE)
+--深渊模式减伤光环
+LinkLuaModifier( "modifier_abyss_jianshang", "ability/modifier/modifier_abyss_jianshang.lua", LUA_MODIFIER_MOTION_NONE )
