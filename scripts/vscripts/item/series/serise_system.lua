@@ -16,15 +16,15 @@
 if SeriseSystem == nil then SeriseSystem = {} end
 AFFIX_FOR_EQUIPMENT = {
 	["s1"] = {
-		str = {1,7},
-		agi = {1,7},
-		int = {1,7},
+		str = {2,7},
+		agi = {2,7},
+		int = {2,7},
 		all = {1,5},
-		mana = {2,10}, -- 最大每秒回蓝
-		health = {1,15}, -- 最大生命恢复 0.1 - 1.5 1 - 15
+		mana = {3,10}, -- 最大每秒回蓝
+		health = {3,15}, -- 最大生命恢复 0.1 - 1.5 1 - 15
 		as = {10,25},
-		armor = {1,10},
-		damage = {1,7},
+		armor = {2,10},
+		damage = {2,7},
 		-- magic = {1,7}
 	},
 	["s2"] = {
@@ -167,14 +167,21 @@ function SeriseSystem:SetItemAttr(hItem,nAffix,nSeason,nTier)
 	local hAffixList = {}
 	for k,v in pairs(hAttrAffixList) do	table.insert(hAffixList, k) end
 	local hRandomAffixOrder = {}
+
+	 
+
 	RandFetch(hRandomAffixOrder,nAffix,nCurrentCount)
 	for _,nOrder in pairs(hRandomAffixOrder) do
 		local sAttr = hAffixList[nOrder]
 		local nMin = hAttrAffixList[sAttr][1]
 		local nMax = hAttrAffixList[sAttr][2]
 		--print(sAttr,nMin,nMax)
-		local nValue = self:GetRandomRatioValue(nMin,nMax) + nMin - 1
-		hAttrBonus[sAttr] = nValue + nTier - 1
+		local nMoeBouns = 0
+		-- if game_enum.nMoeNoviceCount > 0 then
+		-- 	nMoeBouns = RandomInt(0,math.floor(game_enum.nMoeNoviceCount * 0.5))
+		-- end
+		local nValue = self:GetRandomRatioValue(nMin,nMax) + nMin + nTier - 1
+		hAttrBonus[sAttr] = nValue + nMoeBouns
 	end
 	hItem.bonus.attr = hAttrBonus
 	

@@ -252,7 +252,7 @@ function modifier_item_archer_bow_multe:OnCreated()
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, 
 			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 
 			0, 
-			false 
+			true 
 		)
 		local bUseCastAttackOrb = false
 		local bProcessProcs = false

@@ -152,13 +152,13 @@
 		"ID"	"1666"
 		"ItemQuality"	"consumable"
 		"ItemCastOnPickup"	"1"
-		"Model"	"models/props_gameplay/gold_bag.vmdl"
 		"ItemShareability"	"ITEM_NOT_SHAREABLE"
 		"ItemPurchasable"	"0"
 		"ItemKillable"	"0"
 		"ItemKillable"	"0"
 		"ItemStackable"	"0"
 		"ItemRequirements"	{}
+		"Model"	"models/props_gameplay/gold_bag.vmdl"
 	}
 
 	"item_archers_wood"
@@ -170,13 +170,13 @@
 		"ID"	"1667"
 		"ItemQuality"	"consumable"
 		"ItemCastOnPickup"	"1"
-		"Model"	"models/props_gameplay/branch.vmdl"
 		"ItemShareability"	"ITEM_NOT_SHAREABLE"
 		"ItemPurchasable"	"0"
 		"ItemKillable"	"0"
 		"ItemKillable"	"0"
 		"ItemStackable"	"0"
 		"ItemRequirements"	{}
+		"Model"	"models/props_gameplay/branch.vmdl"
 	}
 
 	"item_baoxiang_gold"
@@ -188,7 +188,6 @@
 		"ID"	"1668"
 		"ItemQuality"	"consumable"
 		"ItemCastOnPickup"	"1"
-		"Model"	"models/props_gameplay/gold_coin001.vmdl"
 		"ItemDroppable"	"0"
 		"ItemSellable"	"0"
 		"ItemShareability"	"ITEM_NOT_SHAREABLE"
@@ -197,6 +196,7 @@
 		"ItemKillable"	"0"
 		"ItemStackable"	"0"
 		"ItemRequirements"	{}
+		"Model"	"models/props_gameplay/gold_coin001.vmdl"
 	}
 
 	"item_baoWu_book"
@@ -208,8 +208,6 @@
 		"ID"	"1669"
 		"ItemQuality"	"artifact"
 		"ItemCastOnPickup"	"0"
-		"Model"	"models/items/courier/bookwyrm/bookwyrm_flying.vmdl"
-		"Effect"	"particles/ambient/ambient2.vpcf"
 		"ItemDroppable"	"1"
 		"ItemSellable"	"0"
 		"ItemShareability"	"ITEM_FULLY_SHAREABLE"
@@ -230,6 +228,8 @@
 			}
 			"SpendCharge"	{}
 		}
+		"Model"	"models/items/courier/bookwyrm/bookwyrm_flying.vmdl"
+		"Effect"	"particles/ambient/ambient2.vpcf"
 	}
 
 	// 个人宝物书
@@ -244,8 +244,6 @@
 		"ID"	"1670"
 		"ItemQuality"	"artifact"
 		"ItemCastOnPickup"	"0"
-		"Model"	"models/items/courier/bookwyrm/bookwyrm_flying.vmdl"
-		"Effect"	"particles/test_particles/parterre_partic/dazzle_ti6_shallow_grave_gold.vpcf"
 		"ItemCost"	"20000"
 		"ItemDroppable"	"1"
 		"ItemSellable"	"1"
@@ -257,6 +255,8 @@
 		"ItemInitialCharges"	"1"
 		"ItemStackable"	"1"
 		"ItemRequirements"	{}
+		"Model"	"models/items/courier/bookwyrm/bookwyrm_flying.vmdl"
+		"Effect"	"particles/test_particles/parterre_partic/dazzle_ti6_shallow_grave_gold.vpcf"
 	}
 
 	// 个人宝物书
@@ -271,8 +271,6 @@
 		"ID"	"1599"
 		"ItemQuality"	"artifact"
 		"ItemCastOnPickup"	"0"
-		"Model"	"models/items/courier/bookwyrm/bookwyrm_flying.vmdl"
-		"Effect"	"particles/test_particles/parterre_partic/dazzle_ti6_shallow_grave_gold.vpcf"
 		"ItemCost"	"0"
 		"ItemDroppable"	"1"
 		"ItemSellable"	"1"
@@ -285,6 +283,8 @@
 		"ItemInitialCharges"	"1"
 		"ItemStackable"	"1"
 		"ItemRequirements"	{}
+		"Model"	"models/items/courier/bookwyrm/bookwyrm_flying.vmdl"
+		"Effect"	"particles/test_particles/parterre_partic/dazzle_ti6_shallow_grave_gold.vpcf"
 	}
 
 	"item_recipe_archer_paradise"
@@ -3367,6 +3367,56 @@
 		"ItemRequirements"	{}
 	}
 
+	"item_silver_spade_complete"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_kazan_of_curse"
+		"ScriptFile"	"item/s2/item_silver_spade_complete"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"AbilityCooldown"	"0"
+		"ID"	"1611"
+		"ItemQuality"	"artifact"
+		"ItemCastOnPickup"	"0"
+		"ItemCost"	"0"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemShareability"	"ITEM_FULLY_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemPermanent"	"0"
+		"ItemRequiresCharges"	"1"
+		"ItemInitialCharges"	"1"
+		"ItemStackable"	"1"
+		"SideShop"	"1"
+		"ItemShopTags"	"consumable"
+		"ItemRequirements"	{}
+	}
+
+	"item_silver_spade_fragment"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_buckler"
+		"ScriptFile"	"item/s2/item_silver_spade_fragment"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"AbilityCooldown"	"0"
+		"ID"	"1612"
+		"ItemQuality"	"artifact"
+		"ItemCastOnPickup"	"0"
+		"ItemCost"	"0"
+		"ItemDroppable"	"1"
+		"ItemSellable"	"1"
+		"ItemShareability"	"ITEM_FULLY_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemPermanent"	"0"
+		"ItemRequiresCharges"	"1"
+		"ItemInitialCharges"	"1"
+		"ItemStackable"	"1"
+		"SideShop"	"1"
+		"ItemShopTags"	"consumable"
+		"ItemRequirements"	{}
+	}
+
 	"item_ghost_esoterica"
 	{
 		"BaseClass"	"item_lua"
@@ -3623,8 +3673,6 @@
 		// -------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"	"100"
 		"ItemQuality"	"consumable"
-		// "Model"	"models/props_gameplay/gold_bag.vmdl"
-		"Model"	"models/items/phoenix/ultimate/blazing_wing_blazing_egg/blazing_wing_blazing_egg.vmdl"
 		// Item Info
 		// -------------------------------------------------------------------------------------------------------------
 		"ItemCost"	"0"
@@ -3637,6 +3685,8 @@
 		"ItemStackable"	"1"
 		"ItemShopTags"	"consumable"
 		"ItemRequirements"	{}
+		// "Model"	"models/props_gameplay/gold_bag.vmdl"
+		"Model"	"models/items/phoenix/ultimate/blazing_wing_blazing_egg/blazing_wing_blazing_egg.vmdl"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
 		"AbilityName"	"item_bag_of_gold"
@@ -3895,7 +3945,6 @@
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"ID"	"1578"
-		"Model"	"models/props_gameplay/salve_red.vmdl"
 		"ItemDroppable"	"1"
 		"ItemSellable"	"1"
 		"ItemShareability"	"ITEM_FULLY_SHAREABLE"
@@ -3904,6 +3953,7 @@
 		"ItemInitialCharges"	"1"
 		"ItemStackable"	"1"
 		"ItemRequirements"	{}
+		"Model"	"models/props_gameplay/salve_red.vmdl"
 	}
 
 	"item_the_wind_elements_invulnerable"
@@ -3916,8 +3966,6 @@
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"ID"	"1609"
 		"ItemCastOnPickup"	"1"
-		"Model"	"models/props_gameplay/refresher_shard.vmdl"
-		"Effect"	"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_hud_ambient.vpcf"
 		"ItemDroppable"	"1"
 		"ItemSellable"	"1"
 		"ItemShareability"	"ITEM_FULLY_SHAREABLE"
@@ -3926,6 +3974,8 @@
 		"ItemInitialCharges"	"1"
 		"ItemStackable"	"1"
 		"ItemRequirements"	{}
+		"Model"	"models/props_gameplay/refresher_shard.vmdl"
+		"Effect"	"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_hud_ambient.vpcf"
 	}
 
 	"item_ray_elements"
@@ -3938,8 +3988,6 @@
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"ID"	"1610"
 		"ItemCastOnPickup"	"1"
-		"Model"	"models/props_gameplay/refresher_shard.vmdl"
-		"Effect"	"particles/generic_gameplay/rune_doubledamage_owner.vpcf"
 		"ItemDroppable"	"1"
 		"ItemSellable"	"1"
 		"ItemShareability"	"ITEM_FULLY_SHAREABLE"
@@ -3948,5 +3996,7 @@
 		"ItemInitialCharges"	"1"
 		"ItemStackable"	"1"
 		"ItemRequirements"	{}
+		"Model"	"models/props_gameplay/refresher_shard.vmdl"
+		"Effect"	"particles/generic_gameplay/rune_doubledamage_owner.vpcf"
 	}
 }

@@ -2303,6 +2303,17 @@
 		"AbilityCooldown"	"0"
 	}
 
+	"archon_deputy_select_thrid"
+	{
+		"BaseClass"	"ability_lua"
+		"AbilityTextureName"	"random"
+		"ScriptFile"	"ability/archon_deputy_select.lua"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"MaxLevel"	"1"
+		"AbilityCooldown"	"0"
+	}
+
 	"archon_deputy_scavenging"
 	{
 		"BaseClass"	"ability_lua"
@@ -4084,6 +4095,14 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN"
 	}
 
+	// 舔狗不得好死
+	"gem_tiangoubudehaosi"
+	{
+		"BaseClass"	"ability_datadriven"
+		"AbilityTextureName"	"baowu/tiangoubudehaosi"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	}
+
 	"ability_operate_attack"
 	{
 		"BaseClass"	"ability_datadriven"
@@ -4810,7 +4829,7 @@
 			"03"
 			{
 				"var_type"	"FIELD_FLOAT"
-				"coefficient"	"0.2 0.26 0.32 0.38 0.44 0.5 0.56"
+				"coefficient"	"0.3 0.39 0.48 0.57 0.66 0.75 0.84"
 			}
 		}
 	}

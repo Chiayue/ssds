@@ -196,9 +196,19 @@ function Player_Data:InitModifier( hHero )
         hAbility = hHero:AddAbility("upgrade_ability_core")
         hAbility:SetLevel(1)
     end
+
     -- 团队增益BUFF
-    hHero:AddNewModifier(hHero, hAbility, "modifier_team_buff", {})
+    local bTeamBuff = hHero:AddNewModifier(hHero, hAbility, "modifier_team_buff", {})
     hHero:AddNewModifier(hHero, hAbility, "modifier_select_skin_time", { duration = 15})
+    -- 萌新BUFF
+    local hMoeBuff = hHero:AddNewModifier(hHero, hAbility, "modifier_moe_novice", {})
+    hMoeBuff:SetStackCount(game_enum.nMoeNoviceCount)
+    local nPlayerID = hHero:GetOwner():GetPlayerID()
+    local nTime = Archive:GetData(nPlayerID,"game_time")
+    local nMapLevel = GetPlayerMapLevel(nTime)
+    if nMapLevel <= 8 then local hMoeBuff = hHero:AddNewModifier(hHero, hAbility, "modifier_moe_novice_player", {}) end
+
+    bTeamBuff:SetStackCount(game_enum.nMoeNoviceCount*5)
     for _,sAbilityName in pairs(TECH_UPGRADE_LIST) do
         local sModifier = "modifier_"..sAbilityName
         local hModifier = hHero:AddNewModifier(hHero, hAbility, sModifier, {}) 
@@ -322,6 +332,11 @@ function Player_Data:OnEntityKilled(event)
             local CDOTAPlayer = PlayerResource:GetPlayer(nPlayerID)
             if CDOTAPlayer ~= nil then
                 local hHero = CDOTAPlayer:GetAssignedHero()
+                -- 萌新玩家
+                if hHero:HasModifier("modifier_moe_novice_player")  then
+                    PlayerResource:ModifyGold(nPlayerID,3,true,DOTA_ModifyGold_Unspecified)
+                    PopupGoldGain(hHero, 3)
+                end
                 -- 混子
                 if hAttacker ~= hHero and hHero:HasAbility("archon_deputy_idler") == true then
                     PlayerResource:ModifyGold(nPlayerID,2,true,DOTA_ModifyGold_Unspecified)

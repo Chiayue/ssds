@@ -46,6 +46,7 @@ local Treasure_list = {
     "gem_devil_left_foot",
     "gem_devil_right_foot",
     "gem_gangtieheji",
+    "gem_tiangoubudehaosi",
 
     "gem_void_lock",
     "gem_die_venom",
@@ -64,6 +65,7 @@ local Treasure_list = {
     "zuanshi_touzi",
 
     "gold_jinbiboyi", 
+
     -- "mucai_mucaiboyi",
 -- "baiyin_touzi",
 -- "huangjin_touzi",

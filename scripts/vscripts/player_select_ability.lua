@@ -23,7 +23,6 @@ local pre = 0
 local hPassive = {}
 local hPlayerBonus = {}
 local hRepick = {}
-
 function Player_Select_Ability:init()
 	-- 科技系统
 	for nPlayerID = 0,MAX_PLAYER-1 do
@@ -33,6 +32,12 @@ function Player_Select_Ability:init()
 		hPassive[nPlayerID] = nil;
 		hRepick[nPlayerID] = false;
 		CustomNetTables:SetTableValue( "player_passive", tostring(nPlayerID), t )
+		local CDOTAPlayer = PlayerResource:GetPlayer(nPlayerID)
+		if CDOTAPlayer ~= nil then
+			local nTime = Archive:GetData(nPlayerID,"game_time")
+			local nMapLevel = GetPlayerMapLevel(nTime)
+			if nMapLevel <= 15 then game_enum.nMoeNoviceCount = game_enum.nMoeNoviceCount + 1 end
+		end
 	end
 	
 	CustomNetTables:SetTableValue( "player_data", "passive_select", hPassive )
@@ -189,6 +194,7 @@ function Player_Select_Ability:Talent_Selected(args)
 		-- 爆裂
 		local hBonusBA = hNewHero:FindAbilityByName("bonus_base_attackspeed")
 		hBonusBA:SetLevel(1)
+		
 		Player_Data:InitModifier( hNewHero )
 	    CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"closed_ability_select",{})
 	    Player_Data():AddPoint(nPlayerID,200)
@@ -215,11 +221,8 @@ function Player_Select_Ability:Talent_Selected(args)
 	    	-- print("IsInToolsMode")
 	    	if IsInToolsMode() then 
 	    		hNewHero:AddItemByName("item_tools_mode") 
-	    		-- heroAbility = "ability_tianjue_challenge"
-	    		-- for n=0,3 do 
-	    		-- 	local Ability = hNewHero:AddAbility(heroAbility)
-       --          	Ability:SetLevel(1)
-	    		-- end
+	    		local chanzi = hNewHero:AddItemByName("item_silver_spade_fragment") 
+	    		chanzi:SetCurrentCharges(6)
 	    	end
 			
 			local baowu2 = hNewHero:AddItemByName("item_baoWu_book")
@@ -490,16 +493,18 @@ function Player_Select_Ability:OnThinkTechnology()
 					-- 2件套
 					local nDeputyStack = hHero:GetModifierStackCount("modifier_series_reward_deputy_technology", hHero )
 					if nDeputyStack >= 2 then
-						nLimitAmount = 250
+						nLimitAmount = 5000
 					end
+					
 					
 					if pre >= nLimitSec then
 						local nowPoint = Player_Data():getPoints(nPlayerID)
 						-- 3件套
-						local reward = math.floor((nowPoint * nLimitReward)/100)
-						if nDeputyStack >= 3 then
-							reward = reward * 2
+						if  nDeputyStack >= 3 then
+							nLimitReward = 1.5
 						end
+						local reward = math.floor((nowPoint * nLimitReward)/100)
+						
 						if reward > nLimitAmount then
 							reward = nLimitAmount
 						end
@@ -751,4 +756,59 @@ function modifier_autistic_every_week:IsHidden() return true end
 function modifier_autistic_every_week:RemoveOnDeath() return false end
 function modifier_autistic_every_week:GetAttributes()
 	return  MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE + MODIFIER_ATTRIBUTE_PERMANENT
+end
+
+---------------------  萌新BUFF ---------------
+-- 条件：等级小于等于8,
+-- 队伍中有萌新时，队伍最终伤害提高5%(乘区D)，可叠加。并且BOSS掉落的装备属性额外提高1~3%，初始属性10点，杀怪额外+3。
+LinkLuaModifier("modifier_moe_novice", "player_select_ability.lua", LUA_MODIFIER_MOTION_NONE)
+if modifier_moe_novice == nil then modifier_moe_novice = {} end
+function modifier_moe_novice:IsHidden() return false end
+function modifier_moe_novice:GetTexture() return "moe_novice" end
+function modifier_moe_novice:RemoveOnDeath() return false end
+function modifier_moe_novice:OnRefresh()
+    if not IsServer() then return end
+    self:IncrementStackCount()
+end
+function modifier_moe_novice:DeclareFunctions() 
+	local funcs = {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_TOOLTIP,
+	} 
+	return funcs
+end
+
+function modifier_moe_novice:OnTooltip() 
+	return self:GetStackCount() 
+end
+
+---- 萌新玩家
+LinkLuaModifier("modifier_moe_novice_player", "player_select_ability.lua", LUA_MODIFIER_MOTION_NONE)
+if modifier_moe_novice_player == nil then modifier_moe_novice_player = {} end
+function modifier_moe_novice_player:IsHidden() return false end
+function modifier_moe_novice_player:GetTexture() return "moe_novice" end
+function modifier_moe_novice_player:RemoveOnDeath() return false end
+function modifier_moe_novice_player:IsDebuff() return true end
+function modifier_moe_novice_player:DeclareFunctions() 
+	local funcs = {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_TOOLTIP,
+	} 
+	return funcs
+end
+
+function modifier_moe_novice_player:GetModifierBonusStats_Agility() 
+	return 10
+end
+
+function modifier_moe_novice_player:GetModifierBonusStats_Intellect()	
+	return 10
+end
+
+function modifier_moe_novice_player:GetModifierBonusStats_Strength() 
+	return 10
 end

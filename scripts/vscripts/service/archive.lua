@@ -180,7 +180,9 @@ function Archive:GetData(nPlayerID,sKeyword)
 	elseif sKeyword == nil then
 		return game_archive[nPlayerID]
 	else 
-		if game_archive[nPlayerID][sKeyword] == nil then
+		if game_archive[nPlayerID] == nil then 
+			return 0 
+		elseif game_archive[nPlayerID][sKeyword] == nil then
 			return 0
 		else
 			return game_archive[nPlayerID][sKeyword]

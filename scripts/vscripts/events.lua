@@ -181,6 +181,10 @@ function CAddonTemplateGameMode:OnBossCreatedSeriesItem()
             if nPlayer ~= nil then
                 local aHero = nPlayer:GetAssignedHero()
                 local randNum = RandomInt(1,100)
+                local probability = 0 
+                if game_enum.nMoeNoviceCount > 0 then
+                    probability = 2 * game_enum.nMoeNoviceCount
+                end
                 if spawner_config.mosterWave >= 180  then
                     if randNum <= 45 then
                         SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
@@ -221,6 +225,13 @@ function CAddonTemplateGameMode:OnBossCreatedSeriesItem()
                     end
                 elseif spawner_config.mosterWave == 20 then
                     SeriseSystem:CreateSeriesItem(aHero,2,1,1)         -- T1
+                end
+
+                --新手额外金装爆率
+                if spawner_config.mosterWave >= 100  then
+                    if randNum <= probability then
+                        SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
+                    end
                 end
     
                 --无尽装备存档

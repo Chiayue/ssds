@@ -37,7 +37,7 @@ function archon_deputy_doctor:GetCooldown()
 	local hCaster = self:GetCaster()
 	local nDeputyStack = hCaster:GetModifierStackCount("modifier_series_reward_deputy_doctor", hCaster )
 	local nBaseCD = 70
-	if nDeputyBlink >= 2 then nBaseCD = 50 end
+	if nDeputyStack >= 2 then nBaseCD = 50 end
 	return nBaseCD
 end
 

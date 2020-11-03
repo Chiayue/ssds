@@ -15,7 +15,7 @@ function modifier_archon_deputy_idler:OnCreated()
 	self.stand_bonus = self:GetAbility():GetSpecialValueFor( "stand_bonus" )
 	if IsServer() then
 		local hCaster = self:GetParent()
-		hCaster:AddNewModifier(hCaster, self:GetAbility(), "modifier_archon_deputy_idler_effect", {})
+		--hCaster:AddNewModifier(hCaster, self:GetAbility(), "modifier_archon_deputy_idler_effect", {})
 	end
 end
 
@@ -33,13 +33,13 @@ function modifier_archon_deputy_idler:OnAttack(keys)
 	if keys.attacker ~= self:GetCaster() then return 0 end
 	local hCaster = self:GetCaster()
 	self:StartIntervalThink(5)
-	hCaster:RemoveModifierByName("modifier_archon_deputy_idler_effect")
+	--hCaster:RemoveModifierByName("modifier_archon_deputy_idler_effect")
 end
 
 function modifier_archon_deputy_idler:OnIntervalThink()
 	if not IsServer() then return end
 	local hCaster = self:GetCaster()
-	hCaster:AddNewModifier(hCaster, self:GetAbility(), "modifier_archon_deputy_idler_effect", {})
+	--hCaster:AddNewModifier(hCaster, self:GetAbility(), "modifier_archon_deputy_idler_effect", {})
 end
 
 if modifier_archon_deputy_idler_effect == nil then modifier_archon_deputy_idler_effect ={} end

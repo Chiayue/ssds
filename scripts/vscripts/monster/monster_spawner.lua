@@ -206,7 +206,7 @@ function MobSpawner:SpawnAbyssNextWave()
         spawner_config.monsterSurplusNum = 0
         GlobalVarFunc.monsterIsShuaMan = false
         --深渊模式刷小兵
-        self:SpawnMonsterAbyss()
+        --self:SpawnMonsterAbyss()
         --深渊模式刷boss
         self:SpawnBossAbyss()
     end
@@ -291,7 +291,7 @@ function MobSpawner:OnNextMonTimeXu()
     end
 
     if (spawner_config.spawn_state == 0) and (spawner_config.spawn_xu_time_tips > 0) then 
-        CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_xu_time_tips;maxTime=spawner_config.spawn_interval_time;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
+        CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_xu_time_tips;gameType = GlobalVarFunc.game_type;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
         spawner_config.spawn_xu_time_tips = spawner_config.spawn_xu_time_tips-1
     else
         spawner_config.spawn_xu_time_tips = spawner_config.spawn_xu_time
@@ -299,7 +299,7 @@ function MobSpawner:OnNextMonTimeXu()
     end
     
     if (spawner_config.spawn_state == 1) and (spawner_config.spawn_interval_time_tips > 0) then 
-        CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_interval_time_tips;maxTime=spawner_config.spawn_interval_time;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
+        CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_interval_time_tips;gameType = GlobalVarFunc.game_type;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
         --倒计时10秒，显示UI提示
         if spawner_config.spawn_interval_time_tips <= 10 and spawner_config.monsterNumber > 0 then
             CustomGameEventManager:Send_ServerToAllClients("monsterNum_time_count_down",{time=spawner_config.spawn_interval_time_tips;isShow=1})
@@ -316,7 +316,7 @@ function MobSpawner:OnNextMonTimeXu()
                 self:OnGameOver()
                 return nil 
             end
-            CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_interval_time_tips;maxTime=spawner_config.spawn_interval_time;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
+            CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_interval_time_tips;gameType = GlobalVarFunc.game_type;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
             
         end
         spawner_config.spawn_interval_time_tips = spawner_config.spawn_interval_time-1   --游戏每次运行到else后会耗费1秒来赋值
@@ -332,7 +332,7 @@ function MobSpawner:OnNextMonTime()
     end
 
     if (spawner_config.spawn_state == 0) and (spawner_config.spawn_start_time_tips > 0) then 
-        CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_start_time_tips;maxTime=spawner_config.spawn_interval_time;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
+        CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_start_time_tips;gameType = GlobalVarFunc.game_type;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
         spawner_config.spawn_start_time_tips = spawner_config.spawn_start_time_tips-1
     else
         spawner_config.spawn_start_time_tips = spawner_config.spawn_start_time
@@ -340,7 +340,7 @@ function MobSpawner:OnNextMonTime()
     end
     
     if (spawner_config.spawn_state == 1) and (spawner_config.spawn_interval_time_tips > 0) then 
-        CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_interval_time_tips;maxTime=spawner_config.spawn_interval_time;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
+        CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_interval_time_tips;gameType = GlobalVarFunc.game_type;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
         --倒计时10秒，显示UI提示
         if spawner_config.spawn_interval_time_tips <= 10 and spawner_config.monsterNumber > 0 then
             CustomGameEventManager:Send_ServerToAllClients("monsterNum_time_count_down",{time=spawner_config.spawn_interval_time_tips;isShow=1})
@@ -351,7 +351,7 @@ function MobSpawner:OnNextMonTime()
         spawner_config.spawn_interval_time_tips = spawner_config.spawn_interval_time_tips-1
     else
         if spawner_config.spawn_interval_time_tips == 0 then
-            CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_interval_time_tips;maxTime=spawner_config.spawn_interval_time;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
+            CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_interval_time_tips;gameType = GlobalVarFunc.game_type;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
             
             --野怪没清完将失败
             if spawner_config.monsterNumber > 0 then
@@ -372,7 +372,7 @@ function MobSpawner:OnEndlessNextMonTime1()
     end
 
     if (spawner_config.spawn_state == 0) and (spawner_config.spawn_start_time_tips > 0) then 
-        CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_start_time_tips;maxTime=spawner_config.spawn_interval_endless_time;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
+        CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_start_time_tips;gameType = GlobalVarFunc.game_type;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
         spawner_config.spawn_start_time_tips = spawner_config.spawn_start_time_tips-1
     else
         spawner_config.spawn_start_time_tips = spawner_config.spawn_start_time
@@ -389,7 +389,7 @@ function MobSpawner:OnEndlessNextMonTime2()
     end
 
     if (spawner_config.spawn_state == 1) and (spawner_config.spawn_interval_endless_time_tips > 0) then 
-        CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_interval_endless_time_tips;maxTime=spawner_config.spawn_interval_endless_time;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
+        CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_interval_endless_time_tips;gameType = GlobalVarFunc.game_type;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
 
         --倒计时10秒，显示UI提示
         if spawner_config.spawn_interval_endless_time_tips <= 10 then
@@ -418,7 +418,7 @@ function MobSpawner:OnAbyssNextMonTime()
     end
 
     if (spawner_config.spawn_state == 0) and (spawner_config.spawn_start_time_tips > 0) then 
-        CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_start_time_tips;maxTime=spawner_config.spawn_interval_time;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
+        CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_start_time_tips;gameType = GlobalVarFunc.game_type;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
         spawner_config.spawn_start_time_tips = spawner_config.spawn_start_time_tips - 1
     else
         spawner_config.spawn_start_time_tips = spawner_config.spawn_start_time
@@ -426,7 +426,7 @@ function MobSpawner:OnAbyssNextMonTime()
     end
     
     if (spawner_config.spawn_state == 1) and (spawner_config.spawn_abyss_monster_time > 0) then 
-        CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_abyss_monster_time;maxTime=spawner_config.spawn_interval_time;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
+        CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_abyss_monster_time;gameType = GlobalVarFunc.game_type;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
         --倒计时10秒，显示UI提示
         if spawner_config.spawn_abyss_monster_time <= 10 and spawner_config.monsterNumber > 0 then
             CustomGameEventManager:Send_ServerToAllClients("monsterNum_time_count_down",{time=spawner_config.spawn_abyss_monster_time;isShow=1})
@@ -437,7 +437,7 @@ function MobSpawner:OnAbyssNextMonTime()
         spawner_config.spawn_abyss_monster_time = spawner_config.spawn_abyss_monster_time - 1
     else
         if spawner_config.spawn_abyss_monster_time == 0 then
-            CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_abyss_monster_time;maxTime=spawner_config.spawn_interval_time;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
+            CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_abyss_monster_time;gameType = GlobalVarFunc.game_type;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
             
             --野怪没清完将失败
             if spawner_config.monsterNumber > 0 then
@@ -696,22 +696,26 @@ end
 -- 深渊模式刷Boss
 function MobSpawner:SpawnBossAbyss()
 
-    if not GlobalVarFunc.abyss_spawn_state then
-        return
-    end
+    -- if not GlobalVarFunc.abyss_spawn_state then
+    --     return
+    -- end
 
     --野怪池子的数量
     spawner_config.monsterSurplusNum = 0
     GlobalVarFunc.monsterIsShuaMan = false
 
-    --local position = GlobalVarFunc:IsCanFindPath(2000, 3000)
-    local position = Vector(0, -500, 0)
-    local ability = self:_addAbyssAbility()
+    local position = GlobalVarFunc:IsCanFindPath(1000, 2500)
     local bossModel = self:_addAbyssModel()
     local boss = CreateUnitByNameInPool(bossModel, position, true, nil, nil, DOTA_TEAM_BADGUYS)
     boss:AddNewModifier(boss, nil, "modifier_cooldown_ai", nil)
-    local newAbility = boss:AddAbility(ability)
-    newAbility:SetLevel(1)
+
+    local ability1 = self:_addAbyssAbility()
+    local newAbility1 = boss:AddAbility(ability1)
+    newAbility1:SetLevel(1)
+
+    local ability2 = self:_addAbyssAbility()
+    local newAbility2 = boss:AddAbility(ability2)
+    newAbility2:SetLevel(1)
 
     --减伤光环
     boss:AddNewModifier(boss, nil, "modifier_abyss_jianshang", nil)
@@ -720,6 +724,34 @@ function MobSpawner:SpawnBossAbyss()
     self:setAbyssMonsterBaseInformation(boss)
     
     spawner_config.monsterTable[tostring(boss:entindex())] = boss
+
+    GlobalVarFunc.abyss_boss = boss
+
+    MobSpawner:OnAbyssUpdateHealth(GlobalVarFunc.abyss_boss)
+end
+
+function MobSpawner:OnAbyssUpdateHealth(unit)
+    if unit == nil then
+        CustomGameEventManager:Send_ServerToAllClients("close_boss_health_bar", nil)
+        return
+    end
+
+    GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("update_boss_health"), function ()
+        if GameRules:IsGamePaused() then
+            return 0.1
+        end
+        if unit and not unit:IsNull() and unit:IsAlive() then
+            CustomGameEventManager:Send_ServerToAllClients("show_boss_health_bar", {
+                name = unit:GetUnitName(),
+                maxHealth = unit:GetMaxHealth(),
+                health = unit:GetHealth()
+            })
+            return 0.1
+        else
+            CustomGameEventManager:Send_ServerToAllClients("close_boss_health_bar", nil)
+        end
+        return nil
+    end, 0)
 end
 
 --每周自闭模式刷小兵
@@ -980,7 +1012,8 @@ end
 
 function MobSpawner:abyss_Health() 
     local health = GlobalVarFunc.abyss_monster_level * GlobalVarFunc.abyss_monster_level * GlobalVarFunc.abyss_monster_level * 10
-    return health
+    --return health
+    return 1000000
 end
 
 function MobSpawner:abyss_HealthRegen() 

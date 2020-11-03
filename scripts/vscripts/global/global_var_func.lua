@@ -7,6 +7,8 @@ end
 game_enum = {}
 game_enum.GAME_ENDTIME = 1800
 game_enum.GAME_CODE = "archers_survive"             -- 游戏名称编码
+
+game_enum.nMoeNoviceCount = 0
 ---------
 MAX_PLAYER = 6                  -- 最大玩家数量
 --------- 科技
@@ -94,6 +96,8 @@ GlobalVarFunc.monsterIsShuaMan = false
 GlobalVarFunc.abyss_spawn_state = false
 --深渊怪物层级   30秒层级加1
 GlobalVarFunc.abyss_monster_level = 1
+--深渊Boss
+GlobalVarFunc.abyss_boss = nil
 --boss音效
 GlobalVarFunc.boss_sound = nil
 --无尽模式刷boss间隔1秒
