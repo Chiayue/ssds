@@ -14,8 +14,12 @@ function CAddonTemplateGameMode:OnEntityKill(event)
 
                 --深渊击杀boss进入下一波
                 if GlobalVarFunc.game_type == 1002 then
-                    GlobalVarFunc.abyss_spawn_state = false
-                    MobSpawner:SpawnAbyssNextWave()
+                    if GlobalVarFunc.MonsterWave == 4 then
+                        self:OnGoodguysWinner()
+                    else
+                        GlobalVarFunc.abyss_spawn_state = false
+                        MobSpawner:SpawnAbyssNextWave()
+                    end
                 end
                 
             else
@@ -34,6 +38,9 @@ function CAddonTemplateGameMode:OnEntityKill(event)
         if GlobalVarFunc.baowushu_num < 4 then
             self:OnCreatedBaoWuBook(killedUnit) 
         end    
+
+        --铲子掉落
+        self:OnCreateChanZi(killedUnit)
     end
 
     if killedUnit:IsHero() then
@@ -74,7 +81,7 @@ function CAddonTemplateGameMode:IsGoodguysWinner()
     spawner_config.monsterNumber = count
 
     if (GlobalVarFunc.game_type==0) and (count == 0) and (spawner_config.mosterWave == 12) then
-         self:OnGoodguysWinner()
+        self:OnGoodguysWinner()
     elseif (GlobalVarFunc.game_type==1) and (count == 0) and (spawner_config.mosterWave == 16) then
         self:OnGoodguysWinner()
     elseif (GlobalVarFunc.game_type>=2) and (count == 0) and (spawner_config.mosterWave == 20) then
@@ -118,12 +125,14 @@ function CAddonTemplateGameMode:OnSetBadguysWinner()
 end
 
 function CAddonTemplateGameMode:OnGoodguysWinner()
-     --判断是否游戏结束
-     if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
+    --判断是否游戏结束
+    if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
         return nil
     end
-    --玩家通关
-    GlobalVarFunc.isClearance = true
+    if GlobalVarFunc.game_mode == "common" then
+        --玩家通关
+        GlobalVarFunc.isClearance = true
+    end
     --游戏结束进行玩家数据存档
     game_playerinfo:SaveData()
     --游戏结束类型
@@ -242,3 +251,25 @@ function CAddonTemplateGameMode:OnBossCreatedSeriesItem()
     end
 end
 
+--铲子掉落
+function CAddonTemplateGameMode:OnCreateChanZi(unit)
+    if (spawner_config.mosterWave > 10) and (GlobalVarFunc.game_type == 1001) then
+        local position = unit:GetOrigin()
+        local randNum = RandomInt(1,100)
+        if unit:GetContext("boss") then
+            if randNum <= 10 then
+                local newItem = CreateItem( "item_gold_spade_fragment", nil, nil )
+                local drop = CreateItemOnPositionSync( position, newItem )
+                local dropTarget = position 
+                newItem:LaunchLoot( false, 300, 0.75, dropTarget )
+            end
+        else
+            if randNum <= 1 then
+                local newItem = CreateItem( "item_silver_spade_fragment", nil, nil )
+                local drop = CreateItemOnPositionSync( position, newItem )
+                local dropTarget = position 
+                newItem:LaunchLoot( false, 300, 0.75, dropTarget )
+            end
+        end
+    end
+end

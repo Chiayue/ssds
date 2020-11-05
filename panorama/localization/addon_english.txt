@@ -6,6 +6,11 @@
     "CHAPTER30"   "chapter30"
     "CHAPTER40"   "chapter40"
     "CHAPTER50"   "chapter50"
+    "HOOK"         "hook"
+    "PROLOGUE"     "prologue"
+    "ENDLESS"      "endless"
+    "AUTISTIC"     "autistic"
+    "ABYSS"        "abyss"
 
     "GOLD_NOT_ENOUGH"    "gold not enough"
     "GOLD_GAME_FAILURE"  "gold coin game failure"

@@ -176,8 +176,8 @@ function MobSpawner:OnGameModeAbyss(now)
         MobSpawner:SpawnAbyssNextWave()
     end
     
-    --深渊野怪属性层级  30秒层级加1
-    GlobalVarFunc.abyss_monster_level =  math.floor(now/30) + 1
+    --深渊野怪属性层级  40秒层级加1
+    GlobalVarFunc.abyss_monster_level =  math.floor(now/40) + 1
     
 end
 
@@ -206,7 +206,7 @@ function MobSpawner:SpawnAbyssNextWave()
         spawner_config.monsterSurplusNum = 0
         GlobalVarFunc.monsterIsShuaMan = false
         --深渊模式刷小兵
-        --self:SpawnMonsterAbyss()
+        self:SpawnMonsterAbyss()
         --深渊模式刷boss
         self:SpawnBossAbyss()
     end
@@ -696,9 +696,9 @@ end
 -- 深渊模式刷Boss
 function MobSpawner:SpawnBossAbyss()
 
-    -- if not GlobalVarFunc.abyss_spawn_state then
-    --     return
-    -- end
+    if not GlobalVarFunc.abyss_spawn_state then
+        return
+    end
 
     --野怪池子的数量
     spawner_config.monsterSurplusNum = 0
@@ -707,15 +707,9 @@ function MobSpawner:SpawnBossAbyss()
     local position = GlobalVarFunc:IsCanFindPath(1000, 2500)
     local bossModel = self:_addAbyssModel()
     local boss = CreateUnitByNameInPool(bossModel, position, true, nil, nil, DOTA_TEAM_BADGUYS)
-    boss:AddNewModifier(boss, nil, "modifier_cooldown_ai", nil)
 
-    local ability1 = self:_addAbyssAbility()
-    local newAbility1 = boss:AddAbility(ability1)
-    newAbility1:SetLevel(1)
-
-    local ability2 = self:_addAbyssAbility()
-    local newAbility2 = boss:AddAbility(ability2)
-    newAbility2:SetLevel(1)
+    --深渊boss技能
+    self:_addAbyssAbility(boss,4)
 
     --减伤光环
     boss:AddNewModifier(boss, nil, "modifier_abyss_jianshang", nil)
@@ -933,7 +927,7 @@ end
 --深渊怪的基本属性设置
 function MobSpawner:setAbyssMonsterBaseInformation(unit)
     local health = self:abyss_Health()
-    local healthRegen = self:abyss_Health()
+    local healthRegen = self:abyss_HealthRegen()
     local attack = self:abyss_AttackDamage()
     local armor = self:abyss_Armor()
     local magicalResistance = self:abyss_MagicalResistance()
@@ -1006,14 +1000,13 @@ end
 
 --深渊野怪攻击力
 function MobSpawner:abyss_AttackDamage()
-    local attack = (GlobalVarFunc.abyss_monster_level * GlobalVarFunc.abyss_monster_level * 50) * (GlobalVarFunc.duliuLevel*0.03 + 1) * GlobalVarFunc.MonsterViolent
+    local attack = (GlobalVarFunc.abyss_monster_level * GlobalVarFunc.abyss_monster_level * 20) * (GlobalVarFunc.duliuLevel*0.03 + 1) * GlobalVarFunc.MonsterViolent
     return attack
 end
 
 function MobSpawner:abyss_Health() 
     local health = GlobalVarFunc.abyss_monster_level * GlobalVarFunc.abyss_monster_level * GlobalVarFunc.abyss_monster_level * 10
-    --return health
-    return 1000000
+    return health
 end
 
 function MobSpawner:abyss_HealthRegen() 
@@ -1160,10 +1153,24 @@ function MobSpawner:_addAbility()
 end
 
 --随机分配深渊boss技能
-function MobSpawner:_addAbyssAbility()
-    local random = RandomInt(1,#abyss_ability)
-    local abyssAbilityName =  abyss_ability[random]
-    return abyssAbilityName
+function MobSpawner:_addAbyssAbility(unit, index)
+    --添加ai
+    unit:AddNewModifier(unit, nil, "modifier_cooldown_ai", nil)
+
+    --添加技能
+    local newAbyssAbilityTable = {}
+    for i=1,#abyss_ability do
+        newAbyssAbilityTable[i] = abyss_ability[i]
+    end
+
+    for i=1,index do
+        local randomNum = RandomInt(1, #newAbyssAbilityTable)
+        local abilityName = newAbyssAbilityTable[randomNum]
+        table.remove( newAbyssAbilityTable, randomNum )
+
+        local newAbility = unit:AddAbility(abilityName)
+        newAbility:SetLevel(1)
+    end
 end
 
 --随机分配深渊boss模型

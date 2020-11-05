@@ -30,10 +30,11 @@ end
 --移动速度（百分比增加移动速度，自身不叠加） 
 function modifier_create_monster_move_speed:GetModifierMoveSpeedBonus_Percentage()
     if IsServer() then
-        return GlobalVarFunc.duliuLevel * 2
+        return GlobalVarFunc.duliuLevel * 2 + game_enum.nMonsterMoveBonus
     else
         local duliu_level = CustomNetTables:GetTableValue( "common", "greedy_level" )
-        return duliu_level.greedy_level * 2
+        local MonsterMove = CustomNetTables:GetTableValue( "common", "monster_move_bonus")
+        return duliu_level.greedy_level * 2  + MonsterMove.move_bonus
     end
 end
 

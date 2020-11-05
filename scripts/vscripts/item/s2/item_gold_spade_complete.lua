@@ -8,16 +8,16 @@
 7.什么都没有                   20%
 ]]
 local hSpadeEvent = {
-	{ event = "add_gold", amount = 15000 , chance = 20 },
-	{ event = "add_str", amount = 200 , chance = 10 },
-	{ event = "add_agi", amount = 200 , chance = 10 },
-	{ event = "add_int", amount = 200 , chance = 10 },
-	{ event = "add_monster_ms", amount = 5 , chance = 10 },
-	{ event = "add_wood", amount = 2000 , chance = 20 },
+	{ event = "add_gold", amount = 60000 , chance = 20 },
+	{ event = "add_str", amount = 800 , chance = 10 },
+	{ event = "add_agi", amount = 800 , chance = 10 },
+	{ event = "add_int", amount = 800 , chance = 10 },
+	{ event = "add_monster_ms", amount = 10 , chance = 10 },
+	{ event = "add_wood", amount = 8000 , chance = 20 },
 	{ event = "none", amount = 0 , chance = 20 },
 }
-if item_silver_spade_complete == nil then item_silver_spade_complete = {} end
-function item_silver_spade_complete:OnSpellStart() 
+if item_gold_spade_complete == nil then item_gold_spade_complete = {} end
+function item_gold_spade_complete:OnSpellStart() 
 	if not IsServer() then return end
 	local hCaster = self:GetCaster()
 	local nPlayerID = hCaster:GetOwner():GetPlayerID()
@@ -26,7 +26,7 @@ function item_silver_spade_complete:OnSpellStart()
 	for _,v in pairs(hSpadeEvent) do
 		nBaseChance = nBaseChance + v.chance
 		if nNowChance <= nBaseChance then
-			RunSpadeEvent(nPlayerID,"Silver",v.event,v.amount)
+			RunSpadeEvent(nPlayerID,"Gold",v.event,v.amount)
 			break
 		end
 	end

@@ -16,7 +16,8 @@ abyss_ability = {
     "ability_abyss_14",
     "ability_abyss_15",
     "ability_abyss_16",
-    "ability_abyss_17"
+    "ability_abyss_17",
+    -- "ability_abyss_18"
 }
 
 abyss_boss = {

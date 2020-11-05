@@ -6,6 +6,11 @@
     "CHAPTER30"   "第30章"
     "CHAPTER40"   "第40章"
     "CHAPTER50"   "第50章"
+    "HOOK"         "挂机"
+    "PROLOGUE"     "序章"
+    "ENDLESS"      "无尽"
+    "AUTISTIC"     "自闭"
+    "ABYSS"        "深渊"
 
     "GOLD_NOT_ENOUGH"    "金币不够"
     "GOLD_GAME_FAILURE"  "金币博弈失败"

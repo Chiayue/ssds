@@ -9,6 +9,8 @@ game_enum.GAME_ENDTIME = 1800
 game_enum.GAME_CODE = "archers_survive"             -- 游戏名称编码
 
 game_enum.nMoeNoviceCount = 0
+game_enum.nMonsterMoveBonus = 0
+CustomNetTables:SetTableValue( "common", "monster_move_bonus",{ move_bonus = game_enum.nMonsterMoveBonus} )
 ---------
 MAX_PLAYER = 6                  -- 最大玩家数量
 --------- 科技
@@ -134,6 +136,8 @@ GlobalVarFunc.singlePlayerLife = 1
 GlobalVarFunc.Luoli = nil
 --记录自闭模式游戏时间3分钟后
 GlobalVarFunc.zibijinengTime = false
+--图腾怪计数
+GlobalVarFunc.tuTengNumber = 0
 
 -- <==============================全局函数================================>
 -- 切割字符串为数组
@@ -236,14 +240,28 @@ end
 --每周自闭模式玩法改变
 function GlobalVarFunc:OnWeeklyGameChange(unit)
 
-	--3分钟后添加自闭技能
-	if GlobalVarFunc.zibijinengTime then
-		if unit:GetContext("boss")  then
-			unit:AddNewModifier( unit, nil, "modifier_autistic_week3_boss", {} )
-		else
-			unit:AddNewModifier( unit, nil, "modifier_autistic_week3_emeny", {} )
+
+	if unit:GetContext("boss")  then
+		if GlobalVarFunc.MonsterWave >= 25 then
+			local newAbility1 = unit:AddAbility("ability_boss_bulwark")
+	        newAbility1:SetLevel(1)
+		end
+		if GlobalVarFunc.MonsterWave >= 200 then
+			local newAbility2 = unit:AddAbility("ability_boss_strike")
+	        newAbility2:SetLevel(1)
 		end
 	end
+	
+
+
+	-- --3分钟后添加自闭技能
+	-- if GlobalVarFunc.zibijinengTime then
+	-- 	if unit:GetContext("boss")  then
+	-- 		unit:AddNewModifier( unit, nil, "modifier_autistic_week3_boss", {} )
+	-- 	else
+	-- 		unit:AddNewModifier( unit, nil, "modifier_autistic_week3_emeny", {} )
+	-- 	end
+	-- end
 
 	-- if GlobalVarFunc.MonsterWave % 2 == 0 then
 	-- 	unit:AddNewModifier( unit, nil, "modifier_autistic_week2_emeny_a", {} )

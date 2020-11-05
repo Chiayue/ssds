@@ -1,3 +1,4 @@
+-- 减益buff
 LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_Reduce_Damage", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_Reduce_MoveSpeed", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
@@ -9,6 +10,18 @@ LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_Reduce_Physics_CriticalStrik
 LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_Reduce_Magic_CriticalStrike", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_Reduce_Magic_CriticalStrikeDamage", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_Increase_IncomingDamage", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
+-- 增益buff
+LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Damage", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackSpeed", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MoveSpeed", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MaxHeal", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_ToneUp_HealRegen", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
 
 --[[
 	减少攻击力
@@ -24,17 +37,17 @@ LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_Increase_IncomingDamage", "a
 	增加受到的伤害
 ]]
 local DeBuffList = { -- 减益BUFF 给所有敌人增加
-	"modifier_abyssBoss_DeBuff_and_Buff_Reduce_Damage",
-	"modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed",
-	"modifier_abyssBoss_DeBuff_and_Buff_Reduce_MoveSpeed",
-	"modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackRange",
-	"modifier_abyssBoss_DeBuff_and_Buff_Reduce_MaxHeal",
-	"modifier_abyssBoss_DeBuff_and_Buff_Reduce_AllProperties", -- 全属性
-	"modifier_abyssBoss_DeBuff_and_Buff_Reduce_Physics_CriticalStrike", -- 物理暴击
-	"modifier_abyssBoss_DeBuff_and_Buff_Reduce_Physics_CriticalStrikeDamage",
-	"modifier_abyssBoss_DeBuff_and_Buff_Reduce_Magic_CriticalStrike", -- 法术暴击
-	"modifier_abyssBoss_DeBuff_and_Buff_Reduce_Magic_CriticalStrikeDamage",
-	"modifier_abyssBoss_DeBuff_and_Buff_Increase_IncomingDamage",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_Reduce_Damage",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_Reduce_MoveSpeed",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackRange",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_Reduce_MaxHeal",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_Reduce_AllProperties", -- 全属性
+	-- "modifier_abyssBoss_DeBuff_and_Buff_Reduce_Physics_CriticalStrike", -- 物理暴击
+	-- "modifier_abyssBoss_DeBuff_and_Buff_Reduce_Physics_CriticalStrikeDamage",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_Reduce_Magic_CriticalStrike", -- 法术暴击
+	-- "modifier_abyssBoss_DeBuff_and_Buff_Reduce_Magic_CriticalStrikeDamage",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_Increase_IncomingDamage",
 }
 
 --[[
@@ -51,7 +64,17 @@ local DeBuffList = { -- 减益BUFF 给所有敌人增加
 	减少受到的伤害
 ]]
 local BuffList = {  -- 增益BUFF 给Boss自身增加
-	"modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Damage",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Damage",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackSpeed",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MoveSpeed",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MaxHeal",
+	 "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_HealRegen",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage",
 }
 
 if modifier_abyssBoss_DeBuff_and_Buff == nil then 
@@ -73,8 +96,8 @@ end
 function modifier_abyssBoss_DeBuff_and_Buff:IsHidden( ... )
 	return false
 end
-
-function modifier_abyssBoss_DeBuff_and_Buff:IsDebuff( ... )
+function modifier_abyssBoss_DeBuff_and_Buff:GetTexture()
+	 return "baowu/gem_xueshiyuanbo_lua" 
 end
 
 function modifier_abyssBoss_DeBuff_and_Buff:IsPurgable()
@@ -101,30 +124,30 @@ function modifier_abyssBoss_DeBuff_and_Buff:OnIntervalThink( ... )
 		if self.time == 15 then 
 			local random = RandomInt(2, 10)
 			--if random % 2 == 1 then -- 添加DeBuff
-				print("1")
-				local a = self:AddModifierDeBuff()
-				print("a>>>>>>>>>>>>>>>>>>>>=",a)
-				local enemys = FindUnitsInRadius(
-					hParent:GetTeamNumber(), 
-					hParent:GetOrigin(), 
-					hParent, 
-					99999, 
-					DOTA_UNIT_TARGET_TEAM_ENEMY, 
-					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-					0, 0, false 
-				)
+				-- print("1")
+				-- local a = self:AddModifierDeBuff()
+				-- print("a>>>>>>>>>>>>>>>>>>>>=",a)
+				-- local enemys = FindUnitsInRadius(
+				-- 	hParent:GetTeamNumber(), 
+				-- 	hParent:GetOrigin(), 
+				-- 	hParent, 
+				-- 	99999, 
+				-- 	DOTA_UNIT_TARGET_TEAM_ENEMY, 
+				-- 	DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+				-- 	0, 0, false 
+				-- )
 
-				for _,enemy in pairs(enemys) do
-					if enemy ~= nil then --  and ( not enemy:IsMagicImmune() ) and ( not enemy:IsInvulnerable() )
-						-- 敌人添加buff
-						enemy:AddNewModifier( hParent, self:GetAbility(), a, { duration = 10} )
-					end
-				end
+				-- for _,enemy in pairs(enemys) do
+				-- 	if enemy ~= nil then --  and ( not enemy:IsMagicImmune() ) and ( not enemy:IsInvulnerable() )
+				-- 		-- 敌人添加buff
+				-- 		enemy:AddNewModifier( hParent, self:GetAbility(), a, { duration = 10} )
+				-- 	end
+				-- end
 			-- else -- 添加Buff  -- if random % 2 == 0 then
-			-- 	print("0")
-			-- 	local b = self:AddModifierBuff()
-			-- 	print("b>>>>>>>>>>>>>>>>>>>>=",b)
-			-- 	hParent:AddNewModifier(hParent, nil, b, {duration = 10})
+				print("0")
+				local b = self:AddModifierBuff()
+				print("b>>>>>>>>>>>>>>>>>>>>=",b)
+				hParent:AddNewModifier(hParent, self:GetAbility(), b, {duration = 10})
 			-- end	
 			self.time = 0
 		end
@@ -144,29 +167,38 @@ if modifier_abyssBoss_DeBuff_and_Buff_Reduce_Damage == nil then modifier_abyssBo
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_Damage:IsHidden( ... ) return false end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_Damage:IsDebuff( ... ) return true end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_Damage:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
-function modifier_abyssBoss_DeBuff_and_Buff_Reduce_Damage:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE} end
-function modifier_abyssBoss_DeBuff_and_Buff_Reduce_Damage:GetModifierPreAttack_BonusDamage( ... ) return -self:GetParent():GetAverageTrueAttackDamage(self:GetParent()) * 0.1 end
+function modifier_abyssBoss_DeBuff_and_Buff_Reduce_Damage:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE} end
+function modifier_abyssBoss_DeBuff_and_Buff_Reduce_Damage:GetModifierDamageOutgoing_Percentage( ... ) return -10 end
 -- 减少10%攻速
 if modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed == nil then modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed = class({}) end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed:IsHidden( ... ) return false end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed:IsDebuff( ... ) return true end
+function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed:OnCreated( ... ) 
+	self.parget_AttackSpeed = 0
+	self.parget_AttackSpeed = self:GetParent():GetDisplayAttackSpeed() * 0.1
+end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT} end
-function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed:GetModifierAttackSpeedBonus_Constant( ... ) return -self:GetParent():GetAttackSpeed() * 0.1 end
+function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed:GetModifierAttackSpeedBonus_Constant( ... ) return -self.parget_AttackSpeed end
 -- 减少10%移速
 if modifier_abyssBoss_DeBuff_and_Buff_Reduce_MoveSpeed == nil then modifier_abyssBoss_DeBuff_and_Buff_Reduce_MoveSpeed = class({}) end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_MoveSpeed:IsHidden( ... ) return false end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_MoveSpeed:IsDebuff( ... ) return true end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_MoveSpeed:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
-function modifier_abyssBoss_DeBuff_and_Buff_Reduce_MoveSpeed:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT} end
-function modifier_abyssBoss_DeBuff_and_Buff_Reduce_MoveSpeed:GetModifierMoveSpeedBonus_Constant( ... ) return -self:GetParent():GetBaseMoveSpeed() * 0.1 end
--- 减少攻击范围
+function modifier_abyssBoss_DeBuff_and_Buff_Reduce_MoveSpeed:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE} end
+function modifier_abyssBoss_DeBuff_and_Buff_Reduce_MoveSpeed:GetModifierMoveSpeedBonus_Percentage( ... ) return -30 end
+-- 减少10%攻击范围
 if modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackRange == nil then modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackRange = class({}) end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackRange:IsHidden( ... ) return false end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackRange:IsDebuff( ... ) return true end
+-- function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackRange:OnCreated( ... ) 
+-- 	self.patent_AttackRange = 0
+-- 	self.patent_AttackRange = ( self:GetParent():GetBaseAttackRange() + GetUnitRange(self:GetParent()) ) * 0.5
+-- 	print("patent_AttackRange>>>>>>>>>>>>>>>>>>>>>>>=", self.patent_AttackRange)
+-- 	end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackRange:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackRange:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_ATTACK_RANGE_BONUS} end
-function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackRange:GetModifierAttackRangeBonus( ... ) return -( self:GetParent():GetBaseAttackRange() + self:GetParent():GetUnitRange( self:GetParent() )() ) * 0.1 end
+function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackRange:GetModifierAttackRangeBonus( ... ) return -500 end
 -- 减少10%的最大血量
 if modifier_abyssBoss_DeBuff_and_Buff_Reduce_MaxHeal == nil then modifier_abyssBoss_DeBuff_and_Buff_Reduce_MaxHeal = class({}) end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_MaxHeal:IsHidden( ... ) return false end
@@ -174,16 +206,24 @@ function modifier_abyssBoss_DeBuff_and_Buff_Reduce_MaxHeal:IsDebuff( ... ) retur
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_MaxHeal:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_MaxHeal:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_HEALTH_BONUS} end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_MaxHeal:GetModifierHealthBonus( ... ) return -self:GetParent():GetMaxHealth() * 0.1 end 
--- 减少10%力量
+-- 减少10%全属性
 if modifier_abyssBoss_DeBuff_and_Buff_Reduce_AllProperties == nil then modifier_abyssBoss_DeBuff_and_Buff_Reduce_AllProperties = class({}) end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AllProperties:IsHidden( ... ) return false end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AllProperties:IsDebuff( ... ) return true end
+function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AllProperties:OnCreated( ... ) 
+	self.parent_Strength = 0
+	self.parent_Strength = self:GetParent():GetStrength() * 0.1
+	self.parent_Agility = 0 
+	self.parent_Agility = self:GetParent():GetAgility() * 0.1
+	self.parent_Intellect = 0
+	self.parent_Intellect = self:GetParent():GetIntellect() * 0.1
+end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AllProperties:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AllProperties:DeclareFunctions( ... ) 
 	return {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,MODIFIER_PROPERTY_STATS_AGILITY_BONUS,MODIFIER_PROPERTY_STATS_INTELLECT_BONUS} end
-function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AllProperties:GetModifierBonusStats_Strength( ... ) return -self:GetParent():GetStrength() * 0.1 end
-function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AllProperties:GetModifierBonusStats_Agility( ... ) return -self:GetParent():GetAgility() * 0.1 end
-  function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AllProperties:GetModifierBonusStats_Intellect( ... ) return -self:GetParent():GetIntellect() * 0.1 end
+function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AllProperties:GetModifierBonusStats_Strength( ... ) return -self.parent_Strength end
+function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AllProperties:GetModifierBonusStats_Agility( ... ) return -self.parent_Agility end
+function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AllProperties:GetModifierBonusStats_Intellect( ... ) return -self.parent_Intellect end
 --减少物理暴击几率 50%
 if modifier_abyssBoss_DeBuff_and_Buff_Reduce_Physics_CriticalStrike == nil then modifier_abyssBoss_DeBuff_and_Buff_Reduce_Physics_CriticalStrike = class({}) end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_Physics_CriticalStrike:IsHidden( ... ) return false end
@@ -210,5 +250,88 @@ function modifier_abyssBoss_DeBuff_and_Buff_Increase_IncomingDamage:IsHidden( ..
 function modifier_abyssBoss_DeBuff_and_Buff_Increase_IncomingDamage:IsDebuff( ... ) return true end
 function modifier_abyssBoss_DeBuff_and_Buff_Increase_IncomingDamage:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
 function modifier_abyssBoss_DeBuff_and_Buff_Increase_IncomingDamage:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE} end
-function modifier_abyssBoss_DeBuff_and_Buff_Increase_IncomingDamage:GetModifierIncomingDamage_Percentage( ... ) return 10 end 
+function modifier_abyssBoss_DeBuff_and_Buff_Increase_IncomingDamage:GetModifierIncomingDamage_Percentage( ... ) return 10 end
+
+
 --------------------------------------------------------全部增益Buff-------------------------------------------------------------
+-- 增加10%攻击力
+if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Damage == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Damage = class({}) end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Damage:IsHidden( ... ) return false end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Damage:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Damage:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE} end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Damage:GetModifierDamageOutgoing_Percentage( ... ) return 10 end
+-- 增加10%攻速
+if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackSpeed == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackSpeed = class({}) end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackSpeed:IsHidden( ... ) return false end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackSpeed:OnCreated( ... ) 
+	-- self.parget_AttackSpeed = 0
+	-- self.parget_AttackSpeed = (1 + self:GetParent():GetDisplayAttackSpeed() ) * 0.1
+end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackSpeed:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackSpeed:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT} end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackSpeed:GetModifierAttackSpeedBonus_Constant( ... ) return 500 end
+-- 增加50%移速
+if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MoveSpeed == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MoveSpeed = class({}) end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MoveSpeed:IsHidden( ... ) return false end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MoveSpeed:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MoveSpeed:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE} end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MoveSpeed:GetModifierMoveSpeedBonus_Percentage( ... ) return 50 end
+-- 增加10%攻击范围
+if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange = class({}) end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange:IsHidden( ... ) return false end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange:OnCreated( ... ) 
+	self.patent_AttackRange = 0
+	self.patent_AttackRange = self:GetParent():GetBaseAttackRange() * 0.5
+	print("patent_AttackRange>>>>>>>>>>>>>>>>>>>>>>>=", self.patent_AttackRange)
+end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE} end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange:GetModifierDamageOutgoing_Percentage( ... ) return 500 end
+-- 增加10%生命最大值
+if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MaxHeal == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MaxHeal = class({}) end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MaxHeal:IsHidden( ... ) return false end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MaxHeal:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MaxHeal:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS} end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MaxHeal:GetModifierExtraHealthBonus( ... ) return self:GetParent():GetMaxHealth() * 0.1 end
+-- 增加10%护甲
+if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor = class({}) end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor:IsHidden( ... ) return false end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackSpeed:OnCreated( ... ) 
+	self.x = self:GetParent():GetPhysicalArmorValue(true) * 0.1
+	print("x>>>>>>>>>>>>>>>>=",self.x)
+end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS} end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor:GetModifierPhysicalArmorBonus( ... ) return x end
+-- 增加10%魔抗
+if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance = class({}) end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance:IsHidden( ... ) return false end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS} end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance:GetModifierMagicalResistanceBonus( ... ) return self:GetParent():GetMagicalArmorValue() * 0.1 end
+-- 增加10%闪避
+if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss = class({}) end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss:IsHidden( ... ) return false end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_MISS_PERCENTAGE} end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss:GetModifierMiss_Percentage( ... ) return 50 end
+-- 增加10%生命回复
+if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_HealRegen == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_HealRegen = class({}) end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_HealRegen:IsHidden( ... ) return false end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_HealRegen:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_HealRegen:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE} end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_HealRegen:GetModifierHealthRegenPercentage( ... ) return 10 end
+-- 状态免疫
+if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity = class({}) end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity:IsHidden( ... ) return false end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity:CheckState() -- 碰撞效果
+	return {[MODIFIER_STATE_STUNNED] = false,[MODIFIER_STATE_MAGIC_IMMUNE] = false, [MODIFIER_STATE_FROZEN] = false} end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE} end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity:GetModifierDamageOutgoing_Percentage( ... ) return 10 end
+-- 减少10%的所受伤害
+if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage = class({}) end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage:IsHidden( ... ) return false end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE} end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage:GetModifierDamageOutgoing_Percentage( ... ) return -10 end
