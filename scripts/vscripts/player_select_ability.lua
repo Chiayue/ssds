@@ -10,7 +10,6 @@ require("item/series/serise_system")
 require("service/arrow_soul_reward")
 require("service/arrow_soul_compensate")
 require("autistic/autistic_weeky_init")
-
 ----- 技能觉醒 等级
 ABILITY_AWAKEN_1 = 2
 ABILITY_AWAKEN_2 = 5
@@ -222,11 +221,10 @@ function Player_Select_Ability:Talent_Selected(args)
 	    	-- print("IsInToolsMode")
 	    	if IsInToolsMode() then 
 	    		hNewHero:AddItemByName("item_tools_mode") 
-	    		-- local chanzi = hNewHero:AddItemByName("item_silver_spade_fragment") 
-	    		-- chanzi:SetCurrentCharges(20)
-	    		-- local chanzi = hNewHero:AddItemByName("item_gold_spade_fragment") 
-	    		-- chanzi:SetCurrentCharges(20)
+	    		local chanzi = hNewHero:AddItemByName("item_silver_spade_fragment") 
+	    		chanzi:SetCurrentCharges(6)
 	    	end
+			
 			local baowu2 = hNewHero:AddItemByName("item_baoWu_book")
 			baowu2:SetCurrentCharges(20)
 			local baodian = hNewHero:AddItemByName("item_talent_upgrade")
@@ -241,6 +239,7 @@ function Player_Select_Ability:Talent_Selected(args)
 	   	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"hero_selected_over",{ hero = sAbilityName})
 	   	-- 更新补偿
 	   	local bExp = Store:CheckExpCard(nPlayerID)
+	   	print("ExpCard",bExp)
 	   	Timer(1,function()
 	   		ArrowSoulCompensate:CheckReward( hNewHero )
 	   	end)
@@ -275,7 +274,6 @@ end
 -- 游戏激活选择技能
 function Player_Select_Ability:OnGameRulesStateChange(event)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		-- 模式判断
 		-- 作弊模式验证
 		if GameRules:IsCheatMode() then
 			 local nPlayerCount = PlayerResource:GetPlayerCount()

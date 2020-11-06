@@ -43,9 +43,7 @@ return {
 		"particles/radiant_fx2/fs_altar_ascension.vpcf",
 		"particles/diy_particles/flandre_diy_skill.vpcf",
 		"particles/diy_particles/rubick_wing.vpcf",
-		"particles/diy_particles/halloween_ambient.vpcf",
-		"particles/units/heroes/hero_spirit_breaker/spirit_breaker_nether_strike_begin.vpcf",
-		"particles/units/heroes/hero_spirit_breaker/spirit_breaker_nether_strike_end.vpcf",
+		"particles/diy_particles/halloween_ambient.vpcf"
 	},
 
 	soundfile = {

@@ -10,22 +10,11 @@ function modifier_gem_dazhiliao:DeclareFunctions()
 end
 
 function modifier_gem_dazhiliao:IsHidden()
-    if self:GetCaster():HasModifier( "modifier_gem_zhiliao_taozhuang" ) then
-        return true
-    else
-        return false
-    end
+	return false
 end
 
 function modifier_gem_dazhiliao:OnCreated(params)
     self.health_regen = 1.5
-
-    if IsServer() then
-        local hero = self:GetParent()
-        if hero:HasModifier("modifier_gem_zhongzhiliao") and hero:HasModifier("modifier_gem_xiaozhiliao") and not hero:HasModifier("modifier_gem_zhiliao_taozhuang") then
-            hero:AddNewModifier( hero, self:GetAbility(), "modifier_gem_zhiliao_taozhuang", {} )
-        end
-    end
 end
 
 function modifier_gem_dazhiliao:GetModifierHealthRegenPercentage()

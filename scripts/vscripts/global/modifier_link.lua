@@ -58,7 +58,6 @@ LinkLuaModifier("modifier_gem_gangtieheji", "ability/modifier/modifier_gem_gangt
 LinkLuaModifier("modifier_gem_pinbenshishadewo", "ability/modifier/modifier_gem_pinbenshishadewo", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_gem_yezhendebuyaole", "ability/modifier/modifier_gem_yezhendebuyaole", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier( "modifier_gem_tiangoubudehaosi", "ability/modifier/modifier_gem_tiangoubudehaosi.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_gem_zhiliao_taozhuang", "ability/modifier/modifier_gem_zhiliao_taozhuang.lua", LUA_MODIFIER_MOTION_NONE )
 
 --箭魂修炼
 LinkLuaModifier("modifier_arrowSoul_meditation", "ability/modifier/modifier_arrowSoul_meditation", LUA_MODIFIER_MOTION_NONE)

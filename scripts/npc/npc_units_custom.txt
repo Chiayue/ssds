@@ -75,6 +75,7 @@
 		"Ability15"	""
 		"Ability16"	""
 		"MagicalResistance"	"1"
+		"vscripts"	""
 	}
 
 	"npc_dota_creature_monster_2"
@@ -8492,7 +8493,7 @@
 	{
 		"BaseClass"	"npc_dota_creature"
 		"Ability1"	"ability_stake_1"
-		"Ability2"	"ability_boss_bulwark"
+		"Ability2"	""
 		"Ability3"	""
 		"Ability4"	""
 		"Ability5"	""
@@ -9014,6 +9015,7 @@
 		"AttackDamageMin"	"0"
 		// Damage range max.
 		"AttackDamageMax"	"0"
+		"AttackDamageType"	""
 		// Speed of attack.
 		"AttackRate"	"0"
 		// Normalized time in animation cycle to attack.
@@ -9022,6 +9024,8 @@
 		"AttackAcquisitionRange"	"0"
 		// Range within a target can be attacked.
 		"AttackRange"	"0"
+		// Particle system model for projectile.
+		"ProjectileModel"	""
 		// Speed of projectile.
 		"ProjectileSpeed"	"0"
 		// Bounty
@@ -9828,6 +9832,7 @@
 		"HealthBarOffset"	"200"
 		"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"MovementCapabilities"	"DOTA_UNIT_CAP_MOVE_GROUND"
+		"vscripts"	""
 		"AttackAcquisitionRange"	"20000"
 	}
 
@@ -9928,7 +9933,6 @@
 			}
 		}
 		"AttackAcquisitionRange"	"20000"
-		"StatusHealth"	""
 	}
 
 	"npc_dota_creature_boss_blademaster"
@@ -10255,59 +10259,5 @@
 		"HealthBarOffset"	"200"
 		"AttackCapabilities"	"DOTA_UNIT_CAP_NO_ATTACK"
 		"MovementCapabilities"	"DOTA_UNIT_CAP_MOVE_GROUND"
-	}
-
-	"ice_totem_unit"
-	{
-		"BaseClass"	"npc_dota_creature"
-		"Ability1"	""
-		"Ability2"	""
-		"Ability3"	""
-		"Ability4"	""
-		"Ability5"	""
-		"Ability6"	""
-		"Ability7"	""
-		"Ability8"	""
-		"Ability9"	""
-		"Ability10"	""
-		"Ability11"	""
-		"Ability12"	""
-		"Ability13"	""
-		"Ability14"	""
-		"Ability15"	""
-		"Ability16"	""
-		"Model"	"models/heroes/ancient_apparition/ancient_apparition.vmdl"
-		"ModelScale"	"1"
-		"HasInventory"	""
-		"ConsideredHero"	""
-		"HealthBarOffset"	"200"
-		"StatusHealth"	"100"
-		"AttackCapabilities"	"DOTA_UNIT_CAP_NO_ATTACK"
-		"MovementCapabilities"	"DOTA_UNIT_CAP_MOVE_NONE"
-		"Creature"
-		{
-			"AttachWearables"
-			{
-				"Wearable1"
-				{
-					"ItemDef"	"8714"
-				}
-				"Wearable2"
-				{
-					"ItemDef"	"8726"
-				}
-				"Wearable3"
-				{
-					"ItemDef"	"8713"
-				}
-				"Wearable4"
-				{
-					"ItemDef"	"7844"
-				}
-			}
-		}
-		"AttackAcquisitionRange"	""
-		"MinimapIconSize"	"300"
-		"MinimapIcon"	"minimap_roshancamp"
 	}
 }

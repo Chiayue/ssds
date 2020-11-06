@@ -57,8 +57,8 @@
 	
 	"misc"
 	{
-        "item" "item_study_passive_lv1"
-        "item" "item_study_passive_lv2"
+        //"item" "item_study_passive_lv1"
+        //"item" "item_study_passive_lv2"
         "item" "item_study_passive_lv3"
         "item" "item_gerenbaoWu_book" //个人宝物书
 	}   

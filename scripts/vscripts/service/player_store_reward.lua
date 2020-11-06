@@ -169,7 +169,6 @@ function PlayerStoreReward:Set(hHero,hCurrentStore)
 		local hMapsLevelReward = Store:GetGoodsFreeReward()
 		
 		local nLevel = GetPlayerMapLevel(hArchive["game_time"]) - 1
-		-- print(nLevel)
 		local sArchiveAffix = "store_purchased_"
 		for k,v in pairs(hMapsLevelReward) do
 			if nLevel >= k then

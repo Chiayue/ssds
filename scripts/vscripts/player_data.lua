@@ -20,7 +20,6 @@ TECH_UPGRADE_LIST = {
     "Upgrade_MaxDamage",
     "Upgrade_Range",
     "Upgrade_Base_Attackspeed",
-    --"upgrade_damage_enhancement",
     "Upgrade_Armor",
     "Upgrade_MaxHeath",
     "Upgrade_HeathRegen",

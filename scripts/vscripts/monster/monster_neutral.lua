@@ -24,30 +24,8 @@ function MonsterNeutral:OnMonsterNeutralThinker()
     if (spawner_config.mosterWave > 0) and (spawner_config.mosterWave < 50) and (GlobalVarFunc.neutralMosterNum < 15) and (GlobalVarFunc.game_type ~= 1002) then
         self:OnCreateNeutralBoss()
     end
-
-    if (GlobalVarFunc.MonsterWave >= 50) and ((GlobalVarFunc.MonsterWave - 50) % 20 == 0) and (GlobalVarFunc.game_type == 1001) then
-        self:OnCreateTuTeng()
-    end
     
     return 1
-end
-
-function MonsterNeutral:OnCreateTuTeng()
-    if GlobalVarFunc.tuTengNumber >= 1 then
-        return
-    end
-
-    local name = "ice_totem_unit"
-    local position = GlobalVarFunc:IsCanFindPath(1000, 4500)
-    local tuteng = CreateUnitByName(name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
-    self:setMonsterBaseInformation(tuteng)
-
-    --添加ai
-    tuteng:AddNewModifier(tuteng, nil, "modifier_cooldown_ai", nil)
-    local ability = tuteng:AddAbility("ability_abyss_18")
-    ability:SetLevel(1)
-
-    GlobalVarFunc.tuTengNumber = GlobalVarFunc.tuTengNumber + 1
 end
 
 function MonsterNeutral:OnCreateNeutralBoss()
@@ -71,20 +49,6 @@ function MonsterNeutral:OnKillMonsterNeutral(event)
             end
         end)
     end
-
-    if killedUnit:GetUnitName() == "ice_totem_unit" then 
-        GlobalVarFunc.tuTengNumber = GlobalVarFunc.tuTengNumber - 1
-        local position = killedUnit:GetOrigin()
-        self:OnCreateChanZi(position)
-    end
-end
-
-function MonsterNeutral:OnCreateChanZi(vector)
-    local position = vector
-    local newItem = CreateItem( "item_gold_spade_fragment", nil, nil )
-    local drop = CreateItemOnPositionSync( position, newItem )
-    local dropTarget = position 
-    newItem:LaunchLoot( false, 300, 0.75, dropTarget )
 end
 
 function MonsterNeutral:OnCreateMonster(Vec)
@@ -136,11 +100,6 @@ function MonsterNeutral:setMonsterBaseInformation(unit)
     --血量上限20亿
     if health > 2000000000 then
         health = 2000000000
-    end
-
-    --图腾
-    if unit:GetUnitName() == "ice_totem_unit" then
-        health = GlobalVarFunc.playersNum * 40
     end
 
     unit:SetBaseMaxHealth(health)   

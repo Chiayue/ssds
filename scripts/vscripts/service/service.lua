@@ -14,7 +14,7 @@ KEY = "LLFZBS"
 Address = "http://47.108.61.165/service"
 ServerKey = GetDedicatedServerKeyV2(KEY)
 -- 服务列表
-MAP_CODE = "archers_survive_test"									-- 地图编码
+MAP_CODE = "archers_survive"									-- 地图编码
 
 -- 其他常量
 REQUEST_TIME_OUT = 30

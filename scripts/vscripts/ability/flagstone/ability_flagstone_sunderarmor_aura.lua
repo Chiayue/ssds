@@ -62,20 +62,13 @@ if modifier_ability_flagstone_sunderarmor_aura_effect == nil then
 	modifier_ability_flagstone_sunderarmor_aura_effect ={}
 end
 
-function modifier_ability_flagstone_sunderarmor_aura_effect:OnCreated()
-	self.bonus = self:GetAbility():GetSpecialValueFor( "bonus" )
-end
-
-function modifier_ability_flagstone_sunderarmor_aura_effect:OnRefresh()
-	self.bonus = self:GetAbility():GetSpecialValueFor( "bonus" )
-end
 
 function modifier_ability_flagstone_sunderarmor_aura_effect:IsDebuff()
 	return true
 end
 
 function modifier_ability_flagstone_sunderarmor_aura_effect:IsHidden()
-	return false
+	return true
 end
 
 function modifier_ability_flagstone_sunderarmor_aura_effect:DeclareFunctions()
@@ -86,5 +79,5 @@ function modifier_ability_flagstone_sunderarmor_aura_effect:DeclareFunctions()
 end
 
 function modifier_ability_flagstone_sunderarmor_aura_effect:GetModifierPhysicalArmorBonus( params )
-	return -self.bonus
+	return -20
 end
