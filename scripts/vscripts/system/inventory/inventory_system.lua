@@ -403,6 +403,10 @@ function InventorySystem:ItemAddedToInventory(keys)
 		return false
 	end
 
+	if sItemName == "item_silver_spade_fragment" or sItemName == "item_gold_spade_fragment" then
+		hItem:SetPurchaser(nil)
+	end
+
 	-- 判断是否开启背包
 	local pack = InventoryBackpack:GetBackpack(hInventoryParent)
 	if pack then
