@@ -40,6 +40,8 @@ function archon_deputy_scavenging:OnSpellStart()
 					GlobalVarFunc:OnGameSound("jinbi_sound", nPlayerID)
 					--UTIL_Remove(v)
 					v:RemoveSelf() 
+					addHeroRandomAttr(hCaster)
+
 				elseif sItemName == "item_archers_wood" then
 					local nNum = hItem:GetCurrentCharges()
 					local nAmount = math.floor(nNum * (1 + fReward* 0.01))
@@ -48,6 +50,7 @@ function archon_deputy_scavenging:OnSpellStart()
         			GlobalVarFunc:OnGameSound("mutou_sound", nPlayerID)
 					--UTIL_Remove(v)
 					v:RemoveSelf() 
+					addHeroRandomAttr(hCaster)
 				end
 			end
 		end

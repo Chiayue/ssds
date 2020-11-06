@@ -13,6 +13,5 @@ monster_ability = {
     "viper_corrosive_skin",                     
     "troll_warlord_fervor",                     
     "sniper_headshot",                        
-    "weaver_geminate_attack",
     "creep_ability_dodge"
 }

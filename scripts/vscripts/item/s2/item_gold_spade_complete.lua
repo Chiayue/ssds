@@ -12,7 +12,7 @@
 ]]
 local hSpadeEvent = {
 	{ event = "none", chance = 5 },
-	{ event = "add_gold", amount = 60000 , chance = 20 },
+	{ event = "add_round_income", amount = 1500 , chance = 20 },
 	{ event = "add_str", amount = 800 , chance = 10 },
 	{ event = "add_agi", amount = 800 , chance = 10 },
 	{ event = "add_int", amount = 800 , chance = 10 },
@@ -23,7 +23,8 @@ local hSpadeEvent = {
 	{ event = "add_int2", amount = 8000 , chance = 1 ,screen_arcane = true},
 	{ event = "add_serieitem", chance = 3 ,screen_arcane = true},
 	{ event = "level_up", amount = 10 , chance = 5 },
-	{ event = "add_monster_ms", amount = 50 , chance = 4 },
+	{ event = "add_all2", amount = 3000 , chance = 1 ,screen_arcane = true},
+	{ event = "add_monster_ms", amount = 30 , chance = 3 },
 	
 }
 if item_gold_spade_complete == nil then item_gold_spade_complete = {} end

@@ -34,10 +34,6 @@ function MobSpawner:OnThink()
     local now = GameRules:GetDOTATime(false, false)  --返回Dota游戏内的时间。（是否包含赛前时间或负时间)
     now = math.floor(now)
 
-    if now >= 180 then
-        GlobalVarFunc.zibijinengTime = true
-    end
-
     --创建地图logo 和 萝莉
     if now == 1 then
         self:OnCreateArcherLogo()
@@ -176,8 +172,8 @@ function MobSpawner:OnGameModeAbyss(now)
         MobSpawner:SpawnAbyssNextWave()
     end
     
-    --深渊野怪属性层级  40秒层级加1
-    GlobalVarFunc.abyss_monster_level =  math.floor(now/40) + 1
+    --深渊野怪属性层级  60秒层级加1
+    GlobalVarFunc.abyss_monster_level =  math.floor(now/60) + 1
     
 end
 
@@ -480,7 +476,7 @@ function MobSpawner:SpawnMonster()
 
         self:setMonsterBaseInformation(mob)
 
-        if spawner_config.mosterWave>=8 then
+        if spawner_config.mosterWave >= 8 then
             mob:AddAbility(ability)
         end
 

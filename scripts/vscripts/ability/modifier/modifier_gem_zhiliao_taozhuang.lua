@@ -14,7 +14,7 @@ function modifier_gem_zhiliao_taozhuang:IsHidden()
 end
 
 function modifier_gem_zhiliao_taozhuang:GetModifierIncomingDamage_Percentage( params )
-	return -5
+	return -10
 end
 
 function modifier_gem_zhiliao_taozhuang:IsPurgable()

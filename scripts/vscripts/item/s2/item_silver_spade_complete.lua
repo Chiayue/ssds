@@ -14,8 +14,8 @@ local hSpadeEvent = {
 	{ event = "add_int", amount = 200 , chance = 10 },
 	{ event = "add_monster_ms", amount = 5 , chance = 10 },
 	{ event = "add_wood", amount = 2000 , chance = 20 },
-	{ event = "add_item", name = "item_gold_spade_fragment", amount = 1 , chance = 5 },
-	{ event = "none", amount = 0 , chance = 15 },
+	{ event = "add_item", name = "item_gold_spade_fragment", amount = 1 , chance = 15 },
+	{ event = "none", amount = 0 , chance = 5 },
 }
 if item_silver_spade_complete == nil then item_silver_spade_complete = {} end
 function item_silver_spade_complete:OnSpellStart() 

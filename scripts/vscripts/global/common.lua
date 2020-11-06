@@ -149,7 +149,7 @@ end
 function RunSpadeEvent(hCaster,sSpadeName,hParam)
 	-- print(sEventName,"/",nAmount)
 	-- body
-	local nAmount = hParam.amount
+	local nAmount = hParam.amount or 0
 	local sEventName = hParam.event
 	local gameEvent = {}
 	local nPlayerID = hCaster:GetOwner():GetPlayerID()
@@ -160,6 +160,12 @@ function RunSpadeEvent(hCaster,sSpadeName,hParam)
 	    	v:ModifyGold(nAmount, false, 0)
 	    	SendOverheadEventMessage( hPlayer, OVERHEAD_ALERT_GOLD, v, nAmount, nil )
 	    end
+	elseif sEventName == "add_round_income" then
+		local hOperateInfo = CustomNetTables:GetTableValue( "gameInfo", "operate" )
+		for k,v in pairs(hOperateInfo) do
+			v.operate_gold = v.operate_gold + nAmount
+		end
+		CustomNetTables:SetTableValue( "gameInfo", "operate", hOperateInfo)
 	elseif sEventName == "add_str" or sEventName == "add_str2" then
 		for k,v in pairs(hAllHero) do
 			Player_Data:AddBasebonus(v,DOTA_ATTRIBUTE_STRENGTH,nAmount)
@@ -170,6 +176,12 @@ function RunSpadeEvent(hCaster,sSpadeName,hParam)
 		end
 	elseif sEventName == "add_int" or sEventName == "add_int2" then
 		for k,v in pairs(hAllHero) do
+			Player_Data:AddBasebonus(v,DOTA_ATTRIBUTE_INTELLECT,nAmount)
+		end
+	elseif sEventName == "add_all" or sEventName == "add_all2" then
+		for k,v in pairs(hAllHero) do
+			Player_Data:AddBasebonus(v,DOTA_ATTRIBUTE_STRENGTH,nAmount)
+			Player_Data:AddBasebonus(v,DOTA_ATTRIBUTE_AGILITY,nAmount)
 			Player_Data:AddBasebonus(v,DOTA_ATTRIBUTE_INTELLECT,nAmount)
 		end
 	elseif sEventName == "level_up" then
@@ -198,4 +210,21 @@ function RunSpadeEvent(hCaster,sSpadeName,hParam)
 	gameEvent[ "message" ] = "#DOTA_HUD_SPADE_"..sSpadeName.."_"..sEventName
 	FireGameEvent( "dota_combat_event_message", gameEvent )
 	if hParam.screen_arcane == true then CustomGameEventManager:Send_ServerToAllClients("screen_arcane",{}) end
+end
+
+function addHeroRandomAttr(hHero)
+	local bonus_type = RandomInt(0,2)
+    if bonus_type == DOTA_ATTRIBUTE_STRENGTH then
+        local BaseProperty = hHero:GetBaseStrength() 
+        hHero:SetBaseStrength(BaseProperty + 1)
+    end
+    if bonus_type == DOTA_ATTRIBUTE_AGILITY then
+        local BaseProperty = hHero:GetBaseAgility() 
+        hHero:SetBaseAgility(BaseProperty + 1)
+    end
+    if bonus_type == DOTA_ATTRIBUTE_INTELLECT then
+        local BaseProperty = hHero:GetBaseIntellect() 
+        hHero:SetBaseIntellect(BaseProperty + 1)
+    end
+    hHero:CalculateStatBonus()
 end

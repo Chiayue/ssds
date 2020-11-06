@@ -3378,7 +3378,7 @@
 		"ID"	"1611"
 		"ItemQuality"	"artifact"
 		"ItemCastOnPickup"	"0"
-		"ItemCost"	"40000"
+		"ItemCost"	"20000"
 		"ItemDroppable"	"1"
 		"ItemSellable"	"0"
 		"ItemShareability"	"ITEM_FULLY_SHAREABLE"
@@ -3390,6 +3390,7 @@
 		"SideShop"	"1"
 		"ItemShopTags"	"consumable"
 		"ItemRequirements"	{}
+		"Model"	"models/items/models/shovel/shovel_silver.vmdl"
 	}
 
 	"item_gold_spade_complete"
@@ -3415,6 +3416,7 @@
 		"SideShop"	"1"
 		"ItemShopTags"	"consumable"
 		"ItemRequirements"	{}
+		"Model"	"models/items/models/shovel/shovel_gold.vmdl"
 	}
 
 	"item_silver_spade_fragment"
@@ -3428,7 +3430,7 @@
 		"ID"	"1612"
 		"ItemQuality"	"artifact"
 		"ItemCastOnPickup"	"0"
-		"ItemCost"	"10000"
+		"ItemCost"	"5000"
 		"ItemDroppable"	"1"
 		"ItemSellable"	"1"
 		"ItemPurchasable"	"0"
@@ -3439,6 +3441,7 @@
 		"SideShop"	"1"
 		"ItemShopTags"	"consumable"
 		"ItemRequirements"	{}
+		"Model"	"models/items/models/shovel/shovel_silver.vmdl"
 	}
 
 	"item_gold_spade_fragment"
@@ -3452,7 +3455,7 @@
 		"ID"	"1614"
 		"ItemQuality"	"artifact"
 		"ItemCastOnPickup"	"0"
-		"ItemCost"	"80000"
+		"ItemCost"	"40000"
 		"ItemDroppable"	"1"
 		"ItemSellable"	"1"
 		"ItemPurchasable"	"0"
@@ -3463,6 +3466,7 @@
 		"SideShop"	"1"
 		"ItemShopTags"	"consumable"
 		"ItemRequirements"	{}
+		"Model"	"models/items/models/shovel/shovel_gold.vmdl"
 	}
 
 	"item_ghost_esoterica"

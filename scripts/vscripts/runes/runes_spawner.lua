@@ -30,7 +30,7 @@ function RunesSpawner:OnThinker()
     local now = GameRules:GetDOTATime(false, false)  --返回Dota游戏内的时间。（是否包含赛前时间或负时间)
     now = math.floor(now)
     if now >= runes_config.create_begin then
-        for i=1,4 do
+        for i=1,6 do
             --40波之后不刷金袋
             if GlobalVarFunc.MonsterWave <= 40 then
                 self:OnCreateGold()
@@ -44,7 +44,7 @@ end
 
 --金袋
 function RunesSpawner:OnCreateGold()
-    local position = Vector(0, 0, 0) + RandomVector( RandomFloat( 300, 4000 ))
+    local position = Vector(0, 0, 0) + RandomVector( RandomFloat( 500, 5000 ))
     local newItem = CreateItem( runes_config.goods[1].name, nil, nil )
     newItem:SetPurchaseTime( 0 )                                       --设置物品的购买时间    
     local gold = GlobalVarFunc.MonsterWave * 5 * GlobalVarFunc.playersNum
@@ -60,7 +60,7 @@ end
 
 --木头
 function RunesSpawner:OnCreateWood()
-    local position = Vector(0, 0, 0) + RandomVector( RandomFloat( 300, 4000 ))
+    local position = Vector(0, 0, 0) + RandomVector( RandomFloat( 500, 5000 ))
     local newItem = CreateItem( runes_config.goods[2].name, nil, nil )
     newItem:SetPurchaseTime( 0 ) 
     newItem:SetCurrentCharges(RandomInt(5, 10 * GlobalVarFunc.playersNum))                                      

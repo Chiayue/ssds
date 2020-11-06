@@ -134,10 +134,12 @@ GlobalVarFunc.player_treasure_list = {}
 GlobalVarFunc.singlePlayerLife = 1
 --萝莉单位记录
 GlobalVarFunc.Luoli = nil
---记录自闭模式游戏时间3分钟后
-GlobalVarFunc.zibijinengTime = false
---图腾刷新波数记录
+--是否创建图腾
+GlobalVarFunc.isCreateTuTeng = true
+--图腾计数
 GlobalVarFunc.tuTengNumber = 0
+--图腾是否连续刷
+GlobalVarFunc.isLianXuCreateTT = true
 
 -- <==============================全局函数================================>
 -- 切割字符串为数组
@@ -242,7 +244,7 @@ function GlobalVarFunc:OnWeeklyGameChange(unit)
 
 
 	if unit:GetContext("boss")  then
-		if GlobalVarFunc.MonsterWave >= 25 then
+		if (GlobalVarFunc.MonsterWave >= 25) and (GlobalVarFunc.playersNum > 1) then
 			local newAbility1 = unit:AddAbility("ability_boss_bulwark")
 	        newAbility1:SetLevel(1)
 		end
@@ -256,14 +258,11 @@ function GlobalVarFunc:OnWeeklyGameChange(unit)
 	unit:AddNewModifier(unit, nil, "modifier_bloodseeker_thirst", nil)
 	
 
-	-- --3分钟后添加自闭技能
-	-- if GlobalVarFunc.zibijinengTime then
 	-- 	if unit:GetContext("boss")  then
 	-- 		unit:AddNewModifier( unit, nil, "modifier_autistic_week3_boss", {} )
 	-- 	else
 	-- 		unit:AddNewModifier( unit, nil, "modifier_autistic_week3_emeny", {} )
 	-- 	end
-	-- end
 
 	-- if GlobalVarFunc.MonsterWave % 2 == 0 then
 	-- 	unit:AddNewModifier( unit, nil, "modifier_autistic_week2_emeny_a", {} )
@@ -297,4 +296,12 @@ function GlobalVarFunc:IsCanFindPath(mix, max)
         position = Vector(1000, 0, 0)
 	end
 	return position
+end
+
+--创建金/银铲子
+function GlobalVarFunc:OnCreateChanzi(position,chanzi_str)
+	local newItem = CreateItem( chanzi_str, nil, nil )
+    local drop = CreateItemOnPositionSync( position, newItem )
+    local dropTarget = position 
+	newItem:LaunchLoot( false, 300, 0.75, dropTarget )
 end

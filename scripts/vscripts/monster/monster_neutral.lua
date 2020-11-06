@@ -21,30 +21,95 @@ function MonsterNeutral:OnMonsterNeutralThinker()
         return nil
     end
     
+    --中立怪
     if (spawner_config.mosterWave > 0) and (spawner_config.mosterWave < 50) and (GlobalVarFunc.neutralMosterNum < 15) and (GlobalVarFunc.game_type ~= 1002) then
         self:OnCreateNeutralBoss()
     end
 
-    if (GlobalVarFunc.MonsterWave >= 50) and ((GlobalVarFunc.MonsterWave - 50) % 10 == 0) and (GlobalVarFunc.game_type == 1001) then
-        if GlobalVarFunc.tuTengNumber ~= GlobalVarFunc.MonsterWave then
-            self:OnCreateTuTeng()
-            GlobalVarFunc.tuTengNumber = GlobalVarFunc.MonsterWave
+    --图腾
+    if (GlobalVarFunc.MonsterWave >= 40) and (GlobalVarFunc.game_type == 1001) then
+        if GlobalVarFunc.isCreateTuTeng == true then
+            GlobalVarFunc.isCreateTuTeng = false
+            MonsterNeutral:OnTuTengTime()
         end
     end
     
     return 1
 end
 
+function MonsterNeutral:OnTuTengTime()
+
+    for i=1,2 do
+        MonsterNeutral:OnCreateTuTeng()
+    end
+    GlobalVarFunc.isLianXuCreateTT  = true
+
+    CustomGameEventManager:Send_ServerToAllClients("show_event_tip",{event_name="tuTeng"})
+
+    local time = 300
+    GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("spawn_tuteng_think"), 
+    function()
+        if GameRules:IsGamePaused() then
+            return 0.1
+        end
+
+        --120秒后击杀不在刷新图腾
+        if time == 180 then
+            GlobalVarFunc.isLianXuCreateTT  = false
+        end
+
+        if time > 0 then
+            time = time - 1
+            return 1
+        else
+            MonsterNeutral:OnTuTengTime()
+            return nil
+        end
+    end, 0)
+
+end
+
 function MonsterNeutral:OnCreateTuTeng()
+
+    if GlobalVarFunc.tuTengNumber >= 2 then
+        return
+    end
+
     local name = "ice_totem_unit"
     local position = GlobalVarFunc:IsCanFindPath(1000, 4500)
     local tuteng = CreateUnitByName(name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
     self:setMonsterBaseInformation(tuteng)
 
+    GlobalVarFunc.tuTengNumber = GlobalVarFunc.tuTengNumber + 1
+
     --添加ai
     tuteng:AddNewModifier(tuteng, nil, "modifier_cooldown_ai", nil)
     local ability = tuteng:AddAbility("ability_abyss_18")
     ability:SetLevel(1)
+
+
+    local time = 120
+    GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("spawn_tutengTime_think"), 
+    function()
+        if GameRules:IsGamePaused() then
+            return 0.1
+        end
+
+        if time > 0 then
+            time = time - 1
+            return 1
+        else
+            if tuteng ~= nil then
+                GlobalVarFunc.tuTengNumber = GlobalVarFunc.tuTengNumber - 1
+                if GlobalVarFunc.tuTengNumber < 0 then
+                    GlobalVarFunc.tuTengNumber = 0
+                end
+            end
+
+            UTIL_Remove(tuteng)
+            return nil
+        end
+    end, 0)
 end
 
 function MonsterNeutral:OnCreateNeutralBoss()
@@ -58,8 +123,11 @@ end
 
 function MonsterNeutral:OnKillMonsterNeutral(event)
     local killedUnit = EntIndexToHScript(event.entindex_killed)
-    local Vec = killedUnit:GetOrigin()
+
+    --击杀中立怪
     if killedUnit:GetUnitName() == "npc_dota_creature_zhongli_monster" then
+
+        local Vec = killedUnit:GetOrigin()
         GlobalVarFunc.neutralMosterNum = GlobalVarFunc.neutralMosterNum - 1
         
         Timer(1, function()
@@ -69,18 +137,18 @@ function MonsterNeutral:OnKillMonsterNeutral(event)
         end)
     end
 
+    --击杀图腾
     if killedUnit:GetUnitName() == "ice_totem_unit" then 
-        local position = killedUnit:GetOrigin()
-        self:OnCreateChanZi(position)
-    end
-end
 
-function MonsterNeutral:OnCreateChanZi(vector)
-    local position = vector
-    local newItem = CreateItem( "item_gold_spade_fragment", nil, nil )
-    local drop = CreateItemOnPositionSync( position, newItem )
-    local dropTarget = position 
-    newItem:LaunchLoot( false, 300, 0.75, dropTarget )
+        local position = killedUnit:GetOrigin()
+        GlobalVarFunc.tuTengNumber = GlobalVarFunc.tuTengNumber - 1
+
+        GlobalVarFunc:OnCreateChanzi(position,"item_gold_spade_fragment")
+
+        if GlobalVarFunc.isLianXuCreateTT then
+            MonsterNeutral:OnCreateTuTeng()
+        end
+    end
 end
 
 function MonsterNeutral:OnCreateMonster(Vec)

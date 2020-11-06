@@ -40,7 +40,7 @@ function CAddonTemplateGameMode:OnEntityKill(event)
         end    
 
         --铲子掉落
-        self:OnCreateChanZi(killedUnit)
+        self:OnCreatedChanZi(killedUnit)
     end
 
     if killedUnit:IsHero() then
@@ -252,24 +252,25 @@ function CAddonTemplateGameMode:OnBossCreatedSeriesItem()
 end
 
 --铲子掉落
-function CAddonTemplateGameMode:OnCreateChanZi(unit)
-    if (spawner_config.mosterWave > 10) and (GlobalVarFunc.game_type == 1001) then
+function CAddonTemplateGameMode:OnCreatedChanZi(unit)
+    if (spawner_config.mosterWave >= 5) and (GlobalVarFunc.game_type == 1001) then
         local position = unit:GetOrigin()
         local randNum = RandomInt(1,100)
         if unit:GetContext("boss") then
-            if randNum <= 10 then
-                local newItem = CreateItem( "item_gold_spade_fragment", nil, nil )
-                local drop = CreateItemOnPositionSync( position, newItem )
-                local dropTarget = position 
-                newItem:LaunchLoot( false, 300, 0.75, dropTarget )
+            if spawner_config.mosterWave >= 100 then
+                if randNum <= 20 then
+                    GlobalVarFunc:OnCreateChanzi(position,"item_gold_spade_fragment")
+                end
+            elseif spawner_config.mosterWave >= 10 then
+                if randNum <= 10 then
+                    GlobalVarFunc:OnCreateChanzi(position,"item_gold_spade_fragment")
+                end
             end
         else
             if randNum <= 1 then
-                local newItem = CreateItem( "item_silver_spade_fragment", nil, nil )
-                local drop = CreateItemOnPositionSync( position, newItem )
-                local dropTarget = position 
-                newItem:LaunchLoot( false, 300, 0.75, dropTarget )
+                GlobalVarFunc:OnCreateChanzi(position,"item_silver_spade_fragment")
             end
         end
     end
+
 end

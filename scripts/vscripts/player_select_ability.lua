@@ -404,6 +404,7 @@ function Player_Select_Ability:scavenging( args )
        		local woodAmmt = math.floor(( cost * fReward ) * 0.01)
 			Player_Data():AddPoint(PlayerID,woodAmmt)
         	PopupWoodGain(aHero, woodAmmt)
+        	addHeroRandomAttr(aHero)
        	end
        	GlobalVarFunc:OnGameSound("mutou_sound", PlayerID)
        	--UTIL_Remove(nItem)
@@ -427,6 +428,7 @@ function Player_Select_Ability:scavenging( args )
 			local goldAmmt = math.floor(( cost * fReward ) * 0.01)
 			PlayerResource:ModifyGold(PlayerID,goldAmmt,true,DOTA_ModifyGold_Unspecified)
 			PopupGoldGain(aHero, goldAmmt)
+			addHeroRandomAttr(aHero)
 		end
 		GlobalVarFunc:OnGameSound("jinbi_sound", PlayerID)
 		--UTIL_Remove(nItem)
@@ -450,15 +452,12 @@ function Player_Select_Ability:scavenging( args )
 			local goldAmmt = math.floor(( cost * fReward ) * 0.01)
 			PlayerResource:ModifyGold(PlayerID,goldAmmt,true,DOTA_ModifyGold_Unspecified)
 			PopupGoldGain(aHero, goldAmmt)
+
 		end
 		GlobalVarFunc:OnGameSound("jinbi_sound", PlayerID)
 		--UTIL_Remove(nItem)
 		nItem:RemoveSelf() 
     end
-	
-
-
-	
 end
 
 ----------------- 科学家/理财/属性 ------------------
