@@ -176,8 +176,8 @@ function MobSpawner:OnGameModeAbyss(now)
         MobSpawner:SpawnAbyssNextWave()
     end
     
-    --深渊野怪属性层级  30秒层级加1
-    GlobalVarFunc.abyss_monster_level =  math.floor(now/30) + 1
+    --深渊野怪属性层级  40秒层级加1
+    GlobalVarFunc.abyss_monster_level =  math.floor(now/40) + 1
     
 end
 
@@ -478,12 +478,13 @@ function MobSpawner:SpawnMonster()
         -- 创建单位 
         local mob = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
 
+        self:setMonsterBaseInformation(mob)
+
         if spawner_config.mosterWave>=8 then
             mob:AddAbility(ability)
         end
 
         GlobalVarFunc:_addMoveSpeedAbility(mob)
-        self:setMonsterBaseInformation(mob)
 
         spawner_config.monsterTable[tostring(mob:entindex())] = mob 
     
@@ -515,13 +516,13 @@ function MobSpawner:SpawnBoss()
     local position = GlobalVarFunc:IsCanFindPath(4000, 4500)
     local monster_name = bossname..spawner_config.mosterWave
     local boss = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+    boss:SetContext("boss", "1", 0)
+    self:setMonsterBaseInformation(boss)
     boss:AddAbility(ability1)
     if spawner_config.mosterWave>=12 then
         boss:AddAbility(ability2)
     end
-    boss:SetContext("boss", "1", 0)
     GlobalVarFunc:_addMoveSpeedAbility(boss)
-    self:setMonsterBaseInformation(boss)
 
     spawner_config.monsterTable[tostring(boss:entindex())] = boss    
     
@@ -569,11 +570,11 @@ function MobSpawner:SpawnMonsterEndless()
                 local monster_name = wave_info_waves.name..model
                 -- 创建单位 
                 local mob = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+                self:setMonsterBaseInformation(mob)
                 if spawner_config.mosterWave>=8 then
                     mob:AddAbility(ability)
                 end
                 GlobalVarFunc:_addMoveSpeedAbility(mob)
-                self:setMonsterBaseInformation(mob)
     
                 spawner_config.monsterTable[tostring(mob:entindex())] = mob 
         
@@ -617,6 +618,8 @@ function MobSpawner:SpawnBossEndless()
     local position = GlobalVarFunc:IsCanFindPath(2000, 3000)
     local boss_name = wave_info_waves.name..bossModel
     local boss = CreateUnitByNameInPool(boss_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+    boss:SetContext("boss", "1", 0)
+    self:setMonsterBaseInformation(boss)
     boss:AddAbility(ability1)
     if spawner_config.mosterWave>=12 then
         boss:AddAbility(ability2)
@@ -626,9 +629,7 @@ function MobSpawner:SpawnBossEndless()
         local Ability3= boss:AddAbility("monster_jianshang")
         Ability3:SetLevel(1)
     end
-    boss:SetContext("boss", "1", 0)
     GlobalVarFunc:_addMoveSpeedAbility(boss)
-    self:setMonsterBaseInformation(boss)
 
     GlobalVarFunc.endless_boss_isAlive = true
     
@@ -667,6 +668,7 @@ function MobSpawner:SpawnMonsterAbyss()
         local monster_name = wave_info_waves.name..model
         -- 创建单位 
         local mob = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+        self:setAbyssMonsterBaseInformation(mob)
 
         --随机分配野怪技能
         local ability = self:_addAbility()
@@ -674,8 +676,6 @@ function MobSpawner:SpawnMonsterAbyss()
 
         --减伤光环                     
         mob:AddNewModifier(mob, nil, "modifier_abyss_jianshang", nil)
-        
-        self:setAbyssMonsterBaseInformation(mob)
 
         spawner_config.monsterTable[tostring(mob:entindex())] = mob 
     
@@ -707,21 +707,14 @@ function MobSpawner:SpawnBossAbyss()
     local position = GlobalVarFunc:IsCanFindPath(1000, 2500)
     local bossModel = self:_addAbyssModel()
     local boss = CreateUnitByNameInPool(bossModel, position, true, nil, nil, DOTA_TEAM_BADGUYS)
-    boss:AddNewModifier(boss, nil, "modifier_cooldown_ai", nil)
-
-    local ability1 = self:_addAbyssAbility()
-    local newAbility1 = boss:AddAbility(ability1)
-    newAbility1:SetLevel(1)
-
-    local ability2 = self:_addAbyssAbility()
-    local newAbility2 = boss:AddAbility(ability2)
-    newAbility2:SetLevel(1)
-
-    --减伤光环
-    boss:AddNewModifier(boss, nil, "modifier_abyss_jianshang", nil)
 
     boss:SetContext("boss", "1", 0)
     self:setAbyssMonsterBaseInformation(boss)
+
+    --深渊boss技能
+    self:_addAbyssAbility(boss,1)
+    --减伤光环
+    boss:AddNewModifier(boss, nil, "modifier_abyss_jianshang", nil)
     
     spawner_config.monsterTable[tostring(boss:entindex())] = boss
 
@@ -796,14 +789,13 @@ function MobSpawner:OnWeeklySpawnMonsterEndless()
                 local monster_name = wave_info_waves.name..model
                 -- 创建单位 
                 local mob = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+                self:setMonsterBaseInformation(mob)
                 if spawner_config.mosterWave>=8 then
                     mob:AddAbility(ability)
                 end
-                
+
                 GlobalVarFunc:_addMoveSpeedAbility(mob)
                 GlobalVarFunc:OnWeeklyGameChange(mob)
-
-                self:setMonsterBaseInformation(mob)
     
                 spawner_config.monsterTable[tostring(mob:entindex())] = mob 
         
@@ -847,6 +839,9 @@ function MobSpawner:OnWeeklySpawnBossEndless()
     local position = GlobalVarFunc:IsCanFindPath(2000, 3000)
     local boss_name = wave_info_waves.name..bossModel
     local boss = CreateUnitByNameInPool(boss_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+    boss:SetContext("boss", "1", 0)
+    self:setMonsterBaseInformation(boss)
+
     boss:AddAbility(ability1)
     if spawner_config.mosterWave>=12 then
         boss:AddAbility(ability2)
@@ -857,11 +852,8 @@ function MobSpawner:OnWeeklySpawnBossEndless()
         Ability3:SetLevel(1)
     end
 
-    boss:SetContext("boss", "1", 0)
     GlobalVarFunc:_addMoveSpeedAbility(boss)
     GlobalVarFunc:OnWeeklyGameChange(boss)
-
-    self:setMonsterBaseInformation(boss)
 
     GlobalVarFunc.endless_boss_isAlive = true
     
@@ -879,6 +871,7 @@ function MobSpawner:OnAbyssSpawnMonster()
     local position = GlobalVarFunc:IsCanFindPath(2000, 3000)
     -- 创建单位 
     local mob = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+    self:setAbyssMonsterBaseInformation(mob)
 
     --随机分配野怪技能
     local ability = self:_addAbility()
@@ -886,8 +879,6 @@ function MobSpawner:OnAbyssSpawnMonster()
 
     --减伤光环
     mob:AddNewModifier(mob, nil, "modifier_abyss_jianshang", nil)
-
-    self:setAbyssMonsterBaseInformation(mob)
 
     spawner_config.monsterTable[tostring(mob:entindex())] = mob 
 end
@@ -916,6 +907,8 @@ function MobSpawner:OnSpawnMonster()
     -- 创建单位 
     local mob = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
 
+    self:setMonsterBaseInformation(mob)
+
     if spawner_config.mosterWave>=8 then
         mob:AddAbility(ability)
     end
@@ -925,7 +918,6 @@ function MobSpawner:OnSpawnMonster()
     end
 
     GlobalVarFunc:_addMoveSpeedAbility(mob)
-    self:setMonsterBaseInformation(mob)
 
     spawner_config.monsterTable[tostring(mob:entindex())] = mob 
 end
@@ -933,7 +925,7 @@ end
 --深渊怪的基本属性设置
 function MobSpawner:setAbyssMonsterBaseInformation(unit)
     local health = self:abyss_Health()
-    local healthRegen = self:abyss_Health()
+    local healthRegen = self:abyss_HealthRegen()
     local attack = self:abyss_AttackDamage()
     local armor = self:abyss_Armor()
     local magicalResistance = self:abyss_MagicalResistance()
@@ -1006,14 +998,13 @@ end
 
 --深渊野怪攻击力
 function MobSpawner:abyss_AttackDamage()
-    local attack = (GlobalVarFunc.abyss_monster_level * GlobalVarFunc.abyss_monster_level * 50) * (GlobalVarFunc.duliuLevel*0.03 + 1) * GlobalVarFunc.MonsterViolent
+    local attack = (GlobalVarFunc.abyss_monster_level * GlobalVarFunc.abyss_monster_level * 20) * (GlobalVarFunc.duliuLevel*0.03 + 1) * GlobalVarFunc.MonsterViolent
     return attack
 end
 
 function MobSpawner:abyss_Health() 
     local health = GlobalVarFunc.abyss_monster_level * GlobalVarFunc.abyss_monster_level * GlobalVarFunc.abyss_monster_level * 10
-    --return health
-    return 1000000
+    return health
 end
 
 function MobSpawner:abyss_HealthRegen() 
@@ -1160,10 +1151,24 @@ function MobSpawner:_addAbility()
 end
 
 --随机分配深渊boss技能
-function MobSpawner:_addAbyssAbility()
-    local random = RandomInt(1,#abyss_ability)
-    local abyssAbilityName =  abyss_ability[random]
-    return abyssAbilityName
+function MobSpawner:_addAbyssAbility(unit, index)
+    --添加ai
+    unit:AddNewModifier(unit, nil, "modifier_cooldown_ai", nil)
+
+    --添加技能
+    local newAbyssAbilityTable = {}
+    for i=1,#abyss_ability do
+        newAbyssAbilityTable[i] = abyss_ability[i]
+    end
+
+    for i=1,index do
+        local randomNum = RandomInt(1, #newAbyssAbilityTable)
+        local abilityName = newAbyssAbilityTable[randomNum]
+        table.remove( newAbyssAbilityTable, randomNum )
+
+        local newAbility = unit:AddAbility(abilityName)
+        newAbility:SetLevel(1)
+    end
 end
 
 --随机分配深渊boss模型

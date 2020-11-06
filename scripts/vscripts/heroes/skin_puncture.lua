@@ -16,7 +16,6 @@ return {
 		attack_projectile = "particles/econ/items/windrunner/windranger_arcana/windranger_arcana_base_attack.vpcf",
 		model_scale = 1,
 		wearables = {
-			
 			{ID = "12326", style = "0",model = "models/items/windrunner/windranger_ti8_immortal_shoulders/windranger_ti8_immortal_shoulders.vmdl", 
 				particle_systems = {
 					{   

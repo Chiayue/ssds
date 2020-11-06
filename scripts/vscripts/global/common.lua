@@ -144,3 +144,58 @@ function try1(block)
 		return errors
 	end
 end
+
+--------------- 铲子事件 ------------
+function RunSpadeEvent(hCaster,sSpadeName,hParam)
+	-- print(sEventName,"/",nAmount)
+	-- body
+	local nAmount = hParam.amount
+	local sEventName = hParam.event
+	local gameEvent = {}
+	local nPlayerID = hCaster:GetOwner():GetPlayerID()
+	local hAllHero = HeroList:GetAllHeroes()
+	if sEventName == "add_gold" then
+	    for k,v in pairs(hAllHero) do
+	    	local hPlayer = PlayerResource:GetPlayer(v:GetPlayerID())
+	    	v:ModifyGold(nAmount, false, 0)
+	    	SendOverheadEventMessage( hPlayer, OVERHEAD_ALERT_GOLD, v, nAmount, nil )
+	    end
+	elseif sEventName == "add_str" or sEventName == "add_str2" then
+		for k,v in pairs(hAllHero) do
+			Player_Data:AddBasebonus(v,DOTA_ATTRIBUTE_STRENGTH,nAmount)
+		end
+	elseif sEventName == "add_agi" or sEventName == "add_agi2"then
+		for k,v in pairs(hAllHero) do
+			Player_Data:AddBasebonus(v,DOTA_ATTRIBUTE_AGILITY,nAmount)
+		end
+	elseif sEventName == "add_int" or sEventName == "add_int2" then
+		for k,v in pairs(hAllHero) do
+			Player_Data:AddBasebonus(v,DOTA_ATTRIBUTE_INTELLECT,nAmount)
+		end
+	elseif sEventName == "level_up" then
+		for k,v in pairs(hAllHero) do
+			for n=1,nAmount do v:HeroLevelUp(true) end
+		end
+	elseif sEventName == "add_monster_ms" then
+		game_enum.nMonsterMoveBonus = game_enum.nMonsterMoveBonus + nAmount
+		CustomNetTables:SetTableValue( "common", "monster_move_bonus",{ move_bonus = game_enum.nMonsterMoveBonus} )
+	elseif sEventName == "add_wood" then
+		for P = 0 , MAX_PLAYER - 1 do
+			Player_Data:AddPoint(P ,nAmount)
+		end
+	elseif sEventName == "add_item" then
+		local sItemName = hParam.name
+		gameEvent["ability_name"] = sItemName
+		hCaster:AddItemByName(sItemName)
+	elseif sEventName == "add_serieitem" then
+		for k,hHero in pairs(hAllHero) do
+			SeriseSystem:CreateSeriesItem(hHero,4,1,3)
+		end
+	end
+	gameEvent[ "player_id" ] = nPlayerID
+	gameEvent[ "teamnumber" ] = -1
+	gameEvent[ "int_value" ] = nAmount
+	gameEvent[ "message" ] = "#DOTA_HUD_SPADE_"..sSpadeName.."_"..sEventName
+	FireGameEvent( "dota_combat_event_message", gameEvent )
+	if hParam.screen_arcane == true then CustomGameEventManager:Send_ServerToAllClients("screen_arcane",{}) end
+end

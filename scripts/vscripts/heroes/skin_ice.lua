@@ -30,6 +30,6 @@ return {
 		attack_projectile = "particles/units/heroes/hero_crystalmaiden/maiden_base_attack.vpcf",
 		model_scale = 1,
 		wearables = {},
-
+		
 	},
 }

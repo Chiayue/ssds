@@ -7,6 +7,7 @@ local randomPassiveTable = {
 	"ability_flagstone_bounty_hunter",
 	"ability_flagstone_festering",
 	"ability_flagstone_sunderarmor_aura",
+	"ability_flagstone_festering_aura",
 }
 
 if item_study_passive == nil then item_study_passive = {} end

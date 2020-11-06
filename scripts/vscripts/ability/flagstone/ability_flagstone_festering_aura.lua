@@ -52,46 +52,23 @@ end
 --------------------------------------------------------------------------------
 
 function modifier_ability_flagstone_festering_aura:GetAuraRadius()
-	return self.aura_radius
+	return 1200
 end
 
---------------------------------------------------------------------------------
 
-function modifier_ability_flagstone_festering_aura:OnCreated( kv )
-	self.aura_radius = 1200
-	if IsServer() and self:GetParent() ~= self:GetCaster() then
-		self:StartIntervalThink( 0.5 )
-	end
-end
-
---------------------------------------------------------------------------------
-
-function modifier_ability_flagstone_festering_aura:OnRefresh( kv )
-	self.aura_radius = 1200
-end
-
---------------------------------------------------------------------------------
-
-function modifier_ability_flagstone_festering_aura:OnIntervalThink()
-	if self:GetCaster() ~= self:GetParent() and self:GetCaster():IsAlive() then
-		self:Destroy()
-	end
-end
 
 if modifier_ability_flagstone_festering_aura_effect == nil then
 	modifier_ability_flagstone_festering_aura_effect ={}
 end
 
 function modifier_ability_flagstone_festering_aura_effect:OnCreated( kv )
-	-- local nLevel = self:GetAbility():GetLevel() 
-	-- self.bonus = nFestering[nLevel]
+	self.bonus = self:GetAbility():GetSpecialValueFor( "bonus" )
 end
 
 --------------------------------------------------------------------------------
 
 function modifier_ability_flagstone_festering_aura_effect:OnRefresh( kv )
-	-- local nLevel = self:GetAbility():GetLevel() 
-	-- self.bonus = nFestering[nLevel]
+	self.bonus = self:GetAbility():GetSpecialValueFor( "bonus" )
 end
 
 function modifier_ability_flagstone_festering_aura_effect:IsDebuff()
@@ -99,7 +76,7 @@ function modifier_ability_flagstone_festering_aura_effect:IsDebuff()
 end
 
 function modifier_ability_flagstone_festering_aura_effect:IsHidden()
-	return true
+	return false
 end
 
 function modifier_ability_flagstone_festering_aura_effect:DeclareFunctions()
@@ -110,6 +87,5 @@ function modifier_ability_flagstone_festering_aura_effect:DeclareFunctions()
 end
 
 function modifier_ability_flagstone_festering_aura_effect:GetModifierMagicalResistanceBonus( params )
-	--local nLevel = self:GetAbility():GetLevel() or 1
-	return -40
+	return -self.bonus
 end

@@ -6,6 +6,15 @@
     "CHAPTER30"   "chapter30"
     "CHAPTER40"   "chapter40"
     "CHAPTER50"   "chapter50"
+    "HOOK"         "hook"
+    "PROLOGUE"     "prologue"
+    "ENDLESS"      "endless"
+    "AUTISTIC"     "autistic"
+    "ABYSS"        "abyss"
+
+    "LEVEL_20_UNLOCK"     "level 20 unlock"
+    "LEVEL_30_UNLOCK"     "level 30 unlock"
+    "LEVEL_40_UNLOCK"     "level 40 unlock"
 
     "GOLD_NOT_ENOUGH"    "gold not enough"
     "GOLD_GAME_FAILURE"  "gold coin game failure"

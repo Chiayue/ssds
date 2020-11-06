@@ -66,7 +66,6 @@ local hRewardTable = {
 	[188898517] = { 
 		["npc_dota_hero_troll_warlord"] = {
 			["skin_id"] = 6,
-			["model"] = "models/npc/xiatiya/xiatiya.vmdl",
 			["modifier"] = "modifier_customized_reward_xiatiya",
 			["model_scale"] = 1.0,
 		},
@@ -126,7 +125,32 @@ local hRewardTable = {
 				["particles/diy_particles/cirno_ambient.vpcf"] = PATTACH_OVERHEAD_FOLLOW
 			},
 		}
-	}
+	},
+	[89158652] = {
+		["npc_dota_hero_troll_warlord"] = {
+			["skin_id"] = 6,
+			["model"] = "models/npc/xiatiya/xiatiya.vmdl",
+			["modifier"] = "modifier_customized_reward_xiatiya",
+			["model_scale"] = 1.0,
+		},
+	},
+	[345257636] = {
+		["npc_dota_hero_troll_warlord"] = {
+			["skin_id"] = 6,
+			["model"] = "models/npc/xiatiya/xiatiya.vmdl",
+			["modifier"] = "modifier_customized_reward_xiatiya",
+			["model_scale"] = 1.0,
+		},
+	},
+	[190812781] = { 
+		["npc_dota_hero_troll_warlord"] = {
+			["skin_id"] = 5,
+			["model_scale"] = 1.4,
+			["particle"] = {
+				["particles/diy_particles/shinai_ambient.vpcf"] = PATTACH_ABSORIGIN_FOLLOW
+			},
+		}
+	},
 }
 
 
@@ -251,13 +275,14 @@ if modifier_customized_reward_attr_range == nil then modifier_customized_reward_
 function modifier_customized_reward_attr_range:GetModifierAttackRangeBonus() return self:GetStackCount() end
 
 
---------------------------- xiatiya --------
+--------------------------- xiatiya START ----------------------------
 LinkLuaModifier("modifier_customized_reward_xiatiya_25", "customized_reward", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_customized_reward_xiatiya_50", "customized_reward", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_customized_reward_xiatiya_75", "customized_reward", LUA_MODIFIER_MOTION_NONE)
 if modifier_customized_reward_xiatiya == nil then modifier_customized_reward_xiatiya = {} end
 function modifier_customized_reward_xiatiya:IsHidden()return true end
-
+function modifier_customized_reward_xiatiya:IsPurgable() return false end
+function modifier_customized_reward_xiatiya:RemoveOnDeath() return false end
 function modifier_customized_reward_xiatiya:OnCreated()
 	if not IsServer() then return end
 	self.changeCd = 1
@@ -334,3 +359,4 @@ function modifier_customized_reward_xiatiya_75:OnDestroy()
 	if not IsServer() then return end
 	ParticleManager:DestroyParticle(self.nFXIndex,true)
 end
+--------------------------- xiatiya END ----------------------------

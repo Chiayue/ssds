@@ -32,6 +32,7 @@ return {
 	{	-- 4 弓魂
 		model = "models/npc/spirit_archer/spirit_archer.vmdl",
 		attack_projectile = "particles/units/heroes/hero_windrunner/windrunner_base_attack.vpcf",
+		model_scale = 0.65,
 		wearables = {},
 	},
 	{	-- 5 诗乃
@@ -43,5 +44,6 @@ return {
 		model = "models/npc/xiatiya/xiatiya.vmdl",
 		attack_projectile = "particles/diy_particles/xiatiya_attack.vpcf",
 		wearables = {},
+		modifier = "modifier_customized_reward_xiatiya",
 	},
 }

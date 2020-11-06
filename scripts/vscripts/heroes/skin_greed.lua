@@ -16,7 +16,6 @@ return {
 	{	-- 2
 		model = "models/heroes/invoker/invoker.vmdl",
 		attack_projectile = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf",
-		--attack_projectile = "particles/econ/items/templar_assassin/templar_assassin_focal/ta_focal_base_attack.vpcf",
 		model_scale = 1,
 		wearables = {
 			{model = "models/items/invoker/dark_magic_bracer.vmdl", particle_systems = {}},
@@ -25,6 +24,12 @@ return {
 			{model = "models/heroes/invoker/invoker_head.vmdl", particle_systems = {}},
 			{model = "models/items/invoker/dark_magic_shoulder.vmdl", particle_systems = {}},
 		},
-
+	},
+	{	-- 3 东皇太乙
+		model = "models/npc/tyzr/tyzr.vmdl",
+		attack_projectile = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf",
+		model_scale = 1,
+		wearables = {
+		},
 	},
 }

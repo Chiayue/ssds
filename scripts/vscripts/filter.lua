@@ -22,6 +22,19 @@ function Filter:DamageFilter( params )
 	if hAttacker == nil then return true end
 	local team = hAttacker:GetTeam()
 	if team == 2 then
+		--- 判断面向
+		local nBossBulwark = hTarget:GetModifierStackCount("modifier_ability_boss_bulwark", hTarget )
+		if nBossBulwark > 0 then
+			local forwardVector			= hTarget:GetForwardVector()
+			local forwardAngle			= math.deg(math.atan2(forwardVector.x, forwardVector.y))
+			local reverseEnemyVector	= (hTarget:GetAbsOrigin() - hAttacker:GetAbsOrigin()):Normalized()
+			local reverseEnemyAngle		= math.deg(math.atan2(reverseEnemyVector.x, reverseEnemyVector.y))
+			local difference = math.abs(forwardAngle - reverseEnemyAngle)
+			if difference >= 80 then
+				params.damage = params.damage * (100 - nBossBulwark) * 0.01
+			end
+		end
+
 		local damageType =  damagetype_const -- 1物理 2魔法 4真实
 		local nPlayerID = hAttacker:GetPlayerID()
 		local iDamageType = params.damagetype_const

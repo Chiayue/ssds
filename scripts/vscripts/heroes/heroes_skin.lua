@@ -51,7 +51,7 @@ function HeroesSkin:Init(hHero)
 	if hHero:FindModifierByName("modifier_wearable_hider_while_model_changes") == nil then
 		local sHeroName = hHero:GetUnitName()
 		hHero:AddNewModifier(hHero, nil, "modifier_wearable_hider_while_model_changes", {}).sOriginalModel = hSkinData[sHeroName][1].model
-		hHero:SetModel(hSkinData[sHeroName][1].model)
+		if hSkinData[sHeroName][1].model ~= nil then hHero:SetModel(hSkinData[sHeroName][1].model) end
 		HeroesSkin:ChangeSkin(hHero,1)
 	end
 end
