@@ -55,6 +55,7 @@ end
  
 -- e.g. when last-hitting a creep
 function PopupGoldGain(target, amount)
+
     if amount < 1 then return end
     PopupNumbers(target, "gold", Vector(255, 200, 100), 1.0, amount, POPUP_SYMBOL_PRE_PLUS, nil)
 end
@@ -86,8 +87,10 @@ function PopupNumbers(target, pfx, color, lifetime, number, presymbol, postsymbo
     ParticleManager:SetParticleControl(pidx, 1, Vector(tonumber(presymbol), tonumber(number), tonumber(postsymbol)))
     ParticleManager:SetParticleControl(pidx, 2, Vector(lifetime, digits, 20))
     ParticleManager:SetParticleControl(pidx, 3, color)
+    ParticleManager:ReleaseParticleIndex(pidx)
     GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("destroyPop"),
         function()
+            
             ParticleManager:DestroyParticle(pidx,true)
         end,1)
 end

@@ -110,15 +110,22 @@ function modifier_archon_passive_greed:OnAttackLanded( params )
 
 	EmitSoundOn( "Hero_EarthShaker.Fissure", hTarget )
 	-- 范围伤害   
-	local enemies = FindUnitsInRadius(
+	-- local enemies = FindUnitsInRadius(
+	-- 	self:GetCaster():GetTeamNumber(), 
+	-- 	hTarget:GetOrigin(), 
+	-- 	hTarget, 
+	-- 	aoe, 
+	-- 	DOTA_UNIT_TARGET_TEAM_ENEMY, 
+	-- 	DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+	-- 	0, 0, false 
+	-- )
+	local enemies = GetAOEMostTargetsSpellTarget(
 		self:GetCaster():GetTeamNumber(), 
 		hTarget:GetOrigin(), 
 		hTarget, 
 		aoe, 
 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-		0, 0, false 
-	)
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC )
 
 	local nPlayerID = hCaster:GetPlayerID()
 	local nGreedLevel = 0

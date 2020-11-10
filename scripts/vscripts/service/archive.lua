@@ -146,7 +146,7 @@ function Archive:SavePlayerProfile(hPlayerID)
 		local rows = self:GetData(nPlayerID)
 		hRows[nSteamID] = rows
 	end
-	
+	-- DeepPrintTable(hRows)
 	Service:HTTPRequest("POST", ACTION_ARCHIVE_SAVE_V2, { rows = hRows }, function(iStatusCode, sBody)
 		if iStatusCode == 200 then
 			local hBody = json.decode(sBody)

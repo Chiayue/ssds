@@ -75,26 +75,22 @@ function modifier_archon_passive_natural:OnAttackLanded( params )
 	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hTarget )
 	ParticleManager:SetParticleControl(nFXIndex, 0, Vector(500, 500, 500))
 	ParticleManager:ReleaseParticleIndex(nFXIndex)
-	-- 新加特效
-	local EffectName_1 = "particles/econ/items/monkey_king/arcana/death/monkey_king_spring_arcana_death.vpcf"
-	local nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hTarget )
-	ParticleManager:SetParticleControl(nFXIndex_1, 0, Vector(500, 500, 500))
-	ParticleManager:ReleaseParticleIndex(nFXIndex_1)
-	-- local EffectName_2 = "particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf"
-	-- local nFXIndex_2 = ParticleManager:CreateParticle( EffectName_2, PATTACH_ABSORIGIN_FOLLOW, hTarget )
-	-- ParticleManager:SetParticleControl(nFXIndex_2, 0, Vector(500, 500, 500))
+	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyNatural"),
+    function()
+        ParticleManager:DestroyParticle(nFXIndex, true)
+    end,1)
 
 	-- 范围伤害
 	EmitSoundOn( "Hero_Venomancer.PoisonNovaImpact", hTarget )
 	-- print(hTarget:GetModifierStackCount( sModifierName, self:GetAbility() )) 
-	local enemies = FindUnitsInRadius(
+	local enemies = FindUnitsInRadius2(
 		self:GetCaster():GetTeamNumber(), 
 		hTarget:GetOrigin(), 
 		hTarget, 
 		aoe, 
 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-		0, 0, false 
+		0, 1, false 
 	)
 	
 	for _,enemy in pairs(enemies) do

@@ -46,6 +46,7 @@ function archon_deputy_boxer:OnSpellStart()
 				"particles/units/heroes/hero_faceless_void/faceless_void_time_lock_bash.vpcf", 
 				PATTACH_CUSTOMORIGIN, 
 				nil)
+			print( particle )
 			ParticleManager:SetParticleControl(particle, 0, hCaster:GetAbsOrigin() )
 			ParticleManager:SetParticleControl(particle, 1, hCaster:GetAbsOrigin() )
 			ParticleManager:SetParticleControlEnt(particle, 2, hCaster, PATTACH_CUSTOMORIGIN, "attach_hitloc", hCaster:GetAbsOrigin(), true)

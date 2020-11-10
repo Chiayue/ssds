@@ -91,7 +91,7 @@ function modifier_archon_passive_puncture:CreateLinear(vPos)
 		Source = self:GetCaster(),
 		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
 		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
-		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
 	}
 	ProjectileManager:CreateLinearProjectile( info )
 end

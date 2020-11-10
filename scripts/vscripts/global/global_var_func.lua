@@ -130,7 +130,7 @@ GlobalVarFunc.InvestmentRewardCoefficient = {1.00,1.00,1.00,1.00,1.00,1.00}
 GlobalVarFunc.arrowSoulRewardCoefficient = {1.00,1.00,1.00,1.00,1.00,1.00}
 --玩家宝物池子
 GlobalVarFunc.player_treasure_list = {}
---单个玩家普通章节死亡游戏不结束，多1条命
+--单个玩家死亡游戏不结束，多1条命
 GlobalVarFunc.singlePlayerLife = 1
 --萝莉单位记录
 GlobalVarFunc.Luoli = nil

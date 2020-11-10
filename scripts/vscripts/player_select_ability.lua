@@ -222,17 +222,13 @@ function Player_Select_Ability:Talent_Selected(args)
 	    	-- print("IsInToolsMode")
 	    	if IsInToolsMode() then 
 	    		hNewHero:AddItemByName("item_tools_mode") 
-	    		local chanzi = hNewHero:AddItemByName("item_silver_spade_fragment") 
-	    		chanzi:SetCurrentCharges(99)
-	    		local chanzi2 = hNewHero:AddItemByName("item_gold_spade_fragment") 
-	    		chanzi2:SetCurrentCharges(99)
+	    		hNewHero:AddItemByName("item_tools_mode") 
+	    		hNewHero:AddItemByName("item_tools_mode") 
 	    	end
 			local baowu2 = hNewHero:AddItemByName("item_baoWu_book")
 			baowu2:SetCurrentCharges(20)
 			local baodian = hNewHero:AddItemByName("item_talent_upgrade")
 			baodian:SetCurrentCharges(6)
-			-- local baowu = hNewHero:AddItemByName("item_study_passive_lv3")
-			-- baowu:SetCurrentCharges(5)
 			PlayerResource:ModifyGold(nPlayerID,99999,true,DOTA_ModifyGold_Unspecified)
 		  	if GlobalVarFunc.game_type == -2 then 
 		  		Player_Data():AddPoint(nPlayerID,1000000)
@@ -240,7 +236,6 @@ function Player_Select_Ability:Talent_Selected(args)
 	    end
 	   	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"hero_selected_over",{ hero = sAbilityName})
 	   	-- 更新补偿
-	   	local bExp = Store:CheckExpCard(nPlayerID)
 	   	Timer(1,function()
 	   		ArrowSoulCompensate:CheckReward( hNewHero )
 	   	end)

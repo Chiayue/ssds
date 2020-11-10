@@ -106,7 +106,10 @@ function modifier_archon_passive_ice:OnAttackLanded( params )
 	end
 	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hTarget )
 	ParticleManager:ReleaseParticleIndex(nFXIndex)
-	
+	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyIce"),
+    function()
+        ParticleManager:DestroyParticle(nFXIndex, true)
+    end,1)
 	if nLevel >= ABILITY_AWAKEN_2 then
 		abil_damage = abil_damage + ( self:GetCaster():GetIntellect() * 6 )
 	elseif nLevel >= ABILITY_AWAKEN_1 then
@@ -114,14 +117,14 @@ function modifier_archon_passive_ice:OnAttackLanded( params )
 	end
 	EmitSoundOn( "Hero_Crystal.CrystalNova", hTarget )
 	-- 范围伤害
-	local enemies = FindUnitsInRadius(
+	local enemies = FindUnitsInRadius2(
 		self:GetCaster():GetTeamNumber(), 
 		hTarget:GetOrigin(), 
 		hTarget, 
 		aoe, 
 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-		0, 0, true 
+		0, 1, true 
 	)
 	for _,enemy in pairs(enemies) do
 		if enemy ~= nil then

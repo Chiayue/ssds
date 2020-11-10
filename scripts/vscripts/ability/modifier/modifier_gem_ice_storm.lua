@@ -51,7 +51,6 @@ function modifier_gem_Ice_storm:DeclareFunctions( ... )
 end
 
 function modifier_gem_Ice_storm:OnAttackLanded( params )
-	--if not IsServer() then return end
 	if params.attacker ~= self:GetParent() then
 		return 0
 	end
@@ -73,15 +72,24 @@ function modifier_gem_Ice_storm:OnAttackLanded( params )
 		return 0
 	end
 
-	-- 范围搜索
-	local enemies = FindUnitsInRadius(
+	-- 范围搜索 
+	-- local enemies = FindUnitsInRadius(
+	-- 	hCaster:GetTeamNumber(), 
+	-- 	hTarget:GetOrigin(), 
+	-- 	hTarget, 
+	-- 	radius, 
+	-- 	DOTA_UNIT_TARGET_TEAM_ENEMY, 
+	-- 	DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+	-- 	0, 0, false 
+	-- )
+
+	local enemies = GetAOEMostTargetsSpellTarget(
 		hCaster:GetTeamNumber(), 
 		hTarget:GetOrigin(), 
 		hTarget, 
 		radius, 
 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-		0, 0, false 
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 	)
 	-- 一开始就造成500范围内的敌人冰冻 
 	for _,enemy in pairs(enemies) do
@@ -144,7 +152,6 @@ function modifier_archon_passive_Ice_storm_aureole:GetModifierAura()
 end
 
 function modifier_archon_passive_Ice_storm_aureole:GetAuraRadius()
-	--if not IsServer() then return end
 	return self.radius
 end
 
@@ -158,27 +165,25 @@ end
 
 function modifier_archon_passive_Ice_storm_aureole:OnCreated( params )
 ---------------------------------------------- 创建效果 ---------------------------------------------------
-	--if not IsServer() then return end
-	local hCaster = self:GetCaster()
-	local hParent = self:GetParent()
-	self.radius = 500
+	if IsServer() then 
+		local hCaster = self:GetCaster()
+		local hParent = self:GetParent()
+		self.radius = 500
 
-	if not hParent.nFXIndex then
-		local EffectName = "particles/econ/items/winter_wyvern/winter_wyvern_ti7/wyvern_cold_embrace_ti7_2buff.vpcf" -- 冰川风暴特效
-		hParent.nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_WORLDORIGIN, hParent)
-		ParticleManager:SetParticleControl( hParent.nFXIndex, 0, hParent:GetAbsOrigin())
-		ParticleManager:SetParticleControl( hParent.nFXIndex, 3, Vector(self.radius, 1, 1))
+		if not hParent.nFXIndex then
+			local EffectName = "particles/econ/items/winter_wyvern/winter_wyvern_ti7/wyvern_cold_embrace_ti7_2buff.vpcf" -- 冰川风暴特效
+			hParent.nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_WORLDORIGIN, hParent)
+			ParticleManager:SetParticleControl( hParent.nFXIndex, 0, hParent:GetAbsOrigin())
+			ParticleManager:SetParticleControl( hParent.nFXIndex, 3, Vector(self.radius, 1, 1))
+		end
 	end
-----------------------------------------------------------------------------------------------------------
 end
 
 function modifier_archon_passive_Ice_storm_aureole:OnRefresh(params)
-	--if not IsServer() then return end
 	self.radius = 500
 end
 
 function modifier_archon_passive_Ice_storm_aureole:OnDestroy(params)
-	--if not IsServer() then return end
 	local hParent = self:GetParent()
 	if hParent.nFXIndex then 
 		ParticleManager:DestroyParticle( hParent.nFXIndex, false )
@@ -208,32 +213,38 @@ function modifier_archon_passive_Ice_storm_damge:RemoveOnDeath()
 end
 
 function modifier_archon_passive_Ice_storm_damge:OnCreated(params)
-	--if not IsServer() then return end
-	local hParent = self:GetParent()
-	local hCaster = self:GetCaster()
-	--self.speed_cut = 100
-	self.radius = 500
+	if IsServer() then 
+		local hParent = self:GetParent()
+		local hCaster = self:GetCaster()
+		self.radius = 500
 
-	self:StartIntervalThink(0.5)
+		self:StartIntervalThink(0.5)
+	end
 end
 
 function modifier_archon_passive_Ice_storm_damge:OnIntervalThink( params )
-	
-	local hParent = self:GetParent()
-	local hCaster = self:GetCaster()
-	local hAbility = self:GetAbility()
-
 	if IsServer() then
+		local hParent = self:GetParent()
+		local hCaster = self:GetCaster()
+		local hAbility = self:GetAbility()
 		local duration = 5
 		-- 范围寻找
-		local enemies = FindUnitsInRadius(
+		-- local enemies = FindUnitsInRadius(
+		-- 	hCaster:GetTeamNumber(), 
+		-- 	hParent:GetOrigin(), 
+		-- 	hParent, 
+		-- 	self.radius, 
+		-- 	DOTA_UNIT_TARGET_TEAM_ENEMY, 
+		-- 	DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+		-- 	0, 0, false 
+		-- )
+		local enemies = GetAOEMostTargetsSpellTarget(
 			hCaster:GetTeamNumber(), 
 			hParent:GetOrigin(), 
 			hParent, 
 			self.radius, 
 			DOTA_UNIT_TARGET_TEAM_ENEMY, 
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-			0, 0, false 
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 		)
 
 		for _,enemy in pairs(enemies) do
@@ -253,21 +264,17 @@ function modifier_archon_passive_Ice_storm_damge:OnIntervalThink( params )
 end
 
 function modifier_archon_passive_Ice_storm_damge:OnRefresh( ... )
-	--if not IsServer() then return end
 	self.radius = 500
-	--self.speed_cut = 100
 end
 
 function modifier_archon_passive_Ice_storm_damge:DeclareFunctions( ... )
 	return 
 		{
-			--MODIFIER_PROPERTY_OVERRIDE_ANIMATION, -- 动画
 			MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT, -- 移动速度
 		}
 end
 
 function modifier_archon_passive_Ice_storm_damge:GetModifierMoveSpeedBonus_Constant( ... )
-	--if not IsServer() then return end
 	return -100
 end
 
@@ -312,10 +319,6 @@ function modifier_archon_passive_Ice_storm_frozen_debuff:DeclareFunctions( ... )
 		}
 end
 
--- function modifier_archon_passive_Ice_storm_frozen_debuff:GetEffectName()
--- 	return "particles/heroes/cirno/ability_cirno_04_buff.vpcf" -- 冰冻特效
--- end
-
 function modifier_archon_passive_Ice_storm_frozen_debuff:GetOverrideAnimation( ... )
 	return ACT_DOTA_DISABLED -- 伤残动画
 end
@@ -346,16 +349,12 @@ function modifier_archon_passive_Ice_storm_continue_damge:RemoveOnDeath()
 end
 
 function modifier_archon_passive_Ice_storm_continue_damge:OnCreated(params)
-	--if not IsServer() then return end
-	local hParent = self:GetParent()
-	local hCaster = self:GetCaster()
-	--self.timer_attack_multiple = 3
-	
-	-- local EffectName = "particles/units/heroes/hero_invoker/invoker_ice_wall_debuff_frost.vpcf" -- 冰气特效
-	-- local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hParent)
-	-- self:AddParticle(nFXIndex, false, false, -1, false, false)
+	if IsServer() then 
+		local hParent = self:GetParent()
+		local hCaster = self:GetCaster()
 
-	self:StartIntervalThink(1)
+		self:StartIntervalThink(1)
+	end
 end
 
 function modifier_archon_passive_Ice_storm_continue_damge:OnIntervalThink( params )
@@ -374,8 +373,3 @@ function modifier_archon_passive_Ice_storm_continue_damge:OnIntervalThink( param
 
 	end
 end
-
--- function modifier_archon_passive_Ice_storm_continue_damge:OnRefresh( ... )
--- 	--if not IsServer() then return end
--- 	self.timer_attack_multiple = 3
--- end

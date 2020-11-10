@@ -98,6 +98,10 @@ function modifier_archon_passive_bank:HitTarget( hOrigin,hTarget)
 
 	table.insert( self:GetAbility().hTargetsHit, hTarget )
 	ParticleManager:ReleaseParticleIndex(lightningBolt)
+	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyBank"),
+    function()
+        ParticleManager:DestroyParticle(lightningBolt, true)
+    end,1)
 end
 
 
@@ -132,7 +136,7 @@ function modifier_archon_passive_bank_thinker:OnIntervalThink()
 			DOTA_UNIT_TARGET_TEAM_ENEMY, 
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, 
 			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 
-			0, 
+			1, 
 			false 
 		)
 		local hClosestTarget = nil
@@ -141,9 +145,7 @@ function modifier_archon_passive_bank_thinker:OnIntervalThink()
 		if #enemies > 0 then
 			for _,enemy in pairs(enemies) do
 				if enemy ~= nil then
-
 					local bIsHit = false
-
 					if self:GetAbility().hTargetsHit ~= nil then
 						for _,hHitEnemy in ipairs(self:GetAbility().hTargetsHit) do
 							if enemy == hHitEnemy then
@@ -207,4 +209,8 @@ function modifier_archon_passive_bank_thinker:HitTarget( hOrigin,hTarget)
 		{ duration = 1} 
 	)
 	ParticleManager:ReleaseParticleIndex(lightningBolt)
+	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyBank"),
+    function()
+        ParticleManager:DestroyParticle(lightningBolt, true)
+    end,1)
 end

@@ -139,9 +139,9 @@ end
 
 function game_playerinfo:OnRewardActivityCoin(nPlayerID)
     if GlobalVarFunc.MonsterWave >= 100 then
-        local activityCoin = (math.floor(GlobalVarFunc.MonsterWave / 100)) * 10
-        if activityCoin > 30 then 
-            activityCoin = 30
+        local activityCoin = (math.floor(GlobalVarFunc.MonsterWave / 100)) * 15
+        if activityCoin > 45 then 
+            activityCoin = 45
         end
         local tip = "每周自闭模式奖励"..activityCoin.."活动币"
         Store:AddCustomGoodsValue(nPlayerID,"activity_coin",activityCoin,tip,true)

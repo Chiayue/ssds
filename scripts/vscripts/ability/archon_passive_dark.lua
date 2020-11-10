@@ -2,6 +2,8 @@ LinkLuaModifier( "modifier_archon_passive_dark", "ability/archon_passive_dark.lu
 LinkLuaModifier( "modifier_archon_passive_dark_debuff", "ability/archon_passive_dark.lua",LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_archon_passive_dark_debuff2", "ability/archon_passive_dark.lua",LUA_MODIFIER_MOTION_NONE )
 -------------------------------------------------
+local nDarkFXIndex = nil
+
 --Abilities
 if archon_passive_dark == nil then
 	archon_passive_dark = class({})
@@ -58,31 +60,28 @@ function modifier_archon_passive_dark:OnAttackLanded( params )
 	if self:GetCaster():GetModelName() == "models/npc/flandre/flandre.vmdl" then
 		EffectName = "particles/diy_particles/flandre_diy_skill.vpcf"
 	end
-	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hTarget)
-	-- ParticleManager:SetParticleControl(nFXIndex, 0, Vector(500, 500, 500))
-	-- ParticleManager:SetParticleControl(nFXIndex, 1, Vector(400, 400, 400))
+	
+
+	local nFXIndex  = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hTarget)
 	ParticleManager:ReleaseParticleIndex(nFXIndex)
-	-- -- 新建特效
-	-- local EffectName_1 = "particles/econ/items/bristleback/bristle_spikey_spray/bristle_spikey_quill_spray.vpcf"
-	-- local nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_RENDERORIGIN_FOLLOW, hTarget)
-	-- ParticleManager:SetParticleControl(nFXIndex_1, 0, Vector(500, 500, 500))
-	-- ParticleManager:ReleaseParticleIndex(nFXIndex_1)
-	-- local EffectName_2 = "particles/heroes/thtd_junko/ability_junko_03.vpcf"
-	-- local nFXIndex_2 = ParticleManager:CreateParticle( EffectName_2, PATTACH_ABSORIGIN_FOLLOW, hTarget)
-	-- ParticleManager:SetParticleControl(nFXIndex_2, 0, Vector(500, 500, 500))
-	-- ParticleManager:ReleaseParticleIndex(nFXIndex_2)
+	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyDark"),
+    function()
+        ParticleManager:DestroyParticle(nFXIndex, true)
+    end,1)
+	
+	
 	local abil_damage = self:GetCaster():GetStrength() + self:GetCaster():GetAgility() + self:GetCaster():GetIntellect()
 	abil_damage = abil_damage * self:GetAbility():GetSpecialValueFor( "coefficient" )
 	-- print("before:",abil_damage)
 	-- 范围伤害
-	local enemies = FindUnitsInRadius(
+	local enemies = FindUnitsInRadius2(
 		self:GetCaster():GetTeamNumber(), 
 		hTarget:GetOrigin(), 
 		hTarget, 
 		aoe, 
 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-		0, 0, false 
+		0, 1, false 
 	)
 	local nLevel = self:GetAbility():GetLevel()
 	-- L5觉醒

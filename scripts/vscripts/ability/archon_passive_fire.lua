@@ -103,17 +103,21 @@ function modifier_archon_passive_fire:OnAttackLanded( params )
 			local nFXIndex_0 = ParticleManager:CreateParticle( EffectName_0, PATTACH_ABSORIGIN_FOLLOW, hTarget )
 			ParticleManager:SetParticleControl(nFXIndex_0, 1, Vector(500, 500, 500))
 			ParticleManager:ReleaseParticleIndex(nFXIndex_0)
+			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyFire"),
+		    function()
+		        ParticleManager:DestroyParticle(nFXIndex_0, true)
+		    end,1)
 			--------------------------------------------------------------
 			EmitSoundOn( "Hero_OgreMagi.Fireblast.Target", hTarget )
 			-- 范围
-			local enemies = FindUnitsInRadius(
+			local enemies = FindUnitsInRadius2(
 				hAttacker:GetTeamNumber(), 
 				hTarget:GetOrigin(), 
 				hTarget, 
 				aoe, 
 				DOTA_UNIT_TARGET_TEAM_ENEMY, 
 				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-				0, 0, false 
+				0, 1, false 
 			)
 
 			for _,enemy in pairs(enemies) do
@@ -157,14 +161,14 @@ function modifier_archon_passive_fire:OnIntervalThink(params)
 		-- 范围
 		local impact_effect = "particles/units/heroes/hero_ogre_magi/ogre_magi_fireblast_cast.vpcf"
 		
-		local enemies = FindUnitsInRadius(
+		local enemies = FindUnitsInRadius2(
 			hCaster:GetTeamNumber(), 
 			hCaster:GetOrigin(), 
 			hCaster, 
 			nAllRange, 
 			DOTA_UNIT_TARGET_TEAM_ENEMY, 
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-			0, 0, false 
+			0, 1, false 
 		)
 
 		for _,enemy in pairs(enemies) do

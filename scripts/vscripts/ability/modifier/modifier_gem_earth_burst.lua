@@ -48,12 +48,9 @@ function modifier_gem_earth_burst:DeclareFunctions( ... )
 end
 
 function modifier_gem_earth_burst:OnAttackLanded( params )
-	--if not IsServer() then return end
 	if params.attacker ~= self:GetParent() then
 		return 0
 	end
-	-- print("self.timer_count>>>>>>>>>>>=", self.timer_count)
-	-- print("self.timer_built_cooldown>>>>>>>>>>>>>>>>=", self.timer_built_cooldown)
 	-- 不会同时触发两次效果
     if self.timer_built_cooldown == false then 
     	return 0
@@ -92,15 +89,24 @@ function modifier_gem_earth_burst:OnAttackLanded( params )
 	ParticleManager:ReleaseParticleIndex( nFXIndex_3 )
 
 	-- 范围搜索
-	local enemies = FindUnitsInRadius(
+	-- local enemies = FindUnitsInRadius(
+	-- 	hCaster:GetTeamNumber(), 
+	-- 	hTarget:GetOrigin(), 
+	-- 	hTarget, 
+	-- 	radius, 
+	-- 	DOTA_UNIT_TARGET_TEAM_ENEMY, 
+	-- 	DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+	-- 	0, 0, false 
+	-- )
+	local enemies = GetAOEMostTargetsSpellTarget(
 		hCaster:GetTeamNumber(), 
 		hTarget:GetOrigin(), 
 		hTarget, 
 		radius, 
 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-		0, 0, false 
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 	)
+
 	-- 一开始就造成500范围内的敌人击飞 
 	for _,enemy in pairs(enemies) do
 		if enemy ~= nil and ( not enemy:IsMagicImmune() ) and ( not enemy:IsInvulnerable() ) then
@@ -132,5 +138,4 @@ function modifier_gem_earth_burst:OnAttackLanded( params )
 		end
 	end
 	self.timer_built_cooldown = false
-	--self:GetAbility():StartCooldown(self:GetAbility():GetCooldown(1))
 end

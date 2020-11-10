@@ -115,17 +115,21 @@ function modifier_archon_passive_earth:OnAttackLanded( params )
 	local nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hCaster )
 	ParticleManager:SetParticleControl(nFXIndex_1, 0, Vector(nBaseRange, nBaseRange, nBaseRange))
 	ParticleManager:ReleaseParticleIndex(nFXIndex_1)
+	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyEarth"),
+    function()
+        ParticleManager:DestroyParticle(nFXIndex_1, true)
+    end,1)
 	EmitSoundOn( "Hero_Ursa.Earthshock", hCaster )
 	local abil_damage = self:GetCaster():GetMaxHealth() * self:GetAbility():GetSpecialValueFor( "coefficient" ) * 0.01
 	-- 范围
-	local enemies = FindUnitsInRadius(
+	local enemies = FindUnitsInRadius2(
 		hCaster:GetTeamNumber(), 
 		hCaster:GetOrigin(), 
 		hCaster, 
 		nAllRange, 
 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-		0, 0, false 
+		0, 1, false 
 	)
 	for _,enemy in pairs(enemies) do
 		if enemy ~= nil  then
@@ -148,7 +152,7 @@ function modifier_archon_passive_earth:OnAttackLanded( params )
 			nAllRange, 
 			DOTA_UNIT_TARGET_TEAM_FRIENDLY, 
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-			0, 0, false 
+			0, 1, false 
 		)
 		local nStack = math.floor(self:GetCaster():GetMaxHealth() / 50000)
 		for _,hAllies in pairs(hFriendly) do

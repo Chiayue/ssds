@@ -24,8 +24,16 @@ modifier_ability_boss_strike = {}
 function modifier_ability_boss_strike:IsHidden() return true end
 function modifier_ability_boss_strike:DeclareFunctions()
     return {
-		MODIFIER_EVENT_ON_TAKEDAMAGE
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT
     }
+end
+function modifier_ability_boss_strike:GetModifierBaseAttackTimeConstant()
+	return 2
+end
+function modifier_ability_boss_strike:GetModifierBaseDamageOutgoing_Percentage()
+	return -30
 end
 
 function modifier_ability_boss_strike:OnTakeDamage( keys )
@@ -51,7 +59,7 @@ modifier_ability_boss_strike_debuff = {}
 function modifier_ability_boss_strike_debuff:IsHidden() return true end
 function modifier_ability_boss_strike_debuff:CheckState()
 	local state = {
-		[MODIFIER_STATE_INVISIBLE]	= true,
+		-- [MODIFIER_STATE_INVISIBLE]	= true,
 		[MODIFIER_STATE_UNSELECTABLE] = true,
 		[MODIFIER_STATE_INVULNERABLE] = true,
 		[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
@@ -66,7 +74,13 @@ function modifier_ability_boss_strike_debuff:CheckState()
 	}
 	return state
 end
-
+function modifier_ability_boss_strike_debuff:OnCreated()
+	local nStartParticle = ParticleManager:CreateParticle("particles/econ/items/antimage/antimage_ti7/antimage_blink_ti7_end.vpcf", PATTACH_CUSTOMORIGIN, self:GetParent())
+	ParticleManager:SetParticleControl(nStartParticle, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControlEnt(nStartParticle, 1, self:GetParent(), PATTACH_CUSTOMORIGIN, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+	--ParticleManager:SetParticleControlForward(nStartParticle, 0, direction)
+	ParticleManager:ReleaseParticleIndex(nStartParticle)
+end
 function modifier_ability_boss_strike_debuff:OnDestroy()
 	local nEndParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_spirit_breaker/spirit_breaker_nether_strike_end.vpcf", PATTACH_ABSORIGIN, self:GetParent())
 	ParticleManager:ReleaseParticleIndex(nEndParticle)

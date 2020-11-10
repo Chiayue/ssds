@@ -51,15 +51,19 @@ function modifier_archon_passive_magic:OnAttack( params )
 		local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_POINT, hCaster )
 		--ParticleManager:SetParticleControl(nFXIndex, 1, Vector(nAllRange, nAllRange, nAllRange))
 		ParticleManager:ReleaseParticleIndex(nFXIndex)
+		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyMagic"),
+	    function()
+	        ParticleManager:DestroyParticle(nFXIndex, true)
+	    end,1)
 		-- 范围
-		local enemies = FindUnitsInRadius(
+		local enemies = FindUnitsInRadius2(
 			hCaster:GetTeamNumber(), 
 			hTarget:GetOrigin(), 
 			hTarget, 
 			aoe, 
 			DOTA_UNIT_TARGET_TEAM_ENEMY, 
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-			0, 0, false 
+			0, 1, false 
 		)
 		EmitSoundOn( "Hero_Invoker.EMP.Discharge", hCaster )
 		for _,enemy in pairs(enemies) do
@@ -91,23 +95,22 @@ function modifier_archon_passive_magic:OnAttack( params )
 			local abil_damage = hCaster:GetIntellect() * self:GetAbility():GetSpecialValueFor( "notfull_damage" ) * mana_percent * 0.01
 			local EffectName = "particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
 			local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_POINT, hTarget )
-			ParticleManager:SetParticleControl(nFXIndex, 1, Vector(500, 500, 500))
 			ParticleManager:ReleaseParticleIndex(nFXIndex)
-			local EffectName_1 = "particles/heroes/lily/ability_lily_01.vpcf"
-			local nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_POINT, hTarget )
-			ParticleManager:SetParticleControl(nFXIndex_1, 1, Vector(500, 500, 500))
-			ParticleManager:ReleaseParticleIndex(nFXIndex_1)
+			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyMagic"),
+		    function()
+		        ParticleManager:DestroyParticle(nFXIndex, true)
+		    end,1)
 			EmitSoundOn( "Hero_EarthShaker.Fissure", hTarget )
 			
 			-- 范围
-			local enemies = FindUnitsInRadius(
+			local enemies = FindUnitsInRadius2(
 				hCaster:GetTeamNumber(), 
 				hTarget:GetOrigin(), 
 				hTarget, 
 				aoe, 
 				DOTA_UNIT_TARGET_TEAM_ENEMY, 
 				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-				0, 0, false 
+				0, 1, false 
 			)
 
 			for _,enemy in pairs(enemies) do

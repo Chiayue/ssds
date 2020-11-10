@@ -32,16 +32,18 @@ function Filter:DamageFilter( params )
 			local difference = math.abs(forwardAngle - reverseEnemyAngle)
 			if difference >= 80 then
 				params.damage = params.damage * (100 - nBossBulwark) * 0.01
+			elseif difference <= 60 then
+				params.damage = params.damage * 1.5
 			end
 		end
 
 		local damageType =  damagetype_const -- 1物理 2魔法 4真实
-		local nPlayerID = hAttacker:GetPlayerID()
+		local nPlayerID = hAttacker:GetOwner():GetPlayerID()
 		local iDamageType = params.damagetype_const
 		local hAttr =  GlobalVarFunc.attr[nPlayerID + 1]
 		-- 伤害乘区
 		-- print(params.damage)
-		local nFinal = ( 1+hAttr["fdamage_a"] ) 
+		local nFinal = ( 1+ hAttr["fdamage_a"] ) 
 			* ( 1 + hAttr["fdamage_b"] ) 
 			* ( 1 + hAttr["fdamage_c"] ) 
 			* ( 1 + hAttr["fdamage_d"] ) 

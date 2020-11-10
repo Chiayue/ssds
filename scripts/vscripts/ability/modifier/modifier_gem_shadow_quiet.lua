@@ -75,15 +75,23 @@ function modifier_gem_shadow_quiet:OnAttackLanded( params )
 	end
 
 	-- 范围搜索
-	local enemies = FindUnitsInRadius(
+	-- local enemies = FindUnitsInRadius(
+	-- 	hCaster:GetTeamNumber(), 
+	-- 	hTarget:GetOrigin(), 
+	-- 	hTarget, 
+	-- 	radius, 
+	-- 	DOTA_UNIT_TARGET_TEAM_ENEMY, 
+	-- 	DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+	-- 	0, 0, false 
+	-- )
+	local enemies = GetAOEMostTargetsSpellTarget(
 		hCaster:GetTeamNumber(), 
 		hTarget:GetOrigin(), 
 		hTarget, 
 		radius, 
 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-		0, 0, false 
-	)
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+		)
 	-- 一开始就造成500范围内的敌人睡眠
 	for _,enemy in pairs(enemies) do
 		if enemy ~= nil and ( not enemy:IsMagicImmune() ) and ( not enemy:IsInvulnerable() ) then
@@ -141,7 +149,6 @@ function modifier_archon_passive_shadow_quiet_debuff:GetModifierAura()
 end
 
 function modifier_archon_passive_shadow_quiet_debuff:GetAuraRadius()
-	--if not IsServer() then return end
 	return self.radius
 end
 
@@ -155,7 +162,6 @@ end
 
 function modifier_archon_passive_shadow_quiet_debuff:OnCreated( params )
 ---------------------------------------------- 创建效果(组合特效) ---------------------------------------------------
-	--if not IsServer() then return end
 	local hCaster = self:GetCaster()
 	local hParent = self:GetParent()
 	self.radius = 500
@@ -180,12 +186,10 @@ function modifier_archon_passive_shadow_quiet_debuff:OnCreated( params )
 end
 
 function modifier_archon_passive_shadow_quiet_debuff:OnRefresh(params)
-	--if not IsServer() then return end
 	self.radius = 500
 end
 
 function modifier_archon_passive_shadow_quiet_debuff:OnDestroy(params)
-	--if not IsServer() then return end
 	local hParent = self:GetParent()
 	if hParent.nFXIndex and hParent.nFXIndex_1 and hParent.nFXIndex_2 then 
 		ParticleManager:DestroyParticle( hParent.nFXIndex, false )
@@ -224,28 +228,34 @@ end
 
 -- 在命中的敌人脚下生成一个暗影特效。
 function modifier_archon_passive_shadow_quiet_frozen_debuff:OnCreated(params)
-	--if not IsServer() then return end
-	--self.speed_cut = 100
-	self.radius = 500
-
-	self:StartIntervalThink(0.5)
+	if not IsServer() then 
+		self.radius = 500
+		self:StartIntervalThink(0.5)
+	end
 end
 
 function modifier_archon_passive_shadow_quiet_frozen_debuff:OnIntervalThink( params )
-	local hParent = self:GetParent()
-	local hCaster = self:GetCaster()
-
 	if IsServer() then
+		local hParent = self:GetParent()
+		local hCaster = self:GetCaster()
 		local duration = 5
 		-- 范围寻找
-		local enemies = FindUnitsInRadius(
-			hCaster:GetTeamNumber(), 
-			hParent:GetOrigin(), 
-			hParent, 
-			self.radius, 
-			DOTA_UNIT_TARGET_TEAM_ENEMY, 
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-			0, 0, false 
+		-- local enemies = FindUnitsInRadius(
+		-- 	hCaster:GetTeamNumber(), 
+		-- 	hParent:GetOrigin(), 
+		-- 	hParent, 
+		-- 	self.radius, 
+		-- 	DOTA_UNIT_TARGET_TEAM_ENEMY, 
+		-- 	DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+		-- 	0, 0, false 
+		-- )
+		local enemies = GetAOEMostTargetsSpellTarget(
+		hCaster:GetTeamNumber(), 
+		hParent:GetOrigin(), 
+		hParent, 
+		self.radius, 
+		DOTA_UNIT_TARGET_TEAM_ENEMY, 
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 		)
 
 		for _,enemy in pairs(enemies) do
@@ -265,21 +275,17 @@ function modifier_archon_passive_shadow_quiet_frozen_debuff:OnIntervalThink( par
 end
 
 function modifier_archon_passive_shadow_quiet_frozen_debuff:OnRefresh( ... )
-	--if not IsServer() then return end
 	self.radius = 500
-	--self.speed_cut = 100
 end
 
 function modifier_archon_passive_shadow_quiet_frozen_debuff:DeclareFunctions( ... )
 	return 
 		{
-			--MODIFIER_PROPERTY_OVERRIDE_ANIMATION, -- 动画
 			MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT, -- 移动速度
 		}
 end
 
 function modifier_archon_passive_shadow_quiet_frozen_debuff:GetModifierMoveSpeedBonus_Constant( ... )
-	--if not IsServer() then return end
 	return -100
 end
 
@@ -324,10 +330,6 @@ function modifier_archon_passive_shadow_quiet_sleep_debuff:DeclareFunctions( ...
 		}
 end
 
--- function modifier_archon_passive_shadow_quiet_sleep_debuff:GetEffectName()
--- 	return "particles/newplayer_fx/npx_sleeping.vpcf" -- 睡眠特效
--- end
-
 function modifier_archon_passive_shadow_quiet_sleep_debuff:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
@@ -362,27 +364,19 @@ function modifier_archon_passive_shadow_quiet_shadow_damage:RemoveOnDeath()
 end
 
 function modifier_archon_passive_shadow_quiet_shadow_damage:OnCreated(params)
-	--if not IsServer() then return end
-	local hParent = self:GetParent()
-	local hCaster = self:GetCaster()
-	--self.timer_attack_multiple = 3
-	
-	local EffectName = "particles/units/heroes/hero_void_spirit/void_spirit_warp_dust_dark.vpcf" -- 暗影标志特效
-	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_RENDERORIGIN_FOLLOW, hParent)
-	self:AddParticle(nFXIndex, false, false, -1, false, false)
+	if IsServer() then
+		local hParent = self:GetParent()
+		local hCaster = self:GetCaster()
 
-	-- local EffectName_1 = "particles/killstreak/killstreak_fire_flames_lv2_hud.vpcf" -- 身体燃烧特效
-	-- local nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ROOTBONE_FOLLOW, hParent)
-	-- self:AddParticle(nFXIndex_1, false, false, -1, false, false)
-
-	self:StartIntervalThink(1)
+		self:StartIntervalThink(1)
+	end
 end
 
 function modifier_archon_passive_shadow_quiet_shadow_damage:OnIntervalThink( params )
-	local hParent = self:GetParent()
-	local hCaster = self:GetCaster()
-
 	if IsServer() then
+		local hParent = self:GetParent()
+		local hCaster = self:GetCaster()
+
 		ApplyDamage(
 		{
 			attacker = hCaster,
@@ -394,8 +388,3 @@ function modifier_archon_passive_shadow_quiet_shadow_damage:OnIntervalThink( par
 
 	end
 end
-
--- function modifier_archon_passive_shadow_quiet_shadow_damage:OnRefresh( ... )
--- 	--if not IsServer() then return end
--- 	self.timer_attack_multiple = 3
--- end

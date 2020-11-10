@@ -52,7 +52,6 @@ end
 
 -- 在命中的敌人脚下生成一个毒液特效。只要有敌人经过  就必然感染毒液 5秒
 function modifier_gem_die_venom:OnAttackLanded( params )
-	--if not IsServer() then return end
 	if params.attacker ~= self:GetParent() then
 		return 0
 	end
@@ -74,14 +73,22 @@ function modifier_gem_die_venom:OnAttackLanded( params )
 	end
 
 	-- 范围寻找
-		local enemies = FindUnitsInRadius(
+		-- local enemies = FindUnitsInRadius(
+		-- 	hCaster:GetTeamNumber(), 
+		-- 	hTarget:GetOrigin(), 
+		-- 	hTarget, 
+		-- 	radius, 
+		-- 	DOTA_UNIT_TARGET_TEAM_ENEMY, 
+		-- 	DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+		-- 	0, 0, false 
+		-- )
+		local enemies = GetAOEMostTargetsSpellTarget(
 			hCaster:GetTeamNumber(), 
 			hTarget:GetOrigin(), 
 			hTarget, 
 			radius, 
 			DOTA_UNIT_TARGET_TEAM_ENEMY, 
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-			0, 0, false 
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 		)
 
 		for _,enemy in pairs(enemies) do
@@ -132,7 +139,6 @@ function modifier_archon_passive_die_venom_debuff:GetModifierAura()
 end
 
 function modifier_archon_passive_die_venom_debuff:GetAuraRadius()
-	--if not IsServer() then return end
 	return self.radius
 end
 
@@ -146,7 +152,6 @@ end
 
 function modifier_archon_passive_die_venom_debuff:OnCreated( params )
 ---------------------------------------------- 创建效果 ---------------------------------------------------
-	--if not IsServer() then return end
 	local hCaster = self:GetCaster()
 	local hParent = self:GetParent()
 	self.radius = 500
@@ -171,12 +176,10 @@ function modifier_archon_passive_die_venom_debuff:OnCreated( params )
 end
 
 function modifier_archon_passive_die_venom_debuff:OnRefresh(params)
-	--if not IsServer() then return end
 	self.radius = 500
 end
 
 function modifier_archon_passive_die_venom_debuff:OnDestroy(params)
-	--if not IsServer() then return end
 	local hParent = self:GetParent()
 	if hParent.nFXIndex and hParent.nFXIndex_1 and hParent.nFXIndex_2 then 
 		ParticleManager:DestroyParticle( hParent.nFXIndex, false )
@@ -215,14 +218,13 @@ end
 
 -- 如果一直在上面，就一直刷新毒液的持续时间
 function modifier_archon_passive_die_venom_damge:OnCreated(params)
-	if not IsServer() then return end
-	local hParent = self:GetParent()
-	local hCaster = self:GetCaster()
-	-- self.speed_cut = 100
-	self.radius = 500
+	if IsServer() then 
+		local hParent = self:GetParent()
+		local hCaster = self:GetCaster()
+		self.radius = 500
 
-	--hParent:AddNewModifier(hCaster, self:GetAbility(), "modifier_archon_passive_die_venom_duration_damge", {duration = duration})
-	self:StartIntervalThink(0.5)
+		self:StartIntervalThink(0.5)
+	end
 end
 
 function modifier_archon_passive_die_venom_damge:OnIntervalThink( params )
@@ -231,15 +233,23 @@ function modifier_archon_passive_die_venom_damge:OnIntervalThink( params )
 
 	if IsServer() then
 		local duration = 5
-		-- 范围寻找
-		local enemies = FindUnitsInRadius(
+		-- 范围寻找	
+		-- local enemies = FindUnitsInRadius(
+		-- 	hCaster:GetTeamNumber(), 
+		-- 	hParent:GetOrigin(), 
+		-- 	hParent, 
+		-- 	self.radius, 
+		-- 	DOTA_UNIT_TARGET_TEAM_ENEMY, 
+		-- 	DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+		-- 	0, 0, false 
+		-- )
+		local enemies = GetAOEMostTargetsSpellTarget(
 			hCaster:GetTeamNumber(), 
 			hParent:GetOrigin(), 
 			hParent, 
 			self.radius, 
 			DOTA_UNIT_TARGET_TEAM_ENEMY, 
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-			0, 0, false 
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 		)
 
 		for _,enemy in pairs(enemies) do

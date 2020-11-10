@@ -99,8 +99,8 @@ function CAddonTemplateGameMode:IsBadguysWinner()
             end
         end
     end
-    --单个玩家普通章节死亡游戏不结束，多1条命
-    if GlobalVarFunc.playersNum == 1 and GlobalVarFunc.game_mode == "common" then
+    --单个玩家死亡游戏不结束，多1条命
+    if GlobalVarFunc.playersNum == 1 then
         if GlobalVarFunc.singlePlayerLife == 0 then
             self:OnSetBadguysWinner()
         else

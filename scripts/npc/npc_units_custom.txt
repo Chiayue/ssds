@@ -8520,6 +8520,39 @@
 		"AttackCapabilities"	"DOTA_UNIT_CAP_NO_ATTACK"
 	}
 
+	"npc_dota_creature_stake2"
+	{
+		"BaseClass"	"npc_dota_creature"
+		"Ability1"	"weaver_geminate_attack"
+		"Ability2"	""
+		"Ability3"	""
+		"Ability4"	""
+		"Ability5"	""
+		"Ability6"	""
+		"Ability7"	""
+		"Ability8"	""
+		"Ability9"	""
+		"Ability10"	""
+		"Ability11"	""
+		"Ability12"	""
+		"Ability13"	""
+		"Ability14"	""
+		"Ability15"	""
+		"Ability16"	""
+		"Model"	"models/creeps/neutral_creeps/n_creep_gnoll/n_creep_gnoll_frost.vmdl"
+		"ModelScale"	"2"
+		"AttackDamageMin"	"1"
+		"AttackDamageMax"	"1"
+		"MovementCapabilities"	"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"	"250"
+		"StatusHealth"	"20"
+		"StatusHealthRegen"	"0"
+		"ArmorPhysical"	"0"
+		"MagicalResistance"	"0"
+		"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"	"125"
+	}
+
 	"npc_dota_creature_tower"
 	{
 		"BaseClass"	"npc_dota_creature"
@@ -10288,8 +10321,6 @@
 		"Ability16"	""
 		"Model"	"models/heroes/ancient_apparition/ancient_apparition.vmdl"
 		"ModelScale"	"1"
-		"HasInventory"	""
-		"ConsideredHero"	""
 		"HealthBarOffset"	"200"
 		"StatusHealth"	"100"
 		"AttackCapabilities"	"DOTA_UNIT_CAP_NO_ATTACK"
@@ -10316,7 +10347,6 @@
 				}
 			}
 		}
-		"AttackAcquisitionRange"	""
 		"MinimapIconSize"	"400"
 		"MinimapIcon"	"minimap_racks90"
 	}

@@ -69,9 +69,9 @@ local BuffList = {  -- 增益BUFF 给Boss自身增加
 	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MoveSpeed",
 	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange",
 	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MaxHeal",
-	 "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor",
 	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance",
-	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss",
+	"modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss",
 	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_HealRegen",
 	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity",
 	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage",
@@ -121,34 +121,34 @@ function modifier_abyssBoss_DeBuff_and_Buff:OnIntervalThink( ... )
 		local hParent = self:GetParent()
 		self.time = self.time + 1
 		
-		if self.time == 15 then 
+		if self.time == 10 then 
 			local random = RandomInt(2, 10)
-			--if random % 2 == 1 then -- 添加DeBuff
-				-- print("1")
-				-- local a = self:AddModifierDeBuff()
-				-- print("a>>>>>>>>>>>>>>>>>>>>=",a)
-				-- local enemys = FindUnitsInRadius(
-				-- 	hParent:GetTeamNumber(), 
-				-- 	hParent:GetOrigin(), 
-				-- 	hParent, 
-				-- 	99999, 
-				-- 	DOTA_UNIT_TARGET_TEAM_ENEMY, 
-				-- 	DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-				-- 	0, 0, false 
-				-- )
+			-- if random % 2 == 1 then -- 添加DeBuff
+			-- 	print("1")
+			-- 	local DeBuff_Name = self:AddModifierDeBuff()
+			-- 	--print("DeBuff_Name>>>>>>>>>>>>>>>>>>>>=",DeBuff_Name)
+			-- 	local enemys = FindUnitsInRadius(
+			-- 		hParent:GetTeamNumber(), 
+			-- 		hParent:GetOrigin(), 
+			-- 		hParent, 
+			-- 		99999, 
+			-- 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
+			-- 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+			-- 		0, 0, false 
+			-- 	)
 
-				-- for _,enemy in pairs(enemys) do
-				-- 	if enemy ~= nil then --  and ( not enemy:IsMagicImmune() ) and ( not enemy:IsInvulnerable() )
-				-- 		-- 敌人添加buff
-				-- 		enemy:AddNewModifier( hParent, self:GetAbility(), a, { duration = 10} )
-				-- 	end
-				-- end
+			-- 	for _,enemy in pairs(enemys) do
+			-- 		if enemy ~= nil then --  and ( not enemy:IsMagicImmune() ) and ( not enemy:IsInvulnerable() )
+			-- 			-- 敌人添加buff
+			-- 			enemy:AddNewModifier( hParent, nil, DeBuff_Name, { duration = 10} )
+			-- 		end
+			-- 	end
 			-- else -- 添加Buff  -- if random % 2 == 0 then
 				print("0")
-				local b = self:AddModifierBuff()
-				print("b>>>>>>>>>>>>>>>>>>>>=",b)
-				hParent:AddNewModifier(hParent, self:GetAbility(), b, {duration = 10})
-			-- end	
+				local Buff_Name = self:AddModifierBuff()
+				--print("Buff_Name>>>>>>>>>>>>>>>>>>>>=",Buff_Name)
+				hParent:AddNewModifier(hParent, nil, Buff_Name, {duration = 10})
+			--end	
 			self.time = 0
 		end
 
@@ -280,9 +280,9 @@ function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MoveSpeed:GetModifierMoveSpee
 if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange = class({}) end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange:IsHidden( ... ) return false end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange:OnCreated( ... ) 
-	self.patent_AttackRange = 0
-	self.patent_AttackRange = self:GetParent():GetBaseAttackRange() * 0.5
-	print("patent_AttackRange>>>>>>>>>>>>>>>>>>>>>>>=", self.patent_AttackRange)
+	-- self.patent_AttackRange = 0
+	-- self.patent_AttackRange = self:GetParent():GetBaseAttackRange() * 0.5
+	-- print("patent_AttackRange>>>>>>>>>>>>>>>>>>>>>>>=", self.patent_AttackRange)
 end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE} end
@@ -297,24 +297,28 @@ function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MaxHeal:GetModifierExtraHealt
 if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor = class({}) end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor:IsHidden( ... ) return false end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
-function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackSpeed:OnCreated( ... ) 
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor:OnCreated( ... ) 
 	self.x = self:GetParent():GetPhysicalArmorValue(true) * 0.1
-	print("x>>>>>>>>>>>>>>>>=",self.x)
 end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS} end
-function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor:GetModifierPhysicalArmorBonus( ... ) return x end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor:GetModifierPhysicalArmorBonus( ... ) return 100 end
 -- 增加10%魔抗
 if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance = class({}) end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance:IsHidden( ... ) return false end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance:OnCreated( ... ) 
+	self.x = self:GetParent():GetMagicalArmorValue() * 0.1
+end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS} end
-function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance:GetModifierMagicalResistanceBonus( ... ) return self:GetParent():GetMagicalArmorValue() * 0.1 end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance:GetModifierMagicalResistanceBonus( ... ) return 50 end
 -- 增加10%闪避
 if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss = class({}) end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss:IsHidden( ... ) return false end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
-function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_MISS_PERCENTAGE} end
-function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss:GetModifierMiss_Percentage( ... ) return 50 end
+-- function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_AVOID_DAMAGE} end
+-- function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss:GetModifierAvoidDamage( ... ) return 100 end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_EVASION_CONSTANT} end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss:GetModifierEvasion_Constant( ... ) return 100 end
 -- 增加10%生命回复
 if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_HealRegen == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_HealRegen = class({}) end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_HealRegen:IsHidden( ... ) return false end
@@ -325,10 +329,9 @@ function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_HealRegen:GetModifierHealthRe
 if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity = class({}) end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity:IsHidden( ... ) return false end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
-function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity:CheckState() -- 碰撞效果
-	return {[MODIFIER_STATE_STUNNED] = false,[MODIFIER_STATE_MAGIC_IMMUNE] = false, [MODIFIER_STATE_FROZEN] = false} end
-function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE} end
-function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity:GetModifierDamageOutgoing_Percentage( ... ) return 10 end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity:CheckState() return {[MODIFIER_STATE_MAGIC_IMMUNE] = true,} end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_STATUS_RESISTANCE} end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity:GetModifierStatusResistance( ... ) return 100 end
 -- 减少10%的所受伤害
 if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage = class({}) end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage:IsHidden( ... ) return false end

@@ -145,6 +145,20 @@ function try1(block)
 	end
 end
 
+-- 从表里寻找值的键TableFindKey[ByValue]
+function TableFindKey(t, v)
+	if t == nil then
+		return nil
+	end
+
+	for _k, _v in pairs(t) do
+		if v == _v then
+			return _k
+		end
+	end
+	return nil
+end
+
 --------------- 铲子事件 ------------
 function RunSpadeEvent(hCaster,sSpadeName,hParam)
 	-- print(sEventName,"/",nAmount)
@@ -227,4 +241,32 @@ function addHeroRandomAttr(hHero)
         hHero:SetBaseIntellect(BaseProperty + 1)
     end
     hHero:CalculateStatBonus()
+end
+-- 寻找范围的单位： 队伍、位置、目标、范围、队伍过滤、类型过滤
+function GetAOEMostTargetsSpellTarget(team_number, search_position, target, radius, team_filter, type_filter)
+	local targets = FindUnitsInRadius(team_number, search_position, target, radius, team_filter, type_filter, 0, 0, false)
+
+	return targets
+end
+
+function FindUnitsInRadius2( iTeamNumber, vPosition, hCacheUnit, flRadius, iTeamFilter, iTypeFilter, iFlagFilter, iOrder, bCanGrowCache )
+	local nMax = 30
+	local enemies = FindUnitsInRadius(
+		iTeamNumber, 
+		vPosition, 
+		hCacheUnit, 
+		flRadius, 
+		iTeamFilter, 
+		iTypeFilter, 
+		iFlagFilter,
+		FIND_UNITS_EVERYWHERE,--iOrder,
+		bCanGrowCache 
+	)
+	local nCounts = #enemies
+	if nCounts > nMax then
+		for i=nMax,nCounts do
+			enemies[i] = nil
+		end
+	end
+	return enemies
 end

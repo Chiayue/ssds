@@ -72,14 +72,14 @@ function modifier_archon_passive_light:OnAttackLanded( params )
 	local nDamageRadius = self:GetAbility():GetSpecialValueFor( "damage_radius" )
 	-- 对敌人范围
 	EmitSoundOn( "Hero_Omniknight.Purification", hTarget )
-	local enemies = FindUnitsInRadius(
+	local enemies = FindUnitsInRadius2(
 		self:GetCaster():GetTeamNumber(), 
 		hTarget:GetOrigin(), 
 		hTarget, 
 		nDamageRadius, 
 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-		0, 0, false 
+		0, 1, false 
 	)
 	for _,enemy in pairs(enemies) do
 		if enemy ~= nil  then
@@ -98,11 +98,11 @@ function modifier_archon_passive_light:OnAttackLanded( params )
 	local EffectName = "particles/units/heroes/hero_omniknight/omniknight_loadout.vpcf"
 	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hTarget)
 	ParticleManager:ReleaseParticleIndex(nFXIndex)
-	-- 新加特效 -- 敌人
-	local EffectName_2 = "particles/heroes/thtd_yuugi/ability_yuugi_01.vpcf"
-	local nFXIndex_2 = ParticleManager:CreateParticle( EffectName_2, PATTACH_ABSORIGIN_FOLLOW, hTarget )
-	ParticleManager:SetParticleControl(nFXIndex_2, 0, Vector(nDamageRadius, nDamageRadius, nDamageRadius))
-	ParticleManager:ReleaseParticleIndex(nFXIndex_2)
+	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyLight"),
+    function()
+        ParticleManager:DestroyParticle(nFXIndex, true)
+    end,1)
+
 	-- 治疗值
 	local nHealthAmount = nBaseDamage * self:GetAbility():GetSpecialValueFor( "health_coefficient" )
 	EmitSoundOn( "Hero_Dazzle.Shadow_Wave", hCaster )
@@ -110,14 +110,14 @@ function modifier_archon_passive_light:OnAttackLanded( params )
 	local nHealRadius = 0
 	if nLevel >= ABILITY_AWAKEN_1 then
 		local nHealRadius = self:GetAbility():GetSpecialValueFor( "heal_radius" )
-		local allies = FindUnitsInRadius(
+		local allies = FindUnitsInRadius2(
 			hCaster:GetTeamNumber(), 
 			hCaster:GetOrigin(), 
 			hCaster, 
 			nHealRadius, 
 			DOTA_UNIT_TARGET_TEAM_FRIENDLY, 
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-			0, 0, false 
+			0, 1, false 
 		)
 		for _,ally in pairs(allies) do
 			if ally ~= nil then

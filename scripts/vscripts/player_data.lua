@@ -13,7 +13,6 @@ INCOME_BASE_bonus       = 50            -- 投资基础消耗
 INCOME_UPGRADE_COST     = 10            -- 投资每级提升
 TECH_MAX_LEVEL          = 10            -- 科技最大等级
 TECH_AWARD_EVERY        = 5             -- 每点多少次科技，额外奖励属性
------- 裂变 -----
 
 TECH_UPGRADE_LIST = {
     "Upgrade_AttackSpeed",
@@ -291,6 +290,10 @@ function Player_Data:OnEntityKilled(event)
         -- 触发BOSS事件 升级天赋
         local sKilledName = hKilled:GetUnitName()
         local nUnitLevel = hKilled:GetLevel()
+        if sKilledName == "npc_dota_creature_stake2" then
+            local vPos = hKilled:GetAbsOrigin() 
+            CreateUnitByName("npc_dota_creature_stake2", vPos, true, nil, nil, DOTA_TEAM_BADGUYS)
+        end
         if sKilledName == "npc_dota_creature_BigBoss" then
             -- 提示
             local gameEvent = {}
@@ -378,10 +381,10 @@ function Player_Data:OnEntityKilled(event)
         end
         -- 击杀单位处理
         -- table.insert(tUnitPools,hKilled)
-        -- Timer(1.6,function()
-        --     -- hKilled:RemoveSelf() 
-        --     UTIL_Remove(hKilled)
-        -- end)
+        Timer(1.6,function()
+            hKilled:RemoveSelf() 
+            -- UTIL_Remove(hKilled)
+        end)
     end
 end
 

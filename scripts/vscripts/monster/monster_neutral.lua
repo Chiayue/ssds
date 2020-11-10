@@ -203,7 +203,7 @@ function MonsterNeutral:setMonsterBaseInformation(unit)
 
     --图腾
     if unit:GetUnitName() == "ice_totem_unit" then
-        health = GlobalVarFunc.playersNum * 40
+        health = GlobalVarFunc.playersNum * 15 + 20
     end
 
     unit:SetBaseMaxHealth(health)   

@@ -75,15 +75,23 @@ function modifier_gem_void_lock:OnAttackLanded( params )
 	ParticleManager:ReleaseParticleIndex( nFXIndex )
 
 	-- 范围伤害
-	local enemies = FindUnitsInRadius(
+	-- local enemies = FindUnitsInRadius(
+	-- 	hCaster:GetTeamNumber(), 
+	-- 	hTarget:GetOrigin(), 
+	-- 	hTarget, 
+	-- 	radius, 
+	-- 	DOTA_UNIT_TARGET_TEAM_ENEMY, 
+	-- 	DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+	-- 	0, 0, false 
+	-- )
+	local enemies = GetAOEMostTargetsSpellTarget(
 		hCaster:GetTeamNumber(), 
 		hTarget:GetOrigin(), 
 		hTarget, 
 		radius, 
 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-		0, 0, false 
-	)
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+		)
 
 	for _,enemy in pairs(enemies) do
 		if enemy ~= nil and ( not enemy:IsMagicImmune() ) and ( not enemy:IsInvulnerable() ) then
@@ -153,10 +161,6 @@ function modifier_archon_passive_void_lock_debuff:DeclareFunctions( ... )
 			MODIFIER_PROPERTY_OVERRIDE_ANIMATION, -- 动画
 		}
 end
-
--- function modifier_archon_passive_void_lock_debuff:GetEffectName()
--- 	return "particles/generic_gameplay/generic_stunned.vpcf" -- 眩晕特效
--- end
 
 function modifier_archon_passive_void_lock_debuff:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
