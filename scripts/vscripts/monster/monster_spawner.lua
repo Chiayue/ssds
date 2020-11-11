@@ -1393,6 +1393,15 @@ function MobSpawner:OnLuoliTiaoWu(args)
         Store:UsedCustomGoodsValue(args.PlayerID,"arrow_soul",888,"萝莉跳舞")
         --萝莉跳舞冷却
         MobSpawner:OnCoolDown()
+
+        local tiaowuNum =  Archive:GetData(args.PlayerID,"luoli_tiaowu_num")
+        tiaowuNum = tiaowuNum + 1
+
+        --萝莉跳舞数据存档
+        local hRows = {}
+        hRows["luoli_tiaowu_num"] = tiaowuNum
+        Archive:SaveRowsToPlayer(args.PlayerID,hRows)
+
     else
         CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(args.PlayerID),"send_error_message_client",{message="ARROW_SOUL_NOT_ENOUGH"})
     end

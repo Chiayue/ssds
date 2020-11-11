@@ -37,7 +37,7 @@ LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage", "abi
 	增加受到的伤害
 ]]
 local DeBuffList = { -- 减益BUFF 给所有敌人增加
-	-- "modifier_abyssBoss_DeBuff_and_Buff_Reduce_Damage",
+	"modifier_abyssBoss_DeBuff_and_Buff_Reduce_Damage",
 	-- "modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed",
 	-- "modifier_abyssBoss_DeBuff_and_Buff_Reduce_MoveSpeed",
 	-- "modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackRange",
@@ -68,10 +68,10 @@ local BuffList = {  -- 增益BUFF 给Boss自身增加
 	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackSpeed",
 	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MoveSpeed",
 	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange",
-	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MaxHeal",
+	 "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MaxHeal",
 	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Armor",
 	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_spellResistance",
-	"modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss",
+	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_Miss",
 	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_HealRegen",
 	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_StateImmunity",
 	-- "modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage",
@@ -121,43 +121,35 @@ function modifier_abyssBoss_DeBuff_and_Buff:OnIntervalThink( ... )
 		local hParent = self:GetParent()
 		self.time = self.time + 1
 		
-		if self.time == 10 then 
+		if self.time == 11 then 
 			local random = RandomInt(2, 10)
-			-- if random % 2 == 1 then -- 添加DeBuff
-			-- 	print("1")
-			-- 	local DeBuff_Name = self:AddModifierDeBuff()
-			-- 	--print("DeBuff_Name>>>>>>>>>>>>>>>>>>>>=",DeBuff_Name)
-			-- 	local enemys = FindUnitsInRadius(
-			-- 		hParent:GetTeamNumber(), 
-			-- 		hParent:GetOrigin(), 
-			-- 		hParent, 
-			-- 		99999, 
-			-- 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
-			-- 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-			-- 		0, 0, false 
-			-- 	)
+			if random % 2 == 1 then -- 添加DeBuff
+				print("1")
+				local DeBuff_Name = self:AddModifierDeBuff()
+				--print("DeBuff_Name>>>>>>>>>>>>>>>>>>>>=",DeBuff_Name)
+				local enemys = FindUnitsInRadius(
+					hParent:GetTeamNumber(), 
+					hParent:GetOrigin(), 
+					hParent, 
+					99999, 
+					DOTA_UNIT_TARGET_TEAM_ENEMY, 
+					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+					0, 0, false 
+				)
 
-			-- 	for _,enemy in pairs(enemys) do
-			-- 		if enemy ~= nil then --  and ( not enemy:IsMagicImmune() ) and ( not enemy:IsInvulnerable() )
-			-- 			-- 敌人添加buff
-			-- 			enemy:AddNewModifier( hParent, nil, DeBuff_Name, { duration = 10} )
-			-- 		end
-			-- 	end
-			-- else -- 添加Buff  -- if random % 2 == 0 then
+				for _,enemy in pairs(enemys) do
+					if enemy ~= nil and ( not enemy:IsMagicImmune() ) and ( not enemy:IsInvulnerable() ) then --  
+						-- 敌人添加buff
+						enemy:AddNewModifier( hParent, nil, DeBuff_Name, { duration = 10} )
+					end
+				end
+			else 
 				print("0")
 				local Buff_Name = self:AddModifierBuff()
-				--print("Buff_Name>>>>>>>>>>>>>>>>>>>>=",Buff_Name)
 				hParent:AddNewModifier(hParent, nil, Buff_Name, {duration = 10})
-			--end	
+			end	
 			self.time = 0
 		end
-
-		--local x = hParent:FindAllModifiers()
-		-- for _,midifier_name in pairs(x) do
-		-- 	--print("midifier_name<>><><><><><><=========",midifier_name:GetName())
-		-- 	if midifier_name:GetName() == "modifier_abyssBoss_DeBuff_and_Buff" then 	
-		-- 	end
-		-- end
 	end
 end
 
@@ -174,12 +166,12 @@ if modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed == nil then modifier_ab
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed:IsHidden( ... ) return false end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed:IsDebuff( ... ) return true end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed:OnCreated( ... ) 
-	self.parget_AttackSpeed = 0
-	self.parget_AttackSpeed = self:GetParent():GetDisplayAttackSpeed() * 0.1
+	-- self.parget_AttackSpeed = 0
+	-- self.parget_AttackSpeed = self:GetParent():GetDisplayAttackSpeed() * 0.1
 end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT} end
-function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed:GetModifierAttackSpeedBonus_Constant( ... ) return -self.parget_AttackSpeed end
+function modifier_abyssBoss_DeBuff_and_Buff_Reduce_AttackSpeed:GetModifierAttackSpeedBonus_Constant( ... ) return -500 end
 -- 减少10%移速
 if modifier_abyssBoss_DeBuff_and_Buff_Reduce_MoveSpeed == nil then modifier_abyssBoss_DeBuff_and_Buff_Reduce_MoveSpeed = class({}) end
 function modifier_abyssBoss_DeBuff_and_Buff_Reduce_MoveSpeed:IsHidden( ... ) return false end
@@ -285,8 +277,8 @@ function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange:OnCreated( ... )
 	-- print("patent_AttackRange>>>>>>>>>>>>>>>>>>>>>>>=", self.patent_AttackRange)
 end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
-function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE} end
-function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange:GetModifierDamageOutgoing_Percentage( ... ) return 500 end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_ATTACK_RANGE_BONUS} end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_AttackRange:GetModifierAttackRangeBonus( ... ) return 500 end
 -- 增加10%生命最大值
 if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MaxHeal == nil then modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MaxHeal = class({}) end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_MaxHeal:IsHidden( ... ) return false end

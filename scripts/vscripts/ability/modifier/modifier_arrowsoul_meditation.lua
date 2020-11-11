@@ -16,6 +16,7 @@ function modifier_arrowSoul_meditation:DeclareFunctions()
         MODIFIER_EVENT_ON_ATTACKED ,        --攻击
         MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE ,     --攻击力
         MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE ,     --移动速度（百分比增加移动速度，自身不叠加）
+        MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,     --魔法抗性
     }
     return funcs
 end
@@ -73,7 +74,9 @@ end
 
 --护甲
 function modifier_arrowSoul_meditation:GetModifierPhysicalArmorBonus()
-    if self:GetParent():GetModifierStackCount( "modifier_arrowSoul_meditation" , nil ) >= 26 then
+    if self:GetParent():GetModifierStackCount( "modifier_arrowSoul_meditation" , nil ) >= 40 then
+        return 23
+    elseif self:GetParent():GetModifierStackCount( "modifier_arrowSoul_meditation" , nil ) >= 26 then
         return 13
     elseif self:GetParent():GetModifierStackCount( "modifier_arrowSoul_meditation" , nil ) >= 5 then
         return 3
@@ -158,6 +161,13 @@ end
 function modifier_arrowSoul_meditation:GetModifierMoveSpeedBonus_Percentage()
     if self:GetParent():GetModifierStackCount( "modifier_arrowSoul_meditation" , nil ) >= 34 then
         return 5
+    end
+end
+
+--魔法抗性
+function modifier_arrowSoul_meditation:GetModifierMagicalResistanceBonus()
+    if self:GetParent():GetModifierStackCount( "modifier_arrowSoul_meditation" , nil ) >= 41 then
+        return 15
     end
 end
 

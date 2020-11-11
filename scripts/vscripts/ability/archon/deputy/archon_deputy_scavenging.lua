@@ -51,6 +51,10 @@ function archon_deputy_scavenging:OnSpellStart()
 					--UTIL_Remove(v)
 					v:RemoveSelf() 
 					addHeroRandomAttr(hCaster)
+				elseif sItemName == "item_silver_spade_fragment" or sItemName == "item_gold_spade_fragment" then
+					v:RemoveSelf() 
+					hCaster:AddItem(hItem)
+					
 				end
 			end
 		end

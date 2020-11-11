@@ -243,7 +243,7 @@ function modifier_item_archer_bow_multe:OnCreated()
 		local nBaseAttackRange =  hCaster:GetBaseAttackRange()
 		local nAttackRangeBonus =  100
 		local nAoeRadius = self:GetAbility().AoeRadius
-		local enemies = FindUnitsInRadius( 
+		local enemies = FindUnitsInRadius2( 
 			hCaster:GetTeamNumber(), 
 			hCaster:GetOrigin(), 
 			hTarget, 

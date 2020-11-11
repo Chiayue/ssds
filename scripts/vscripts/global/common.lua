@@ -250,7 +250,7 @@ function GetAOEMostTargetsSpellTarget(team_number, search_position, target, radi
 end
 
 function FindUnitsInRadius2( iTeamNumber, vPosition, hCacheUnit, flRadius, iTeamFilter, iTypeFilter, iFlagFilter, iOrder, bCanGrowCache )
-	local nMax = 30
+	local nMax = 20
 	local enemies = FindUnitsInRadius(
 		iTeamNumber, 
 		vPosition, 
@@ -260,7 +260,7 @@ function FindUnitsInRadius2( iTeamNumber, vPosition, hCacheUnit, flRadius, iTeam
 		iTypeFilter, 
 		iFlagFilter,
 		FIND_UNITS_EVERYWHERE,--iOrder,
-		bCanGrowCache 
+		false 
 	)
 	local nCounts = #enemies
 	if nCounts > nMax then

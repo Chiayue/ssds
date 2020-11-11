@@ -222,8 +222,10 @@ function Player_Select_Ability:Talent_Selected(args)
 	    	-- print("IsInToolsMode")
 	    	if IsInToolsMode() then 
 	    		hNewHero:AddItemByName("item_tools_mode") 
-	    		hNewHero:AddItemByName("item_tools_mode") 
-	    		hNewHero:AddItemByName("item_tools_mode") 
+	    		local sp = hNewHero:AddItemByName("item_silver_spade_fragment") 
+	    		local gp = hNewHero:AddItemByName("item_gold_spade_fragment") 
+	    		sp:SetCurrentCharges(50)
+	    		gp:SetCurrentCharges(50)
 	    	end
 			local baowu2 = hNewHero:AddItemByName("item_baoWu_book")
 			baowu2:SetCurrentCharges(20)
@@ -716,17 +718,15 @@ function AttributeCalculation(hHero)
 	------ 伤害加成 通用 --------
 	---- 最终伤害
 	local nFinalDamage = hHero:GetStrength() * 0.0001 -- 1W点100% 0.01%
+	if nArrowSoulStack >= 39 then nFinalDamage = nFinalDamage + 0.03 end
 	hAttr["final_damage"] = nFinalDamage
 	-------------------- 物理伤害加成 --------------------
-	local nPhysicalDamage =  hHero:GetAgility() * 0.0002 -- 1W点200%
-	-- local sHeroName = hHero:GetUnitName()
-	-- if sHeroName == "npc_dota_hero_troll_warlord" then
-	-- 	nPhysicalDamage = nPhysicalDamage * 0.75
-	-- end
-	-- local nAgiPhysicalDamage =  hHero:GetAgility() * 0.002 -- 1W点200%
+	local nPhysicalDamage =  hHero:GetAgility() * 0.0003 -- 1W点200%
+	if nArrowSoulStack >= 37 then nPhysicalDamage = nPhysicalDamage + 0.05 end
 	hAttr["physical_damage"] = nPhysicalDamage + nFinalDamage
 	-------------------- 法术伤害加成 --------------------
 	local nMagicDamage = hHero:GetIntellect() * 0.0008 -- 1W点800% 
+	if nArrowSoulStack >= 38 then nMagicDamage = nMagicDamage + 0.05 end
 	hAttr["magic_damage"] = nMagicDamage + nFinalDamage
 	-- DeepPrintTable(hAttr)
 	GetUnitRange(hHero)
@@ -755,7 +755,6 @@ function modifier_autistic_every_week:GetAttributes()
 end
 
 ---------------------  萌新BUFF ---------------
--- 条件：等级小于等于8,
 -- 队伍中有萌新时，队伍最终伤害提高5%(乘区D)，可叠加。并且BOSS掉落的装备属性额外提高1~3%，初始属性10点，杀怪额外+3。
 LinkLuaModifier("modifier_moe_novice", "player_select_ability.lua", LUA_MODIFIER_MOTION_NONE)
 if modifier_moe_novice == nil then modifier_moe_novice = {} end

@@ -57,8 +57,10 @@ function ArrowSoulMeditation:OnMeditationArrowSoul(args)
         cost_arrowSoul = 2000
     elseif arrowSoul_meditationNum < 30 then
         cost_arrowSoul = 3000
-    elseif arrowSoul_meditationNum <= 36 then
+    elseif arrowSoul_meditationNum < 36 then
         cost_arrowSoul = 6000
+    elseif arrowSoul_meditationNum <= 42 then
+        cost_arrowSoul = 12000
     end
     
     local playerArrowSoulNum =  Store:GetData(args.PlayerID,"arrow_soul")
@@ -118,6 +120,10 @@ function ArrowSoulMeditation:OnMeditationArrowSoul(args)
         if arrowSoul_meditationNum == 31 then
             PlayerResource:ModifyGold(args.PlayerID,600,true,DOTA_ModifyGold_Unspecified)
         end
+        --开局一本N级被动技能书
+        if arrowSoul_meditationNum == 42 then
+            hHero:AddItemByName("item_study_passive_lv1")
+        end
 
     else
         CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(args.PlayerID),"send_error_message_client",{message="ARROW_SOUL_NOT_ENOUGH"})
@@ -164,6 +170,10 @@ function ArrowSoulMeditation:OnInitArrowSoulMeditation(hHero)
     --初始金币+600
     if arrowSoul_meditationNum >= 31 then
         PlayerResource:ModifyGold(nPlayerID,600,true,DOTA_ModifyGold_Unspecified)
+    end
+    --开局一本N级被动技能书
+    if arrowSoul_meditationNum >= 42 then
+        hHero:AddItemByName("item_study_passive_lv1")
     end
     
 end

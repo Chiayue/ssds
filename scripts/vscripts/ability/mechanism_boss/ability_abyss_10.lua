@@ -78,9 +78,9 @@ function modifier_ability_abyss_10:OnDeath( params )
 		--print("1")
 		local newItem = CreateItem( "item_corrosive", nil, nil )
 		local drop = CreateItemOnPositionSync( hUnit:GetAbsOrigin(), newItem ) 
-		if hParent:GetHealth() <= 0 then 
-			UTIL_Remove(hParent)
-		end
+		-- if hParent:GetHealth() <= 0 then 
+		-- 	UTIL_Remove(hParent)
+		-- end
 	end
 end
 

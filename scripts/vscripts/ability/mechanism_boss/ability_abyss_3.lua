@@ -14,7 +14,6 @@ end
 
 function ability_abyss_3:OnSpellStart( ... )
 	local hCaster = self:GetCaster()
-	local player_nuber = 0
 	-- 寻找自身所有的敌人
 	local enemys = FindUnitsInRadius(
 		hCaster:GetTeamNumber(), 
@@ -24,19 +23,20 @@ function ability_abyss_3:OnSpellStart( ... )
 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
 		0, 0, false)
-
-	if #enemys <= 1 then
-		player_nuber = 1
-	else
-		player_nuber = (#enemys/2)
-	end
-
-	for i, enemy in pairs(enemys) do
-		-- 半数以上的敌人加上DEBUFF
-		if i <= player_nuber then 
-			enemy:AddNewModifier(hCaster, self, "modifier_ability_abyss_3", {})
-			hCaster.index_modifier_ability_abyss_3 = enemy 		-- 保存那个实体添加的modifier 
+	if self.index_naber ~= nil then 
+		for _, unity_enemy in pairs(self.index_naber) do
+			if unity_enemy:HasModifier("modifier_ability_abyss_3") then
+				unity_enemy:RemoveModifierByName("modifier_ability_abyss_3")
+			end
 		end
+	end
+	self.index_naber = {}
+	for i = 1, #enemys/2 do 
+		local x = RandomInt(1, #enemys)
+		-- 半数以上的敌人加上DEBUFF 
+		enemys[x]:AddNewModifier(hCaster, self, "modifier_ability_abyss_3", {})
+		table.insert(self.index_naber, enemys[x])
+		table.remove(enemys, x)
 	end
 end
 
@@ -59,13 +59,15 @@ function modifier_ability_abyss_3_deth:DeclareFunctions( ... )
 		}
 end
 
-function modifier_ability_abyss_3_deth:OnDeath( ... ) 
+function modifier_ability_abyss_3_deth:OnDeath( kys ) 
 	local hParent = self:GetParent()
 	if hParent:IsAlive() then return end 
-	local hParent_modifier_ability_abyss_3 = hParent.index_modifier_ability_abyss_3		-- 得到拥有这个modified的实体
-	if hParent_modifier_ability_abyss_3 == nil then return end
-	if hParent_modifier_ability_abyss_3:HasModifier("modifier_ability_abyss_3") then
-		hParent_modifier_ability_abyss_3:RemoveModifierByName("modifier_ability_abyss_3")
+	for _,  index in pairs(self.index_naber) do
+		-- local hParent_modifier_ability_abyss_3 = index		-- 得到拥有这个modified的实体
+		if index == nil or index:IsAlive() then return end
+		if index:HasModifier("modifier_ability_abyss_3") then
+			index:RemoveModifierByName("modifier_ability_abyss_3")
+		end
 	end
 end
 

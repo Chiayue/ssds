@@ -41,12 +41,14 @@ end
 function modifier_ability_abyss_16:OnIntervalThink( ... )
 	local hParent = self:GetParent()
 
-	if IsServer() then 
-		local reduce_max_heal = hParent:GetHealth() - hParent:GetMaxHealth() * 0.01
-		hParent:SetHealth(reduce_max_heal)
-		if reduce_max_heal == 0 then 
-			hParent:ForceKill(true)
-			return 0
+	if IsServer() then
+		if hParent:GetHealth() > 0 then 
+			local reduce_max_heal = hParent:GetHealth() - hParent:GetMaxHealth() * 0.01
+			hParent:SetHealth(reduce_max_heal)
+			if reduce_max_heal <= 0 then 
+				hParent:ForceKill(false)
+				return
+			end
 		end
 		local reduce_heal_percentage = hParent:GetHealthPercent()
 		self.heal_percentage = 100 - reduce_heal_percentage
@@ -58,9 +60,8 @@ function modifier_ability_abyss_16:DeclareFunctions( ... )
 		{
 			MODIFIER_EVENT_ON_ATTACK_LANDED, 
 			MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT, 
+			MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
 			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-			MODIFIER_EVENT_ON_DEATH,
 		}
 end
 
@@ -77,11 +78,11 @@ function modifier_ability_abyss_16:OnAttackLanded( kv )
 	hAttacker:Heal(attack_damage_heal, hAttacker)
 end
 
-function modifier_ability_abyss_16:GetModifierMoveSpeedBonus_Constant( kv )
+function modifier_ability_abyss_16:GetModifierMoveSpeedBonus_Constant()
 	return self.heal_percentage * 3
 end
 
-function modifier_ability_abyss_16:GetModifierAttackSpeedBonus_Constant( kv )
+function modifier_ability_abyss_16:GetModifierAttackSpeedBonus_Constant()
 	return self.heal_percentage * 5
 end
 

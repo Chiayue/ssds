@@ -90,7 +90,7 @@ function modifier_archon_passive_puncture:CreateLinear(vPos)
 		fDistance = self.puncture_distance,
 		Source = self:GetCaster(),
 		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
-		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
+		iUnitTargetType = DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_HERO,
 		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
 	}
 	ProjectileManager:CreateLinearProjectile( info )

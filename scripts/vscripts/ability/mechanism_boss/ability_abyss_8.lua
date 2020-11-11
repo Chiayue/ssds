@@ -27,7 +27,11 @@ function modifier_ability_abyss_8:OnCreated( kv )
 	self.IncomingDamage_value = -100
 	if IsServer() then 
 		self:SetStackCount(10)
-		--hCaster:AddNewModifier(hCaster, self:GetAbility(), "modifier_ability_abyss_8_Reduction_of_injury", {})
+		local item_corrosive_radomNuber = RandomInt(1, 3)
+		for i = 1, item_corrosive_radomNuber do
+			local newItem = CreateItem( "item_corrosive", nil, nil )
+			local drop = CreateItemOnPositionSync( hCaster:GetAbsOrigin() + RandomVector(1) * RandomFloat(0, 1000), newItem ) 
+		end
 	end 
 end
 

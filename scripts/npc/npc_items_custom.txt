@@ -1864,6 +1864,69 @@
 		}
 	}
 
+	"item_exclusive_rage_a"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_near_gale_electric_hammer"
+		"ScriptFile"	"item/exclusive/item_exclusive_rage"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"ID"	"1615"
+		"ItemQuality"	"artifact"
+		"ItemCost"	"1000"
+		"ItemDroppable"	"0"
+		"ItemSellable"	"0"
+		"ItemShareability"	"ITEM_NOT_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemInitialCharges"	"0"
+		"ItemStackable"	"1"
+		"MaxUpgradeLevel"	"1"
+		"ItemBaseLevel"	"1"
+		"ItemRequirements"	{}
+	}
+
+	"item_exclusive_rage_b"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_near_gale_electric_hammer"
+		"ScriptFile"	"item/exclusive/item_exclusive_rage"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"ID"	"1616"
+		"ItemQuality"	"artifact"
+		"ItemCost"	"1000"
+		"ItemDroppable"	"0"
+		"ItemSellable"	"0"
+		"ItemShareability"	"ITEM_NOT_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemInitialCharges"	"0"
+		"ItemStackable"	"1"
+		"MaxUpgradeLevel"	"1"
+		"ItemBaseLevel"	"1"
+		"ItemRequirements"	{}
+	}
+
+	"item_exclusive_rage_c"
+	{
+		"BaseClass"	"item_lua"
+		"AbilityTextureName"	"item_near_gale_electric_hammer"
+		"ScriptFile"	"item/exclusive/item_exclusive_rage"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"ID"	"1617"
+		"ItemQuality"	"artifact"
+		"ItemCost"	"1000"
+		"ItemDroppable"	"0"
+		"ItemSellable"	"0"
+		"ItemShareability"	"ITEM_NOT_SHAREABLE"
+		"ItemPurchasable"	"0"
+		"ItemKillable"	"0"
+		"ItemInitialCharges"	"0"
+		"ItemStackable"	"1"
+		"MaxUpgradeLevel"	"1"
+		"ItemBaseLevel"	"1"
+		"ItemRequirements"	{}
+	}
+
 	"item_archer_bow_level_2"
 	{
 		"BaseClass"	"item_lua"

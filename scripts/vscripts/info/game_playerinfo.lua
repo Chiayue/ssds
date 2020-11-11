@@ -34,6 +34,7 @@ local player_STR = {
     "gameMode_10_clearance",
     "arrowSoul_meditation",
     "weekly_waves",
+    "luoli_tiaowu_num",
 } 
 --玩家存档数据网表
 local playersData = {}

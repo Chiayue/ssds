@@ -991,6 +991,7 @@
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"SpellImmunityType"	"SPELL_IMMUNITY_ALLIES_YES"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
 		// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
@@ -1035,12 +1036,12 @@
 				"scepter_manacost"	"50"
 			}
 		}
-		"SpellImmunityType"	"SPELL_IMMUNITY_ALLIES_YES"
 	}
 
 	"life_stealer_feast"
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_2"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1062,13 +1063,13 @@
 				"attack_speed_bonus"	"50"
 			}
 		}
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 	}
 
 	"spirit_breaker_greater_bash"
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_3"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1121,7 +1122,6 @@
 				"movespeed_duration"	"3.0"
 			}
 		}
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"	"SPELL_DISPELLABLE_YES_STRONG"
 		"AbilitySound"	"Hero_Spirit_Breaker.GreaterBash"
 		// Stats
@@ -1133,6 +1133,7 @@
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_3"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1171,7 +1172,6 @@
 				"max_range_tooltip"	"1500"
 			}
 		}
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"	"SPELL_DISPELLABLE_YES"
 		"AbilitySound"	"hero_viper.CorrosiveSkin"
 		// Stats
@@ -1209,6 +1209,7 @@
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_PURE"
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_2"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1240,7 +1241,6 @@
 				"slow"	"-100"
 			}
 		}
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		// Damage.
 		// -------------------------------------------------------------------------------------------------------------
 		"AbilityDamage"	"50"
@@ -1250,6 +1250,7 @@
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_PURE"
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_3"
 		"AbilityCooldown"	"4"
 		// General
@@ -1276,7 +1277,6 @@
 				"bonus_damage"	"50"
 			}
 		}
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 	}
 
 	"visage_gravekeepers_cloak"
@@ -1329,6 +1329,7 @@
 	{
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_1"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1369,7 +1370,6 @@
 				"illusion_percentage"	"50"
 			}
 		}
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilitySound"	"Hero_Antimage.ManaBreak"
 	}
 
@@ -1378,6 +1378,7 @@
 		"BaseClass"	"ability_datadriven"
 		"AbilityTextureName"	"phantom_assassin_blur"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_1"
 		// General
 		// -------------------------------------------------------------------------------------------------------------
@@ -1405,7 +1406,6 @@
 				"bonus_dodge"	"15"
 			}
 		}
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilitySound"	"Hero_Antimage.ManaBreak"
 	}
 
@@ -2805,6 +2805,7 @@
 		"AbilityTextureName"	"centaur_hoof_stomp"
 		"ScriptFile"	"ability/creatures/creature_bonus_chicken"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		// Special
 		// -------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -2825,7 +2826,6 @@
 				"gold_bag_duration"	"10.0"
 			}
 		}
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 		"IsOnCastBar"	"0"
 	}
 
@@ -2854,6 +2854,7 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -2884,7 +2885,6 @@
 				"agi_multiple_damage"	"30"
 			}
 		}
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"gem_die_venom"
@@ -2895,6 +2895,7 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -2937,7 +2938,6 @@
 				"timer_attack_multiple"	"5"
 			}
 		}
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"gem_raging_fire_interrogate"
@@ -2948,6 +2948,7 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -2991,7 +2992,6 @@
 				"timer_attack_multiple"	"5"
 			}
 		}
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"archon_passive_solar_flare"
@@ -3003,6 +3003,7 @@
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitDamageType"	"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilitySpecial"
 		{
@@ -3027,7 +3028,6 @@
 				"attack_multiple"	"20"
 			}
 		}
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"gem_earth_burst"
@@ -3038,6 +3038,7 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -3070,7 +3071,6 @@
 				"attack_multiple"	"30"
 			}
 		}
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"gem_shadow_quiet"
@@ -3081,6 +3081,7 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -3128,7 +3129,6 @@
 				"timer_attack_multiple"	"3"
 			}
 		}
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"gem_Ice_storm"
@@ -3139,6 +3139,7 @@
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"	"1"
 		"AbilityCooldown"	"15"
 		"precache"
@@ -3185,7 +3186,6 @@
 				"timer_attack_multiple"	"3"
 			}
 		}
-		"SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_NO"
 	}
 
 	"abilityyuyuko"
