@@ -205,6 +205,8 @@ function RunSpadeEvent(hCaster,sSpadeName,hParam)
 	elseif sEventName == "add_monster_ms" then
 		game_enum.nMonsterMoveBonus = game_enum.nMonsterMoveBonus + nAmount
 		CustomNetTables:SetTableValue( "common", "monster_move_bonus",{ move_bonus = game_enum.nMonsterMoveBonus} )
+	-- elseif sEventName == "add_hero_ms" then
+		
 	elseif sEventName == "add_wood" then
 		for P = 0 , MAX_PLAYER - 1 do
 			Player_Data:AddPoint(P ,nAmount)
@@ -269,4 +271,19 @@ function FindUnitsInRadius2( iTeamNumber, vPosition, hCacheUnit, flRadius, iTeam
 		end
 	end
 	return enemies
+end
+
+function CreateModifierThinker2( handle_1, handle_2, string_3, handle_4, Vector_5, int_6, bool_7 ) 
+	print("CreateModifierThinker  C:",IsClient()," S:",IsServer())
+	CreateModifierThinker( handle_1, handle_2, string_3, handle_4, Vector_5, int_6, bool_7 ) 
+end
+
+function SendParticlesToClient(sParticles,hUnit,ParticleAttachment_t)
+	if ParticleAttachment_t == nil then ParticleAttachment_t = PATTACH_ABSORIGIN_FOLLOW end
+	local queryUnit = hUnit:GetEntityIndex()
+	local vVector = hUnit:GetAbsOrigin() 
+	CustomGameEventManager:Send_ServerToAllClients(
+		"local_player_particles",
+		{ Particles = sParticles , Vector = vVector,queryUnit = queryUnit , Attachment = ParticleAttachment_t}
+	)
 end

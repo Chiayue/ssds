@@ -52,7 +52,11 @@ end
 
 --射程
 function modifier_ability_shishi_challenge:GetModifierAttackRangeBonus()
-	return 100
+	if self:GetParent():HasModifier("modifier_autistic_week4_ally") then
+        return 0
+    else
+        return 100
+    end
 end
 
 --金币奖励

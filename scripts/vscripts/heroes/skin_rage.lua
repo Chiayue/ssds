@@ -37,12 +37,14 @@ return {
 	},
 	{	-- 5 诗乃
 		model = "models/npc/shinai/shinai.vmdl",
+		model_scale = 1,
 		attack_projectile = "particles/diy_particles/shinai_attack.vpcf",
 		wearables = {},
 	},
 	{	-- 6 夏提雅
 		model = "models/npc/xiatiya/xiatiya.vmdl",
 		attack_projectile = "particles/diy_particles/xiatiya_attack.vpcf",
+		model_scale = 1,
 		wearables = {},
 		modifier = "modifier_customized_reward_xiatiya",
 	},

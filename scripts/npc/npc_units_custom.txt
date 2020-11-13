@@ -9863,6 +9863,7 @@
 		"MovementCapabilities"	"DOTA_UNIT_CAP_MOVE_GROUND"
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
+		"MinimapIconSize"	"500"
 	}
 
 	"npc_dota_creature_boss_ice"
@@ -9891,6 +9892,7 @@
 		"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
+		"MinimapIconSize"	"500"
 	}
 
 	"npc_dota_creature_boss_fire"
@@ -9919,6 +9921,7 @@
 		"HealthBarOffset"	"200"
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
+		"MinimapIconSize"	"500"
 	}
 
 	"npc_dota_creature_boss_robot"
@@ -9965,6 +9968,7 @@
 		}
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
+		"MinimapIconSize"	"500"
 	}
 
 	"npc_dota_creature_boss_blademaster"
@@ -10022,6 +10026,7 @@
 		"HasAggressiveStance"	"1"
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
+		"MinimapIconSize"	"500"
 	}
 
 	"npc_dota_creature_boss_shredder"
@@ -10084,6 +10089,7 @@
 		}
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
+		"MinimapIconSize"	"500"
 	}
 
 	"npc_dota_creature_boss_shadow"
@@ -10138,6 +10144,7 @@
 		}
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
+		"MinimapIconSize"	"500"
 	}
 
 	"npc_dota_creature_boss_celestialgod"
@@ -10166,6 +10173,7 @@
 		"MovementCapabilities"	"DOTA_UNIT_CAP_MOVE_GROUND"
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
+		"MinimapIconSize"	"500"
 	}
 
 	"npc_dota_creature_boss_madwarrior"
@@ -10216,6 +10224,7 @@
 		}
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
+		"MinimapIconSize"	"500"
 	}
 
 	"npc_dota_creature_boss_diao"
@@ -10244,6 +10253,7 @@
 		"MovementCapabilities"	"DOTA_UNIT_CAP_MOVE_GROUND"
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
+		"MinimapIconSize"	"500"
 	}
 
 	"the_running_of_the_security_unit"
@@ -10319,7 +10329,7 @@
 		"Ability14"	""
 		"Ability15"	""
 		"Ability16"	""
-		"Model"	"models/heroes/ancient_apparition/ancient_apparition.vmdl"
+		"Model"	"models/heroes/gyro/gyro.vmdl"
 		"ModelScale"	"1"
 		"HealthBarOffset"	"200"
 		"StatusHealth"	"100"
@@ -10331,19 +10341,23 @@
 			{
 				"Wearable1"
 				{
-					"ItemDef"	"8714"
+					"ItemDef"	"8385"
 				}
 				"Wearable2"
 				{
-					"ItemDef"	"8726"
+					"ItemDef"	"8381"
 				}
 				"Wearable3"
 				{
-					"ItemDef"	"8713"
+					"ItemDef"	"8383"
 				}
 				"Wearable4"
 				{
-					"ItemDef"	"7844"
+					"ItemDef"	"6965"
+				}
+				"Wearable5"
+				{
+					"ItemDef"	"8378"
 				}
 			}
 		}
@@ -10370,8 +10384,8 @@
 		"Ability14"	""
 		"Ability15"	""
 		"Ability16"	""
-		"Model"	"models/items/gyrocopter/dwarven_gyrocopter_off_hand/dwarven_gyrocopter_off_hand.vmdl"
-		"StatusHealth"	"20"
+		"Model"	"models/items/gyrocopter/submersible_aircraft_08_off_hand/submersible_aircraft_08_off_hand.vmdl"
+		"StatusHealth"	"30"
 		"BoundsHullName"	"200"
 	}
 }

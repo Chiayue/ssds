@@ -59,7 +59,6 @@ end
 function HeroesSkin:ChangeSkin(hHero,skinId)
 	local sHeroName = hHero:GetUnitName()
 	local hSkin = hSkinData[sHeroName]
-	--if hSkin == nil then return end
 	WearableManager:RemoveOriginalWearables(hHero)
 	WearableManager:RemoveAllWearable(hHero)
 	-- DeepPrintTable(hSkin[skinId])
@@ -76,4 +75,15 @@ function HeroesSkin:ChangeSkin(hHero,skinId)
 	if hSkin[skinId].attack_projectile ~= nil then
 		hHero:SetRangedProjectileName(hSkin[skinId].attack_projectile)	
 	end
+	-- 添加对应 modifier
+	if hSkin[skinId].modifier ~= nil then
+		hHero:AddNewModifier(hHero, nil, hSkin[skinId].modifier, {})
+	end
 end
+
+
+
+
+
+
+------------------------------  部分皮肤特效 ------------------------------

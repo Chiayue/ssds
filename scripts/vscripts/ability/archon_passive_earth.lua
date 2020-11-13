@@ -2,6 +2,7 @@
 -- 被攻击时有一定有一定的几率对自身攻击范围造成伤害。
 LinkLuaModifier( "modifier_archon_passive_earth", "ability/archon_passive_earth.lua",LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_archon_passive_earth_buff", "ability/archon_passive_earth.lua",LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_archon_passive_earth_particles", "ability/archon_passive_earth.lua",LUA_MODIFIER_MOTION_NONE )
 -------------------------------------------------
 --Abilities
 if archon_passive_earth == nil then
@@ -24,22 +25,6 @@ function modifier_archon_passive_earth:IsHidden()
 	return true
 end
 
---------------------------------------------------------------------------------
--- function modifier_archon_passive_earth:IsAura()
--- 	return true
--- end
-
--- function modifier_archon_passive_earth:GetModifierAura()
--- 	return "modifier_archon_passive_earth_aura"
--- end
-
--- function modifier_archon_passive_earth:GetAuraSearchTeam()
--- 	return DOTA_UNIT_TARGET_TEAM_FRIENDLY
--- end
-
--- function modifier_archon_passive_earth:GetAuraSearchType()
--- 	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
--- end
 --------------------------------------------------------------------------------
 function modifier_archon_passive_earth:OnCreated()
 	self.bonus_maxhealth = 0
@@ -100,26 +85,12 @@ function modifier_archon_passive_earth:OnAttackLanded( params )
 	local nBowRange = 0
 	local nTechRange = 0
 	local nBaseRange = self:GetCaster():GetBaseAttackRange()
-	local hBow = self:GetCaster():FindModifierByName("modifier_item_archer_bow")
-	if hBow ~= nil then
-		nBowRange = hBow:GetModifierAttackRangeBonus()
-	end
-	local hTeahRange = self:GetCaster():FindModifierByName("modifier_Upgrade_Range")
-	if hTeahRange ~= nil then
-		nTechRange = hTeahRange:GetModifierAttackRangeBonus()
-	end
-	local nAllRange = nBaseRange + nBowRange + nTechRange
-	
-	-- 创建效果
-	local EffectName_1 = "particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_magical.vpcf"
-	local nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hCaster )
-	ParticleManager:SetParticleControl(nFXIndex_1, 0, Vector(nBaseRange, nBaseRange, nBaseRange))
-	ParticleManager:ReleaseParticleIndex(nFXIndex_1)
-	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyEarth"),
-    function()
-        ParticleManager:DestroyParticle(nFXIndex_1, true)
-    end,1)
+	local nAllRange = nBaseRange + GetUnitRange(self:GetCaster())
+	if nAllRange < 300 then nAllRange = 300 end
 	EmitSoundOn( "Hero_Ursa.Earthshock", hCaster )
+	SendParticlesToClient("particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_magical.vpcf",hCaster)
+	-- 创建特效
+	-- hCaster:AddNewModifier( hCaster, self:GetAbility(), "modifier_archon_passive_earth_particles", { duration = 1} )
 	local abil_damage = self:GetCaster():GetMaxHealth() * self:GetAbility():GetSpecialValueFor( "coefficient" ) * 0.01
 	-- 范围
 	local enemies = FindUnitsInRadius2(
@@ -178,4 +149,22 @@ function modifier_archon_passive_earth_buff:OnCreated()
 	if IsServer() then
 		self:SetStackCount(1)
 	end
+end
+
+--------------
+modifier_archon_passive_earth_particles = {}
+function modifier_archon_passive_earth_particles:GetAttributes() return  MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_archon_passive_earth_particles:IsHidden() return true end
+function modifier_archon_passive_earth_particles:IsDebuff() return false end
+function modifier_archon_passive_earth_particles:OnCreated()
+	local hCaster = self:GetCaster()
+	local hTarget = self:GetParent()
+	if IsServer() then 
+	else
+		-- 创建效果
+		local EffectName_1 = "particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_magical.vpcf"
+		local nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_ABSORIGIN_FOLLOW, hCaster )
+		ParticleManager:ReleaseParticleIndex(nFXIndex_1)
+	end
+	self:Destroy()
 end

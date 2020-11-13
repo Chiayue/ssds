@@ -84,7 +84,7 @@ end
 -- <==============================全局变量================================>
 --游戏模式分类：   普通(默认)："common"    挂机："hook"      无尽："endless"     深渊："endless"
 GlobalVarFunc.game_mode =  "common"
---游戏模式选择:-2 挂机，0 序章，1 第一章，2 第二章........1000 无尽,  1001 自闭， 1002 深渊
+--游戏模式选择:-2 挂机，0 序章，1 第一章，2 第二章........1000 无尽,  1001 自闭， 1002 深渊   1003铲子模式
 GlobalVarFunc.game_type = 0
 --记录游戏玩家数
 GlobalVarFunc.playersNum = 0
@@ -304,4 +304,24 @@ function GlobalVarFunc:OnCreateChanzi(position,chanzi_str)
     local drop = CreateItemOnPositionSync( position, newItem )
     local dropTarget = position 
 	newItem:LaunchLoot( false, 300, 0.75, dropTarget )
+end
+
+--倒计时10秒，显示UI提示
+function GlobalVarFunc:OnGameCountDown(gameTime, monsterNumber)
+
+	if monsterNumber == nil then
+		--无尽
+		if gameTime <= 10 then
+            CustomGameEventManager:Send_ServerToAllClients("monsterNum_time_count_down",{time=gameTime;isShow=1})
+        else
+            CustomGameEventManager:Send_ServerToAllClients("monsterNum_time_count_down",{time=0;isShow=0})
+        end
+	else
+		if gameTime <= 10 and monsterNumber > 0 then
+			CustomGameEventManager:Send_ServerToAllClients("monsterNum_time_count_down",{time=gameTime;isShow=1})
+		else
+			CustomGameEventManager:Send_ServerToAllClients("monsterNum_time_count_down",{time=0;isShow=0})
+		end
+	end
+
 end

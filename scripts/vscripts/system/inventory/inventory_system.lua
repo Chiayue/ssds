@@ -398,7 +398,9 @@ function InventorySystem:ItemAddedToInventory(keys)
 		hItem:EndCooldown()
 		return true
 	end
-
+	if sItemName == "item_archers_gold"  or sItemName == "item_archers_wood" then
+		return true
+	end
 	if sItemName == "item_enchanted_mango" then
 		return false
 	end

@@ -10,6 +10,7 @@
     "PROLOGUE"     "prologue"
     "ENDLESS"      "endless"
     "AUTISTIC"     "autistic"
+    "AUTISTIC_PLUS"     "autistic plus"
     "ABYSS"        "abyss"
 
     "LEVEL_20_UNLOCK"     "level 20 unlock"

@@ -1,4 +1,7 @@
 LinkLuaModifier( "modifier_archon_passive_magic", "ability/archon_passive_magic.lua",LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_archon_passive_magic_particles", "ability/archon_passive_magic.lua",LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_archon_passive_magic_particles2", "ability/archon_passive_magic.lua",LUA_MODIFIER_MOTION_NONE )
+
 -------------------------------------------------
 --Abilities
 if archon_passive_magic == nil then
@@ -28,11 +31,8 @@ end
 
 -- 魔力爆发
 -- 魔力之箭
-function modifier_archon_passive_magic:OnAttack( params )
-	-- if not IsServer() then return end
-	if params.attacker ~= self:GetParent() then
-		return 0
-	end
+function modifier_archon_passive_magic:OnAttackLanded( params )
+	if params.attacker ~= self:GetParent() then return 0 end
 	if params.target == nil then return end
 	if params.target:IsAlive() == false then return end
 	if self:GetCaster():HasModifier("modifier_item_archer_bow_multe")  == true then return end
@@ -46,16 +46,10 @@ function modifier_archon_passive_magic:OnAttack( params )
 		local nLevel = self:GetAbility():GetLevel()
 		if nLevel < ABILITY_AWAKEN_1 then return end
 		-- 魔力爆发
-		local abil_damage = hCaster:GetIntellect() * self:GetAbility():GetSpecialValueFor( "full_damage" )
+		EmitSoundOn( "Hero_Invoker.EMP.Discharge", hCaster )
 		local EffectName = "particles/econ/items/abaddon/abaddon_alliance/abaddon_aphotic_shield_alliance_explosion.vpcf"
-		local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_POINT, hCaster )
-		--ParticleManager:SetParticleControl(nFXIndex, 1, Vector(nAllRange, nAllRange, nAllRange))
-		ParticleManager:ReleaseParticleIndex(nFXIndex)
-		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyMagic"),
-	    function()
-	        ParticleManager:DestroyParticle(nFXIndex, true)
-	    end,1)
-		-- 范围
+		SendParticlesToClient(EffectName,hCaster)
+		local abil_damage = hCaster:GetIntellect() * self:GetAbility():GetSpecialValueFor( "full_damage" )
 		local enemies = FindUnitsInRadius2(
 			hCaster:GetTeamNumber(), 
 			hTarget:GetOrigin(), 
@@ -65,7 +59,7 @@ function modifier_archon_passive_magic:OnAttack( params )
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
 			0, 1, false 
 		)
-		EmitSoundOn( "Hero_Invoker.EMP.Discharge", hCaster )
+		
 		for _,enemy in pairs(enemies) do
 			if enemy ~= nil  then
 				local damage = {
@@ -91,17 +85,11 @@ function modifier_archon_passive_magic:OnAttack( params )
 			chance = chance + 5
 		end
 		if nowChance  < chance then
-			
 			local abil_damage = hCaster:GetIntellect() * self:GetAbility():GetSpecialValueFor( "notfull_damage" ) * mana_percent * 0.01
-			local EffectName = "particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
-			local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_POINT, hTarget )
-			ParticleManager:ReleaseParticleIndex(nFXIndex)
-			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyMagic"),
-		    function()
-		        ParticleManager:DestroyParticle(nFXIndex, true)
-		    end,1)
 			EmitSoundOn( "Hero_EarthShaker.Fissure", hTarget )
 			
+			local EffectName = "particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
+			SendParticlesToClient(EffectName,hTarget)
 			-- 范围
 			local enemies = FindUnitsInRadius2(
 				hCaster:GetTeamNumber(), 
@@ -126,5 +114,36 @@ function modifier_archon_passive_magic:OnAttack( params )
 			end
 		end
 	end
-	
+end
+---------------------------------------------------------------------------------------
+modifier_archon_passive_magic_particles = {}
+function modifier_archon_passive_magic_particles:GetAttributes() return  MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_archon_passive_magic_particles:IsDebuff() return false end
+function modifier_archon_passive_magic_particles:IsHidden() return true end
+function modifier_archon_passive_magic_particles:OnCreated()
+	local hCaster = self:GetCaster()
+	local hTarget = self:GetParent()
+	if IsServer() then 
+	else
+		local EffectName = "particles/econ/items/abaddon/abaddon_alliance/abaddon_aphotic_shield_alliance_explosion.vpcf"
+		local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_POINT, hCaster )
+		ParticleManager:ReleaseParticleIndex(nFXIndex)
+	end
+	self:Destroy()
+end
+---------------------------------------------------------------------------------------
+modifier_archon_passive_magic_particles2 = {}
+function modifier_archon_passive_magic_particles2:GetAttributes() return  MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_archon_passive_magic_particles2:IsDebuff() return false end
+function modifier_archon_passive_magic_particles2:IsHidden() return true end
+function modifier_archon_passive_magic_particles2:OnCreated()
+	local hCaster = self:GetCaster()
+	local hTarget = self:GetParent()
+	if IsServer() then 
+	else
+		local EffectName = "particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
+		local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_POINT, hTarget )
+		ParticleManager:ReleaseParticleIndex(nFXIndex)
+	end
+	self:Destroy()
 end

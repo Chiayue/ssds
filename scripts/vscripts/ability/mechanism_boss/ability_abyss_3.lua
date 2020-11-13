@@ -14,6 +14,7 @@ end
 
 function ability_abyss_3:OnSpellStart( ... )
 	local hCaster = self:GetCaster()
+	local linkNuber = 0
 	-- 寻找自身所有的敌人
 	local enemys = FindUnitsInRadius(
 		hCaster:GetTeamNumber(), 
@@ -31,7 +32,11 @@ function ability_abyss_3:OnSpellStart( ... )
 		end
 	end
 	self.index_naber = {}
-	for i = 1, #enemys/2 do 
+	linkNuber = #enemys/2
+	if linkNuber <= 1 then
+		linkNuber = 1
+	end
+	for i = 1, linkNuber do 
 		local x = RandomInt(1, #enemys)
 		-- 半数以上的敌人加上DEBUFF 
 		enemys[x]:AddNewModifier(hCaster, self, "modifier_ability_abyss_3", {})
@@ -56,7 +61,24 @@ function modifier_ability_abyss_3_deth:DeclareFunctions( ... )
 	return 
 		{
 			MODIFIER_EVENT_ON_DEATH,
+			MODIFIER_EVENT_ON_ATTACK_LANDED,
 		}
+end
+
+function modifier_ability_abyss_3_deth:OnAttackLanded( keys )
+	local attacker = keys.attacker
+	local hParent = self:GetParent()
+
+	if attacker:GetTeam() == DOTA_TEAM_BADGUYS then
+		return
+	end
+	if hParent ~= keys.target then 
+		return
+	end
+
+	if not attacker:HasModifier("modifier_ability_abyss_3") then 
+		hParent:AddNewModifier(hParent, self:GetAbility(), "modifier_ability_abyss_3_Reduction_of_injury", {duration = 1})
+	end
 end
 
 function modifier_ability_abyss_3_deth:OnDeath( kys ) 

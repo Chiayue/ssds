@@ -46,6 +46,7 @@ return {
 		"particles/diy_particles/halloween_ambient.vpcf",
 		"particles/units/heroes/hero_spirit_breaker/spirit_breaker_nether_strike_begin.vpcf",
 		"particles/units/heroes/hero_spirit_breaker/spirit_breaker_nether_strike_end.vpcf",
+		"particles/econ/items/monkey_king/arcana/death/monkey_king_spring_arcana_death.vpcf"
 	},
 
 	soundfile = {

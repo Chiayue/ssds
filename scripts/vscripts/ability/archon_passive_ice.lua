@@ -1,6 +1,6 @@
 LinkLuaModifier( "modifier_archon_passive_ice", "ability/archon_passive_ice.lua",LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_archon_passive_ice_effect", "ability/archon_passive_ice.lua",LUA_MODIFIER_MOTION_NONE )
-
+LinkLuaModifier( "modifier_archon_passive_ice_particles", "ability/archon_passive_ice.lua",LUA_MODIFIER_MOTION_NONE )
 -------------------------------------------------
 --Abilities
 if archon_passive_ice == nil then
@@ -100,22 +100,14 @@ function modifier_archon_passive_ice:OnAttackLanded( params )
 	local abil_damage = self:GetCaster():GetIntellect() * self:GetAbility():GetSpecialValueFor( "coefficient" )
 	local duration = self:GetAbility():GetSpecialValueFor( "duration" )
 
-	local EffectName = "particles/heroes/humei/ability_humei_011_ice_c.vpcf"
-	if modelName == "models/npc/cirno/cirno.vmdl" then
-		EffectName = "particles/diy_particles/cirno_skill.vpcf"
-	end
-	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hTarget )
-	ParticleManager:ReleaseParticleIndex(nFXIndex)
-	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyIce"),
-    function()
-        ParticleManager:DestroyParticle(nFXIndex, true)
-    end,1)
+	
 	if nLevel >= ABILITY_AWAKEN_2 then
 		abil_damage = abil_damage + ( self:GetCaster():GetIntellect() * 6 )
 	elseif nLevel >= ABILITY_AWAKEN_1 then
 		abil_damage = abil_damage + ( self:GetCaster():GetIntellect() * 2 )
 	end
 	EmitSoundOn( "Hero_Crystal.CrystalNova", hTarget )
+	SendParticlesToClient("particles/diy_particles/cirno_skill.vpcf",hTarget)
 	-- 范围伤害
 	local enemies = FindUnitsInRadius2(
 		self:GetCaster():GetTeamNumber(), 
@@ -192,4 +184,20 @@ end
 function modifier_archon_passive_ice_effect:GetModifierMoveSpeedBonus_Percentage()
 	return -self.slow_movespeed 
 end
-
+--------------
+modifier_archon_passive_ice_particles = {}
+function modifier_archon_passive_ice_particles:GetAttributes() return  MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_archon_passive_ice_particles:IsDebuff() return false end
+function modifier_archon_passive_ice_particles:IsHidden() return true end
+function modifier_archon_passive_ice_particles:OnCreated()
+	local hCaster = self:GetCaster()
+	local hTarget = self:GetParent()
+	if IsServer() then 
+	else
+		-- 创建效果
+		local EffectName = "particles/diy_particles/cirno_skill.vpcf"
+		local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hTarget )
+		ParticleManager:ReleaseParticleIndex(nFXIndex)
+	end
+	self:Destroy()
+end

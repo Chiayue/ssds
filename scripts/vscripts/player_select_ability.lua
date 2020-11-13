@@ -24,6 +24,8 @@ local pre = 0
 local hPassive = {}
 local hPlayerBonus = {}
 local hRepick = {}
+local nDotaMap = nil
+local nMagmaTime = 0
 function Player_Select_Ability:init()
 	-- 科技系统
 	for nPlayerID = 0,MAX_PLAYER-1 do
@@ -242,8 +244,8 @@ function Player_Select_Ability:Talent_Selected(args)
 	   		ArrowSoulCompensate:CheckReward( hNewHero )
 	   	end)
 	   	-- 自闭模式
-	   	if GlobalVarFunc.game_type == 1001 and GlobalVarFunc.game_mode == "endless"then
-	   		-- hNewHero:AddNewModifier(hNewHero, nil, "modifier_autistic_week3_ally", {})
+	   	if GlobalVarFunc.game_type == 1001 or GlobalVarFunc.game_type == 1003 then
+			hNewHero:AddNewModifier(hNewHero, nil, "modifier_autistic_week4_ally", {})
 	   	end
 
 	   	-- 提示
@@ -273,6 +275,10 @@ end
 function Player_Select_Ability:OnGameRulesStateChange(event)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		-- 模式判断
+
+		if GlobalVarFunc.game_type == 1001 then
+			Player_Select_Ability:AutisticMode()
+		end
 		-- 作弊模式验证
 		if GameRules:IsCheatMode() then
 			 local nPlayerCount = PlayerResource:GetPlayerCount()
@@ -464,6 +470,7 @@ function Player_Select_Ability:OnThinkTechnology()
 	end
 	if GlobalVarFunc.MonsterWave >= 1 or GlobalVarFunc.game_type == -2 then
 		pre = pre + 1
+		nMagmaTime = nMagmaTime + 1
 		for nPlayerID = 0,5 do
 			local hPlayer = PlayerResource:GetPlayer(nPlayerID)
 			if hPlayer ~= nil then
@@ -729,7 +736,6 @@ function AttributeCalculation(hHero)
 	if nArrowSoulStack >= 38 then nMagicDamage = nMagicDamage + 0.05 end
 	hAttr["magic_damage"] = nMagicDamage + nFinalDamage
 	-- DeepPrintTable(hAttr)
-	GetUnitRange(hHero)
 end 
 
 
@@ -806,4 +812,10 @@ end
 
 function modifier_moe_novice_player:GetModifierBonusStats_Strength() 
 	return 10
+end
+-------------------
+function Player_Select_Ability:AutisticMode()
+	print("AutisticMode")
+	--local vVector = Vector(0,0,10)
+	--nDotaMap = DOTA_SpawnMapAtPosition( "archers_survive_red", vVector, true, nil, nil, {vector = vVector} )
 end

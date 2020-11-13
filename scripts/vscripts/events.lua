@@ -14,7 +14,7 @@ function CAddonTemplateGameMode:OnEntityKill(event)
 
                 --深渊击杀boss进入下一波
                 if GlobalVarFunc.game_type == 1002 then
-                    if GlobalVarFunc.MonsterWave == 4 then
+                    if GlobalVarFunc.MonsterWave == 8 then
                         self:OnGoodguysWinner()
                     else
                         GlobalVarFunc.abyss_spawn_state = false
@@ -253,7 +253,7 @@ end
 
 --铲子掉落
 function CAddonTemplateGameMode:OnCreatedChanZi(unit)
-    if (spawner_config.mosterWave >= 5) and (GlobalVarFunc.game_type == 1001) then
+    if (spawner_config.mosterWave >= 5) and (GlobalVarFunc.game_type == 1003) then
         local position = unit:GetOrigin()
         local randNum = RandomInt(1,100)
         if unit:GetContext("boss") then

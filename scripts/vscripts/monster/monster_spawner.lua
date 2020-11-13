@@ -64,8 +64,8 @@ function MobSpawner:OnThink()
         --无尽模式
         self:OnGameModeEndless(now)
 
-    --每周自闭模式
-    elseif GlobalVarFunc.game_type==1001 then
+    --每周自闭模式     铲子模式
+    elseif GlobalVarFunc.game_type==1001 or GlobalVarFunc.game_type == 1003 then
 
         --判断是否刷池子怪
         MobSpawner:OnNowTotalMonsterNum()
@@ -183,7 +183,7 @@ function MobSpawner:SpawnAbyssNextWave()
     if GlobalVarFunc.abyss_spawn_state then
         spawner_config.spawn_abyss_monster_time = spawner_config.spawn_abyss_boss_time
     else
-        spawner_config.spawn_abyss_monster_time = 500
+        spawner_config.spawn_abyss_monster_time = 300
     end
 
     spawner_config.mosterWave = spawner_config.mosterWave + 1
@@ -202,7 +202,7 @@ function MobSpawner:SpawnAbyssNextWave()
         spawner_config.monsterSurplusNum = 0
         GlobalVarFunc.monsterIsShuaMan = false
         --深渊模式刷小兵
-        --self:SpawnMonsterAbyss()
+        self:SpawnMonsterAbyss()
         --深渊模式刷boss
         self:SpawnBossAbyss()
     end
@@ -245,8 +245,8 @@ function MobSpawner:SpawnNextWave()
         end
         self:SpawnBossEndless()
 
-    --每周自闭模式
-    elseif GlobalVarFunc.game_type==1001 then
+    --每周自闭模式    铲子模式
+    elseif GlobalVarFunc.game_type==1001 or GlobalVarFunc.game_type == 1003 then
         --野怪池子的数量
         spawner_config.monsterSurplusNum = 800
         GlobalVarFunc.monsterIsShuaMan = false
@@ -297,11 +297,7 @@ function MobSpawner:OnNextMonTimeXu()
     if (spawner_config.spawn_state == 1) and (spawner_config.spawn_interval_time_tips > 0) then 
         CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_interval_time_tips;gameType = GlobalVarFunc.game_type;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
         --倒计时10秒，显示UI提示
-        if spawner_config.spawn_interval_time_tips <= 10 and spawner_config.monsterNumber > 0 then
-            CustomGameEventManager:Send_ServerToAllClients("monsterNum_time_count_down",{time=spawner_config.spawn_interval_time_tips;isShow=1})
-        else
-            CustomGameEventManager:Send_ServerToAllClients("monsterNum_time_count_down",{time=0;isShow=0})
-        end
+        GlobalVarFunc:OnGameCountDown(spawner_config.spawn_interval_time_tips, spawner_config.monsterNumber)
 
         spawner_config.spawn_interval_time_tips = spawner_config.spawn_interval_time_tips-1
     else
@@ -338,11 +334,7 @@ function MobSpawner:OnNextMonTime()
     if (spawner_config.spawn_state == 1) and (spawner_config.spawn_interval_time_tips > 0) then 
         CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_interval_time_tips;gameType = GlobalVarFunc.game_type;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
         --倒计时10秒，显示UI提示
-        if spawner_config.spawn_interval_time_tips <= 10 and spawner_config.monsterNumber > 0 then
-            CustomGameEventManager:Send_ServerToAllClients("monsterNum_time_count_down",{time=spawner_config.spawn_interval_time_tips;isShow=1})
-        else
-            CustomGameEventManager:Send_ServerToAllClients("monsterNum_time_count_down",{time=0;isShow=0})
-        end
+        GlobalVarFunc:OnGameCountDown(spawner_config.spawn_interval_time_tips, spawner_config.monsterNumber)
 
         spawner_config.spawn_interval_time_tips = spawner_config.spawn_interval_time_tips-1
     else
@@ -388,11 +380,7 @@ function MobSpawner:OnEndlessNextMonTime2()
         CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_interval_endless_time_tips;gameType = GlobalVarFunc.game_type;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
 
         --倒计时10秒，显示UI提示
-        if spawner_config.spawn_interval_endless_time_tips <= 10 then
-            CustomGameEventManager:Send_ServerToAllClients("monsterNum_time_count_down",{time=spawner_config.spawn_interval_endless_time_tips;isShow=1})
-        else
-            CustomGameEventManager:Send_ServerToAllClients("monsterNum_time_count_down",{time=0;isShow=0})
-        end
+        GlobalVarFunc:OnGameCountDown(spawner_config.spawn_interval_endless_time_tips)
 
         spawner_config.spawn_interval_endless_time_tips = spawner_config.spawn_interval_endless_time_tips-1
     else
@@ -424,11 +412,7 @@ function MobSpawner:OnAbyssNextMonTime()
     if (spawner_config.spawn_state == 1) and (spawner_config.spawn_abyss_monster_time > 0) then 
         CustomGameEventManager:Send_ServerToAllClients("OnNextMonsterTip",{time=spawner_config.spawn_abyss_monster_time;gameType = GlobalVarFunc.game_type;num = spawner_config.mosterWave;monsterNum=spawner_config.monsterNumber;monsterchizi=spawner_config.monsterSurplusNum})
         --倒计时10秒，显示UI提示
-        if spawner_config.spawn_abyss_monster_time <= 10 and spawner_config.monsterNumber > 0 then
-            CustomGameEventManager:Send_ServerToAllClients("monsterNum_time_count_down",{time=spawner_config.spawn_abyss_monster_time;isShow=1})
-        else
-            CustomGameEventManager:Send_ServerToAllClients("monsterNum_time_count_down",{time=0;isShow=0})
-        end
+        GlobalVarFunc:OnGameCountDown(spawner_config.spawn_abyss_monster_time, spawner_config.monsterNumber)
 
         spawner_config.spawn_abyss_monster_time = spawner_config.spawn_abyss_monster_time - 1
     else
@@ -641,7 +625,7 @@ function MobSpawner:SpawnMonsterAbyss()
     end
 
     --野怪池子的数量
-    spawner_config.monsterSurplusNum = 2000
+    spawner_config.monsterSurplusNum = 1000
     GlobalVarFunc.monsterIsShuaMan = false
 
     --小兵模型
@@ -692,9 +676,9 @@ end
 -- 深渊模式刷Boss
 function MobSpawner:SpawnBossAbyss()
 
-    -- if not GlobalVarFunc.abyss_spawn_state then
-    --     return
-    -- end
+    if not GlobalVarFunc.abyss_spawn_state then
+        return
+    end
 
     --野怪池子的数量
     spawner_config.monsterSurplusNum = 0
@@ -708,7 +692,7 @@ function MobSpawner:SpawnBossAbyss()
     self:setAbyssMonsterBaseInformation(boss)
 
     --深渊boss技能
-    self:_addAbyssAbility(boss,1)
+    self:_addAbyssAbility(boss,4)
     --减伤光环
     boss:AddNewModifier(boss, nil, "modifier_abyss_jianshang", nil)
     
@@ -909,7 +893,7 @@ function MobSpawner:OnSpawnMonster()
         mob:AddAbility(ability)
     end
 
-    if GlobalVarFunc.game_type == 1001 then
+    if GlobalVarFunc.game_type == 1001 or GlobalVarFunc.game_type == 1003 then
         GlobalVarFunc:OnWeeklyGameChange(mob)
     end
 
@@ -957,37 +941,40 @@ function MobSpawner:setAbyssMonsterBaseInformation(unit)
 end
 
 function MobSpawner:abyss_boss_info(unit, health, attack)
-    if unit:GetUnitName() == "npc_dota_creature_boss_diao" then
-        health = health * 50
-        attack = attack * 30
-    elseif unit:GetUnitName() == "npc_dota_creature_boss_troops" then
-        health = health * 30
-        attack = attack * 10
-    elseif unit:GetUnitName() == "npc_dota_creature_boss_ice" then
-        health = health * 20
-        attack = attack * 10
-    elseif unit:GetUnitName() == "npc_dota_creature_boss_fire" then
-        health = health * 20
-        attack = attack * 10
-    elseif unit:GetUnitName() == "npc_dota_creature_boss_robot" then
-        health = health * 40
-        attack = attack * 10
-    elseif unit:GetUnitName() == "npc_dota_creature_boss_blademaster" then
-        health = health * 30
-        attack = attack * 20
-    elseif unit:GetUnitName() == "npc_dota_creature_boss_shredder" then
-        health = health * 35
-        attack = attack * 10
-    elseif unit:GetUnitName() == "npc_dota_creature_boss_shadow" then
-        health = health * 25
-        attack = attack * 15
-    elseif unit:GetUnitName() == "npc_dota_creature_boss_celestialgod" then
-        health = health * 25
-        attack = attack * 15
-    elseif unit:GetUnitName() == "npc_dota_creature_boss_madwarrior" then
-        health = health * 30
-        attack = attack * 10
-    end
+    -- if unit:GetUnitName() == "npc_dota_creature_boss_diao" then
+    --     health = health * 50
+    --     attack = attack * 30
+    -- elseif unit:GetUnitName() == "npc_dota_creature_boss_troops" then
+    --     health = health * 30
+    --     attack = attack * 10
+    -- elseif unit:GetUnitName() == "npc_dota_creature_boss_ice" then
+    --     health = health * 20
+    --     attack = attack * 10
+    -- elseif unit:GetUnitName() == "npc_dota_creature_boss_fire" then
+    --     health = health * 20
+    --     attack = attack * 10
+    -- elseif unit:GetUnitName() == "npc_dota_creature_boss_robot" then
+    --     health = health * 40
+    --     attack = attack * 10
+    -- elseif unit:GetUnitName() == "npc_dota_creature_boss_blademaster" then
+    --     health = health * 30
+    --     attack = attack * 20
+    -- elseif unit:GetUnitName() == "npc_dota_creature_boss_shredder" then
+    --     health = health * 35
+    --     attack = attack * 10
+    -- elseif unit:GetUnitName() == "npc_dota_creature_boss_shadow" then
+    --     health = health * 25
+    --     attack = attack * 15
+    -- elseif unit:GetUnitName() == "npc_dota_creature_boss_celestialgod" then
+    --     health = health * 25
+    --     attack = attack * 15
+    -- elseif unit:GetUnitName() == "npc_dota_creature_boss_madwarrior" then
+    --     health = health * 30
+    --     attack = attack * 10
+    -- end
+
+    health = health * 10000
+    attack = attack * 100
 
     return health, attack
 end
@@ -1068,7 +1055,11 @@ end
 function MobSpawner:_AttackDamage()
     local attack = ((spawner_config.mosterWave-1)*(spawner_config.mosterWave-1)*20+30)*(GlobalVarFunc.duliuLevel*0.03 + 1) * GlobalVarFunc.MonsterViolent
     if GlobalVarFunc.game_mode == "common" then
-        return attack * (GlobalVarFunc.game_type*0.3+0.5)
+        if GlobalVarFunc.game_type == 0 then
+            return attack * 0.3
+        else
+            return attack * (GlobalVarFunc.game_type*0.3+0.5)
+        end
     else
         if spawner_config.mosterWave > 20 then
             return attack * 6
@@ -1089,7 +1080,11 @@ function MobSpawner:_Health()
     end
 
     if GlobalVarFunc.game_mode == "common" then
-        return health * (GlobalVarFunc.game_type*0.3+0.5)
+        if GlobalVarFunc.game_type == 0 then
+            return health * 0.3
+        else
+            return health * (GlobalVarFunc.game_type*0.3+0.5)
+        end
     else
         if spawner_config.mosterWave > 20 then
             return health * 2 * 0.1

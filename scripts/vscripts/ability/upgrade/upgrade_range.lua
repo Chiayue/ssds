@@ -37,7 +37,11 @@ function modifier_Upgrade_Range:DeclareFunctions()
 end
 
 function modifier_Upgrade_Range:GetModifierAttackRangeBonus()
-	return self.bonus * self:GetStackCount()
+	if self:GetParent():HasModifier("modifier_autistic_week4_ally") then
+		return - 700
+	else
+		return self.bonus * self:GetStackCount()
+	end
 end
 
 

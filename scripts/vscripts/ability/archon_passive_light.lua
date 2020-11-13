@@ -1,7 +1,8 @@
 LinkLuaModifier( "modifier_archon_passive_light", "ability/archon_passive_light.lua",LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_archon_passive_light_effect", "ability/archon_passive_light.lua",LUA_MODIFIER_MOTION_NONE )
-
+LinkLuaModifier( "modifier_archon_passive_light_particles", "ability/archon_passive_light.lua",LUA_MODIFIER_MOTION_NONE )
 local sParticle = "particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf"
+local EffectName = "particles/units/heroes/hero_omniknight/omniknight_loadout.vpcf"
 -------------------------------------------------
 --Abilities
 if archon_passive_light == nil then
@@ -72,6 +73,7 @@ function modifier_archon_passive_light:OnAttackLanded( params )
 	local nDamageRadius = self:GetAbility():GetSpecialValueFor( "damage_radius" )
 	-- 对敌人范围
 	EmitSoundOn( "Hero_Omniknight.Purification", hTarget )
+	SendParticlesToClient(EffectName,hTarget)
 	local enemies = FindUnitsInRadius2(
 		self:GetCaster():GetTeamNumber(), 
 		hTarget:GetOrigin(), 
@@ -95,13 +97,7 @@ function modifier_archon_passive_light:OnAttackLanded( params )
 
 	-- 创建效果
 	-- local EffectName = "particles/units/heroes/hero_abaddon/abaddon_borrowed_time_heal.vpcf"
-	local EffectName = "particles/units/heroes/hero_omniknight/omniknight_loadout.vpcf"
-	local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hTarget)
-	ParticleManager:ReleaseParticleIndex(nFXIndex)
-	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyLight"),
-    function()
-        ParticleManager:DestroyParticle(nFXIndex, true)
-    end,1)
+	
 
 	-- 治疗值
 	local nHealthAmount = nBaseDamage * self:GetAbility():GetSpecialValueFor( "health_coefficient" )
@@ -180,3 +176,21 @@ end
 
 function modifier_archon_passive_light_effect:DeclareFunctions() return { MODIFIER_PROPERTY_TOOLTIP } end
 function modifier_archon_passive_light_effect:OnTooltip() return self:GetStackCount() end
+--------------
+modifier_archon_passive_light_particles = {}
+function modifier_archon_passive_light_particles:GetAttributes() return  MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_archon_passive_light_particles:IsDebuff() return false end
+function modifier_archon_passive_light_particles:IsHidden() return true end
+function modifier_archon_passive_light_particles:OnCreated()
+	local hCaster = self:GetCaster()
+	local hTarget = self:GetParent()
+	if IsServer() then 
+	else
+		-- 创建效果
+		
+		local nFXIndex = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hTarget)
+		ParticleManager:ReleaseParticleIndex(nFXIndex)
+
+	end
+	self:Destroy()
+end

@@ -47,7 +47,11 @@ end
 
 --射程
 function modifier_ability_tianjue_challenge:GetModifierAttackRangeBonus()
-	return 120
+	if self:GetParent():HasModifier("modifier_autistic_week4_ally") then
+        return 0
+    else
+        return 120
+    end
 end
 
 --金币奖励

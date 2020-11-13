@@ -1,6 +1,7 @@
 LinkLuaModifier( "modifier_archon_passive_dark", "ability/archon_passive_dark.lua",LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_archon_passive_dark_debuff", "ability/archon_passive_dark.lua",LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_archon_passive_dark_debuff2", "ability/archon_passive_dark.lua",LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_archon_passive_dark_particles", "ability/archon_passive_dark.lua",LUA_MODIFIER_MOTION_NONE )
 -------------------------------------------------
 local nDarkFXIndex = nil
 
@@ -51,24 +52,14 @@ function modifier_archon_passive_dark:OnAttackLanded( params )
 	if nowChance  > chance then
 		return 0
 	end
-	
+	local hCaster = self:GetCaster()
 	local hTarget = params.target
 	local duration = self:GetAbility():GetSpecialValueFor( "duration" )
 	local aoe = self:GetAbility():GetSpecialValueFor( "aoe" )
-	-- 创建效果
-	local EffectName = "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
-	if self:GetCaster():GetModelName() == "models/npc/flandre/flandre.vmdl" then
-		EffectName = "particles/diy_particles/flandre_diy_skill.vpcf"
-	end
-	
-
-	local nFXIndex  = ParticleManager:CreateParticle( EffectName, PATTACH_ABSORIGIN_FOLLOW, hTarget)
-	ParticleManager:ReleaseParticleIndex(nFXIndex)
-	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyDark"),
-    function()
-        ParticleManager:DestroyParticle(nFXIndex, true)
-    end,1)
-	
+	-- 创建特效
+	-- hTarget:AddNewModifier( self:GetCaster(), self:GetAbility(), "modifier_archon_passive_dark_particles", { duration = 1} )
+	EmitSoundOn( "Hero_Nevermore.Shadowraze", hTarget )
+	SendParticlesToClient("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf",hTarget)
 	
 	local abil_damage = self:GetCaster():GetStrength() + self:GetCaster():GetAgility() + self:GetCaster():GetIntellect()
 	abil_damage = abil_damage * self:GetAbility():GetSpecialValueFor( "coefficient" )
@@ -96,8 +87,6 @@ function modifier_archon_passive_dark:OnAttackLanded( params )
 			hDebuff:SetStackCount(nHurtStack) 
 		end
 	end
-
-	EmitSoundOn( "Hero_Nevermore.Shadowraze", hTarget )
 	for _,enemy in pairs(enemies) do
 		if enemy ~= nil then
 			local damage = {
@@ -157,6 +146,7 @@ end
 function modifier_archon_passive_dark_debuff:GetModifierMiss_Percentage()
 	return self.miss_rate
 end
+
 ----------------------------
 if modifier_archon_passive_dark_debuff2 == nil then modifier_archon_passive_dark_debuff2 = class({}) end
 function modifier_archon_passive_dark_debuff2:IsHidden() return false end
@@ -165,4 +155,22 @@ function modifier_archon_passive_dark_debuff2:OnCreated()
 	if IsServer() then
 		self:SetStackCount(1)
 	end
+end
+
+--------------
+modifier_archon_passive_dark_particles = {}
+function modifier_archon_passive_dark_particles:GetAttributes() return  MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_archon_passive_dark_particles:IsDebuff() return false end
+function modifier_archon_passive_dark_particles:IsHidden() return true end
+function modifier_archon_passive_dark_particles:OnCreated()
+	local hCaster = self:GetCaster()
+	local hTarget = self:GetParent()
+	if IsServer() then 
+	else
+		local EffectName = "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+		local nFXIndex  = ParticleManager:CreateParticle( EffectName, PATTACH_WORLDORIGIN, nil)
+		ParticleManager:SetParticleControl(nFXIndex, 0, hTarget:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(nFXIndex)
+	end
+	self:Destroy()
 end

@@ -25,48 +25,44 @@ end
 function modifier_archon_passive_bank:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_ATTACK,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
 	}
 	return funcs
 end
 
 
-function modifier_archon_passive_bank:OnAttack( params )
-	--if IsServer() then
-		if params.attacker ~= self:GetParent() then
-			return 0
-		end
-		--EmitSoundOn("Hero_Zuus.ArcLightning.Cast",params.attacker)
-		if self:GetCaster():HasModifier("modifier_item_archer_bow_multe")  == true then return end
-		local nLevel = self:GetAbility():GetLevel()
-		local nowChance = RandomInt(0,100)
-		local nBonusChance = 0
-		if nLevel >= ABILITY_AWAKEN_1 then
-			nBonusChance = 5
-		end
-		local chance = self:GetAbility():GetSpecialValueFor( "chance" ) + nBonusChance
-		local nTalentStack = self:GetCaster():GetModifierStackCount("modifier_series_reward_talent_flame", self:GetCaster() )
-		if nTalentStack >= 2 then
-			chance = chance + 5
-		end
-		if nowChance  > chance then
-			return 0
-		end
-		local hAttacker = params.attacker
-		local hTarget = params.target
-		local abil_damage = 1
-		local hCaster = self:GetCaster()
-		local nPlayerID = hCaster:GetPlayerID() 
-		local hPlayerData = CustomNetTables:GetTableValue( "player_data", "common")
-		local nIncomeLevel = hPlayerData[tostring(nPlayerID)]["Income_Level"]
-		if nLevel >= ABILITY_AWAKEN_2 then
-			local nIncomeAmount = hPlayerData[tostring(nPlayerID)]["Income_Amount"]
-			self:GetAbility().nDamage = (nIncomeAmount * nIncomeLevel * self:GetAbility():GetSpecialValueFor( "coefficient" ) * 0.01 )+ 10
-		else
-			self:GetAbility().nDamage = (nIncomeLevel * nIncomeLevel * self:GetAbility():GetSpecialValueFor( "coefficient" ) * 0.01 )+ 10
-		end
-		self:GetAbility().hTargetsHit = {}
-		self:HitTarget( hCaster,hTarget)
-	--end
+function modifier_archon_passive_bank:OnAttackLanded( params )
+	if params.attacker ~= self:GetParent() then return 0 end
+	if self:GetCaster():HasModifier("modifier_item_archer_bow_multe")  == true then return end
+	local nLevel = self:GetAbility():GetLevel()
+	local nowChance = RandomInt(0,100)
+	local nBonusChance = 0
+	if nLevel >= ABILITY_AWAKEN_1 then
+		nBonusChance = 5
+	end
+	local chance = self:GetAbility():GetSpecialValueFor( "chance" ) + nBonusChance
+	local nTalentStack = self:GetCaster():GetModifierStackCount("modifier_series_reward_talent_flame", self:GetCaster() )
+	if nTalentStack >= 2 then
+		chance = chance + 5
+	end
+	if nowChance  > chance then
+		return 0
+	end
+	local hAttacker = params.attacker
+	local hTarget = params.target
+	local abil_damage = 1
+	local hCaster = self:GetCaster()
+	local nPlayerID = hCaster:GetPlayerID() 
+	local hPlayerData = CustomNetTables:GetTableValue( "player_data", "common")
+	local nIncomeLevel = hPlayerData[tostring(nPlayerID)]["Income_Level"]
+	if nLevel >= ABILITY_AWAKEN_2 then
+		local nIncomeAmount = hPlayerData[tostring(nPlayerID)]["Income_Amount"]
+		self:GetAbility().nDamage = (nIncomeAmount * nIncomeLevel * self:GetAbility():GetSpecialValueFor( "coefficient" ) * 0.01 )+ 10
+	else
+		self:GetAbility().nDamage = (nIncomeLevel * nIncomeLevel * self:GetAbility():GetSpecialValueFor( "coefficient" ) * 0.01 )+ 10
+	end
+	self:GetAbility().hTargetsHit = {}
+	self:HitTarget( hCaster,hTarget)
 end
 
 function modifier_archon_passive_bank:HitTarget( hOrigin,hTarget)

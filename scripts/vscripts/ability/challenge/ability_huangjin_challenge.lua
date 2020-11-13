@@ -52,7 +52,11 @@ end
 
 --射程
 function modifier_ability_huangjin_challenge:GetModifierAttackRangeBonus()
-	return 70
+	if self:GetParent():HasModifier("modifier_autistic_week4_ally") then
+        return 0
+    else
+       return 70
+    end
 end
 
 --金币奖励

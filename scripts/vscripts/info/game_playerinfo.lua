@@ -99,7 +99,7 @@ function game_playerinfo:update_playerInfo()
                     --记录无尽最高层数
                     self:OnGameEndless(PlayerID)
 
-                    if GlobalVarFunc.game_type==1001 then
+                    if GlobalVarFunc.game_type==1001 or GlobalVarFunc.game_type==1003 then
                         --记录自闭最高层数
                         self:OnGameZiBi(PlayerID)
                         --自闭地图经验奖励
@@ -140,9 +140,17 @@ end
 
 function game_playerinfo:OnRewardActivityCoin(nPlayerID)
     if GlobalVarFunc.MonsterWave >= 100 then
-        local activityCoin = (math.floor(GlobalVarFunc.MonsterWave / 100)) * 15
-        if activityCoin > 45 then 
-            activityCoin = 45
+        local activityCoin = 0
+        if GlobalVarFunc.game_type == 1001 then
+            activityCoin = (math.floor(GlobalVarFunc.MonsterWave / 100)) * 15
+            if activityCoin > 45 then 
+                activityCoin = 45
+            end
+        else
+            activityCoin = (math.floor(GlobalVarFunc.MonsterWave / 100)) * 10
+            if activityCoin > 30 then 
+                activityCoin = 30
+            end
         end
         local tip = "每周自闭模式奖励"..activityCoin.."活动币"
         Store:AddCustomGoodsValue(nPlayerID,"activity_coin",activityCoin,tip,true)

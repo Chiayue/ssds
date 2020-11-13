@@ -46,6 +46,7 @@ function modifier_archon_passive_puncture:OnAttack(params)
 	-- 获取自身攻击范围
 	local nBaseRange = self:GetCaster():GetBaseAttackRange() + 500
 	local nAllRange = nBaseRange + GetUnitRange(self:GetCaster())
+	if nAllRange < 300 then nAllRange = 300 end
 	--self.puncture_distance = self:GetAbility():GetSpecialValueFor( "puncture_distance" )
 	self.puncture_distance = nAllRange
 	self.puncture_speed = self:GetAbility():GetSpecialValueFor( "puncture_speed" )

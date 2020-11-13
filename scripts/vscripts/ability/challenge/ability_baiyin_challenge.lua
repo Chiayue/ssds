@@ -52,7 +52,11 @@ end
 
 --射程
 function modifier_ability_baiyin_challenge:GetModifierAttackRangeBonus()
-	return 55
+    if self:GetParent():HasModifier("modifier_autistic_week4_ally") then
+        return 0
+    else
+	   return 55
+    end
 end
 
 --金币奖励

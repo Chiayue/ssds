@@ -10,6 +10,7 @@
     "PROLOGUE"     "序章"
     "ENDLESS"      "无尽"
     "AUTISTIC"     "自闭"
+    "AUTISTIC_PLUS"     "自闭plus"
     "ABYSS"        "深渊"
 
     "LEVEL_20_UNLOCK"     "20级解锁"

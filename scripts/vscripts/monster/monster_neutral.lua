@@ -27,7 +27,7 @@ function MonsterNeutral:OnMonsterNeutralThinker()
     end
 
     --图腾
-    if (GlobalVarFunc.MonsterWave >= 40) and (GlobalVarFunc.game_type == 1001) then
+    if (GlobalVarFunc.MonsterWave >= 40) and (GlobalVarFunc.game_type == 1003) then
         if GlobalVarFunc.isCreateTuTeng == true then
             GlobalVarFunc.isCreateTuTeng = false
             MonsterNeutral:OnTuTengTime()
@@ -84,7 +84,7 @@ function MonsterNeutral:OnCreateTuTeng()
 
     --添加ai
     tuteng:AddNewModifier(tuteng, nil, "modifier_cooldown_ai", nil)
-    local ability = tuteng:AddAbility("ability_abyss_18")
+    local ability = tuteng:AddAbility("ability_abyss_19")
     ability:SetLevel(1)
 
 
@@ -180,7 +180,7 @@ function MonsterNeutral:OnCreateMonster(Vec)
 
     self:setMonsterBaseInformation(monster)
 
-    if GlobalVarFunc.game_type == 1001 then
+    if GlobalVarFunc.game_type == 1001 or GlobalVarFunc.game_type == 1003 then
         GlobalVarFunc:OnWeeklyGameChange(monster)
     end
     GlobalVarFunc:_addMoveSpeedAbility(monster)
