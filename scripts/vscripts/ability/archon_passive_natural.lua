@@ -93,25 +93,13 @@ function modifier_archon_passive_natural:OnAttackLanded( params )
 			ApplyDamage( damage )
 
 			if nLevel >= ABILITY_AWAKEN_2 then
-				enemy:AddNewModifier( 
-					self:GetCaster(), 
-					self:GetAbility(), 
-					sModifierName, 
-					{ duration = duration} 
-				)
-				enemy:AddNewModifier( 
-					self:GetCaster(), 
-					self:GetAbility(), 
-					sModifierName, 
-					{ duration = duration} 
-				)
+				for i=1,4 do
+					enemy:AddNewModifier( self:GetCaster(), self:GetAbility(), sModifierName, { duration = duration} )
+				end
 			elseif nLevel >= ABILITY_AWAKEN_1 then
-				enemy:AddNewModifier( 
-					self:GetCaster(), 
-					self:GetAbility(), 
-					sModifierName, 
-					{ duration = duration} 
-				)
+				for i=1,2 do
+					enemy:AddNewModifier( self:GetCaster(), self:GetAbility(), sModifierName, { duration = duration} )
+				end
 			end
 	
 		end
@@ -149,7 +137,7 @@ function modifier_archon_passive_natural_debuff:OnRefresh()
 			self:IncrementStackCount()
 		end
 	else
-		if self:GetStackCount() < 10 then
+		if self:GetStackCount() < 49 then
 			self:IncrementStackCount()
 		end
 	end

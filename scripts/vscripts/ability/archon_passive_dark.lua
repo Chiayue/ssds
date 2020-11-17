@@ -1,4 +1,5 @@
 LinkLuaModifier( "modifier_archon_passive_dark", "ability/archon_passive_dark.lua",LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_archon_passive_buff", "ability/archon_passive_dark.lua",LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_archon_passive_dark_debuff", "ability/archon_passive_dark.lua",LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_archon_passive_dark_debuff2", "ability/archon_passive_dark.lua",LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_archon_passive_dark_particles", "ability/archon_passive_dark.lua",LUA_MODIFIER_MOTION_NONE )
@@ -60,7 +61,8 @@ function modifier_archon_passive_dark:OnAttackLanded( params )
 	-- hTarget:AddNewModifier( self:GetCaster(), self:GetAbility(), "modifier_archon_passive_dark_particles", { duration = 1} )
 	EmitSoundOn( "Hero_Nevermore.Shadowraze", hTarget )
 	SendParticlesToClient("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf",hTarget)
-	
+	-- L2觉醒
+
 	local abil_damage = self:GetCaster():GetStrength() + self:GetCaster():GetAgility() + self:GetCaster():GetIntellect()
 	abil_damage = abil_damage * self:GetAbility():GetSpecialValueFor( "coefficient" )
 	-- print("before:",abil_damage)
@@ -75,7 +77,20 @@ function modifier_archon_passive_dark:OnAttackLanded( params )
 		0, 1, false 
 	)
 	local nLevel = self:GetAbility():GetLevel()
-	-- L5觉醒
+	-- 觉醒
+	if nLevel >= ABILITY_AWAKEN_1 then
+		local nBuffChance = RandomInt(1,100) 
+		-- print(nBuffChance)
+		if nBuffChance <= 20 then
+			local ModifybonusName = "modifier_archon_passive_buff"
+			local hModifiersTable = hCaster:FindAllModifiersByName(ModifybonusName)
+			local nowStack = #hModifiersTable
+			if nowStack >= 20 then
+				hCaster:RemoveModifierByName(ModifybonusName)
+			end
+			hCaster:AddNewModifier( hCaster, self:GetAbility(), ModifybonusName, { duration = 30} )
+		end
+	end
 	if nLevel >= ABILITY_AWAKEN_2 then
 		local nHurtStack  = math.floor(self:GetCaster():GetAgility() / 2000)
 		local hDebuff = hTarget:FindModifierByName("modifier_archon_passive_dark_debuff2")
@@ -174,3 +189,21 @@ function modifier_archon_passive_dark_particles:OnCreated()
 	end
 	self:Destroy()
 end
+
+--------------------
+modifier_archon_passive_buff = {}
+function modifier_archon_passive_buff:GetAttributes() return  MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_archon_passive_buff:IsDebuff() return false end
+function modifier_archon_passive_buff:IsHidden() return true end
+
+function modifier_archon_passive_buff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+	}
+end
+
+function modifier_archon_passive_buff:GetModifierBonusStats_Agility() return 50 end
+function modifier_archon_passive_buff:GetModifierBonusStats_Intellect() return 50 end
+function modifier_archon_passive_buff:GetModifierBonusStats_Strength() return 50 end

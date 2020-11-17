@@ -65,6 +65,7 @@ function modifier_ability_flagstone_bonus_str_effect:DeclareFunctions()
 end
 
 function modifier_ability_flagstone_bonus_str_effect:OnCreated( kv )
+	if not IsServer() then return end
 	self.bonus = self:GetCaster():GetBaseStrength() * self:GetAbility():GetSpecialValueFor( "coefficient" )
 end
 

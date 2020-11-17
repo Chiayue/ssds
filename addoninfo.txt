@@ -18,12 +18,27 @@
 			Command = "+OnBuyIncome"
 			Name = "OnBuyIncome"
 		},
+        
         {
 			Key = "F3"
 			Command = "+OnBuyTechPoints"
 			Name = "OnBuyTechPoints"
 		},
-        
-
+        {
+			Key = "F5"
+			Command = "+OnBuyGreed"
+			Name = "OnBuyGreed"
+		},
+		//练功房
+        // {
+        //     Key = "F7"
+		// 	Command = "+OnEnterRoom"
+		// 	Name = "OnEnterRoom"
+        // },
+		// {
+        //     Key = "F8"
+		// 	Command = "+OnBackRoom"
+		// 	Name = "OnBackRoom"
+        // },
 	]
 }

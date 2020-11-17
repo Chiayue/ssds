@@ -13,16 +13,14 @@ function archon_deputy_killer(params)
 	local nDeputyStack = hCaster:GetModifierStackCount( "modifier_series_reward_deputy_killer", hCaster )
 	if nDeputyStack >=3 then chance = 50 end
 	if nowChance  > chance then
-		return 0
+		return false
 	end
 	
 	local modifier = "modifier_archon_deputy_killer"
 	local nLevelBonus = ability:GetSpecialValueFor( "bonus_level_property" )
 	
-	if nDeputyStack >=3 then
-		nLevelBonus = 35
-	elseif nDeputyStack >=2 then
-		nLevelBonus = 25
+	if nDeputyStack >=2 then
+		nLevelBonus = 999
 	end
 	local nMaxStack = hCaster:GetLevel() * nLevelBonus
 	local nCurrentStack = hCaster:GetModifierStackCount( modifier, hCaster )
@@ -47,8 +45,9 @@ function archon_deputy_killer(params)
 			end
 		end
 		hCaster:SetModifierStackCount( modifier, hCaster, nCurrentStack + 1 )
+		hCaster:CalculateStatBonus()
 	end
-	hCaster:CalculateStatBonus()
+	
 end
 ---------------------- 工匠大师 ------------------------
 if archon_deputy_forging == nil then 

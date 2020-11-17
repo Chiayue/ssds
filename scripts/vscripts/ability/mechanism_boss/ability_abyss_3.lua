@@ -7,7 +7,7 @@ LinkLuaModifier("modifier_ability_abyss_3_Reduction_of_injury", "ability/mechani
 if ability_abyss_3 == nil then 
 	ability_abyss_3 = class({})
 end
-
+index_naber = {}
 function ability_abyss_3:IsHidden( ... )
 	return true
 end
@@ -24,14 +24,15 @@ function ability_abyss_3:OnSpellStart( ... )
 		DOTA_UNIT_TARGET_TEAM_ENEMY, 
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
 		0, 0, false)
-	if self.index_naber ~= nil then 
-		for _, unity_enemy in pairs(self.index_naber) do
+	if index_naber ~= nil then 
+		for _, unity_enemy in pairs(index_naber) do
 			if unity_enemy:HasModifier("modifier_ability_abyss_3") then
 				unity_enemy:RemoveModifierByName("modifier_ability_abyss_3")
+				index_naber = {}
 			end
 		end
 	end
-	self.index_naber = {}
+	
 	linkNuber = #enemys/2
 	if linkNuber <= 1 then
 		linkNuber = 1
@@ -40,7 +41,7 @@ function ability_abyss_3:OnSpellStart( ... )
 		local x = RandomInt(1, #enemys)
 		-- 半数以上的敌人加上DEBUFF 
 		enemys[x]:AddNewModifier(hCaster, self, "modifier_ability_abyss_3", {})
-		table.insert(self.index_naber, enemys[x])
+		table.insert(index_naber, enemys[x])
 		table.remove(enemys, x)
 	end
 end
@@ -84,11 +85,12 @@ end
 function modifier_ability_abyss_3_deth:OnDeath( kys ) 
 	local hParent = self:GetParent()
 	if hParent:IsAlive() then return end 
-	for _,  index in pairs(self.index_naber) do
+	for _,  index in pairs(index_naber) do
 		-- local hParent_modifier_ability_abyss_3 = index		-- 得到拥有这个modified的实体
-		if index == nil or index:IsAlive() then return end
+		--if index == nil or index:IsAlive() then return end
 		if index:HasModifier("modifier_ability_abyss_3") then
 			index:RemoveModifierByName("modifier_ability_abyss_3")
+			index_naber = {}
 		end
 	end
 end

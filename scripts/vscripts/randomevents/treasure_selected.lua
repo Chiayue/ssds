@@ -47,6 +47,7 @@ local Treasure_list = {
     "gem_devil_right_foot",
     "gem_gangtieheji",
     "gem_tiangoubudehaosi",
+    "gem_fuhuoshijian",
 
     "gem_void_lock",
     "gem_die_venom",

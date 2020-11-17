@@ -31,7 +31,7 @@ function modifier_archon_passive_bank:DeclareFunctions()
 end
 
 
-function modifier_archon_passive_bank:OnAttackLanded( params )
+function modifier_archon_passive_bank:OnAttack( params )
 	if params.attacker ~= self:GetParent() then return 0 end
 	if self:GetCaster():HasModifier("modifier_item_archer_bow_multe")  == true then return end
 	local nLevel = self:GetAbility():GetLevel()

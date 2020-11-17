@@ -34,5 +34,6 @@ return {
 		attack_projectile = "particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf",
 		model_scale = 1.2,
 		wearables = {},
+		modifier = "modifier_heroes_skin_flandre",
 	},
 }

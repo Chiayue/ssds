@@ -239,6 +239,10 @@ function MobSpawner:SpawnNextWave()
         spawner_config.monsterSurplusNum = 800
         GlobalVarFunc.monsterIsShuaMan = false
 
+        -- if spawner_config.mosterWave == 50 then
+        --     self:OnCreatedCaiDanBoss()
+        -- end
+
         --25波之后不刷小兵
         if spawner_config.mosterWave <= 25 then
             self:SpawnMonsterEndless()
@@ -1427,4 +1431,18 @@ function MobSpawner:OnCreateGoldMonster()
     local name = "npc_dota_gold_mine"
     local position = Vector(5000, -4600, 0)
     local goldTree = CreateUnitByName(name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+end
+
+function MobSpawner:OnCreatedCaiDanBoss()
+    local monster_name = "npc_caidan_monster"
+    local position = Vector(-5200, 5200, 0)
+    -- 创建单位 
+    local boss = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+    
+    --添加ai
+    boss:AddNewModifier(boss, nil, "modifier_cooldown_ai", nil)
+    local newAbility = boss:AddAbility("ability_abyss_2")
+    newAbility:SetLevel(1)
+    
+    send_tips_message(0, "彩蛋boss出现在地图左上脚，击杀队伍奖励1000全属性")
 end

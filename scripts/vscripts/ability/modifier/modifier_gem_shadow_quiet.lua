@@ -360,7 +360,7 @@ function modifier_archon_passive_shadow_quiet_shadow_damage:IsPurgable()
 end
  
 function modifier_archon_passive_shadow_quiet_shadow_damage:RemoveOnDeath()
-    return false -- 死亡不移除
+    return true -- 死亡不移除
 end
 
 function modifier_archon_passive_shadow_quiet_shadow_damage:OnCreated(params)

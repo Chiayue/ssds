@@ -345,7 +345,7 @@ function modifier_archon_passive_Ice_storm_continue_damge:IsPurgable()
 end
  
 function modifier_archon_passive_Ice_storm_continue_damge:RemoveOnDeath()
-    return false -- 死亡不移除
+    return true -- 死亡不移除
 end
 
 function modifier_archon_passive_Ice_storm_continue_damge:OnCreated(params)

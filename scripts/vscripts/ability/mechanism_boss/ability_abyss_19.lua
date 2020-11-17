@@ -2,7 +2,7 @@
 
 LinkLuaModifier("modifier_ability_abyss_19", "ability/mechanism_Boss/ability_abyss_19", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_ability_abyss_19_move", "ability/mechanism_Boss/ability_abyss_19", LUA_MODIFIER_MOTION_NONE)
---LinkLuaModifier("modifier_ability_abyss_19_control", "ability/mechanism_Boss/ability_abyss_19", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_ability_abyss_19_passivity", "ability/mechanism_Boss/ability_abyss_19", LUA_MODIFIER_MOTION_NONE)
 
 if ability_abyss_19 == nil then
 	ability_abyss_19 = class({})
@@ -43,9 +43,49 @@ function ability_abyss_19:OnSpellStart( ... )
     end
 end
 
--- function ability_abyss_19:GetIntrinsicModifierName()
--- 	return "modifier_ability_abyss_19"
--- end
+function ability_abyss_19:GetIntrinsicModifierName()
+	return "modifier_ability_abyss_19_passivity"
+end
+
+if modifier_ability_abyss_19_passivity == nil then 
+	modifier_ability_abyss_19_passivity = class({})
+end
+
+function modifier_ability_abyss_19_passivity:IsHidden( ... )
+	return true
+end
+
+function modifier_ability_abyss_19_passivity:DeclareFunctions( ... )
+	return{
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_AVOID_DAMAGE, -- return 	keys.damage  直接免伤所有伤害(包括技能带来的所有伤害)
+	}
+end
+
+function modifier_ability_abyss_19_passivity:OnAttackLanded( keys )
+	local attacker = keys.attacker
+	local hParent = self:GetParent()
+	if attacker:GetTeam() == DOTA_TEAM_BADGUYS then
+		return
+	end
+	if hParent ~= keys.target then 
+		return
+	end
+
+	local max_heal = hParent:GetHealth()
+	local health = (max_heal - 1)
+	hParent:SetHealth( health )
+	if attacker:IsRealHero() then 
+        if health <= 0 then
+            hParent:ForceKill(false)
+            -- UTIL_Remove(hParent)
+		end
+	end
+end
+
+function modifier_ability_abyss_19_passivity:GetModifierAvoidDamage( keys )
+	return keys.damage
+end
 
 if modifier_ability_abyss_19 == nil then 
 	modifier_ability_abyss_19 = class({})
@@ -78,8 +118,8 @@ function modifier_ability_abyss_19:OnAttackLanded( keys )
 	if attacker:IsRealHero() then 
         if health <= 0 then
             hParent:RemoveModifierByName("modifier_ability_abyss_19_move")
-            hParent:ForceKill(true)
-            UTIL_Remove(hParent)
+            -- hParent:ForceKill(true)
+            -- UTIL_Remove(hParent)
 		end
 	end
 end
@@ -101,6 +141,7 @@ function modifier_ability_abyss_19_move:OnCreated( ... )
     local hParent = self:GetParent()
     self.time_passed = 0
     self.time_effect = 0
+    self.time_IntervalThink = 0.02
 
     local Effects_0 = "particles/units/heroes/hero_gyrocopter/gyro_homing_missile_fuse.vpcf"
     self.particle_1 = ParticleManager:CreateParticle(Effects_0, PATTACH_ABSORIGIN_FOLLOW, hParent) 
@@ -110,7 +151,7 @@ function modifier_ability_abyss_19_move:OnCreated( ... )
     self.particle_2 = ParticleManager:CreateParticle(Effects_2, PATTACH_OVERHEAD_FOLLOW, hParent.unityTarget) 
     ParticleManager:SetParticleControl(self.particle_2, 0, Vector(0, 0, 0))
     if IsServer() then 
-        self:StartIntervalThink(0.02)
+        self:StartIntervalThink(self.time_IntervalThink)
     end
 end
 
@@ -131,10 +172,10 @@ function modifier_ability_abyss_19_move:OnIntervalThink( ... )
         local distance = (vector_distance):Length2D()   -- 距离
         local direction = (vector_distance):Normalized() -- 方向
 
-        local speed = 340 * 0.02
-        local acceleration = 20 * 0.02 -- 加速度
+        local speed = 340 * self.time_IntervalThink
+        local acceleration = 20 * self.time_IntervalThink -- 加速度
         
-        self.time_passed = self.time_passed + 0.02
+        self.time_passed = self.time_passed + self.time_IntervalThink
         -- 准备时间结束
         if self.time_passed > 3 then
             if distance < 50 then 
@@ -144,7 +185,7 @@ function modifier_ability_abyss_19_move:OnIntervalThink( ... )
                 ApplyDamage({
                     victim = hParent.unityTarget,
                     attacker = hParent,
-                    damage = hParent.unityTarget:GetMaxHealth() * 0.5, -- 
+                    damage = hParent.unityTarget:GetMaxHealth() * 0.7, -- 
                     damage_type = DAMAGE_TYPE_MAGICAL,
                 })
                 --hParent.unityTarget:AddNewModifier(hParent, self:GetAbility(), "modifier_stunned", {duration = 2})

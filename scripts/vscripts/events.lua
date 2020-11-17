@@ -52,7 +52,8 @@ function CAddonTemplateGameMode:OnEntityKill(event)
         
         self:IsBadguysWinner()
 
-        local time = 15
+        local nPlayerID = killedUnit:GetPlayerID()
+        local time = GlobalVarFunc.resurrectionTime[nPlayerID + 1]
         killedUnit:SetTimeUntilRespawn(time)
         GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("spawn_creep_think"), 
         function()
@@ -156,11 +157,11 @@ function CAddonTemplateGameMode:OnCreatedBaoWuBook(unit)
     if GlobalVarFunc.baowushu_num == 0 then
         randNumMax = 300
     elseif GlobalVarFunc.baowushu_num == 1 then
-        randNumMax = 700
+        randNumMax = 600
     elseif GlobalVarFunc.baowushu_num == 2 then
-        randNumMax = 1500
+        randNumMax = 1200
     elseif GlobalVarFunc.baowushu_num == 3 then
-        randNumMax = 3000
+        randNumMax = 2400
     end
 
     local randNum = RandomInt(1,randNumMax)
@@ -194,7 +195,9 @@ function CAddonTemplateGameMode:OnBossCreatedSeriesItem()
                 if game_enum.nMoeNoviceCount > 0 then
                     probability = 2 * game_enum.nMoeNoviceCount
                 end
-                if spawner_config.mosterWave >= 180  then
+                if spawner_config.mosterWave >= 270  then
+                    SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
+                elseif spawner_config.mosterWave >= 180  then
                     if randNum <= 45 then
                         SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
                     else

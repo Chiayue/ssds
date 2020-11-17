@@ -156,9 +156,15 @@ function Player_Data:buy_tech_points( args )
     local nPlayerID = args.PlayerID
     local nAmonut = args.amount
     local currentGold = PlayerResource:GetGold(nPlayerID)
-    if currentGold >= 1000*nAmonut then
-        PlayerResource:SpendGold(nPlayerID,1000*nAmonut,DOTA_ModifyGold_AbilityCost)
-        Player_Data:AddPoint(nPlayerID,100*nAmonut)
+    if currentGold >= 1000 * nAmonut then
+        local nWood = 100 * nAmonut
+        PlayerResource:SpendGold(nPlayerID,1000 * nAmonut,DOTA_ModifyGold_AbilityCost)
+        -- 科技屋效果
+        local hHero = PlayerResource:GetSelectedHeroEntity(nPlayerID)
+        if hHero:HasModifier("modifier_store_reward_technology_house") then
+           nWood = nWood * 1.05
+        end
+        Player_Data:AddPoint(nPlayerID,nWood)
     else
         CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="GOLD_NOT_ENOUGH"})
     end
@@ -206,7 +212,13 @@ function Player_Data:InitModifier( hHero )
     local nPlayerID = hHero:GetOwner():GetPlayerID()
     local nTime = Archive:GetData(nPlayerID,"game_time")
     local nMapLevel = GetPlayerMapLevel(nTime)
-    if nMapLevel <= 8 then local hMoeBuff = hHero:AddNewModifier(hHero, hAbility, "modifier_moe_novice_player", {}) end
+    if nMapLevel <= 18 then 
+        hHero:AddNewModifier(hHero, hAbility, "modifier_moe_novice_player", {}) 
+        if GlobalVarFunc.game_mode == "endless" then
+             hHero:AddNewModifier(hHero, hAbility, "modifier_moe_novice_player_endless", {})
+        end
+    end
+    
 
     bTeamBuff:SetStackCount(game_enum.nMoeNoviceCount*5)
     for _,sAbilityName in pairs(TECH_UPGRADE_LIST) do

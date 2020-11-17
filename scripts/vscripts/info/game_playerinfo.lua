@@ -147,9 +147,9 @@ function game_playerinfo:OnRewardActivityCoin(nPlayerID)
                 activityCoin = 45
             end
         else
-            activityCoin = (math.floor(GlobalVarFunc.MonsterWave / 100)) * 10
-            if activityCoin > 30 then 
-                activityCoin = 30
+            activityCoin = (math.floor(GlobalVarFunc.MonsterWave / 100)) * 20
+            if activityCoin > 60 then 
+                activityCoin = 60
             end
         end
         local tip = "每周自闭模式奖励"..activityCoin.."活动币"

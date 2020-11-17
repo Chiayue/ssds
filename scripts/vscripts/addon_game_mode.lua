@@ -18,6 +18,7 @@ require("monster/monster_challenge")
 require("runes/runes_spawner")
 require("monster/monster_operate")
 require("monster/monster_bigBoss")
+require("monster/monster_exercise_room")
 require("randomEvents/random_events")
 require("randomEvents/treasure_selected")
 require("arrow_Soul_meditation/arrowSoulMeditation")
@@ -152,6 +153,8 @@ function CAddonTemplateGameMode:StageChange()
 		MonsterOperate():Start()
 		--初始化bigBoss
 		MonsterBigBoss():Start()
+		--初始化练功房
+		MonsterExerciseRoom():Start() 
 		--初始化箭魂修炼
 		ArrowSoulMeditation():Start()
 		-- 存档服务

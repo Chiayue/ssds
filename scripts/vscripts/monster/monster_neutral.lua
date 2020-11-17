@@ -149,6 +149,33 @@ function MonsterNeutral:OnKillMonsterNeutral(event)
             MonsterNeutral:OnCreateTuTeng()
         end
     end
+
+    --击杀导弹
+    if killedUnit:GetUnitName() == "track_missiles_unit" then 
+
+        local position = killedUnit:GetOrigin()
+        local random = RandomInt(1, 2)
+        if random == 1 then
+            GlobalVarFunc:OnCreateChanzi(position,"item_gold_spade_fragment")
+        else
+            GlobalVarFunc:OnCreateChanzi(position,"item_silver_spade_fragment")
+        end
+
+    end
+
+    --击杀彩蛋boss
+    if killedUnit:GetUnitName() == "npc_caidan_monster" then 
+        for i = 0 , MAX_PLAYER - 1 do
+            local steam_id = PlayerResource:GetSteamAccountID(i)
+            if steam_id ~= 0 then
+                local nPlayer = PlayerResource:GetPlayer(i)
+                if nPlayer ~= nil then
+                    local hHero = PlayerResource:GetSelectedHeroEntity(i)
+                    hHero:AddNewModifier( hHero, nil, "modifier_caidan_boss", {} )
+                end
+            end
+        end
+    end
 end
 
 function MonsterNeutral:OnCreateMonster(Vec)

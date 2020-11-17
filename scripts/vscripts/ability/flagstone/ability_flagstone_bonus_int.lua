@@ -65,6 +65,7 @@ function modifier_ability_flagstone_bonus_int_effect:DeclareFunctions()
 end
 
 function modifier_ability_flagstone_bonus_int_effect:OnCreated( kv )
+	if not IsServer() then return end
 	self.bonus = self:GetCaster():GetBaseIntellect() * self:GetAbility():GetSpecialValueFor( "coefficient" )
 end
 

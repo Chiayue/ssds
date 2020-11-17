@@ -59,6 +59,8 @@ LinkLuaModifier("modifier_gem_pinbenshishadewo", "ability/modifier/modifier_gem_
 LinkLuaModifier("modifier_gem_yezhendebuyaole", "ability/modifier/modifier_gem_yezhendebuyaole", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier( "modifier_gem_tiangoubudehaosi", "ability/modifier/modifier_gem_tiangoubudehaosi.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_gem_zhiliao_taozhuang", "ability/modifier/modifier_gem_zhiliao_taozhuang.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_gem_hujia_taozhuang", "ability/modifier/modifier_gem_hujia_taozhuang.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_gem_fuhuoshijian", "ability/modifier/modifier_gem_fuhuoshijian.lua", LUA_MODIFIER_MOTION_NONE )
 
 --箭魂修炼
 LinkLuaModifier("modifier_arrowSoul_meditation", "ability/modifier/modifier_arrowSoul_meditation", LUA_MODIFIER_MOTION_NONE)
@@ -70,3 +72,7 @@ LinkLuaModifier("modifier_cooldown_ai", "ability/modifier/modifier_cooldown_ai",
 LinkLuaModifier( "modifier_abyss_jianshang", "ability/modifier/modifier_abyss_jianshang.lua", LUA_MODIFIER_MOTION_NONE )
 -- 深渊Boss随机buff
 LinkLuaModifier("modifier_abyssBoss_DeBuff_and_Buff", "ability/modifier/modifier_abyssBoss_DeBuff_and_Buff", LUA_MODIFIER_MOTION_NONE)
+--自闭移速modifier
+LinkLuaModifier( "modifei_monster_movespeed", "ability/creatures/modifei_monster_movespeed.lua", LUA_MODIFIER_MOTION_NONE )
+--彩蛋boss
+LinkLuaModifier( "modifier_caidan_boss", "ability/modifier/modifier_caidan_boss.lua", LUA_MODIFIER_MOTION_NONE )

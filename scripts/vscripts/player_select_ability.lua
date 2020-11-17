@@ -61,6 +61,10 @@ function Player_Select_Ability:init()
 	--CustomGameEventManager:RegisterListener( "InitializeSelection", Player_Select_Ability.InitializeSelection )
 end
 
+function Player_Select_Ability:startOnThink()
+	GameRules:GetGameModeEntity():SetThink( "OnThinkTechnology", self, "OnThinkTechnology", 1 )
+end
+
 --------- 聊天检查
 function GetTalentIndex(sTalent)
 	for n,k in pairs(TALENT_LIST) do
@@ -76,9 +80,16 @@ function Player_Select_Ability:OnHeroesRepick(args)
 	local nPlayerID = args.PlayerID
 	if hRepick[nPlayerID] == false then
 		hRepick[nPlayerID] = true
-		local t = {}
-		RandFetch(t,#TALENT_LIST,#TALENT_LIST)
-		CustomNetTables:SetTableValue( "player_passive", tostring(nPlayerID), t )
+		local n = 1
+		local t = CustomNetTables:GetTableValue( "player_passive", tostring(nPlayerID))
+		local nTalentList = {}
+		--DeepPrintTable(t)
+		for k,v in pairs(t) do 
+			if n > 4 then table.insert(nTalentList,v) end
+			n = n+1
+		end
+		--DeepPrintTable(nTalentList)
+		CustomNetTables:SetTableValue( "player_passive", tostring(nPlayerID), nTalentList )
 		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"heroese_repick_callback",{})
 	end
 end
@@ -100,9 +111,7 @@ function Player_Select_Ability:OnChat(args)
 	end
 end
 
-function Player_Select_Ability:startOnThink()
-	GameRules:GetGameModeEntity():SetThink( "OnThinkTechnology", self, "OnThinkTechnology", 1 )
-end
+
 
 -- 毒瘤挑战检测
 function Player_Select_Ability:ChallengeGreedy( args )
@@ -218,8 +227,8 @@ function Player_Select_Ability:Talent_Selected(args)
 	    	SeriseSystem:CreateEquipmentInUnit(hArchiveEqui,hNewHero)
 	    	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"hero_init_over",{})
 	    end
-	     -- 特定奖励
-	    CustomizedReward:SetReward( hNewHero )
+	    -- 特定奖励
+	    -- CustomizedReward:SetReward( hNewHero )
 	    if MAP_CODE == "archers_survive_test" then
 	    	-- print("IsInToolsMode")
 	    	if IsInToolsMode() then 
@@ -522,14 +531,14 @@ function Player_Select_Ability:OnThinkTechnology()
 				local PlayerInfo = Player_Data:Get(nPlayerID)
 				local Income_Level = PlayerInfo["common"]["Income_Level"]
 				-- local Income_Reward = Income_Level
-				local nInvsetBonus = 0
+				local nInvsetBonus = 1
 				if hHero:HasAbility("archon_deputy_investment") then
-					nInvsetBonus = 0.25
+					nInvsetBonus = 1.25
 					local nDeputyStack = hHero:GetModifierStackCount("modifier_series_reward_deputy_investment", hHero)
 					if nDeputyStack >= 3 then
-						nInvsetBonus = 1
+						nInvsetBonus = 2
 					elseif nDeputyStack >= 2 then
-						nInvsetBonus = 0.4
+						nInvsetBonus = 1.4
 					end
 					
 				end
@@ -537,10 +546,9 @@ function Player_Select_Ability:OnThinkTechnology()
 				local nGlobalBonus = GlobalVarFunc.GoldInvestmentRewards 
 				+ GlobalVarFunc.InvestmentAndOperate[nCurrentID] 
 				+ GlobalVarFunc.InvestmentRewardCoefficient[nCurrentID]
-				+ nInvsetBonus
 				- 2 
 				
-				Income_Reward = math.floor(Income_Level * nGlobalBonus)
+				Income_Reward = math.floor(Income_Level * nGlobalBonus * nInvsetBonus )
 				Player_Data():Set(nPlayerID,"common","Income_Amount",Income_Reward)
 
 				if GlobalVarFunc.game_type == -2 then Income_Reward = 99999 end
@@ -781,10 +789,7 @@ function modifier_moe_novice:DeclareFunctions()
 	return funcs
 end
 
-function modifier_moe_novice:OnTooltip() 
-	return self:GetStackCount() 
-end
-
+function modifier_moe_novice:OnTooltip() return self:GetStackCount() end
 ---- 萌新玩家
 LinkLuaModifier("modifier_moe_novice_player", "player_select_ability.lua", LUA_MODIFIER_MOTION_NONE)
 if modifier_moe_novice_player == nil then modifier_moe_novice_player = {} end
@@ -802,20 +807,45 @@ function modifier_moe_novice_player:DeclareFunctions()
 	return funcs
 end
 
-function modifier_moe_novice_player:GetModifierBonusStats_Agility() 
-	return 10
+function modifier_moe_novice_player:GetModifierBonusStats_Agility() return 50 end
+function modifier_moe_novice_player:GetModifierBonusStats_Intellect() return 50 end
+function modifier_moe_novice_player:GetModifierBonusStats_Strength()  return 50 end
+--- 萌新（无尽）
+LinkLuaModifier("modifier_moe_novice_player_endless", "player_select_ability.lua", LUA_MODIFIER_MOTION_NONE)
+if modifier_moe_novice_player_endless == nil then modifier_moe_novice_player_endless = {} end
+function modifier_moe_novice_player_endless:IsHidden() return true end
+function modifier_moe_novice_player_endless:GetTexture() return "moe_novice" end
+function modifier_moe_novice_player_endless:RemoveOnDeath() return false end
+function modifier_moe_novice_player_endless:IsDebuff() return true end
+function modifier_moe_novice_player_endless:DeclareFunctions() 
+	local funcs = {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_TOOLTIP,
+		MODIFIER_EVENT_ON_DEATH
+	} 
+	return funcs
 end
 
-function modifier_moe_novice_player:GetModifierBonusStats_Intellect()	
-	return 10
+function modifier_moe_novice_player_endless:OnDeath(args) 
+	if not IsServer() then return end
+	local hAttacker = args.attacker
+	local hCaster = self:GetParent()
+	if hAttacker ~= hCaster then
+		return
+	end
+	if self:GetStackCount() < 1000 then
+		self:IncrementStackCount()
+	end
 end
 
-function modifier_moe_novice_player:GetModifierBonusStats_Strength() 
-	return 10
-end
+function modifier_moe_novice_player_endless:GetModifierBonusStats_Agility() return self:GetStackCount() end
+function modifier_moe_novice_player_endless:GetModifierBonusStats_Intellect() return self:GetStackCount() end
+function modifier_moe_novice_player_endless:GetModifierBonusStats_Strength()  return self:GetStackCount() end
 -------------------
 function Player_Select_Ability:AutisticMode()
-	print("AutisticMode")
+	-- print("AutisticMode")
 	--local vVector = Vector(0,0,10)
 	--nDotaMap = DOTA_SpawnMapAtPosition( "archers_survive_red", vVector, true, nil, nil, {vector = vVector} )
 end

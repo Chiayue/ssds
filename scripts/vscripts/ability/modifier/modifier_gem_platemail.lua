@@ -10,11 +10,22 @@ function modifier_gem_platemail:DeclareFunctions()
 end
 
 function modifier_gem_platemail:IsHidden()
-	return false
+    if self:GetCaster():HasModifier( "modifier_gem_hujia_taozhuang" ) then
+        return true
+    else
+        return false
+    end
 end
 
 function modifier_gem_platemail:OnCreated(params)
     self.armor_add = 10
+
+    if IsServer() then
+        local hero = self:GetParent()
+        if hero:HasModifier("modifier_gem_chainmail") and hero:HasModifier("modifier_gem_bubaizhidun") and not hero:HasModifier("modifier_gem_hujia_taozhuang") then
+            hero:AddNewModifier( hero, self:GetAbility(), "modifier_gem_hujia_taozhuang", {} )
+        end
+    end
 end
 
 function modifier_gem_platemail:GetModifierPhysicalArmorBonus()

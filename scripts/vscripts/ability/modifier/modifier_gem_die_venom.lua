@@ -63,7 +63,7 @@ function modifier_gem_die_venom:OnAttackLanded( params )
 	local hTarget = params.target
 	local hTarget_pos = hTarget:GetOrigin()
 	local duration = 5   -- 持续时间
-	local chance = 100     -- 触发几率
+	local chance = 1     -- 触发几率
 	local radius = 500   -- 范围
 	local attack_multiple = 15  -- 伤害倍数
 
@@ -313,7 +313,7 @@ function modifier_archon_passive_die_venom_duration_damge:IsPurgable()
 end
  
 function modifier_archon_passive_die_venom_duration_damge:RemoveOnDeath()
-    return false -- 死亡不移除
+    return true -- 死亡不移除
 end
 
 function modifier_archon_passive_die_venom_duration_damge:OnCreated(params)

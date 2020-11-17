@@ -140,6 +140,8 @@ GlobalVarFunc.isCreateTuTeng = true
 GlobalVarFunc.tuTengNumber = 0
 --图腾是否连续刷
 GlobalVarFunc.isLianXuCreateTT = true
+--英雄复活时间
+GlobalVarFunc.resurrectionTime = {15,15,15,15,15,15}
 
 -- <==============================全局函数================================>
 -- 切割字符串为数组
@@ -167,6 +169,9 @@ function GlobalVarFunc:GloFunc_Getgame_enum()
 end
 
 function GlobalVarFunc:OnOpenDoor()
+	if GetMapName() == "archers_survive2" then
+		return
+	end
 	if GlobalVarFunc.isOpenDoor then
 	    GlobalVarFunc.isOpenDoor = false
 		local door = Entities:FindByName(nil,"door001open")
@@ -244,14 +249,20 @@ function GlobalVarFunc:OnWeeklyGameChange(unit)
 
 
 	if unit:GetContext("boss")  then
-		if (GlobalVarFunc.MonsterWave >= 25) and (GlobalVarFunc.playersNum > 1) then
-			local newAbility1 = unit:AddAbility("ability_boss_bulwark")
-	        newAbility1:SetLevel(1)
-		end
 		if GlobalVarFunc.MonsterWave >= 200 then
 			local newAbility2 = unit:AddAbility("ability_boss_strike")
 	        newAbility2:SetLevel(1)
 		end
+	end
+
+	if GlobalVarFunc.game_type == 1003 then
+
+		if (GlobalVarFunc.MonsterWave >= 25) and (GlobalVarFunc.playersNum > 1) then
+			local newAbility1 = unit:AddAbility("ability_boss_bulwark")
+	        newAbility1:SetLevel(1)
+		end
+
+		unit:AddNewModifier(unit, nil, "modifei_monster_movespeed", nil)
 	end
 
 	--添加血魔buff移除移速上限

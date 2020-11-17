@@ -83,7 +83,29 @@ end
 
 
 
-
-
-
+LinkLuaModifier("modifier_heroes_skin_template", "heroes/heroes_skin", LUA_MODIFIER_MOTION_NONE)
+modifier_heroes_skin_template = {}
+function modifier_heroes_skin_template:IsHidden() return true end
+function modifier_heroes_skin_template:RemoveOnDeath() return false end
+function modifier_heroes_skin_template:GetAttributes()   
+	return MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE + MODIFIER_ATTRIBUTE_PERMANENT
+end
 ------------------------------  部分皮肤特效 ------------------------------
+
+----------------------- 雷米 芙兰
+LinkLuaModifier("modifier_heroes_skin_flandre", "heroes/heroes_skin", LUA_MODIFIER_MOTION_NONE)
+modifier_heroes_skin_flandre = class(modifier_heroes_skin_template)
+function modifier_heroes_skin_flandre:GetEffectName() return "particles/diy_particles/ambient9.vpcf" end
+function modifier_heroes_skin_flandre:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
+
+----------------------- 琪露诺
+LinkLuaModifier("modifier_heroes_skin_cirno", "heroes/heroes_skin", LUA_MODIFIER_MOTION_NONE)
+modifier_heroes_skin_cirno = class(modifier_heroes_skin_template)
+function modifier_heroes_skin_cirno:GetEffectName() return "particles/diy_particles/cirno_ambient.vpcf" end
+function modifier_heroes_skin_cirno:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
+
+----------------------- 诗乃
+LinkLuaModifier("modifier_heroes_skin_shinai", "heroes/heroes_skin", LUA_MODIFIER_MOTION_NONE)
+modifier_heroes_skin_shinai = class(modifier_heroes_skin_template)
+function modifier_heroes_skin_shinai:GetEffectName() return "particles/diy_particles/shinai_ambient.vpcf" end
+function modifier_heroes_skin_shinai:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end

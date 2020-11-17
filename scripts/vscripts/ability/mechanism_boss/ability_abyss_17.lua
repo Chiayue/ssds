@@ -22,8 +22,9 @@ function ability_abyss_17:OnSpellStart( ... )
 				DOTA_UNIT_TARGET_TEAM_ENEMY, 
 				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
 				0, 0, false)
-	for _,enemy in pairs(enemys) do
-		if #enemy <= 1 then 
+	local enemy_unit = RandomInt(1, #enemys)
+	for i,enemy in pairs(enemys) do
+		if i == enemy_unit then 
 			Unity_Name = hCaster
 			enemy:AddNewModifier(hCaster, self, "modifier_ability_abyss_17", {}) -- duration = 2
 		end
@@ -87,6 +88,18 @@ end
 
 function modifier_ability_abyss_17_damage:OnCreated( ... )
 	local hParent = self:GetParent()
+
+	-- 设置BUFF在头顶的点灯特效		
+	local EffectName_1 = "particles/units/heroes/hero_axe/axe_battle_hunger.vpcf"
+	self.nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_OVERHEAD_FOLLOW, hParent)
+	ParticleManager:SetParticleControl( self.nFXIndex_1, 0, hParent:GetAbsOrigin())
+	self:AddParticle( self.nFXIndex_1, false, false, -1, false, true)
+
+	local EffectName_2 = "particles/oracle_fatesedict_ring_cap_call_the_roll.vpcf"
+	self.nFXIndex_2 = ParticleManager:CreateParticle( EffectName_2, PATTACH_RENDERORIGIN_FOLLOW, hParent)
+	ParticleManager:SetParticleControl( self.nFXIndex_2, 0, hParent:GetAbsOrigin())
+	self:AddParticle( self.nFXIndex_2, false, false, -1, false, true)
+
 	if IsServer() then 
 		self:StartIntervalThink(1)
 		self:SetStackCount(5)
@@ -107,12 +120,6 @@ function modifier_ability_abyss_17_damage:OnIntervalThink( kv )
 			ParticleManager:ReleaseParticleIndex( self.nFXIndex_0 )
 			self:AddParticle(self.nFXIndex_0, false, false, -1, false, true)
 
-			-- 设置BUFF在头顶的点灯特效		particles/units/heroes/hero_axe/axe_battle_hunger.vpcf
-			local EffectName_1 = "particles/units/heroes/hero_axe/axe_battle_hunger.vpcf"
-			self.nFXIndex_1 = ParticleManager:CreateParticle( EffectName_1, PATTACH_OVERHEAD_FOLLOW, hParent)
-			ParticleManager:SetParticleControl( self.nFXIndex_1, 0, hParent:GetAbsOrigin())
-			self:AddParticle( self.nFXIndex_1, false, false, -1, false, true)
-
 			self:DecrementStackCount()
 		else
 			ParticleManager:DestroyParticle( self.nFXIndex_0, false )
@@ -122,6 +129,10 @@ function modifier_ability_abyss_17_damage:OnIntervalThink( kv )
 			ParticleManager:DestroyParticle( self.nFXIndex_1, false )
 			ParticleManager:ReleaseParticleIndex( self.nFXIndex_1 )
 			self.nFXIndex_1 = nil
+
+			ParticleManager:DestroyParticle( self.nFXIndex_2, false )
+			ParticleManager:ReleaseParticleIndex( self.nFXIndex_2 )
+			self.nFXIndex_2 = nil
 
 			self:StartIntervalThink(-1)
 			self:Destroy()

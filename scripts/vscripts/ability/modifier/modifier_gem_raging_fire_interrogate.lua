@@ -309,7 +309,7 @@ function modifier_archon_passive_raging_fire_interrogate_duration_damge:IsPurgab
 end
  
 function modifier_archon_passive_raging_fire_interrogate_duration_damge:RemoveOnDeath()
-    return false -- 死亡不移除
+    return true -- 死亡不移除
 end
 
 function modifier_archon_passive_raging_fire_interrogate_duration_damge:OnCreated(params)
