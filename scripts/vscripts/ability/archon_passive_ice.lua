@@ -102,9 +102,9 @@ function modifier_archon_passive_ice:OnAttackLanded( params )
 
 	
 	if nLevel >= ABILITY_AWAKEN_2 then
-		abil_damage = abil_damage + ( self:GetCaster():GetIntellect() * 6 )
+		abil_damage = abil_damage + ( self:GetCaster():GetIntellect() * 8 )
 	elseif nLevel >= ABILITY_AWAKEN_1 then
-		abil_damage = abil_damage + ( self:GetCaster():GetIntellect() * 2 )
+		abil_damage = abil_damage + ( self:GetCaster():GetIntellect() * 3 )
 	end
 	EmitSoundOn( "Hero_Crystal.CrystalNova", hTarget )
 	SendParticlesToClient("particles/diy_particles/cirno_skill.vpcf",hTarget)

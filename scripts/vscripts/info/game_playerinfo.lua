@@ -2,26 +2,10 @@ if game_playerinfo == nil then
     game_playerinfo = class({})
 end
 
---存档模拟数据
--- {
---     0                               	= table: 0x0024ab40 (table)                --PlayerID
---     { 
---        game_killNum                    	= 0 (number)                           --杀怪数
---        game_time                       	= 0 (number)                           --游戏总时间
---        endless_waves                   	= 0 (number)                           --无尽模式波数
---        gamaModeNum                    	= 0 (number)                           --记录玩家最高的游戏模式
---        gameMode_0_clearance            	= 0 (number)                           --0模式通关次数
---        gameMode_1_clearance            	= 0 (number)                           --1模式通关次数
---        gameMode_2_clearance            	= 0 (number)                           --2模式通关次数
---        gameMode_3_clearance            	= 0 (number)                           --3模式通关次数
---        gameMode_4_clearance            	= 0 (number)                           --4模式通关次数    
---        arrowSoul_meditation               = 0 (number)                                             
---     }
---  }
-
 --玩家存档字段
 local player_STR = {
-    "endless_waves",
+    -- "endless_waves",
+    "endless_waves_s2",
     "game_killNum",
     "game_time",
     "gamaModeNum",
@@ -126,7 +110,8 @@ function game_playerinfo:update_playerInfo()
         tip = "第"..GlobalVarFunc.game_type.."章【失败】箭魂奖励"
     end
     Store:AddAllArrowSoul(hClearReward,"arrow_soul",tip)
-    Archive:SendRanking("normal",GlobalVarFunc.game_type)
+    -- Archive:SendRanking("normal",GlobalVarFunc.game_type)
+    Archive:SendRankingEndless() -- 无尽
     Archive:SaveProfile()
     CustomNetTables:SetTableValue( "gameInfo", "playersData", Archive:GetData())
 end
@@ -147,9 +132,9 @@ function game_playerinfo:OnRewardActivityCoin(nPlayerID)
                 activityCoin = 45
             end
         else
-            activityCoin = (math.floor(GlobalVarFunc.MonsterWave / 100)) * 20
-            if activityCoin > 60 then 
-                activityCoin = 60
+            activityCoin = (math.floor(GlobalVarFunc.MonsterWave / 100)) * 30
+            if activityCoin > 90 then 
+                activityCoin = 90
             end
         end
         local tip = "每周自闭模式奖励"..activityCoin.."活动币"
@@ -261,8 +246,8 @@ end
 
 function game_playerinfo:OnGameEndless(PlayerID)
     if GlobalVarFunc.game_type==1000 then
-        if Archive:GetData(PlayerID,"endless_waves") <= GlobalVarFunc.MonsterWave then
-            Archive:EditPlayerProfile(PlayerID,"endless_waves",GlobalVarFunc.MonsterWave)
+        if Archive:GetData(PlayerID,"endless_waves_s2") <= GlobalVarFunc.MonsterWave then
+            Archive:EditPlayerProfile(PlayerID,"endless_waves_s2",GlobalVarFunc.MonsterWave)
         end
     end
 end

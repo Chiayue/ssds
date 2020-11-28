@@ -5,7 +5,10 @@ function item_silver_spade_fragment:OnSpellStart()
 	local hCaster = self:GetCaster()
 	local nNowCharges = self:GetCurrentCharges()
 	if nNowCharges >= 4 then
-		for i=0,3 do self:SpendCharge() end
 		hCaster:AddItemByName('item_silver_spade_complete')
+		self:SetCurrentCharges(nNowCharges - 4 )
+		if self:GetCurrentCharges() == 0 then
+			self:Destroy()
+		end
 	end
 end

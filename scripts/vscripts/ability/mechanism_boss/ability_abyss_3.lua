@@ -40,9 +40,11 @@ function ability_abyss_3:OnSpellStart( ... )
 	for i = 1, linkNuber do 
 		local x = RandomInt(1, #enemys)
 		-- 半数以上的敌人加上DEBUFF 
-		enemys[x]:AddNewModifier(hCaster, self, "modifier_ability_abyss_3", {})
-		table.insert(index_naber, enemys[x])
-		table.remove(enemys, x)
+		if enemys[x] ~= nil then 
+			enemys[x]:AddNewModifier(hCaster, self, "modifier_ability_abyss_3", {})
+			table.insert(index_naber, enemys[x])
+			table.remove(enemys, x)
+		end
 	end
 end
 

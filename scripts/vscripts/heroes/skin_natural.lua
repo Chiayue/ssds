@@ -23,4 +23,10 @@ return {
 			{model = "models/items/enchantress/frostivus2018_ench_daughter_of_winter_arms/frostivus2018_ench_daughter_of_winter_arms.vmdl", particle_systems = {}},
 		},
 	},
+	{	-- 2号
+		model = "models/npc/izumisagiri/izumisagiri.vmdl",
+		attack_projectile = "particles/diy_particles/izumisagiri_attack.vpcf",
+		model_scale = 1,
+		wearables = {},
+	},
 }

@@ -38,7 +38,12 @@ if item_series_s1_t2_trousers == nil 	then item_series_s1_t2_trousers = class(it
 if item_series_s1_t3_hand == nil 		then item_series_s1_t3_hand = class(item_series_s1) end
 if item_series_s1_t3_chest == nil 		then item_series_s1_t3_chest = class(item_series_s1) end
 if item_series_s1_t3_foot == nil 		then item_series_s1_t3_foot = class(item_series_s1) end
-if item_series_s1_t1_trousers == nil 	then item_series_s1_t3_trousers = class(item_series_s1) end
+if item_series_s1_t3_trousers == nil 	then item_series_s1_t3_trousers = class(item_series_s1) end
+
+if item_series_s2_t1_hand == nil 		then item_series_s2_t1_hand = class(item_series_s1) end
+if item_series_s2_t1_chest == nil 		then item_series_s2_t1_chest = class(item_series_s1) end
+if item_series_s2_t1_foot == nil 		then item_series_s2_t1_foot = class(item_series_s1) end
+if item_series_s2_t1_trousers == nil 	then item_series_s2_t1_trousers = class(item_series_s1) end
 
 if modifier_item_series == nil then modifier_item_series = class({}) end
 
@@ -59,7 +64,8 @@ function modifier_item_series:DeclareFunctions()
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_HEALTH_BONUS,
 		MODIFIER_PROPERTY_MANA_BONUS,
-
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 	} 
 	return funcs
 end
@@ -80,6 +86,9 @@ function modifier_item_series:OnCreated()
 	self.bonus_str = 0
 	self.bonus_agi = 0
 	self.bonus_int = 0
+	self.bonus_ms = 0
+	self.bonus_range = 0
+	self.bonus_armor = 0
 	if self:GetAbility() ~= nil then  
 		if self:GetAbility().bonus ~= nil then
 			local hCaster = self:GetParent()

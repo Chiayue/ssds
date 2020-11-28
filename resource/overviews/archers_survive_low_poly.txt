@@ -1,0 +1,8 @@
+archers_survive_low_poly
+{
+	material materials/overviews/archers_survive_low_poly.vmat
+	pos_x -10640
+	pos_y 11856
+	scale 21.156
+}
+

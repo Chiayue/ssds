@@ -7,6 +7,7 @@ ACTION_STORE_LOAD_ACCOUNT = "store/load_account"				-- 获取玩家商品存档
 ACTION_STORE_PAY_GOODS = "store/pay_goods"						-- 支付商品
 ACTION_STORE_ADD_CURRENCY = "store/add_currency" 				-- 增加自定义货币 [每天都有一定上限，在服务端设置]
 ACTION_STORE_USED_CURRENCY = "store/used_currency" 				-- 消耗自定义货币
+ACTION_STORE_USED_ITEM = "store/used_item" 				-- 消耗自定义货币
 ACTION_STORE_CLEARANCE_REWARD = "store/clearance_reward" 		-- 增加结算时候的奖励
 local hMapsLevelReward = {}
 
@@ -243,4 +244,22 @@ function Store:CheckExpCard(nPlayerID)
 	else
 		return true
 	end
+end
+
+
+function Store:UsedCustomGoodsItem(nPlayerID,sCurrency,nQuantity,sRemarks)
+	-- body
+	local nSteamID = PlayerResource:GetSteamAccountID(nPlayerID)
+	Service:HTTPRequest("POST", ACTION_STORE_USED_CURRENCY, { 
+		steam_id = nSteamID, 
+		currency = sCurrency, 
+		quantity = nQuantity,
+		remarks = sRemarks,
+	}, function(iStatusCode, sBody)
+		if iStatusCode == 200 then
+			local hBody = json.decode(sBody)
+			Store:UpdatePlayerGoods(nPlayerID)
+			
+		end
+	end, REQUEST_TIME_OUT)
 end

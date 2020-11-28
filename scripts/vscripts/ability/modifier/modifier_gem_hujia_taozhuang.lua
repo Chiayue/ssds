@@ -15,6 +15,7 @@ function modifier_gem_hujia_taozhuang:IsHidden()
 end
 
 function modifier_gem_hujia_taozhuang:OnCreated(params)
+	self.look_my_armor_disabled = false
 end
 
 function modifier_gem_hujia_taozhuang:GetModifierPhysicalArmorBonus()
@@ -25,6 +26,7 @@ end
 function modifier_gem_hujia_taozhuang:OnAttackLanded(kv)
 	local hAttacker = kv.attacker   -- 攻击者	
 	local units = kv.target   		-- 受害者   
+	if self.look_my_armor_disabled then return end
     if units == self:GetParent() then
         if units:IsRealHero() then 
 			ApplyDamage({

@@ -8,15 +8,12 @@ local players_boxDamage = {}
 function RandomEvents:Init()
     ListenToGameEvent("entity_killed", Dynamic_Wrap(RandomEvents, "OnKillRandomEvents"), self)
     ListenToGameEvent( "dota_item_picked_up", Dynamic_Wrap(RandomEvents,"OnPickedUpChickenGold"),self)
-    CustomGameEventManager:RegisterListener("item_selected", self.OnAddBusinessItem)
 end
 
 function RandomEvents:Start()
     print("RandomEvents Start")
 
-    -- --自定义UI商人石板价格根据波数定
-    -- CustomGameEventManager:Send_ServerToAllClients("set_item_cost",{monsterWaves=GlobalVarFunc.MonsterWave})
-    if GlobalVarFunc.MonsterWave == 5 or GlobalVarFunc.MonsterWave == 9 or GlobalVarFunc.MonsterWave == 13 or GlobalVarFunc.MonsterWave == 17 then 
+    if (GlobalVarFunc.game_type ~= 1002) and (GlobalVarFunc.MonsterWave == 5 or GlobalVarFunc.MonsterWave == 9 or GlobalVarFunc.MonsterWave == 13 or GlobalVarFunc.MonsterWave == 17) then 
         
         local randNum = RandomInt(1,6)
         if randNum == 1 then
@@ -35,7 +32,6 @@ function RandomEvents:Start()
             --self:OnCreatedBigBoss()
         elseif randNum == 8 then
             --self:OnCreateAngelShop()      --自定义商店
-            --self:OnCreateBusinessMan()  --自己写的UI商城
         end
     end
     
@@ -227,31 +223,6 @@ function RandomEvents:OnCreateAngelShop()
     end, 0)
 end
 
-
-function RandomEvents:OnCreateBusinessMan()
-    local name = "npc_dota_creature_businessman"
-    local position = Vector(1000, 0, 0)
-    local businessMan = CreateUnitByName(name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
-    businessMan:AddNewModifier(nil, nil, "modifier_invulnerable", {})
-    CustomGameEventManager:Send_ServerToAllClients("businessMan_index",{index=businessMan:entindex()})
-
-    local time = 90
-    GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("spawn_creep_think"), 
-    function()
-        if GameRules:IsGamePaused() then
-            return 0.1
-        end
-        if time > 0 then
-            time = time - 1
-            return 1
-        else
-            UTIL_Remove(businessMan)
-            CustomGameEventManager:Send_ServerToAllClients("closed_item_select",{})
-            return nil
-        end
-    end, 0)
-end
-
 function RandomEvents:OnCreatedBaoXiang()
     local name = "npc_dota_creature_baoxiang"
     local position = Vector(0, 0, 0)
@@ -343,23 +314,6 @@ function RandomEvents:OnKillRandomEvents(event)
         for i = 1, 10 do
             self:OnCreateGold(position)
         end
-    end
-end
-
-function RandomEvents:OnAddBusinessItem(args)
-    local itemName = args.item_name
-    local itemCost = args.item_cost
-    local nPlayerID = args.PlayerID
-    local hHero = PlayerResource:GetSelectedHeroEntity(nPlayerID)
-    if hHero:IsNull() then
-        return
-    end
-
-    if itemCost > PlayerResource:GetGold(nPlayerID) then
-        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="GOLD_NOT_ENOUGH"})
-    else
-        PlayerResource:ModifyGold(nPlayerID,-itemCost,true,DOTA_ModifyGold_PurchaseItem)
-        hHero:AddItemByName(itemName)
     end
 end
 

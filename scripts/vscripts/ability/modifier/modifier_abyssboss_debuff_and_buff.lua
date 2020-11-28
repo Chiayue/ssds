@@ -329,4 +329,4 @@ if modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage == nil then modifier
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage:IsHidden( ... ) return false end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage:GetTexture() return "baowu/gem_xueshiyuanbo_lua" end
 function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage:DeclareFunctions( ... ) return {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE} end
-function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage:GetModifierDamageOutgoing_Percentage( ... ) return -10 end
+function modifier_abyssBoss_DeBuff_and_Buff_ToneUp_IncomingDamage:GetModifierIncomingDamage_Percentage( ... ) return -10 end

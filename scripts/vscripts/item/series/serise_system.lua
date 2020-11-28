@@ -28,18 +28,31 @@ AFFIX_FOR_EQUIPMENT = {
 		-- magic = {1,7}
 	},
 	["s2"] = {
-		str = {3,8},
-		agi = {3,8},
-		int = {3,8},
-		all = {2,6},
-		as = {10,25},
-		armor = {2,15},
-		damage = {2,8}, -- 攻击力
-		magic = {2,8},
-		physical = {2,8},
+		-- str = {3,8},
+		-- agi = {3,8},
+		-- int = {3,8},
+		-- new
+		exp = {10,50},
+		bounty = {1,10},
+		pcd = {2,15},
+		mcd = {2,8}, 
+		mh = {2,8},
+		range = {20,100},
+		ms = {2,10},
+		inv = {1,5},
+		pc = {1,3},
+		mc = {1,3},
+		pd = {2,6},
+		md = {2,6},
+		fd = {1,3},
 	},
 	
 }
+---------- 新词条
+--[[
+]]
+
+
 --[[
 【闪烁】*2 每释放4次闪烁，会在5秒内增加自己30%攻击速度 *3 80%
 【炼金】*2 强化资本家，投资收益从25%提升为35% *3 50%
@@ -59,12 +72,17 @@ AFFIX_FOR_DEPUTY  = {
 		"killer",
 		"scavenging",
 		"forging",
-		-- "boxer",
 		"idler",
 	},
 	s2 = {
-		"s2_boxer", -- s2拳师
-		"s2_killer", --s2杀手
+		"blink", 
+		"investment", 
+		"technology", 
+		"doctor",
+		"killer",
+		"scavenging",
+		"forging",
+		"idler",
 	}
 	
 }
@@ -87,11 +105,12 @@ AFFIX_FOR_TALENT = {
 		"greed", -- [贪欲]
 	},
 	s2 = {
-		"s2_light", -- 【光S2】
-		"s2_clod", -- 【寒冷】
-		"s2_flame", --【火焰】
-		"s2_vitality",
-		"s2_ruin",
+		"light", -- 【光能】
+		"clod", -- 【寒冷】
+		"flame", --【火焰】
+		"vitality", -- 【活力】 
+		"ruin",  --【毁灭】
+		"greed", -- [贪欲]
 	}
 	
 }
@@ -167,24 +186,36 @@ function SeriseSystem:SetItemAttr(hItem,nAffix,nSeason,nTier)
 	local hAffixList = {}
 	for k,v in pairs(hAttrAffixList) do	table.insert(hAffixList, k) end
 	local hRandomAffixOrder = {}
-
-	 
-
 	RandFetch(hRandomAffixOrder,nAffix,nCurrentCount)
 	for _,nOrder in pairs(hRandomAffixOrder) do
 		local sAttr = hAffixList[nOrder]
 		local nMin = hAttrAffixList[sAttr][1]
 		local nMax = hAttrAffixList[sAttr][2]
-		--print(sAttr,nMin,nMax)
 		local nMoeBouns = 0
-		-- if game_enum.nMoeNoviceCount > 0 then
-		-- 	nMoeBouns = RandomInt(0,math.floor(game_enum.nMoeNoviceCount * 0.5))
-		-- end
 		local nValue = self:GetRandomRatioValue(nMin,nMax) + nMin + nTier - 1
 		hAttrBonus[sAttr] = nValue + nMoeBouns
 	end
 	hItem.bonus.attr = hAttrBonus
-	
+end
+
+function SeriseSystem:SetItemAttrS2(hItem,nAffix)
+	local hAttrAffixList = AFFIX_FOR_EQUIPMENT["s2"]
+	local hAttrBonus = hItem.bonus.attr
+	local nCurrentCount = self:GetAffixCount( hAttrAffixList )
+	local hAffixList = {}
+	for k,v in pairs(hAttrAffixList) do	table.insert(hAffixList, k) end
+	local hRandomAffixOrder = {}
+	RandFetch(hRandomAffixOrder,nAffix,nCurrentCount)
+	for _,nOrder in pairs(hRandomAffixOrder) do
+		local sAttr = hAffixList[nOrder]
+		local nMin = hAttrAffixList[sAttr][1]
+		local nMax = hAttrAffixList[sAttr][2]
+		local nMoeBouns = 0
+		local nValue = self:GetRandomRatioValue(nMin,nMax) + nMin - 1
+		hAttrBonus[sAttr] = nValue + nMoeBouns
+	end
+	hItem.bonus.attr = hAttrBonus
+	hItem.bonus.gemslot = self:GetRandomRatioValue(1,3)
 end
 function SeriseSystem:CreateEquipmentInUnit(hArchiveEqui,hHero)
 	local hEquipmentTable = hArchiveEqui["equipment"]
@@ -261,7 +292,8 @@ function SeriseSystem:CreateSeriesItem(hHero,nAffix,nSeason,nTier)
 	local hPosition = {"chest","foot","hand"}
 	local nRand = RandomInt(1, #hPosition)
 	local sSet = hPosition[nRand]
-	local sItemName = "item_series_s"..nSeason.."_t"..nTier.."_"..sSet
+	-- local sItemName = "item_series_s"..nSeason.."_t"..nTier.."_"..sSet
+	local sItemName = "item_series_s1_t"..nTier.."_"..sSet
 	local hItem = CreateItem( sItemName, nil, nil )
 	hItem:SetPurchaser(hHero)
 	SeriseSystem:SetItemAttr(hItem,nAffix,nSeason,nTier)
@@ -270,6 +302,25 @@ function SeriseSystem:CreateSeriesItem(hHero,nAffix,nSeason,nTier)
 	return hItem
 end
 
+-- S2紫装
+function SeriseSystem:CreateSeriesItemS2(hHero)
+	local hPosition = {"chest","foot","hand"}
+	local nRand = RandomInt(1, #hPosition)
+	local sSet = hPosition[nRand]
+	local sItemName = "item_series_s2_t1_"..sSet
+	local hItem = CreateItem( sItemName, nil, nil )
+	local nMaxAffix = 5
+	local nAffixChance = RandomInt(1, 3)
+	local nS1Affix = 3
+	if nAffixChance < 2 then nS1Affix = nS1Affix + 1 end
+	hItem:SetPurchaser(hHero)
+	-- S1的词条3-4
+	SeriseSystem:SetItemAttr(hItem,nS1Affix,1,3)
+	SeriseSystem:SetItemAttrS2(hItem,nMaxAffix - nS1Affix)
+	hHero:AddItem(hItem)
+	SeriseSystem:WriteNetTable(hItem)
+	return hItem
+end
 -- 写入网表
 function SeriseSystem:WriteNetTable(hItem)
 	local nItemIndex = hItem:GetEntityIndex()

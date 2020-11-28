@@ -38,7 +38,7 @@ return {
 	},
 	{	-- 5 诗乃4
 		model = "models/npc/shinai/shinai.vmdl",
-		model_scale = 1,
+		model_scale = 1.4,
 		attack_projectile = "particles/diy_particles/shinai_attack.vpcf",
 		modifier = "modifier_heroes_skin_shinai",
 		wearables = {},

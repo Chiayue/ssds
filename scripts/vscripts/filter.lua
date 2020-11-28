@@ -4,21 +4,40 @@ if Filter == nil then
 	Filter = class({})
 end
 
---- 伤害过滤系统加载
+--- 过滤系统加载
 function Filter:init()
 	--print("Filter:init()")
-	GameRules: GetGameModeEntity(): SetDamageFilter(Dynamic_Wrap(Filter,"DamageFilter"),Filter)
+	GameRules: GetGameModeEntity(): SetDamageFilter(Dynamic_Wrap(Filter,"DamageFilterS1"),Filter)
+	-- GameRules: GetGameModeEntity(): SetDamageFilter(Dynamic_Wrap(Filter,"DamageFilterS2"),Filter)
 	GameRules: GetGameModeEntity(): SetHealingFilter(Dynamic_Wrap(Filter,"HealingFilter"),Filter)
+	GameRules: GetGameModeEntity(): SetModifyExperienceFilter(Dynamic_Wrap(Filter,"ExperienceFilter"),Filter)
+
 
 end
 
--- 伤害过滤器 做排名/显示
-function Filter:DamageFilter( params )
+function Filter:ExperienceFilter( params )
+	local hParent = EntIndexToHScript(params.hero_entindex_const or -1)
+	if hParent == nil then return false end
+	if hParent:GetTeam() == 2 then
+		local hTimeAbility = hParent:FindAbilityByName("archon_passive_time")
+		if hTimeAbility ~= nil then
+			if hTimeAbility:GetLevel() >= 5 then
+				params.experience = params.experience * 1.6
+			elseif hTimeAbility:GetLevel() >= 2 then
+				params.experience = params.experience * 2
+			end
+		end
+		local nExpBuff = hParent:GetModifierStackCount("modifier_series_attr_exp", hParent ) * 0.01
+		params.experience = params.experience * ( 1 + nExpBuff)
+	end
+	return true
+end
+-- 伤害过滤器 S1
+function Filter:DamageFilterS1( params )
 	-- body
 	local hAttacker = EntIndexToHScript(params.entindex_attacker_const or -1)
 	local hTarget = EntIndexToHScript(params.entindex_victim_const or -1)
 	local targetName = hTarget:GetUnitName()
-	--print(DeepPrintTable(params))
 	if hAttacker == nil then return true end
 	local team = hAttacker:GetTeam()
 	if team == 2 then
@@ -161,8 +180,22 @@ function Filter:DamageFilter( params )
 	
 	return true
 end
-
-
+function Filter:DamageFilterS2( params )
+	local hAttacker = EntIndexToHScript(params.entindex_attacker_const or -1)
+	local hTarget = EntIndexToHScript(params.entindex_victim_const or -1)
+	local sTargetName = hTarget:GetUnitName()
+	if hAttacker == nil then return true end
+	if hAttacker:GetTeam() == 2 then
+		local iPlayerID = hAttacker:GetPlayerOwnerID()
+		if PlayerResource:IsValidPlayerID(iPlayerID) then
+			local targetName = hTarget:GetUnitName()
+			local nDamageType = params.damagetype_const
+			local fDamage = params.damage
+			GlobalVarFunc.damage[iPlayerID+1] = GlobalVarFunc.damage[iPlayerID+1] + params.damage/10000
+		end
+	end
+	return true
+end
 -- 治疗过滤
 function Filter:HealingFilter( params )
 	local hTarget = EntIndexToHScript(params.entindex_target_const or -1)

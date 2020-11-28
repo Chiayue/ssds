@@ -1,6 +1,7 @@
 LinkLuaModifier("modifier_select_ability_standby", "player_select_ability.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_team_buff", "player_select_ability.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_select_skin_time", "player_select_ability.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_select_hero_time", "player_select_ability.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_autistic_every_week", "player_select_ability.lua", LUA_MODIFIER_MOTION_NONE)
 
 require("player_data")
@@ -26,14 +27,17 @@ local hPlayerBonus = {}
 local hRepick = {}
 local nDotaMap = nil
 local nMagmaTime = 0
+
 function Player_Select_Ability:init()
 	-- 科技系统
+	local hSelected = {}
 	for nPlayerID = 0,MAX_PLAYER-1 do
 		local t = {}
 		-- 默认为3
 		RandFetch(t,#TALENT_LIST,#TALENT_LIST)
 		hPassive[nPlayerID] = nil;
-		hRepick[nPlayerID] = false;
+		hRepick[nPlayerID] = false
+		hSelected[nPlayerID] = 0
 		CustomNetTables:SetTableValue( "player_passive", tostring(nPlayerID), t )
 		local CDOTAPlayer = PlayerResource:GetPlayer(nPlayerID)
 		if CDOTAPlayer ~= nil then
@@ -42,10 +46,9 @@ function Player_Select_Ability:init()
 			if nMapLevel <= 15 then game_enum.nMoeNoviceCount = game_enum.nMoeNoviceCount + 1 end
 		end
 	end
-	
 	CustomNetTables:SetTableValue( "player_data", "passive_select", hPassive )
 	CustomNetTables:SetTableValue( "player_data", "repick", hRepick )
-
+	CustomNetTables:SetTableValue( "player_data", "selected", hSelected )
 	-- self.AbilityData = nil
 	hPlayerBonus["bonus_ability_time"] = 129600
 	CustomNetTables:SetTableValue( "settings", "player_bonus",  hPlayerBonus)
@@ -118,15 +121,12 @@ function Player_Select_Ability:ChallengeGreedy( args )
 	-- body
 	local nPlayerID = args.PlayerID
     local hDuliu = Player_Data:GetStatusInfo(nPlayerID)
-    local nInCooldown = hDuliu["duliu_in_cd"]
     local CDOTAPlayer = PlayerResource:GetPlayer(nPlayerID)
     local hHero = CDOTAPlayer:GetAssignedHero()
     local hDuliuAbility = hHero:FindAbilityByName("challenge_greedy")
     if hDuliuAbility ~= nil then
-	    if nInCooldown <= 0 then
-		    local nMaxCooldown = hDuliu["duliu_max_cd"]
-		    hDuliuAbility:StartCooldown(nMaxCooldown)
-		    Player_Data:Set(nPlayerID,"status","duliu_in_cd",nMaxCooldown)
+	    if hDuliuAbility:IsCooldownReady() == true then
+	    	hDuliuAbility:UseResources(true, true, true)
 		    local gameEvent = {}
             gameEvent[ "player_id" ] = nPlayerID
             gameEvent[ "teamnumber" ] = -1
@@ -135,9 +135,20 @@ function Player_Select_Ability:ChallengeGreedy( args )
 		    MonsterChallenge:OnRewardGold(nPlayerID)
 		    GlobalVarFunc.duliuLevel = GlobalVarFunc.duliuLevel + 1
 		    MonsterChallenge:OnDuLiuAddNum(nPlayerID)
-		    --print(GlobalVarFunc.duliuLevel)
 		    CustomNetTables:SetTableValue("common", "greedy_level", { greedy_level = GlobalVarFunc.duliuLevel})
 		    CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"challenge_greedy_success",{})
+		    --------------- 双倍
+			if hHero:HasModifier("modifier_gem_devil_greed_additional") then
+				local bDouble = false
+				if RandomInt(1, 100) <= 35 then bDouble = true end
+				if bDouble == true then
+					MonsterChallenge:OnDuLiuAddNum(nPlayerID)
+				    GlobalVarFunc.duliuLevel = GlobalVarFunc.duliuLevel + 1
+				    CustomNetTables:SetTableValue("common", "greedy_level", { greedy_level = GlobalVarFunc.duliuLevel})
+				    CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"challenge_greedy_success",{})
+				end
+			end
+
 		else
 			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"send_error_message_client",{message="COOLING_IN_PROGRESS"})
 		end
@@ -149,15 +160,16 @@ end
 function Player_Select_Ability:Talent_Selected(args)
 	local ability_index = args.ability_index
     local nPlayerID = args.PlayerID
-    --print(nPlayerID)
     local sAbilityName = TALENT_LIST[ability_index]
     local CDOTAPlayer = PlayerResource:GetPlayer(nPlayerID)
     local hHero = CDOTAPlayer:GetAssignedHero()
     if hHero == nil then
        return
     end
-    local hPlayerInfo = PlayerResource:GetPlayer(nPlayerID)
-    if hHero:HasAbility("archon_passive_select") then
+    local hSelected = CustomNetTables:GetTableValue( "player_data", "selected")
+    if hHero:HasAbility("archon_passive_select") and hSelected[tostring(nPlayerID)] == 0 then
+    	hSelected[tostring(nPlayerID)] = 1
+    	CustomNetTables:SetTableValue( "player_data", "selected", hSelected )
     	-- print("ReplaceHeroWith")
     	-- 保存物品
     	local hItemList = {}
@@ -179,6 +191,13 @@ function Player_Select_Ability:Talent_Selected(args)
 	    HeroesSkin:Init(hNewHero)
 	    -- 武器
 	    hNewHero:AddItemByName("item_archer_bow_level_1")
+	    -- 删除多余的天赋技能
+	    for i=0,31 do
+	    	local hHeroAbility = hNewHero:GetAbilityByIndex(i)
+	    	if hHeroAbility ~= nil and hHeroAbility:GetAbilityType() == 2 then
+		    	hNewHero:RemoveAbility(hHeroAbility:GetAbilityName())
+		    end
+	    end
 	    -- 技能激活
     	hPassive[nPlayerID] = sAbilityName
     	hNewHero:RemoveAbility("archon_passive_select")
@@ -230,13 +249,15 @@ function Player_Select_Ability:Talent_Selected(args)
 	    -- 特定奖励
 	    -- CustomizedReward:SetReward( hNewHero )
 	    if MAP_CODE == "archers_survive_test" then
-	    	-- print("IsInToolsMode")
 	    	if IsInToolsMode() then 
 	    		hNewHero:AddItemByName("item_tools_mode") 
-	    		local sp = hNewHero:AddItemByName("item_silver_spade_fragment") 
-	    		local gp = hNewHero:AddItemByName("item_gold_spade_fragment") 
-	    		sp:SetCurrentCharges(50)
-	    		gp:SetCurrentCharges(50)
+	    		local sp = hNewHero:AddItemByName("item_baowu_book_personage_use_limit") 
+	    		sp:SetCurrentCharges(2)
+	    		-- local gp = hNewHero:AddItemByName("item_gold_spade_fragment") 
+	    		-- gp:SetCurrentCharges(50)
+	    		-- SeriseSystem:CreateSeriesItemS2(hNewHero)
+	    		-- SeriseSystem:CreateSeriesItemS2(hNewHero)
+	    		-- SeriseSystem:CreateSeriesItemS2(hNewHero)
 	    	end
 			local baowu2 = hNewHero:AddItemByName("item_baoWu_book")
 			baowu2:SetCurrentCharges(20)
@@ -254,7 +275,7 @@ function Player_Select_Ability:Talent_Selected(args)
 	   	end)
 	   	-- 自闭模式
 	   	if GlobalVarFunc.game_type == 1001 or GlobalVarFunc.game_type == 1003 then
-			hNewHero:AddNewModifier(hNewHero, nil, "modifier_autistic_week4_ally", {})
+			hNewHero:AddNewModifier(hNewHero, nil, "modifier_autistic_week5_ally", {})
 	   	end
 
 	   	-- 提示
@@ -274,9 +295,6 @@ function Player_Select_Ability:Talent_Selected(args)
 	        ArrowSoulReward:CheckReward( hNewHero )
 	        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(nPlayerID),"show_arrowSoul_meditationButton",{})
 	   	end)
-	   	
-        
-
     end
 end
 
@@ -285,25 +303,10 @@ function Player_Select_Ability:OnGameRulesStateChange(event)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		-- 模式判断
 
-		if GlobalVarFunc.game_type == 1001 then
+		if GlobalVarFunc.game_type == 1001 or GlobalVarFunc.game_type == 1003 then
 			Player_Select_Ability:AutisticMode()
 		end
-		-- 作弊模式验证
-		if GameRules:IsCheatMode() then
-			 local nPlayerCount = PlayerResource:GetPlayerCount()
-			 if nPlayerCount == 1 then
-			 	local nSteamID = PlayerResource:GetSteamAccountID(0)
-			 	if nSteamID == 147814139 then
-			 		print("CheatMode")
-			 	elseif not IsInToolsMode() then
-			 		GameRules:MakeTeamLose(DOTA_TEAM_GOODGUYS);
-			 	end
-			 else
-			 	if not IsInToolsMode() then
-			 		GameRules:MakeTeamLose(DOTA_TEAM_GOODGUYS);
-			 	end
-			 end
-		end
+		
 		-- 测试服资格
 		if MAP_CODE ~= "archers_survive" then
 			if CheckBeta() == false then
@@ -324,43 +327,23 @@ function Player_Select_Ability:OnGameRulesStateChange(event)
 	    end
 	    GameRules: GetGameModeEntity(): SetUseCustomHeroLevels(true)
 	    GameRules: GetGameModeEntity(): SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
+	    local nDelay = 0
+		if GlobalVarFunc.game_type == 0 then
+			nDelay = 45
+		else
+			nDelay = 15
+		end
 		Timer(1,function()
 			self:startOnThink()
 			local hAllHeroes = HeroList:GetAllHeroes()
-			--print(#hAllHeroes)
 			for k,hHero in pairs(hAllHeroes) do 
 				local passive_select = hHero:FindAbilityByName("archon_passive_select")
 				if passive_select ~= nil then
 					passive_select:SetLevel(1)
-					hHero:AddNewModifier(hHero, passive_select, "modifier_select_ability_standby", {})
+					hHero:AddNewModifier(hHero, passive_select, "modifier_select_ability_standby", { duration = nDelay})
 				end
 			end
         end)
-
-		local nDelay = 0
-		if GlobalVarFunc.game_type == 0 then
-			nDelay = 45
-		else
-			nDelay = 20
-		end
-		Timer(nDelay,function()
-			for nPlayerID = 0,MAX_PLAYER - 1 do
-				local hHero = PlayerResource:GetSelectedHeroEntity(nPlayerID)
-				if hHero ~= nil then
-					if hHero:HasAbility("archon_passive_select") then
-						local nOrder = RandomInt(1,2)
-						local hPlayePassive = CustomNetTables:GetTableValue(  "player_passive", tostring(nPlayerID) )
-						local nAbilityIndex = hPlayePassive[tostring(nOrder)]
-						local args = {
-							PlayerID = nPlayerID,
-							ability_index = nAbilityIndex
-						}
-						Player_Select_Ability:Talent_Selected(args)
-					end
-				end
-			end
-		end)
-
 	end
 end
 
@@ -376,9 +359,11 @@ function Player_Select_Ability:Deputy_Selected( args )
     deputy_1st = hHero:FindAbilityByName("archon_deputy_select_first")
     deputy_2nd = hHero:FindAbilityByName("archon_deputy_select_second")
     if deputy_1st == nil then
-    	hHero:RemoveAbility("archon_deputy_select_second")
-	    local Ability = hHero:AddAbility(sAbilityName)
-	   	Ability:SetLevel(1)
+    	if deputy_2nd ~= nil then
+	    	hHero:RemoveAbility("archon_deputy_select_second")
+		    local Ability = hHero:AddAbility(sAbilityName)
+		   	Ability:SetLevel(1)
+		end
 	else
     	hHero:RemoveAbility("archon_deputy_select_first")
 	    local Ability = hHero:AddAbility(sAbilityName)
@@ -477,9 +462,17 @@ function Player_Select_Ability:OnThinkTechnology()
 	if GameRules:IsGamePaused() == true then
 		return 1
 	end
+	-- 作弊模式验证
+	if GameRules:IsCheatMode() then
+		if not IsInToolsMode() then
+	 		GameRules:MakeTeamLose(DOTA_TEAM_GOODGUYS);
+	 	end
+	end
+
 	if GlobalVarFunc.MonsterWave >= 1 or GlobalVarFunc.game_type == -2 then
 		pre = pre + 1
 		nMagmaTime = nMagmaTime + 1
+
 		for nPlayerID = 0,5 do
 			local hPlayer = PlayerResource:GetPlayer(nPlayerID)
 			if hPlayer ~= nil then
@@ -489,8 +482,24 @@ function Player_Select_Ability:OnThinkTechnology()
 				if nDuliuCooddown > 0 then
 					Player_Data:Modify(nPlayerID,"status","duliu_in_cd",-1)
 				end
-
 				local hHero = hPlayer:GetAssignedHero()
+				---- 
+				local sHeroName = hHero:GetUnitName()
+				if sHeroName == "npc_dota_hero_wisp" then
+					local hSelected = CustomNetTables:GetTableValue( "player_data", "selected")
+					if hHero:HasAbility("archon_passive_select") 
+						and hSelected[tostring(nPlayerID)] == 0 
+						and hHero:HasModifier("modifier_select_ability_standby") == false then
+						local nOrder = RandomInt(1,3)
+						local hPlayePassive = CustomNetTables:GetTableValue(  "player_passive", tostring(nPlayerID) )
+						local nAbilityIndex = hPlayePassive[tostring(nOrder)]
+						local args = {
+							PlayerID = nPlayerID,
+							ability_index = nAbilityIndex
+						}
+						Player_Select_Ability:Talent_Selected(args)
+					end
+				end
 				---- 钻石会员
 				local bHaVipDiamond = hHero:HasModifier("modifier_store_reward_vip_diamond")
 				if bHaVipDiamond == true then
@@ -540,22 +549,26 @@ function Player_Select_Ability:OnThinkTechnology()
 					elseif nDeputyStack >= 2 then
 						nInvsetBonus = 1.4
 					end
-					
 				end
+				local nGemBonus = 1
+				if hHero:HasModifier("modifier_gem_investment_in_secret") then nGemBonus = nGemBonus + 0.1 end
+				if hHero:HasModifier("modifier_gem_investment_in_secret_additional") then nGemBonus = nGemBonus + 0.1 end
 				local nCurrentID = nPlayerID + 1
 				local nGlobalBonus = GlobalVarFunc.GoldInvestmentRewards 
 				+ GlobalVarFunc.InvestmentAndOperate[nCurrentID] 
 				+ GlobalVarFunc.InvestmentRewardCoefficient[nCurrentID]
 				- 2 
 				
-				Income_Reward = math.floor(Income_Level * nGlobalBonus * nInvsetBonus )
+				Income_Reward = math.floor(
+					Income_Level * nGlobalBonus * nInvsetBonus * GlobalVarFunc.EquiInvestment[nCurrentID] * nGemBonus
+				)
 				Player_Data():Set(nPlayerID,"common","Income_Amount",Income_Reward)
 
 				if GlobalVarFunc.game_type == -2 then Income_Reward = 99999 end
 				PlayerResource:ModifyGold(nPlayerID, Income_Reward, true, DOTA_ModifyGold_Unspecified)
 				PopupGoldGain(hHero, Income_Reward)	
 				----- 计算属性 ---------
-				AttributeCalculation(hHero)
+				--AttributeCalculation(hHero)
 			end
 		end
 		if pre >= 5 then
@@ -577,7 +590,7 @@ function modifier_select_ability_standby:GetEffectName() return "particles/statu
 function modifier_select_ability_standby:CheckState()
 	local state = {
 		[MODIFIER_STATE_INVISIBLE]	= true,
-		--[MODIFIER_STATE_UNSELECTABLE] = true,
+		-- [MODIFIER_STATE_UNSELECTABLE] = true,
 		[MODIFIER_STATE_INVULNERABLE] = true,
 		[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
 		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
@@ -590,6 +603,28 @@ function modifier_select_ability_standby:CheckState()
 	}
 	return state
 end
+function modifier_select_ability_standby:OnDestroy()
+	if not IsServer() then return false end
+	local hHero = self:GetParent()
+	local nPlayerID = hHero:GetPlayerID()
+	local hSelected = CustomNetTables:GetTableValue( "player_data", "selected")
+	if hHero:HasAbility("archon_passive_select") and hSelected[tostring(nPlayerID)] == 0 then
+		local nOrder = RandomInt(1,3)
+		local hPlayePassive = CustomNetTables:GetTableValue(  "player_passive", tostring(nPlayerID) )
+		local nAbilityIndex = hPlayePassive[tostring(nOrder)]
+		local args = {
+			PlayerID = nPlayerID,
+			ability_index = nAbilityIndex
+		}
+		Player_Select_Ability:Talent_Selected(args)
+	end
+
+
+end
+---------------------------------------------------------------------------------
+if modifier_select_hero_time == nil then modifier_select_hero_time = {} end
+function modifier_select_hero_time:IsHidden() return true end
+function modifier_select_hero_time:RemoveOnDeath() return false end
 ---------------------------------------------------------------------------------
 if modifier_select_skin_time == nil then modifier_select_skin_time = {} end
 function modifier_select_skin_time:IsHidden() return true end
@@ -617,135 +652,19 @@ end
 function modifier_team_buff:OnTooltip() 
 	return self:GetStackCount()
 end
----------------------------------------------------------------------------------
-function AttributeCalculation(hHero)
-	local nPlayerID = hHero:GetOwner():GetPlayerID() 
-	-- 箭魂层数
-	local nArrowSoulStack = hHero:GetModifierStackCount("modifier_arrowSoul_meditation",  hHero)
-	------- 玩家暴击几率&最终伤害 ------
-	local hAttr = GlobalVarFunc.attr[nPlayerID + 1]
-
-	----------------- 会员伤害乘区 -------------------
-	local nFdamage_a = 0
-	local nDiamond = hHero:GetModifierStackCount("modifier_store_reward_vip_diamond", hHero) * 0.03
-	local nDarkWings = hHero:GetModifierStackCount("modifier_store_reward_dark_wings", hHero) * 0.05
-	local nArrowInfinite = hHero:GetModifierStackCount("modifier_store_reward_arrow_infinite", hHero) * 0.1
-	local nAuraGod = hHero:GetModifierStackCount("modifier_store_reward_aura_god", hHero) * 0.05
-	local nGoldedDragon = hHero:GetModifierStackCount("modifier_store_reward_golden_dragon", hHero) * 0.07
-	nFdamage_a = nFdamage_a + nDiamond + nDarkWings + nArrowInfinite + nGoldedDragon
-	hAttr["fdamage_a"] = nFdamage_a
-	----------------- 装备伤害乘区 -------------------
-	local hBow = hHero:FindModifierByName("modifier_item_archer_bow")
-	hAttr["fdamage_b"] = 0
-	if hBow ~= nil then
-		hAttr["fdamage_b"] = (hBow.reward_damage*0.01) or 0
-	end
-	------------------ 毁灭3件套
-	hAttr["fdamage_g"] = 0
-	if hHero:HasAbility("archon_passive_puncture") or hHero:HasAbility("archon_passive_rage")  then
-		local nRuinStack = hHero:GetModifierStackCount("modifier_series_reward_talent_ruin", hHero )
-		if nRuinStack >= 3 then
-			hAttr["fdamage_g"] = hAttr["fdamage_g"] + 0.2
+-----------
+function Player_Select_Ability:AutisticMode()
+	local tNpcAbility = LoadKeyValues("scripts/npc/npc_abilities.txt")
+	for k,v in pairs(tNpcAbility) do
+		if v ~= nil then
+			if  type(v) == "table" then
+				if v.AbilityType == nil then
+					table.insert(GlobalVarFunc.OriginalAbilities,k)
+				end
+			end
 		end
 	end
-
-	---------------- 技能伤害乘区  --------------------
-	-- 神圣技能BUFF 
-	local nLightStack = hHero:GetModifierStackCount("modifier_archon_passive_light_effect", hHero ) * 0.01
-	hAttr["fdamage_c"] = nLightStack
-	-- 热血战魂 
-	-- local hFervorBuff = hHero:FindModifierByName("modifier_ability_flagstone_warlord_fervor_stacks")
-	-- if hFervorBuff ~= nil then
-	-- 	local nFervorStack = hFervorBuff:GetStackCount()
-	-- 	local nFervorLevel = hFervorBuff:GetAbility():GetLevel() or 1 -- 1,2,4
-	-- 	local hDamage = {1,2,4}
-	-- 	hAttr["fdamage_c"] = hAttr["fdamage_c"] + (nFervorStack * hDamage[nFervorLevel] * 0.01)
-	-- end
-
-	
-	--------------- 团队增益乘区 -----------
-	hAttr["fdamage_d"] = 0
-	local nTeamStack = hHero:GetModifierStackCount("modifier_team_buff", hHero ) * 0.01
-	local nEndlessStack = hHero:GetModifierStackCount("modifier_reward_damage_bonus",hHero) * 0.01
-	hAttr["fdamage_d"] = nTeamStack + nEndlessStack
-	--- 爆裂模式
-	hAttr["fdamage_e"] = 0
-	local nBurstMode = hHero:HasModifier("modifier_bonus_base_attackspeed") and 1 or 0
-	hAttr["fdamage_e"] = hAttr["fdamage_e"] + nBurstMode
-	-- 乘区F
-	hAttr["fdamage_f"] = 0
-	-- 大地BUFF
-	local hEarthBuff = hHero:FindModifierByName("modifier_archon_passive_earth_buff")
-	if hEarthBuff ~= nil then
-		local nEarthStack = hEarthBuff:GetStackCount()
-		hAttr["fdamage_f"] = hAttr["fdamage_c"] + (nEarthStack * 0.01)
-	end
-	---------------------通用暴击爆伤----------------------------
-	-- 通用暴击
-	local nSageBonus = hHero:GetModifierStackCount("modifier_store_reward_sage_stone", hHero ) * 3
-	-- 通用爆伤
-	local nFlameBonus = hHero:GetModifierStackCount("modifier_series_reward_talent_flame_effect", hHero ) * 3
-	local nHeimo = hHero:HasModifier( "modifier_gem_yongmengzhiren_heimo" ) and 200 or 0
-	-------------------- 物理暴击几率 --------------------
-	local nPhysicalCritUp1 = hHero:GetModifierStackCount("modifier_Upgrade_Physical_Critical", hHero ) * 4
-	local nPhysicalCritUp2 = hHero:GetModifierStackCount( "modifier_tech_max_physical_critical_buff", hHero ) * 3
-	local nCanbaiCrit = hHero:HasModifier( "modifier_gem_canbaizhiren") and -20 or 0
-	local nShufuCrit = hHero:HasModifier( "modifier_gem_shufuzhiren" ) and 20 or 0
-	hAttr["physical_crit"] = nPhysicalCritUp1 + nPhysicalCritUp2 + nCanbaiCrit + nShufuCrit + nSageBonus
-	-------------------- 物理爆伤 --------------------
-	local nAgiCritDamage =  0--hHero:GetAgility() * 0.05
-	local nPhysicalCritDamageUp1 = hHero:GetModifierStackCount("modifier_Upgrade_Physical_Critical_Damage", hHero ) * 40
-	local nPhysicalCritDamageUp2 = hHero:GetModifierStackCount( "modifier_tech_max_physical_critical_damage_buff", hHero ) * 25
-	if nArrowSoulStack >= 17 then nPhysicalCritDamageUp1 = nPhysicalCritDamageUp1 + 25 end
-	if nArrowSoulStack >= 32 then nPhysicalCritDamageUp1 = nPhysicalCritDamageUp1 + 30 end
-	-- 宝物
-	local nShufuDamage = hHero:HasModifier( "modifier_gem_shufuzhiren" ) and -75 or 0
-	local nCanbaiDamage = hHero:HasModifier( "modifier_gem_canbaizhiren" ) and 120  or 0
-	local nYongmengDa = hHero:HasModifier( "modifier_gem_yongmengzhiren_da" ) and 70 or 0
-	local nYongmengXiao = hHero:HasModifier( "modifier_gem_yongmengzhiren_xiao") and 30 or 0
-	local nYongmengZhong = hHero:HasModifier( "modifier_gem_yongmengzhiren_zhong" ) and 50 or 0
-	
-	local nBaowu = nYongmengDa + nYongmengXiao + nYongmengZhong + nCanbaiDamage + nShufuDamage
-	hAttr["physical_crit_damage"] = 150 + nAgiCritDamage + nPhysicalCritDamageUp1 + nPhysicalCritDamageUp2 + nBaowu + nFlameBonus + nHeimo
-	-------------------- 法术暴击几率 --------------------
-	local nMagicCritUp1 = hHero:GetModifierStackCount("modifier_Upgrade_Magic_Critical", hHero ) * 4
-	local nMagicCritUp2 = hHero:GetModifierStackCount( "modifier_tech_max_physical_magic_buff", hHero ) * 3
-	-- 宝物
-	local nDuohunCrit = hHero:HasModifier( "modifier_gem_duohunfazhang" ) and 20 or 0
-	local nShihunCrit = hHero:HasModifier( "modifier_gem_shihunshengbei" ) and -20 or 0
-	hAttr["magic_crit"] = nMagicCritUp1 + nMagicCritUp2 + nDuohunCrit + nShihunCrit + nSageBonus
-	-------------------- 法术暴击伤害 --------------------
-	local nIntCritDamage =  0 -- hHero:GetIntellect() * 0.05
-	local nMagicCritDamageUp1 = hHero:GetModifierStackCount("modifier_Upgrade_Magic_Critical_Damage", hHero ) * 40
-	local nMagicCritDamageUp2 = hHero:GetModifierStackCount( "modifier_tech_max_physical_critical_damage_buff", hHero ) * 25
-	if nArrowSoulStack >= 18 then nMagicCritDamageUp1 = nMagicCritDamageUp1 + 25 end
-	if nArrowSoulStack >= 33 then nMagicCritDamageUp1 = nMagicCritDamageUp1 + 30 end
-	-- 宝物
-	local nDuohunDamage = hHero:HasModifier( "modifier_gem_duohunfazhang" ) and -75 or 0
-	local nShihunDamage = hHero:HasModifier( "modifier_gem_shihunshengbei" ) and 120 or 0
-	local nYongmengDa_mag = hHero:HasModifier( "modifier_gem_yongmengzhiren_da" ) and 70 or 0
-	local nYongmengXiao_mag = hHero:HasModifier( "modifier_gem_yongmengzhiren_xiao") and 30 or 0
-	local nYongmengZhong_mag = hHero:HasModifier( "modifier_gem_yongmengzhiren_zhong" ) and 50 or 0
-	hAttr["magic_crit_damage"] = 150 
-		+ nMagicCritDamageUp1 + nMagicCritDamageUp2 + nDuohunDamage 
-		+ nShihunDamage + nFlameBonus + nIntCritDamage + nYongmengXiao_mag 
-		+ nYongmengZhong_mag + nYongmengDa_mag + nHeimo
-	------ 伤害加成 通用 --------
-	---- 最终伤害
-	local nFinalDamage = hHero:GetStrength() * 0.0001 -- 1W点100% 0.01%
-	if nArrowSoulStack >= 39 then nFinalDamage = nFinalDamage + 0.03 end
-	hAttr["final_damage"] = nFinalDamage
-	-------------------- 物理伤害加成 --------------------
-	local nPhysicalDamage =  hHero:GetAgility() * 0.0003 -- 1W点200%
-	if nArrowSoulStack >= 37 then nPhysicalDamage = nPhysicalDamage + 0.05 end
-	hAttr["physical_damage"] = nPhysicalDamage + nFinalDamage
-	-------------------- 法术伤害加成 --------------------
-	local nMagicDamage = hHero:GetIntellect() * 0.0008 -- 1W点800% 
-	if nArrowSoulStack >= 38 then nMagicDamage = nMagicDamage + 0.05 end
-	hAttr["magic_damage"] = nMagicDamage + nFinalDamage
-	-- DeepPrintTable(hAttr)
 end 
-
 
 function CheckBeta()
 	for n=0,MAX_PLAYER -1 do
@@ -790,7 +709,7 @@ function modifier_moe_novice:DeclareFunctions()
 end
 
 function modifier_moe_novice:OnTooltip() return self:GetStackCount() end
----- 萌新玩家
+------------------------------------------ 萌新玩家 ------------------------------------------
 LinkLuaModifier("modifier_moe_novice_player", "player_select_ability.lua", LUA_MODIFIER_MOTION_NONE)
 if modifier_moe_novice_player == nil then modifier_moe_novice_player = {} end
 function modifier_moe_novice_player:IsHidden() return false end
@@ -844,8 +763,28 @@ function modifier_moe_novice_player_endless:GetModifierBonusStats_Agility() retu
 function modifier_moe_novice_player_endless:GetModifierBonusStats_Intellect() return self:GetStackCount() end
 function modifier_moe_novice_player_endless:GetModifierBonusStats_Strength()  return self:GetStackCount() end
 -------------------
-function Player_Select_Ability:AutisticMode()
-	-- print("AutisticMode")
-	--local vVector = Vector(0,0,10)
-	--nDotaMap = DOTA_SpawnMapAtPosition( "archers_survive_red", vVector, true, nil, nil, {vector = vVector} )
+------------------------------------------ 老手玩家 ------------------------------------------
+LinkLuaModifier("modifier_moe_old_player", "player_select_ability.lua", LUA_MODIFIER_MOTION_NONE)
+if modifier_moe_old_player == nil then modifier_moe_old_player = {} end
+function modifier_moe_old_player:IsHidden() return false end
+function modifier_moe_old_player:GetTexture() return "moe_novice" end
+function modifier_moe_old_player:RemoveOnDeath() return false end
+function modifier_moe_old_player:IsDebuff() return true end
+function modifier_moe_old_player:DeclareFunctions() 
+	local funcs = {
+		MODIFIER_EVENT_ON_DEATH,
+	} 
+	return funcs
+end
+function modifier_moe_old_player:OnDeath(args)
+	if not IsServer() then return end
+	local hAttacker = args.attacker
+	local hCaster = self:GetParent()
+	if hAttacker ~= hCaster then
+		return
+	end
+	local nPlayerID = self:GetCaster():GetPlayerID()
+	local nBonusWood = 1
+	Player_Data():AddPoint(nPlayerID,nBonusWood)
+	PopupWoodGain(hCaster, nBonusWood)
 end

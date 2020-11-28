@@ -7,14 +7,16 @@ local hLoading = false
 local hArchiveEqui = {}
 local hArchiveEquiLoading = {}
 local hSteamID = {}
-ACTION_ARCHIVE_LOAD = "archive/load_profile_v2" 				-- 获取游戏存档
-ACTION_ARCHIVE_SAVE = "archive/save_profile" 					-- 保存游戏存档存档
-ACTION_ARCHIVE_SAVE_V2 = "archive/save_profile_v2" 				-- 保存游戏存档存档v2
-ACTION_ARCHIVE_NEW_MATCH = "archive/new_match" 					-- 保存游戏存档存档
-ACTION_ARCHIVE_SAVE_EQUIPMENT = "archive/save_equipment" 		-- 保存装备
-ACTION_ARCHIVE_LOAD_EQUIPMENT = "archive/load_equipment" 		-- 读取装备
-ACTION_ARCHIVE_SEND_RANKING = "ranking/send_ranking" 			-- 提交排名
-ACTION_ARCHIVE_GET_RANKING = "ranking/get_ranking" 				-- 获取排名
+ACTION_ARCHIVE_LOAD = "archive/load_profile_v2" 						-- 获取游戏存档
+ACTION_ARCHIVE_SAVE = "archive/save_profile" 							-- 保存游戏存档存档
+ACTION_ARCHIVE_SAVE_V2 = "archive/save_profile_v2" 						-- 保存游戏存档存档v2
+ACTION_ARCHIVE_NEW_MATCH = "archive/new_match" 							-- 保存游戏存档存档
+ACTION_ARCHIVE_SAVE_EQUIPMENT = "archive/save_equipment" 				-- 保存装备
+ACTION_ARCHIVE_LOAD_EQUIPMENT = "archive/load_equipment" 				-- 读取装备
+ACTION_ARCHIVE_GET_RANKING = "ranking/get_ranking" 						-- 获取排名
+ACTION_ARCHIVE_SEND_RANKING = "ranking/send_ranking" 					-- 提交排名
+ACTION_ARCHIVE_SEND_RANKING_ENDLESS = "ranking/send_ranking_endless"	-- 提交无尽排名
+
 
 function Archive:Init() 
 	print("Archive:Init() ")
@@ -316,6 +318,49 @@ function Archive:GetRanking(sGameType)
 		if iStatusCode == 200 then
 			local hBody = json.decode(sBody)
 			CustomNetTables:SetTableValue("service", "ranking", hBody.data)
+		end
+	end, REQUEST_TIME_OUT)
+end
+
+-- 提交无尽排名
+function Archive:SendRankingEndless()
+	print("SendRankingEndless")
+	local nLayers = GlobalVarFunc.MonsterWave
+	if GlobalVarFunc.game_mode ~= "endless" then return false end
+	-- if GlobalVarFunc.isClearance == false then return false end
+	-- if nLayers < 20 then return false end
+	local hRows = {}
+	local hTeamColl = {}
+	local nPlayerCount = PlayerResource:GetPlayerCount()
+	for nPlayerID = 0 ,nPlayerCount - 1 do
+		local CDOTAPlayer = PlayerResource:GetPlayer(nPlayerID)
+		if CDOTAPlayer ~= nil then
+			local nSteamID = PlayerResource:GetSteamAccountID(nPlayerID)
+			if nSteamID ~= 0 then
+	    		local hHero = CDOTAPlayer:GetAssignedHero()
+				local hAbility = hHero:GetAbilityByIndex(1)
+				local sAbility = hAbility:GetAbilityName()
+				table.insert(hTeamColl,{ steam_id = nSteamID, hero = sAbility })
+			end
+		end
+	end
+	hRows["season"] = GlobalVarFunc.SEASON
+	hRows["layers"] = nLayers
+	hRows["team_coll"] = hTeamColl
+	Service:HTTPRequest("POST", ACTION_ARCHIVE_SEND_RANKING_ENDLESS, { rows = hRows }, function(iStatusCode, sBody)
+		-- print("SendRankingEndless iStatusCode:",iStatusCode)
+		-- print(sBody)
+	end, REQUEST_TIME_OUT)
+end
+
+-- 获取无尽排名
+function Archive:GetRankingEndless(nSeason,sHero)
+
+	Service:HTTPRequest("POST", ACTION_ARCHIVE_GET_RANKING, { season = nSeason }, function(iStatusCode, sBody)
+		--print("LoadServerEqui iStatusCode:",iStatusCode)
+		if iStatusCode == 200 then
+			-- local hBody = json.decode(sBody)
+			-- CustomNetTables:SetTableValue("service", "ranking", hBody.data)
 		end
 	end, REQUEST_TIME_OUT)
 end

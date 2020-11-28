@@ -22,6 +22,25 @@ function modifier_gem_earth_burst:GetTexture()
 end
 
 function modifier_gem_earth_burst:OnCreated()
+	local hParent = self:GetParent()
+
+	if hParent:HasModifier("modifier_gem_void_lock") and  
+            hParent:HasModifier("modifier_gem_die_venom") and 
+            hParent:HasModifier("modifier_gem_Ice_storm")  and not 
+			hParent:HasModifier("modifier_gem_special_buff") then
+		hParent:AddNewModifier( hParent, self:GetAbility(), "modifier_gem_special_buff", {} )
+
+		if hParent:HasModifier("modifier_gem_earth_burst") and
+		hParent:HasModifier("modifier_gem_die_venom") and 
+		hParent:HasModifier("modifier_gem_Ice_storm") and 
+		hParent:HasModifier("modifier_gem_void_lock") then 
+			hParent:RemoveModifierByName("modifier_gem_earth_burst")
+			hParent:RemoveModifierByName("modifier_gem_die_venom")
+			hParent:RemoveModifierByName("modifier_gem_Ice_storm")
+			hParent:RemoveModifierByName("modifier_gem_void_lock")
+		end
+	end
+
 	if IsServer() then 
 		self:StartIntervalThink(1)
 		self.timer_built_cooldown = true

@@ -109,3 +109,13 @@ LinkLuaModifier("modifier_heroes_skin_shinai", "heroes/heroes_skin", LUA_MODIFIE
 modifier_heroes_skin_shinai = class(modifier_heroes_skin_template)
 function modifier_heroes_skin_shinai:GetEffectName() return "particles/diy_particles/shinai_ambient.vpcf" end
 function modifier_heroes_skin_shinai:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
+
+---------------------- 零依
+LinkLuaModifier("modifier_customized_reward_raye", "heroes/heroes_skin", LUA_MODIFIER_MOTION_NONE)
+modifier_customized_reward_raye = class(modifier_heroes_skin_template)
+function modifier_customized_reward_raye:OnCreated()
+	local nFXIndex1 = ParticleManager:CreateParticle("particles/diy_particles/raye_ambient.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(nFXIndex1, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(nFXIndex1, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_attack2", self:GetParent():GetAbsOrigin(), true)
+	
+end

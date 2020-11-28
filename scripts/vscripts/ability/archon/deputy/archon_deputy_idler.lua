@@ -21,7 +21,7 @@ end
 
 function modifier_archon_deputy_idler:DeclareFunctions() 
 	local funcs = {
-		MODIFIER_EVENT_ON_ATTACK,
+		-- MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_EVENT_ON_DEATH,
 		MODIFIER_PROPERTY_TOOLTIP,
 	} 

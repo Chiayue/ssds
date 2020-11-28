@@ -48,13 +48,18 @@ local Treasure_list = {
     "gem_gangtieheji",
     "gem_tiangoubudehaosi",
     "gem_fuhuoshijian",
+    "gem_shanghaizengfu_1",
+    "gem_shanghaizengfu_2",
+    "gem_shanghaizengfu_3",
+    "gem_shanghaizengfu_4",
+    "gem_tanlan",
 
     "gem_void_lock",
     "gem_die_venom",
     "gem_Ice_storm",
-    "gem_raging_fire_interrogate",
+    --"gem_raging_fire_interrogate",
     "gem_earth_burst",
-    "gem_shadow_quiet",
+    --"gem_shadow_quiet",
 
     "mucai_xiaojiejin",
     "mucai_dajiejin",
@@ -65,8 +70,7 @@ local Treasure_list = {
     "tanyuzhihu",
     "zuanshi_touzi",
 
-    "gold_jinbiboyi", 
-
+    -- "gold_jinbiboyi", 
     -- "mucai_mucaiboyi",
 -- "baiyin_touzi",
 -- "huangjin_touzi",
@@ -105,6 +109,19 @@ function Treasure_selected:OnAddTreasure(args)
     if type(treasureName) == "table" then
 		return
     end
+
+    if treasureName ~= "yebuyaole" then
+        local isOK = false 
+        for i = 1, #GlobalVarFunc.baoWuChiZiTest[nPlayerID + 1] do
+            if treasureName == GlobalVarFunc.baoWuChiZiTest[nPlayerID + 1][i] then
+                isOK = true
+            end
+        end
+        GlobalVarFunc.baoWuChiZiTest[nPlayerID + 1] = {}
+        if not isOK then
+            return
+        end
+    end
     
     if hHero:IsNull() then
         return
@@ -132,6 +149,8 @@ function Treasure_selected:OnAddTreasure(args)
         
         --添加宝物的modifier
         hHero:AddNewModifier( hHero, hAbility, "modifier_"..treasureName, {} )
+        -- 把所有选择的宝物添加到表中
+         table.insert(GlobalVarFunc.devilNameCount[nPlayerID + 1], "modifier_"..treasureName)
     else
         -- 宝物既不是技能也不是物品的时候
         if treasureName == "mucai_xiaojiejin" then
@@ -183,6 +202,9 @@ function Treasure_selected:OnAddTreasure(args)
         end
         if treasureName == "huihedashang" then
             Treasure_selected:OnInvestmentRewardCoefficient(nPlayerID,"huihedashang")
+            if not hHero:HasModifier("modifier_gem_huihedashang") then
+                hHero:AddNewModifier(hHero, hAbility, "modifier_gem_huihedashang", {})
+            end
         end
         if treasureName == "baiyin_touzi" then
             Treasure_selected:OnInvestmentRewardCoefficient(nPlayerID,"baiyin_touzi")
@@ -192,6 +214,9 @@ function Treasure_selected:OnAddTreasure(args)
         end
         if treasureName == "zuanshi_touzi" then
             Treasure_selected:OnInvestmentRewardCoefficient(nPlayerID,"zuanshi_touzi")
+            if not hHero:HasModifier("modifier_gem_zuanshi_touzi") then
+                hHero:AddNewModifier(hHero, hAbility, "modifier_gem_zuanshi_touzi", {})
+            end
         end
         if treasureName == "tanyuzhihu" then
             hHero:AddItemByName("item_baowu_book_dark_wings")

@@ -57,6 +57,10 @@ function MobSpawner:OnThink()
     --无尽模式
     elseif GlobalVarFunc.game_type==1000 then 
 
+        if (now ~= 0) and (now%1500==0 or now%1920==0) then
+            --创建商人
+            Devil_Treasure_selected():OnCreateBusinessMan()
+        end
         --判断是否刷池子怪
         MobSpawner:OnNowTotalMonsterNum()
         --剩余野怪数量
@@ -64,7 +68,7 @@ function MobSpawner:OnThink()
         --无尽模式
         self:OnGameModeEndless(now)
 
-    --每周自闭模式     铲子模式
+    --每周自闭模式     自闭PLUS模式
     elseif GlobalVarFunc.game_type==1001 or GlobalVarFunc.game_type == 1003 then
 
         --判断是否刷池子怪
@@ -183,7 +187,7 @@ function MobSpawner:SpawnAbyssNextWave()
     if GlobalVarFunc.abyss_spawn_state then
         spawner_config.spawn_abyss_monster_time = spawner_config.spawn_abyss_boss_time
     else
-        spawner_config.spawn_abyss_monster_time = 300
+        spawner_config.spawn_abyss_monster_time = 200
     end
 
     spawner_config.mosterWave = spawner_config.mosterWave + 1
@@ -205,6 +209,9 @@ function MobSpawner:SpawnAbyssNextWave()
         self:SpawnMonsterAbyss()
         --深渊模式刷boss
         self:SpawnBossAbyss()
+
+        --深渊游戏环节
+        MonsterExerciseRoom():OnAbyssGameLink()
     end
 
     --更新gameInfo网表信息
@@ -239,9 +246,13 @@ function MobSpawner:SpawnNextWave()
         spawner_config.monsterSurplusNum = 800
         GlobalVarFunc.monsterIsShuaMan = false
 
-        -- if spawner_config.mosterWave == 50 then
-        --     self:OnCreatedCaiDanBoss()
-        -- end
+        if spawner_config.mosterWave == 51 and spawner_config.spawn_interval_endless_time_tips >= 1900 then
+            self:OnCreatedCaiDanBoss1()
+        end
+
+        if spawner_config.mosterWave == 100 or spawner_config.mosterWave == 180 or spawner_config.mosterWave == 260 then
+            self:OnCreatedCaiDanBoss2()
+        end
 
         --25波之后不刷小兵
         if spawner_config.mosterWave <= 25 then
@@ -249,7 +260,7 @@ function MobSpawner:SpawnNextWave()
         end
         self:SpawnBossEndless()
 
-    --每周自闭模式    铲子模式
+    --每周自闭模式    自闭PLUS模式
     elseif GlobalVarFunc.game_type==1001 or GlobalVarFunc.game_type == 1003 then
         --野怪池子的数量
         spawner_config.monsterSurplusNum = 800
@@ -604,15 +615,20 @@ function MobSpawner:SpawnBossEndless()
     local boss = CreateUnitByNameInPool(boss_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
     boss:SetContext("boss", "1", 0)
     self:setMonsterBaseInformation(boss)
+
+    if spawner_config.mosterWave<=10 then
+        --减少boss移动速度
+        boss:AddNewModifier(boss, nil, "modifier_stop_move", nil)
+    end
+
     boss:AddAbility(ability1)
     if spawner_config.mosterWave>=12 then
         boss:AddAbility(ability2)
     end
-    if spawner_config.mosterWave >= 90 then
-        --减少伤技能
-        local Ability3= boss:AddAbility("monster_jianshang")
-        Ability3:SetLevel(1)
-    end
+    --减少伤技能
+    local Ability3= boss:AddAbility("monster_jianshang")
+    Ability3:SetLevel(1)
+    
     GlobalVarFunc:_addMoveSpeedAbility(boss)
 
     GlobalVarFunc.endless_boss_isAlive = true
@@ -629,52 +645,49 @@ function MobSpawner:SpawnMonsterAbyss()
     end
 
     --野怪池子的数量
-    spawner_config.monsterSurplusNum = 1000
+    spawner_config.monsterSurplusNum = 0
     GlobalVarFunc.monsterIsShuaMan = false
 
     --小兵模型
-    local wave_info_waves = spawner_config.waves
-    local count = 0
-    GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("spawn_creep_think"), 
-    function()
+    -- local wave_info_waves = spawner_config.waves
+    -- local count = 0
+    -- GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("spawn_creep_think"), 
+    -- function()
         
-        --判断是否暂停游戏
-        if GameRules:IsGamePaused() then
-            return 0.01
-        end
-        --判断是否游戏结束
-        if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
-            return nil
-        end
+    --     --判断是否暂停游戏
+    --     if GameRules:IsGamePaused() then
+    --         return 0.01
+    --     end
+    --     --判断是否游戏结束
+    --     if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
+    --         return nil
+    --     end
 
-        local position = GlobalVarFunc:IsCanFindPath(1000, 4500)
-        local model =  RandomInt(1,50)
-        local monster_name = wave_info_waves.name..model
-        -- 创建单位 
-        local mob = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
-        self:setAbyssMonsterBaseInformation(mob)
+    --     local position = GlobalVarFunc:IsCanFindPath(1000, 4500)
+    --     local model =  RandomInt(1,50)
+    --     local monster_name = wave_info_waves.name..model
+    --     -- 创建单位 
+    --     local mob = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+    --     self:setAbyssMonsterBaseInformation(mob)
 
-        --随机分配野怪技能
-        local ability = self:_addAbility()
-        mob:AddAbility(ability)
+    --     --随机分配野怪技能
+    --     local ability = self:_addAbility()
+    --     mob:AddAbility(ability)
 
-        --减伤光环                     
-        mob:AddNewModifier(mob, nil, "modifier_abyss_jianshang", nil)
-
-        spawner_config.monsterTable[tostring(mob:entindex())] = mob 
+    --     spawner_config.monsterTable[tostring(mob:entindex())] = mob 
     
-        -- 当前怪物计数
-        count = count + 1
-        -- 刷满退出
-        if count < spawner_config.monsterNumMax then
-            return 0.2
-        else
-            GlobalVarFunc.monsterIsShuaMan = true
-            GlobalVarFunc.abyss_spawn_state = true
-            return nil
-        end
+    --     -- 当前怪物计数
+    --     count = count + 1
+    --     -- 刷满退出
+    --     if count < spawner_config.monsterNumMax then
+    --         return 0.2
+    --     else
+    --         GlobalVarFunc.monsterIsShuaMan = true
+    --         GlobalVarFunc.abyss_spawn_state = true
+    --         return nil
+    --     end
           
-    end, 0)
+    -- end, 0)
 end
 
 -- 深渊模式刷Boss
@@ -697,8 +710,6 @@ function MobSpawner:SpawnBossAbyss()
 
     --深渊boss技能
     self:_addAbyssAbility(boss,4)
-    --减伤光环
-    boss:AddNewModifier(boss, nil, "modifier_abyss_jianshang", nil)
     
     spawner_config.monsterTable[tostring(boss:entindex())] = boss
 
@@ -830,12 +841,11 @@ function MobSpawner:OnWeeklySpawnBossEndless()
     if spawner_config.mosterWave>=12 then
         boss:AddAbility(ability2)
     end
-    if spawner_config.mosterWave >= 90 then
-        --减少伤技能
-        local Ability3= boss:AddAbility("monster_jianshang")
-        Ability3:SetLevel(1)
-    end
 
+    --减少伤技能
+    local Ability3= boss:AddAbility("monster_jianshang")
+    Ability3:SetLevel(1)
+    
     GlobalVarFunc:_addMoveSpeedAbility(boss)
     GlobalVarFunc:OnWeeklyGameChange(boss)
 
@@ -860,9 +870,6 @@ function MobSpawner:OnAbyssSpawnMonster()
     --随机分配野怪技能
     local ability = self:_addAbility()
     mob:AddAbility(ability)
-
-    --减伤光环
-    mob:AddNewModifier(mob, nil, "modifier_abyss_jianshang", nil)
 
     spawner_config.monsterTable[tostring(mob:entindex())] = mob 
 end
@@ -1025,7 +1032,7 @@ function MobSpawner:setMonsterBaseInformation(unit)
     local xp = self:_DeathXP()
     local gold = self:_DeathGold()
 
-    if unit:GetContext("boss") then  
+    if unit:GetContext("boss") or unit:GetUnitName() == "npc_caidan_monster_2" or unit:GetUnitName() == "npc_eMo_boss" then  
         health = health*15
         attack = attack*5
         xp = xp*5
@@ -1034,6 +1041,12 @@ function MobSpawner:setMonsterBaseInformation(unit)
         if GlobalVarFunc.playersNum~=0 then
             health = health*(GlobalVarFunc.playersNum*0.5+0.5)
         end
+    end
+
+    --自闭PLUS攻击和血量*5倍
+    if GlobalVarFunc.game_type == 1003 then
+        health = health*5
+        attack = attack*5
     end
 
     --血量上限20亿
@@ -1433,9 +1446,9 @@ function MobSpawner:OnCreateGoldMonster()
     local goldTree = CreateUnitByName(name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
 end
 
-function MobSpawner:OnCreatedCaiDanBoss()
+function MobSpawner:OnCreatedCaiDanBoss1()
     local monster_name = "npc_caidan_monster"
-    local position = Vector(-5200, 5200, 0)
+    local position = Vector(-5000, 5000, 0)
     -- 创建单位 
     local boss = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
     
@@ -1444,5 +1457,34 @@ function MobSpawner:OnCreatedCaiDanBoss()
     local newAbility = boss:AddAbility("ability_abyss_2")
     newAbility:SetLevel(1)
     
-    send_tips_message(0, "彩蛋boss出现在地图左上脚，击杀队伍奖励1000全属性")
+    send_tips_message(0, "CAI_DAN_TIP_1")
+end
+
+function MobSpawner:OnCreatedCaiDanBoss2()
+    local monster_name = "npc_caidan_monster_2"
+    local position = Vector(-5000, 5000, 0)
+    -- 创建单位 
+    local boss = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+    self:setMonsterBaseInformation(boss)
+    --添加ai
+    boss:AddNewModifier(boss, nil, "modifier_cooldown_ai", nil)
+    local newAbility = boss:AddAbility("ability_abyss_1")
+    newAbility:SetLevel(1)
+    
+    send_tips_message(0, "CAI_DAN_TIP_2")
+end
+
+function MobSpawner:OnCreatedEMoTianZhan(nPlayerID)
+    local monster_name = "npc_eMo_boss"
+    local position = Vector(0, 5000, 0)
+    -- 创建单位 
+    local boss = CreateUnitByNameInPool(monster_name, position, true, nil, nil, DOTA_TEAM_BADGUYS)
+    boss.nPlayerID = nPlayerID
+    self:setMonsterBaseInformation(boss)
+    --添加ai
+    boss:AddNewModifier(boss, nil, "modifier_cooldown_ai", nil)
+    --减伤光环
+    boss:AddNewModifier(boss, nil, "modifier_abyss_jianshang", nil)
+    local newAbility = boss:AddAbility("ability_abyss_1")
+    newAbility:SetLevel(1)
 end

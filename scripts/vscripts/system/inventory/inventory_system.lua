@@ -314,8 +314,8 @@ function InventorySystem:ExecuteOrderFilter(params)
 	local playerID = params.issuer_player_id_const
 	-- local queue = params.queue
 	-- DeepPrintTable(params)
-	if orderType == 16 then
-		-- DeepPrintTable(params)
+	if orderType == 12 then	-- 丟棄
+		
 		-- local hItem = EntIndexToHScript(params.entindex_ability or -1)
 		-- local sItemName = hItem:GetAbilityName()
 		-- if sItemName == "item_gerenbaoWu_book" then

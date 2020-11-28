@@ -46,7 +46,10 @@ return {
 		"particles/diy_particles/halloween_ambient.vpcf",
 		"particles/units/heroes/hero_spirit_breaker/spirit_breaker_nether_strike_begin.vpcf",
 		"particles/units/heroes/hero_spirit_breaker/spirit_breaker_nether_strike_end.vpcf",
-		"particles/econ/items/monkey_king/arcana/death/monkey_king_spring_arcana_death.vpcf"
+		"particles/econ/items/monkey_king/arcana/death/monkey_king_spring_arcana_death.vpcf",
+		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet.vpcf",
+		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial.vpcf",
+		"particles/units/heroes/hero_gyrocopter/gyro_calldown_marker.vpcf"
 	},
 
 	soundfile = {
@@ -83,6 +86,7 @@ return {
 		"models/heroes/troll_warlord/leimi.vmdl",
 		"models/npc/luoli/luoli.vmdl",
 		"models/npc/shinai/shinai.vmdl",
+		"models/npc/izumisagiri/izumisagiri.vmdl",
 	}
 
 }

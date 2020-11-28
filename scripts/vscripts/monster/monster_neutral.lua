@@ -84,7 +84,7 @@ function MonsterNeutral:OnCreateTuTeng()
 
     --添加ai
     tuteng:AddNewModifier(tuteng, nil, "modifier_cooldown_ai", nil)
-    local ability = tuteng:AddAbility("ability_abyss_19")
+    local ability = tuteng:AddAbility("ability_abyss_18")
     ability:SetLevel(1)
 
 
@@ -175,7 +175,18 @@ function MonsterNeutral:OnKillMonsterNeutral(event)
                 end
             end
         end
-    end
+    end    
+
+    --击杀彩蛋boss2
+    if killedUnit:GetUnitName() == "npc_caidan_monster_2" then 
+        
+        local position = killedUnit:GetOrigin()
+        local newItem = CreateItem( "item_gift_debris", nil, nil )
+	    local drop = CreateItemOnPositionSync( position, newItem )
+	    local dropTarget = position 
+        newItem:LaunchLoot( false, 300, 0.75, dropTarget )
+
+    end    
 end
 
 function MonsterNeutral:OnCreateMonster(Vec)

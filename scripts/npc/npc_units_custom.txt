@@ -150,7 +150,7 @@
 
 	"npc_dota_creature_monster_3"
 	{
-		"Model"	"models/items/furion/treant/furion_treant_nelum_red/furion_treant_nelum_red.vmdl"
+		"Model"	"models/items/furion/treant/fungal_lord_shroomthing/fungal_lord_shroomthing.vmdl"
 		"BaseClass"	"npc_dota_creature"
 		"SoundSet"	"n_creep_Ranged"
 		"GameSoundsFile"	"soundevents/game_sounds_creeps.vsndevts"
@@ -8805,11 +8805,10 @@
 		"Ability14"	""
 		"Ability15"	""
 		"Ability16"	""
-		"Model"	"models/props_structures/tower_upgrade/tower_upgrade.vmdl"
+		"Model"	"models/heroes/shopkeeper_dire/shopkeeper_dire.vmdl"
 		"ModelScale"	"2"
 		"Level"	"1"
-		"MinimapIcon"	"minimap_roshancamp"
-		"MinimapIconSize"	"500"
+		"MinimapIcon"	"minimap_miscbuilding"
 		"HealthBarOffset"	"200"
 		"RingRadius"	"100"
 		"AttackCapabilities"	"DOTA_UNIT_CAP_NO_ATTACK"
@@ -9864,6 +9863,7 @@
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
 		"MinimapIconSize"	"500"
+		"AttackRange"	"150"
 	}
 
 	"npc_dota_creature_boss_ice"
@@ -9893,6 +9893,7 @@
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
 		"MinimapIconSize"	"500"
+		"AttackRange"	"150"
 	}
 
 	"npc_dota_creature_boss_fire"
@@ -9922,6 +9923,7 @@
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
 		"MinimapIconSize"	"500"
+		"AttackRange"	"150"
 	}
 
 	"npc_dota_creature_boss_robot"
@@ -9969,6 +9971,7 @@
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
 		"MinimapIconSize"	"500"
+		"AttackRange"	"150"
 	}
 
 	"npc_dota_creature_boss_blademaster"
@@ -10027,6 +10030,7 @@
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
 		"MinimapIconSize"	"500"
+		"AttackRange"	"150"
 	}
 
 	"npc_dota_creature_boss_shredder"
@@ -10090,6 +10094,7 @@
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
 		"MinimapIconSize"	"500"
+		"AttackRange"	"150"
 	}
 
 	"npc_dota_creature_boss_shadow"
@@ -10145,6 +10150,7 @@
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
 		"MinimapIconSize"	"500"
+		"AttackRange"	"150"
 	}
 
 	"npc_dota_creature_boss_celestialgod"
@@ -10174,6 +10180,7 @@
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
 		"MinimapIconSize"	"500"
+		"AttackRange"	"150"
 	}
 
 	"npc_dota_creature_boss_madwarrior"
@@ -10225,6 +10232,7 @@
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
 		"MinimapIconSize"	"500"
+		"AttackRange"	"150"
 	}
 
 	"npc_dota_creature_boss_diao"
@@ -10254,6 +10262,7 @@
 		"AttackAcquisitionRange"	"20000"
 		"StatusHealth"	"100"
 		"MinimapIconSize"	"500"
+		"AttackRange"	"150"
 	}
 
 	"the_running_of_the_security_unit"
@@ -10329,7 +10338,7 @@
 		"Ability14"	""
 		"Ability15"	""
 		"Ability16"	""
-		"Model"	"models/heroes/gyro/gyro.vmdl"
+		"Model"	"models/heroes/ancient_apparition/ancient_apparition.vmdl"
 		"ModelScale"	"1"
 		"HealthBarOffset"	"200"
 		"StatusHealth"	"100"
@@ -10341,23 +10350,19 @@
 			{
 				"Wearable1"
 				{
-					"ItemDef"	"8385"
+					"ItemDef"	"8714"
 				}
 				"Wearable2"
 				{
-					"ItemDef"	"8381"
+					"ItemDef"	"8726"
 				}
 				"Wearable3"
 				{
-					"ItemDef"	"8383"
+					"ItemDef"	"8713"
 				}
 				"Wearable4"
 				{
-					"ItemDef"	"6965"
-				}
-				"Wearable5"
-				{
-					"ItemDef"	"8378"
+					"ItemDef"	"7844"
 				}
 			}
 		}
@@ -10423,7 +10428,7 @@
 		"AttackAcquisitionRange"	"5000"
 		"AttackRange"	"200"
 		"MovementCapabilities"	"DOTA_UNIT_CAP_MOVE_GROUND"
-		"StatusHealth"	"10000"
+		"StatusHealth"	"100000000"
 		"VisionDaytimeRange"	"400"
 		"VisionNighttimeRange"	"400"
 		"Creature"
@@ -10467,5 +10472,96 @@
 		"MagicalResistance"	"95"
 		"FollowRange"	"2000"
 		"UseNeutralCreepBehavior"	"1"
+	}
+
+	"npc_caidan_monster_2"
+	{
+		"BaseClass"	"npc_dota_creature"
+		"Ability1"	""
+		"Ability2"	""
+		"Ability3"	""
+		"Ability4"	""
+		"Ability5"	""
+		"Ability6"	""
+		"Ability7"	""
+		"Ability8"	""
+		"Ability9"	""
+		"Ability10"	""
+		"Ability11"	""
+		"Ability12"	""
+		"Ability13"	""
+		"Ability14"	""
+		"Ability15"	""
+		"Ability16"	""
+		"Model"	"models/creeps/roshan/roshan.vmdl"
+		"ModelScale"	"1"
+		"Level"	"1"
+		"ConsideredHero"	"0"
+		"MinimapIcon"	"minimap_racks90"
+		"MinimapIconSize"	"400"
+		"HealthBarOffset"	"200"
+		"RingRadius"	"40"
+		"AttackRate"	"1.5"
+		"AttackAnimationPoint"	"0.4"
+		"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackAcquisitionRange"	"5000"
+		"AttackRange"	"200"
+		"MovementCapabilities"	"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"	"400"
+		"FollowRange"	"2000"
+		"StatusHealth"	"1"
+		"VisionDaytimeRange"	"400"
+		"VisionNighttimeRange"	"400"
+		"UseNeutralCreepBehavior"	"1"
+		"IsAncient"	"1"
+		"CanBeDominated"	"0"
+		"CombatClassAttack"	"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"	"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+	}
+
+	// 恶魔挑战
+	"npc_eMo_boss"
+	{
+		"BaseClass"	"npc_dota_creature"
+		"Ability1"	""
+		"Ability2"	""
+		"Ability3"	""
+		"Ability4"	""
+		"Ability5"	""
+		"Ability6"	""
+		"Ability7"	""
+		"Ability8"	""
+		"Ability9"	""
+		"Ability10"	""
+		"Ability11"	""
+		"Ability12"	""
+		"Ability13"	""
+		"Ability14"	""
+		"Ability15"	""
+		"Ability16"	""
+		"Model"	"models/creeps/roshan/roshan.vmdl"
+		"ModelScale"	"1"
+		"Level"	"1"
+		"ConsideredHero"	"0"
+		"MinimapIcon"	"minimap_racks90"
+		"MinimapIconSize"	"400"
+		"HealthBarOffset"	"200"
+		"RingRadius"	"40"
+		"AttackRate"	"1.5"
+		"AttackAnimationPoint"	"0.4"
+		"AttackCapabilities"	"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackAcquisitionRange"	"5000"
+		"AttackRange"	"200"
+		"MovementCapabilities"	"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"	"400"
+		"FollowRange"	"2000"
+		"StatusHealth"	"1"
+		"VisionDaytimeRange"	"400"
+		"VisionNighttimeRange"	"400"
+		"UseNeutralCreepBehavior"	"1"
+		"IsAncient"	"1"
+		"CanBeDominated"	"0"
+		"CombatClassAttack"	"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"	"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 	}
 }

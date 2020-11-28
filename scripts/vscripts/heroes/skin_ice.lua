@@ -1,5 +1,5 @@
 return {
-	{	-- 1 原始皮肤
+	{	-- 0 原始皮肤
 		model = "models/heroes/crystal_maiden/crystal_maiden.vmdl",
 		attack_projectile = "particles/units/heroes/hero_crystalmaiden/maiden_base_attack.vpcf",
 		model_scale = 1,
@@ -12,7 +12,7 @@ return {
 		},
 
 	},
-	{	-- 
+	{	-- 1
 		model = "models/heroes/crystal_maiden/crystal_maiden.vmdl",
 		attack_projectile = "particles/units/heroes/hero_crystalmaiden/maiden_base_attack.vpcf",
 		model_scale = 1,
@@ -25,11 +25,17 @@ return {
 		},
 
 	},
-	{	-- 3 琪露诺
+	{	-- 2 琪露诺
 		model = "models/npc/cirno/cirno.vmdl",
 		attack_projectile = "particles/units/heroes/hero_crystalmaiden/maiden_base_attack.vpcf",
 		model_scale = 1,
 		wearables = {},
 		modifier = "modifier_heroes_skin_cirno",
+	},
+	{	-- 3 萱澈
+		model = "models/npc/xche/xche.vmdl",
+		attack_projectile = "particles/units/heroes/hero_death_prophet/death_prophet_base_attack.vpcf",
+		model_scale = 1,
+		wearables = {},
 	},
 }

@@ -10,15 +10,11 @@ function modifier_abyss_jianshang:DeclareFunctions()
 end
 
 function modifier_abyss_jianshang:IsHidden()
-	return true
+	return false
 end
 
 function modifier_abyss_jianshang:GetModifierIncomingDamage_Percentage( params )
-    local damageAdd = GlobalVarFunc.abyss_monster_level
-    if damageAdd >= 99 then
-        damageAdd = 99
-    end
-	return -damageAdd
+	return -98
 end
 
 function modifier_abyss_jianshang:IsPurgable()

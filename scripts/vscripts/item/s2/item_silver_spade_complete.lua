@@ -21,17 +21,22 @@ if item_silver_spade_complete == nil then item_silver_spade_complete = {} end
 function item_silver_spade_complete:OnSpellStart() 
 	if not IsServer() then return end
 	local hCaster = self:GetCaster()
-	local nPlayerID = hCaster:GetOwner():GetPlayerID()
-	local nNowChance = RandomInt(0,100)
-	-- nNowChance = 83
-	local nBaseChance = 0
-	for _,v in pairs(hSpadeEvent) do
-		nBaseChance = nBaseChance + v.chance
-		if nNowChance <= nBaseChance then
-			RunSpadeEvent(hCaster,"Silver",v)
-			break
+	local nCharge = self:GetCurrentCharges() 
+	if nCharge >= 1 then
+		local nPlayerID = hCaster:GetOwner():GetPlayerID()
+		local nNowChance = RandomInt(0,100)
+		local nBaseChance = 0
+		for _,v in pairs(hSpadeEvent) do
+			nBaseChance = nBaseChance + v.chance
+			if nNowChance <= nBaseChance then
+				RunSpadeEvent(hCaster,"Silver",v)
+				break
+			end
+		end
+		self:SetCurrentCharges(nCharge - 1 )
+		if self:GetCurrentCharges() == 0 then
+			self:Destroy()
 		end
 	end
-	self:SpendCharge()
 end
 

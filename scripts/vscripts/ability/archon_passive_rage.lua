@@ -43,7 +43,7 @@ function modifier_archon_passive_rage:OnAttack(params)
 
 		local caster = self:GetParent()
 		local health = caster:GetHealth()
-		local health_cost = health * 0.02
+		local health_cost = health * 0.06
 	    local new_health = (health - health_cost)
 	    caster:ModifyHealth(new_health, ability, false, 0)
 	end
@@ -76,10 +76,25 @@ function modifier_archon_passive_rage:DeclareFunctions()
 end
 
 function modifier_archon_passive_rage:GetModifierBaseAttack_BonusDamage()
-	return self.damage_max + self.damage_loss
+	local nLevel = self:GetAbility():GetLevel() 
+	local nBonus = 0
+	if nLevel >= 5 then
+		nBonus = self:GetParent():GetStrength() 
+	end
+	return self.damage_max + self.damage_loss + nBonus
 end
 
 function modifier_archon_passive_rage:GetModifierAttackSpeedBonus_Constant()
 	return self.series_attackspeed
 end
 
+-- function modifier_archon_passive_puncture:GetModifierBaseAttack_BonusDamage()
+-- 	local nLevel = self:GetAbility():GetLevel()
+-- 	if nLevel >= 5 then
+-- 		return self:GetParent():GetAgility() * 2
+-- 	elseif nLevel >= 2 then
+-- 		return self:GetParent():GetAgility()
+-- 	else
+-- 		return 0
+-- 	end
+-- end

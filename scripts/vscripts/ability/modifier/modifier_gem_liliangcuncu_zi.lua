@@ -20,8 +20,8 @@ function modifier_gem_liliangcuncu_zi:IsHidden()
 end
 
 function modifier_gem_liliangcuncu_zi:OnCreated(params)
+    if not IsServer() then return end
     self.attribute_promotion = -100
-
     local hero = self:GetParent()
     if hero:HasModifier("modifier_gem_liliangcuncu_huang") and not hero:HasModifier("modifier_gem_liliangcuncu") then
         hero:AddNewModifier( hero, self:GetAbility(), "modifier_gem_liliangcuncu", {} )

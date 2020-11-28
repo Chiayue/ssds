@@ -1,4 +1,6 @@
-
+--[[
+ 背包系统参考阿瓦隆工作室的荒神罪
+]]
 m_UnitItems = {}
 
 if InventoryBackpack == nil then

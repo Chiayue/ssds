@@ -110,27 +110,3 @@ function getDataOfIndex(value,tReward)
     end
     return order
 end
-
---所有玩家进游戏后的读档信息playerInfo
---{
-    --模拟数据,测试用
-    -- [123456789] = {                                     -- steam_id
-    --     ["playerID"] = 0,                              --游戏内玩家id
-    --     ["endless_waves"] = 0,                          --无尽模式波数记录 
-    --     ["game_killNum"] = 0,                           --杀怪数
-    --     ["gameMode_0_clearance"] = 0,                   --简单模式通关次数
-    --     ["gameMode_1_clearance"] = 0,                   --普通模式通关次数
-    --     ["gameMode_2_clearance"] = 0,                   --困难模式通关次数
-    --     ["gameMode_3_clearance"] = 0,                   --无尽模式通关次数
-    -- },
-
-    -- [123456789] = {                                     -- steam_id
-    --     ["playerID"] = 0,                              --游戏内玩家id
-    --     ["endless_waves"] = 0,                          --无尽模式波数记录 
-    --     ["game_killNum"] = 0,                           --杀怪数
-    --     ["gameMode_0_clearance"] = 0,                   --简单模式通关次数
-    --     ["gameMode_1_clearance"] = 0,                   --普通模式通关次数
-    --     ["gameMode_2_clearance"] = 0,                   --困难模式通关次数
-    --     ["gameMode_3_clearance"] = 0,                   --无尽模式通关次数
-    -- },
---}

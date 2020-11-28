@@ -21,6 +21,7 @@ require("monster/monster_bigBoss")
 require("monster/monster_exercise_room")
 require("randomEvents/random_events")
 require("randomEvents/treasure_selected")
+require("randomEvents/devil_treasure_selected")
 require("arrow_Soul_meditation/arrowSoulMeditation")
 require("events")
 --- guoyuan
@@ -149,6 +150,8 @@ function CAddonTemplateGameMode:StageChange()
 		RandomEvents():Init()
 		--初始宝物选择监听
 		Treasure_selected():Init()
+		--初始化恶魔宝物书
+		Devil_Treasure_selected():Init()
 		--运营初始化
 		MonsterOperate():Start()
 		--初始化bigBoss

@@ -103,24 +103,24 @@ function modifier_archon_passive_time:OnAttackLanded( params )
 	end
 end
 
-function modifier_archon_passive_time:OnDeath(args)
-	--if not IsServer() then return end
-	local hAttacker = args.attacker
-	local hTarget = args.unit
-	local hCaster = self:GetParent()
-	if hAttacker ~= hCaster then
-		return
-	end
-	local nLevel = self:GetAbility():GetLevel()
-	if nLevel >= ABILITY_AWAKEN_1 and nLevel < ABILITY_AWAKEN_2 then
-		local getXP = hTarget:GetDeathXP()
-		getXP = getXP * 0.6
-		hCaster:AddExperience(getXP, 1, false, false)
-	elseif nLevel >= ABILITY_AWAKEN_2 then
-		local getXP = hTarget:GetDeathXP() * 2
-		hCaster:AddExperience(getXP, 1, false, false)
-	end
-end 
+-- function modifier_archon_passive_time:OnDeath(args)
+-- 	--if not IsServer() then return end
+-- 	local hAttacker = args.attacker
+-- 	local hTarget = args.unit
+-- 	local hCaster = self:GetParent()
+-- 	if hAttacker ~= hCaster then
+-- 		return
+-- 	end
+-- 	local nLevel = self:GetAbility():GetLevel()
+-- 	if nLevel >= ABILITY_AWAKEN_1 and nLevel < ABILITY_AWAKEN_2 then
+-- 		local getXP = hTarget:GetDeathXP()
+-- 		getXP = getXP * 0.6
+-- 		hCaster:AddExperience(getXP, 1, false, false)
+-- 	elseif nLevel >= ABILITY_AWAKEN_2 then
+-- 		local getXP = hTarget:GetDeathXP() * 2
+-- 		hCaster:AddExperience(getXP, 1, false, false)
+-- 	end
+-- end 
 
 modifier_archon_passive_time_particles = {}
 function modifier_archon_passive_time_particles:GetAttributes() return  MODIFIER_ATTRIBUTE_MULTIPLE end

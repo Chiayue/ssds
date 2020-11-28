@@ -12,9 +12,13 @@ function CAddonTemplateGameMode:OnEntityKill(event)
                 --无尽存档装备掉落
                 self:OnBossCreatedSeriesItem()
 
+                if GlobalVarFunc.game_type == 1000 and GlobalVarFunc.MonsterWave >= 700 then
+                    self:OnGoodguysWinner()
+                end
+
                 --深渊击杀boss进入下一波
                 if GlobalVarFunc.game_type == 1002 then
-                    if GlobalVarFunc.MonsterWave == 8 then
+                    if GlobalVarFunc.MonsterWave == 10 then
                         self:OnGoodguysWinner()
                     else
                         GlobalVarFunc.abyss_spawn_state = false
@@ -195,34 +199,54 @@ function CAddonTemplateGameMode:OnBossCreatedSeriesItem()
                 if game_enum.nMoeNoviceCount > 0 then
                     probability = 2 * game_enum.nMoeNoviceCount
                 end
-                if spawner_config.mosterWave >= 270  then
+                if spawner_config.mosterWave > 600 then
+                    if randNum <= 10 then
+                        SeriseSystem:CreateSeriesItemS2(aHero)      -- T4
+                    else
+                        SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
+                    end
+                elseif spawner_config.mosterWave > 400 then
+                    if randNum <= 5 then
+                        SeriseSystem:CreateSeriesItemS2(aHero)      -- T4
+                    else
+                        SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
+                    end
+                elseif spawner_config.mosterWave > 320 then
+                    if spawner_config.mosterWave % 20 == 0 then
+                        if randNum <= 5 then
+                            SeriseSystem:CreateSeriesItemS2(aHero)      -- T4
+                        else
+                            SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
+                        end
+                    end
+                elseif spawner_config.mosterWave > 270 then
                     SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
-                elseif spawner_config.mosterWave >= 180  then
-                    if randNum <= 45 then
+                elseif spawner_config.mosterWave >= 180 then
+                    if randNum <= 50 then
                         SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
                     else
                         SeriseSystem:CreateSeriesItem(aHero,3,1,2)      -- T2
                     end
-                elseif spawner_config.mosterWave >= 70  then
-                    if randNum <= 35 then
+                elseif spawner_config.mosterWave >= 70 then
+                    if randNum <= 40 then
                         SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
                     else
                         SeriseSystem:CreateSeriesItem(aHero,3,1,2)      -- T2
                     end
-                elseif spawner_config.mosterWave == 60  then
-                    if randNum <= 25 then
+                elseif spawner_config.mosterWave == 60 then
+                    if randNum <= 30 then
                         SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
                     else
                         SeriseSystem:CreateSeriesItem(aHero,3,1,2)      -- T2
                     end
-                elseif spawner_config.mosterWave == 50  then
-                    if randNum <= 15 then
+                elseif spawner_config.mosterWave == 50 then
+                    if randNum <= 20 then
                         SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
                     else
                         SeriseSystem:CreateSeriesItem(aHero,3,1,2)      -- T2
                     end
                 elseif spawner_config.mosterWave == 40 then 
-                    if randNum <= 5 then
+                    if randNum <= 10 then
                         SeriseSystem:CreateSeriesItem(aHero,4,1,3)      -- T3
                     elseif randNum <= 50 then
                         SeriseSystem:CreateSeriesItem(aHero,3,1,2)        -- T2

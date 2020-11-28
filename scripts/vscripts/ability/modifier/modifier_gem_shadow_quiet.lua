@@ -99,7 +99,7 @@ function modifier_gem_shadow_quiet:OnAttackLanded( params )
 			local damage = {
 				victim = enemy,
 				attacker = hCaster,
-				damage =  hCaster:GetAgility() * attack_multiple,
+				damage = hCaster:GetAgility() * attack_multiple,
 				damage_type = DAMAGE_TYPE_PHYSICAL,
 			}
 
@@ -228,7 +228,7 @@ end
 
 -- 在命中的敌人脚下生成一个暗影特效。
 function modifier_archon_passive_shadow_quiet_frozen_debuff:OnCreated(params)
-	if not IsServer() then 
+	if IsServer() then 
 		self.radius = 500
 		self:StartIntervalThink(0.5)
 	end
@@ -260,7 +260,6 @@ function modifier_archon_passive_shadow_quiet_frozen_debuff:OnIntervalThink( par
 
 		for _,enemy in pairs(enemies) do
 			if enemy ~= nil and ( not enemy:IsMagicImmune() ) and ( not enemy:IsInvulnerable() ) then
-
 				-- 敌人寒气BUFF
 				enemy:AddNewModifier( 
 					hCaster, 

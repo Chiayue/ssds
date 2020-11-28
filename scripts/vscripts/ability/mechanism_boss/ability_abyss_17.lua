@@ -136,7 +136,8 @@ function modifier_ability_abyss_17_damage:OnIntervalThink( kv )
 
 			self:StartIntervalThink(-1)
 			self:Destroy()
-			if Unity_Name:IsAlive() then 
+			if Unity_Name == nil then return end
+			if IsValidEntity(Unity_Name) then 
 				self:FindEnemyRangeDamage(hParent)
 			end
 		end

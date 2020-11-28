@@ -13,7 +13,6 @@ return {
 	{	-- 2
 		model = "models/heroes/lanaya/lanaya.vmdl",
 		attack_projectile = "particles/econ/items/templar_assassin/templar_assassin_focal/ta_focal_base_attack.vpcf",
-		--attack_projectile = "particles/econ/items/templar_assassin/templar_assassin_focal/ta_focal_base_attack.vpcf",
 		model_scale = 1,
 		wearables = {
 			{model = "models/items/lanaya/princess_loulan_weapon/princess_loulan_weapon.vmdl", particle_systems = {}},
@@ -22,5 +21,12 @@ return {
 			{model = "models/items/lanaya/princess_loulan_armor/princess_loulan_armor.vmdl", particle_systems = {}},
 		},
 
+	},
+	{	-- 2
+		model = "models/npc/raye/raye.vmdl",
+		attack_projectile = "particles/diy_particles/raye_attack.vpcf",
+		model_scale = 1.2,
+		wearables = {},
+		modifier = "modifier_customized_reward_raye",
 	},
 }

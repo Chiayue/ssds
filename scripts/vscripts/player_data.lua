@@ -1,3 +1,6 @@
+LinkLuaModifier( "modifier_attribute_calculation", "ability/archon/modifier_attribute_calculation.lua",LUA_MODIFIER_MOTION_NONE )
+
+
 if Player_Data == nil then
 	Player_Data = class({})
 end
@@ -88,7 +91,8 @@ function Player_Data:init()
 
     ListenToGameEvent( "entity_killed" ,Dynamic_Wrap(Player_Data,"OnEntityKilled"),self)
     ListenToGameEvent( "dota_player_gained_level" ,Dynamic_Wrap(Player_Data,"OnPlayerGainedLevel"),self)
-    -- 每秒定时器
+    -- 自闭信息
+    CustomNetTables:SetTableValue( "settings", "autistic", {Texture = "gyrocopter_homing_missile"})
 end
 
 function Player_Data:OnSkinSelected(args)
@@ -202,10 +206,13 @@ function Player_Data:InitModifier( hHero )
         hAbility = hHero:AddAbility("upgrade_ability_core")
         hAbility:SetLevel(1)
     end
-
+    -- 属性BUFF
+    -- print("modifier_attribute_calculation")
+    hHero:AddNewModifier(hNewHero, hAbility, "modifier_attribute_calculation", {}) 
     -- 团队增益BUFF
     local bTeamBuff = hHero:AddNewModifier(hHero, hAbility, "modifier_team_buff", {})
     hHero:AddNewModifier(hHero, hAbility, "modifier_select_skin_time", { duration = 15})
+
     -- 萌新BUFF
     local hMoeBuff = hHero:AddNewModifier(hHero, hAbility, "modifier_moe_novice", {})
     hMoeBuff:SetStackCount(game_enum.nMoeNoviceCount)
@@ -294,6 +301,9 @@ function Player_Data:OnEntityKilled(event)
     local hAttacker = EntIndexToHScript(event.entindex_attacker or -1)
     local hKilled =  EntIndexToHScript(event.entindex_killed or -1)
     local team = hAttacker:GetTeam()
+    if hKilled:GetTeam() == 2 then
+        return false
+    end
     if team == 2 then
         local P = hAttacker:GetOwner():GetPlayerID()
         table_score[P]["Kills"] = table_score[P]["Kills"] + 1

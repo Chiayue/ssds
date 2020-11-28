@@ -151,9 +151,7 @@ function modifier_item_archer_bow:OnAttack(params)
 		local hRageAbility = params.attacker:FindAbilityByName("archon_passive_rage")
 		if hRageAbility ~= nil then
 			local nLevel = hRageAbility:GetLevel()
-			if nLevel >= ABILITY_AWAKEN_2 then
-				nBonusChance = hRageAbility:GetSpecialValueFor( "bonus_lv7" )
-			elseif nLevel >= ABILITY_AWAKEN_1 then
+			if nLevel >= ABILITY_AWAKEN_1 then
 				nBonusChance = hRageAbility:GetSpecialValueFor( "bonus_lv4" )
 			end
 		end
@@ -282,6 +280,7 @@ function modifier_item_archer_bow_multe:OnCreated()
 		end
 		enemies = nil
 		self:Destroy()
+		return 0
 	end
 end
 

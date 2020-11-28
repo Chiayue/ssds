@@ -26,11 +26,31 @@ function modifier_monster_jianshang:IsHidden()
 end
 
 function modifier_monster_jianshang:GetModifierIncomingDamage_Percentage( params )
-    local damageAdd = (GlobalVarFunc.MonsterWave - 90) * 0.5 + 1
-    if damageAdd >= 94 then
-        damageAdd = 94
+    if GlobalVarFunc.game_type == 1003 then
+        if GlobalVarFunc.MonsterWave >= 50 then
+            local damageAdd = (GlobalVarFunc.MonsterWave - 50) * 0.5
+            if damageAdd >= 99 then
+                damageAdd = 99
+            end
+            return -damageAdd
+        end
+    else
+        if GlobalVarFunc.MonsterWave >= 600 then
+            return -98
+        elseif GlobalVarFunc.MonsterWave >= 500 then
+            return -97
+        elseif GlobalVarFunc.MonsterWave >= 400 then
+            return -96
+        elseif GlobalVarFunc.MonsterWave >= 300 then
+            return -95
+        elseif GlobalVarFunc.MonsterWave >= 100 then
+            local damageAdd = (GlobalVarFunc.MonsterWave - 100) * 0.5 
+            if damageAdd >= 94 then
+                damageAdd = 94
+            end
+            return -damageAdd
+        end
     end
-	return -damageAdd
 end
 
 function modifier_monster_jianshang:IsPurgable()

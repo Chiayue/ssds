@@ -5,6 +5,7 @@ if item_tools_mode == nil then item_tools_mode = {} end
 
 function item_tools_mode:OnSpellStart() 
 	if not IsServer() then return end
+	if not IsInToolsMode() then return end
 	local hCaster = self:GetCaster()
 	local nPlayerID = hCaster:GetOwner():GetPlayerID()
 	local nAllRange = 10000
@@ -57,7 +58,16 @@ function modifier_item_tools_mode:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 	}
 end
-function modifier_item_tools_mode:IsHidden()return true end
-function modifier_item_tools_mode:GetModifierBonusStats_Agility() return 50000 end
-function modifier_item_tools_mode:GetModifierBonusStats_Intellect()	return 50000 end
-function modifier_item_tools_mode:GetModifierBonusStats_Strength() return 50000 end
+function modifier_item_tools_mode:IsHidden() return true end
+function modifier_item_tools_mode:GetModifierBonusStats_Agility() 
+	if not IsInToolsMode() then return 0 end
+	return 50000 
+end
+function modifier_item_tools_mode:GetModifierBonusStats_Intellect()	
+	if not IsInToolsMode() then return 0 end
+	return 50000 
+end
+function modifier_item_tools_mode:GetModifierBonusStats_Strength() 
+	if not IsInToolsMode() then return 0 end
+	return 50000 
+end

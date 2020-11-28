@@ -31,7 +31,7 @@ end
 
 -- 魔力爆发
 -- 魔力之箭
-function modifier_archon_passive_magic:OnAttackLanded( params )
+function modifier_archon_passive_magic:OnAttack( params )
 	if params.attacker ~= self:GetParent() then return 0 end
 	if params.target == nil then return end
 	if params.target:IsAlive() == false then return end

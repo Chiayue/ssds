@@ -14,6 +14,7 @@ function GetUnitRange(hUnit)
 		"modifier_ability_shishi_challenge",
 		"modifier_ability_tianjue_challenge",
 		"modifier_arrowSoul_meditation",
+		"modifier_series_attr_range",
 	}
 	for k,v in pairs(hRangeModi) do
 		for _,hModi in pairs(hUnit:FindAllModifiersByName(v)) do
@@ -286,4 +287,33 @@ function SendParticlesToClient(sParticles,hUnit,ParticleAttachment_t)
 		"local_player_particles",
 		{ Particles = sParticles , Vector = vVector,queryUnit = queryUnit , Attachment = ParticleAttachment_t}
 	)
+end
+
+---------------------  新伤害计算 ---------------------
+if ApplyDamage_Original == nil then
+	ApplyDamage_Original = ApplyDamage
+end
+
+function ApplyDamageS2(tDamageTable)
+	-- 技能伤害
+	local hAttack 		= tDamageTable.attacker
+	if hAttack:GetTeam() == 2 then
+		local hTarget 		= tDamageTable.victim
+		local fDamage 		= tDamageTable.damage
+		local iDamageType 	= tDamageTable.damage_type
+		local bIsCrit		= RollCritDamage(hAttack,iDamageType)
+
+		if iDamageType == 1 then
+			-- 判断是否暴击
+
+
+		elseif iDamageType == 2 then
+			
+		end
+	end
+	return ApplyDamage_Original(tDamageTable)
+end
+
+function RollCritDamage(hAttack,iDamageType)
+	return false
 end

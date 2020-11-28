@@ -39,18 +39,20 @@ TALENT_LIST = {
     "archon_passive_puncture",
     "archon_passive_magic",
     "archon_passive_bank",
-
     "archon_passive_time",
+    "archon_passive_greed",
+    "archon_passive_soul",
     -- "archon_passive_resist_armour",
-    -- "archon_passive_soul",
     -- "archon_passive_speed",
     -- "archon_passive_interspace",
     -- "archon_passive_shuttle",
-    "archon_passive_greed"
+    
 }
 
 ITEM_CUSTOM = LoadKeyValues("scripts/npc/npc_items_custom.txt")
 -------- 玩家属性 -------
+GlobalVarFunc.OriginalAbilities = {}
+GlobalVarFunc.EquiInvestment = {1.00,1.00,1.00,1.00,1.00,1.00}
 GlobalVarFunc.damage = {}
 GlobalVarFunc.attr = {}
 for n=0,5 do 
@@ -82,6 +84,7 @@ end
 
 
 -- <==============================全局变量================================>
+GlobalVarFunc.SEASON = 2 -- 赛季
 --游戏模式分类：   普通(默认)："common"    挂机："hook"      无尽："endless"     深渊："endless"
 GlobalVarFunc.game_mode =  "common"
 --游戏模式选择:-2 挂机，0 序章，1 第一章，2 第二章........1000 无尽,  1001 自闭， 1002 深渊   1003铲子模式
@@ -128,8 +131,16 @@ GlobalVarFunc.OperateRewardCoefficient = {1.00,1.00,1.00,1.00,1.00,1.00}
 GlobalVarFunc.InvestmentRewardCoefficient = {1.00,1.00,1.00,1.00,1.00,1.00}
 --箭魂通关奖励系数
 GlobalVarFunc.arrowSoulRewardCoefficient = {1.00,1.00,1.00,1.00,1.00,1.00}
+
 --玩家宝物池子
 GlobalVarFunc.player_treasure_list = {}
+--玩家宝物选择验证
+GlobalVarFunc.baoWuChiZiTest = {{},{},{},{},{},{}}
+--玩家恶魔宝物池子
+GlobalVarFunc.player_devil_treasure_list = {}
+--玩家恶魔宝物选择验证
+GlobalVarFunc.devilDaoWuChiZiTest = {{},{},{},{},{},{}}
+
 --单个玩家死亡游戏不结束，多1条命
 GlobalVarFunc.singlePlayerLife = 1
 --萝莉单位记录
@@ -142,6 +153,16 @@ GlobalVarFunc.tuTengNumber = 0
 GlobalVarFunc.isLianXuCreateTT = true
 --英雄复活时间
 GlobalVarFunc.resurrectionTime = {15,15,15,15,15,15}
+--神之恩赐碎片
+GlobalVarFunc.baoWuShuSuiPian = 0
+--神秘商人出现次数
+GlobalVarFunc.businessNum = 0
+--记录玩家个人宝物书兑换恶魔宝物书次数
+GlobalVarFunc.duihuanEMoBaoWuShuNum = {1,1,1,1,1,1}
+--记录玩家恶魔兑换券次数
+GlobalVarFunc.duihuanEMoTianZhanQuanNum = {1,1,1,1,1,1}
+-- 记录玩家个人宝物选择的数量
+GlobalVarFunc.devilNameCount = {{},{},{},{},{},{}}
 
 -- <==============================全局函数================================>
 -- 切割字符串为数组
@@ -169,14 +190,16 @@ function GlobalVarFunc:GloFunc_Getgame_enum()
 end
 
 function GlobalVarFunc:OnOpenDoor()
-	if GetMapName() == "archers_survive2" then
+	local mapName = GetMapName()
+	if mapName == "archers_survive2" or mapName == "archers_survive_d" then
 		return
 	end
 	if GlobalVarFunc.isOpenDoor then
 	    GlobalVarFunc.isOpenDoor = false
 		local door = Entities:FindByName(nil,"door001open")
+		if door == nil then return end
 		local doorTirgger = Entities:FindByName(nil,"door001o")
-		local v = door:GetOrigin(  )
+		local v = door:GetOrigin()
 		door:SetContextThink(DoUniqueString("open_the_door"), function ()
 			v.z = v.z -15 
 			door : SetOrigin(v)
@@ -248,25 +271,25 @@ end
 function GlobalVarFunc:OnWeeklyGameChange(unit)
 
 
-	if unit:GetContext("boss")  then
-		if GlobalVarFunc.MonsterWave >= 200 then
-			local newAbility2 = unit:AddAbility("ability_boss_strike")
-	        newAbility2:SetLevel(1)
-		end
-	end
+	-- if unit:GetContext("boss")  then
+	-- 	if GlobalVarFunc.MonsterWave >= 200 then
+	-- 		local newAbility2 = unit:AddAbility("ability_boss_strike")
+	--         newAbility2:SetLevel(1)
+	-- 	end
+	-- end
 
-	if GlobalVarFunc.game_type == 1003 then
+	-- if GlobalVarFunc.game_type == 1003 then
 
-		if (GlobalVarFunc.MonsterWave >= 25) and (GlobalVarFunc.playersNum > 1) then
-			local newAbility1 = unit:AddAbility("ability_boss_bulwark")
-	        newAbility1:SetLevel(1)
-		end
+	-- 	if (GlobalVarFunc.MonsterWave >= 25) and (GlobalVarFunc.playersNum > 1) then
+	-- 		local newAbility1 = unit:AddAbility("ability_boss_bulwark")
+	--         newAbility1:SetLevel(1)
+	-- 	end
 
-		unit:AddNewModifier(unit, nil, "modifei_monster_movespeed", nil)
-	end
+	-- 	unit:AddNewModifier(unit, nil, "modifei_monster_movespeed", nil)
+	-- end
 
-	--添加血魔buff移除移速上限
-	unit:AddNewModifier(unit, nil, "modifier_bloodseeker_thirst", nil)
+	-- --添加血魔buff移除移速上限
+	-- unit:AddNewModifier(unit, nil, "modifier_bloodseeker_thirst", nil)
 	
 
 	-- 	if unit:GetContext("boss")  then

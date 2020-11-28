@@ -11,7 +11,6 @@ function archon_passive_bank:GetIntrinsicModifierName()
  	return "modifier_archon_passive_bank"
 end
 
-local sParticle = "particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
 
 if modifier_archon_passive_bank == nil then
 	modifier_archon_passive_bank = class({})
@@ -69,21 +68,22 @@ function modifier_archon_passive_bank:HitTarget( hOrigin,hTarget)
 	if hTarget == nil then
 		return
 	end
+	local sParticle = "particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
+	if self:GetCaster():GetModelName() == "models/npc/raye/raye.vmdl" then
+		sParticle = "particles/diy_particles/raye_skill.vpcf"
+	end
 	local lightningBolt = ParticleManager:CreateParticle(
 		sParticle, 
-		PATTACH_WORLDORIGIN, 
+		PATTACH_CUSTOMORIGIN, 
 		hOrigin
 	)
-	ParticleManager:SetParticleControl(
-		lightningBolt,
-		0,
-		Vector(hOrigin:GetAbsOrigin().x,hOrigin:GetAbsOrigin().y,hOrigin:GetAbsOrigin().z + hOrigin:GetBoundingMaxs().z )
-	)   
-	ParticleManager:SetParticleControl(
-		lightningBolt,
-		1,
-		Vector(hTarget:GetAbsOrigin().x,hTarget:GetAbsOrigin().y,hTarget:GetAbsOrigin().z + hTarget:GetBoundingMaxs().z )
-	)
+	if RandomInt(1, 2) == 1 then
+		ParticleManager:SetParticleControlEnt(lightningBolt, 0, hOrigin, PATTACH_POINT_FOLLOW, "attach_attack1", hOrigin:GetAbsOrigin(), true)
+	else
+		ParticleManager:SetParticleControlEnt(lightningBolt, 0, hOrigin, PATTACH_POINT_FOLLOW, "attach_attack2", hOrigin:GetAbsOrigin(), true)
+	end
+	ParticleManager:SetParticleControlEnt(lightningBolt, 1, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", hTarget:GetAbsOrigin(), true)
+	ParticleManager:ReleaseParticleIndex(lightningBolt)
 	EmitSoundOn( "Hero_Zuus.ArcLightning.Cast", hTarget )
 	hTarget:AddNewModifier( 
 		self:GetCaster(), 
@@ -93,7 +93,7 @@ function modifier_archon_passive_bank:HitTarget( hOrigin,hTarget)
 	)
 
 	table.insert( self:GetAbility().hTargetsHit, hTarget )
-	ParticleManager:ReleaseParticleIndex(lightningBolt)
+	
 	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("DestroyBank"),
     function()
         ParticleManager:DestroyParticle(lightningBolt, true)
@@ -185,6 +185,11 @@ function modifier_archon_passive_bank_thinker:HitTarget( hOrigin,hTarget)
 	if hTarget == nil then
 		return
 	end
+	local sParticle = "particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
+	if self:GetCaster():GetModelName() == "models/npc/raye/raye.vmdl" then
+		sParticle = "particles/diy_particles/raye_skill.vpcf"
+	end
+
 	local lightningBolt = ParticleManager:CreateParticle(sParticle, PATTACH_WORLDORIGIN, hOrigin)
 	ParticleManager:SetParticleControl(
 		lightningBolt,

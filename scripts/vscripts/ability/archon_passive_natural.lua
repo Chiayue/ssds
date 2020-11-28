@@ -42,10 +42,15 @@ function modifier_archon_passive_natural:OnAttackLanded( params )
 	end
 	if nowChance  > chance then
 		-- 普通攻击
+		local nCurrentStack = 0
+		local hModifierInfo = params.target:FindAbilityByName(sModifierName)
+		if hModifierInfo ~= nil then
+			nCurrentStack = hModifierInfo:GetStackCount()
+		end
 		local abil_damage = self:GetCaster():GetAgility() * self:GetAbility():GetSpecialValueFor( "coefficient" )
-		local current_stack = params.target:GetModifierStackCount( sModifierName, self:GetCaster() )
-		if current_stack > 0 then
-			local total_damage = current_stack * self:GetCaster():GetAgility()
+		--local current_stack = params.target:GetModifierStackCount( sModifierName, self:GetCaster() )
+		if nCurrentStack > 0 then
+			local total_damage = nCurrentStack * self:GetCaster():GetAgility()
 			local damage = {
 				victim = params.target,
 				attacker = self:GetCaster(),
@@ -81,8 +86,13 @@ function modifier_archon_passive_natural:OnAttackLanded( params )
 	
 	for _,enemy in pairs(enemies) do
 		if enemy ~= nil then
-			local current_stack = enemy:GetModifierStackCount( sModifierName, self:GetCaster() )
-			local total_damage = current_stack * self:GetCaster():GetAgility()
+			local nCurrentStack = 0
+			local hModifierInfo = enemy:FindAbilityByName(sModifierName)
+			if hModifierInfo ~= nil then
+				nCurrentStack = hModifierInfo:GetStackCount()
+			end
+			-- local current_stack = enemy:GetModifierStackCount( sModifierName, self:GetCaster() )
+			local total_damage = nCurrentStack * self:GetCaster():GetAgility()
 			local damage = {
 				victim = enemy,
 				attacker = self:GetCaster(),

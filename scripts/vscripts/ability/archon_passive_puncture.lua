@@ -106,7 +106,6 @@ function modifier_archon_passive_puncture:GetModifierBaseAttack_BonusDamage()
 	else
 		return 0
 	end
-	
 end
 
 function archon_passive_puncture:OnProjectileHit( hTarget, vLocation )
